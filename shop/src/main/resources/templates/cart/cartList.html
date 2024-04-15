@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/layout1}'>
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<!--사용자 스크립트 추가-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+          $("input[name=cartChkBox]").change(function(){
+              getOrderTotalPrice();
+          })
+        })
+
+        function getOrderTotalPrice(){
+            let orderTotalPrice = 0;
+            $("input[name=cartChkBox]:checked").each(function(){
+                const cartItemId = $(this).val();
+                const price = $("#price_"+ cartItemId).attr("data-price");
+                const count = $("#count_"+ cartItemId).val();
+                orderTotalPrice += price * count;
+            });
+            $("#orderTotalPrice").html(orderTotalPrice + '원');
+        }
+
+        function changeCount(obj){
+            const count = obj.value;
+            const cartItemId = obj.id.split("_")[1];
+            const price = $("#price_" + cartItemId).data('price');
+            const totalPrice = count*price;
+            $("#totalPrice_"+ cartItemId).html(totalPrice+ "원")
+            getOrderTotalPrice();
+            updateCartItemCount(cartItemId, count);
+        }
+
+        function checkAll(){
+            if($("#checkAll").prop("checked")){
+                $("input[name=cartChkBox]").prop("checked", true);
+            } else {
+                $("input[name=cartChkBox]").prop("checked", false);
+            }
+            getOrderTotalPrice();
+        }
+
+        function updateCartItemCount(cartItemId, count){
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+
+            const url = "/cartItem/" + cartItemId + "?count=" + count;
+            $.ajax({
+                url: url,
+                type: "PATCH",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: "json",
+                cache: false,
+                success: function(result, status){
+                    console.log("cartItem count update success");
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == '401'){
+                        alert("로그인 후 이용해주세요.");
+                        location.href = '/members/login';
+                    } else {
+                        alert(jqXHR.responseText);
+                    }
+                }
+            })
+
+        }
+
+        function deleteCartItem(obj){
+            const cartItemId = obj.dataset.id;
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+            const url = "/cartItem/" + cartItemId;
+
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: "json",
+                cache: false,
+                success: function(result, status){
+                    alert("장바구니 상품을 삭제했습니다.");
+                    location.href = '/cart';
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == '401'){
+                        alert("로그인 후 사용해주세요.");
+                        location.href = '/members/login';
+                    } else {
+                        alert(jqXHR.responseJSON.message)
+                    }
+                }
+            })
+        }
+       function orders(){
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        const url = "/cart/orders";
+        const dataList = new Array();
+        const paramData = new Object();
+
+        // 체크된 장바구니의 상품 아이디를 전달하기 위해서
+        // dataList배열에 장바구니 상품아이디를 객체로 만들어 저장함.
+        $("input[name=cartChkBox]:checked").each(function(){
+            const cartItemId = $(this).val();
+            const data = new Object();
+            data["cartItemId"] = cartItemId;
+            dataList.push(data);
+            console.log("===== dataList : " + dataList);
+        })
+
+        // 장바구니 상품 아이디를 저장해 둔 dataList배열을 paramData 객체에 추가함.
+        paramData['cartOrderDTOList']= dataList;
+
+        const param = JSON.stringify(paramData);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            dataType: "json",
+            cache: false,
+            success: function(result, status){
+                alert("주문이 완료 되었습니다.");
+                location.href = "/orders";
+            },
+            error: function(jqXHR, status, error){
+                if(jqXHR.status == '401'){
+                    alert("로그인 후 이용해주세요.");
+                    location.href= "/members/login";
+                } else {
+                    alert(jqXHR.responseJSON.messages);
+                }
+            }
+        })
+
+    }
+    </script>
+</th:block>
+
+<!--사용자 CSS 추가-->
+<th:block layout:fragment="css">
+    <style>
+        .content-mg{
+            margin-left:25%;
+            margin-right:25%;
+            margin-top:2%;
+            margin-bottom:100px;
+        }
+        .repImgDiv{
+            margin-right:15px;
+            margin-left:15px;
+            height:auto;
+        }
+        .repImg{
+            height:100px;
+            width:100px;
+        }
+        .fs18{
+            font-size:18px
+        }
+        .fs24{
+            font-size:24px
+        }
+    </style>
+</th:block>
+<div layout:fragment="content" class="content-mg">
+    <h2 class="mb-4">장바구니 목록</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>
+                <input type="checkbox" id="checkAll" onclick="checkAll()">&nbsp; 전체선택
+            </td>
+            <td>상품정보</td>
+            <td>상품금액</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartItem : ${cartItems}">
+            <td class="text-center align-middle">
+                <input type="checkbox" name="cartChkBox"
+                       th:value="${cartItem.cartItemId}">
+            </td>
+            <td class="d-flex">
+                <div class="repImgDiv align-self-center">
+                    <img th:src="${cartItem.imgUrl}"
+                         th:alt="${cartItem.itemNm}"
+                         class="rounded repImg">
+
+                </div>
+                <div class="align-self-center">
+          <span class="fs24 font-weight-bold"
+                th:text="${cartItem.itemNm}"></span>
+
+                    <div class="fs18 font-weight-light">
+            <span class="input-group mt-2">
+              <span class="align-self-center mr-2"
+                    th:id="'price_' + ${cartItem.cartItemId}"
+                    th:data-price="${cartItem.price}"
+                    th:text="${cartItem.price} + '원'"></span>
+              <input type="number" name="count"
+                     th:id="'count_' + ${cartItem.cartItemId}"
+                     th:value="${cartItem.count}" min="1"
+                     onchange="changeCount(this)"
+                     class="form-control mr-2">
+              <button class="close" type="button" aria-label="Close">
+                <span aria-hidden="true" th:data-id="${cartItem.cartItemId}"
+                      onclick="deleteCartItem(this)">&times;</span>
+              </button>
+            </span>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center align-middle">
+        <span th:id="'totalPrice_' + ${cartItem.cartItemId}"
+              name="totalPrice"
+              th:text="${cartItem.price * cartItem.count} + '원'"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 class="text-center">
+        총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
+    </h2>
+    <div class="text-center mt-3">
+        <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+    </div>
+</div>
+</html>

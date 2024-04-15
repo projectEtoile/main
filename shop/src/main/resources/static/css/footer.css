@@ -1,0 +1,156 @@
+ /* font */
+ @import url('https://webfontworld.github.io/gmarket/GmarketSans.css');
+        
+ .gmarket {
+     font-family: "GmarketSans";
+ }
+
+ /* reset */
+ * {
+    margin: 0;
+    padding: 0;
+}
+footer a {
+    text-decoration: none;
+    color: #000;
+}
+footer li {
+    list-style: none;
+}
+em, address {
+    font-style: normal;
+}
+.ir_so {
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+.ir_pm {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+/* common */
+.gray {
+    background-color: #F6F8FD;
+}
+.container {
+    width: 1160px;
+    margin: 0 auto;
+    padding: 0 20px;
+    /* background: rgba(0,0,0,0.3); */
+}
+.footersection {
+    padding: 120px 0;
+    text-align: center;
+}
+.footersection > h2 {
+    font-size: 50px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+.footersection > p {
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 70px;
+    line-height: 1.5;
+    color: #777;
+}
+.section__desc em {
+    font-style: normal;
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+ /* textType */
+.footer__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: left;
+}
+.footer__logo {
+    width: 30%;
+}
+.footer__logo h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.footer__logo p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.footer__logo .sns ul {
+    display: flex;
+}
+.footer__logo .sns li {
+    margin-right: 5px;
+}
+.footer__logo .sns li a {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background-color: #F5F5F5;
+    border-radius: 50%;
+    background-image: url(https://webstoryboy.github.io/web2022/webs_img/footer02_icon.svg);
+}
+.footer__logo .sns li:nth-child(2) a {
+    background-position: -45px 0;
+}
+.footer__logo .sns li:nth-child(3) a {
+    background-position: -90px 0;
+}
+.footer__logo .sns li:nth-child(4) a {
+    background-position: -135px 0;
+}
+.footer__logo .sns li:nth-child(5) a {
+    background-position: -180px 0;
+}
+.footer__menu {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+.footer__menu h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.footer__menu li a {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 7px;
+}
+.footer__right {
+    margin-top: 80px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+#footerType {
+width: 100%;
+background-color: #F6F8FD;
+text-align: center;
+padding: 120px 0;
+position: relative; /* position 속성을 상대적(relative)으로 변경 */
+
+margin-top: 60px;
+}
+
+.footerContainer {
+max-width: 1160px;
+margin: 0 auto;
+padding: 0 20px;
+}

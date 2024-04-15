@@ -1,0 +1,421 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  /* height: 100%; */
+  font-family: "ProximaNova-Bold","NotoSansKR-Medium";
+}
+
+/* .top-area {
+  width: 100%;
+  height: 40px;
+  background-color: #000;
+} 
+.inner {
+  display: flex;
+   /* 왼쪽으로 정렬 */
+  /* justify-content: flex-end; */
+   /* 세로 가운데 정렬 */
+  /* align-items: center;
+  height: 39px;
+  margin-right: 120px;
+}
+.inner>a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 11px;
+  line-height: 18px;
+  color: #C9C9C9;
+} */
+
+/* 상단 배너 css 시작 */
+.top-area {
+  width: 100%;
+  height: 50px;
+  
+  background-color: pink;
+}
+.top-areaInner {
+/* background-color: pink; */
+display: flex;
+align-items: center;
+  /* align-items: cdropdown-menuenter; / 세로 가운데 정렬 */ 
+  /* height: 39px; */
+  /* margin-right: 120px; */
+}
+.top-areaInner>a {
+  font-style: "accent";
+  margin: auto;
+  text-decoration: none;
+  font-size: 35px;
+  line-height: 40px;
+  color: black;
+}
+/* 상단 배너 css 끝 */
+
+
+
+#icon-box > a{
+  margin: 0px 10px;
+}
+
+#icon-box {
+  right: 300px;
+  display: flex;
+  justify-content: flex-start;
+}
+.material-symbols-outlined{
+  color: #616161;
+  font-size: 27px;
+  font-weight: 300;
+}
+.material-symbols-outlined:hover{
+  color: #000000;
+}
+
+.Category-container {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ffffff;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border-top: 1px solid rgb(229, 229, 229);
+  border-bottom: 1px solid rgb(229, 229, 229);
+}
+
+.Category-container a {
+  color: #888888;
+}
+
+.Category-container button  {
+  color:#888888;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown button {
+  background-color: #ffffff;
+  color: #616161;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-right: 20px;
+  /* border: 1px solid black; */
+  transition: color 0.3s ease;
+}
+.dropdown button:hover {
+  color: #000;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: calc(90%);
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  display: none;
+  z-index: 1000;
+  width: 130px; /* 너비를 200px로 설정합니다. */
+  height: auto; /* 높이를 자동으로 조정합니다. */
+}
+
+.dropdown-menu li {
+  list-style: none;
+  margin: 5px 0;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+.sub-dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: calc(90%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  display: none;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.dropdown-menu li:hover .sub-dropdown-menu {
+  display: block;
+}
+
+.sub-dropdown-menu li {
+  margin: 0;
+  /* display: inline-block;  */
+}
+
+.sub-dropdown-menu li a {
+  display: flex;
+  /* flex: 1; */
+  padding: 8px 10px;
+  color: #333;
+  text-decoration: none;
+  text-align: left; 
+}
+
+/* 이 부분은 모바일버전에서 활용하기 */
+/* .navbar-links {
+  float: left;
+  border-top: 1px solid #E5E5E5; /* 위쪽 선 */
+  /* border-bottom: 1px solid #E5E5E5; */
+  /* width: 100%; */
+  /* display: flex; */
+  /* justify-content: space-around; */
+  /* margin: 0 50px; */
+/* }   */ 
+/* .navbar-links {
+  float: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid rgb(229, 229, 229);
+  border-bottom: 1px solid rgb(229, 229, 229);
+} */
+
+.links a {
+  display: inline-block;
+  color: #111111;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  /* margin: 0 px; */
+}
+.links a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.container1 {
+  display: flex;
+  height: 75px;
+}
+
+.section {
+  flex: 1; /* 동일한 공간을 차지하도록 설정 */
+  /* border: 1px solid #702929;  */
+  display: flex; /* 내부 요소를 수평으로 정렬하기 위해 */
+  justify-content: center; 
+  align-items: center; /* 수직 가운데 정렬 */
+}
+.section2 {
+  flex: 2; /* 동일한 공간을 차지하도록 설정 */
+  /* border: 1px solid #702929;  */
+  display: flex; /* 내부 요소를 수평으로 정렬하기 위해 */
+  justify-content: center; 
+  align-items: center; /* 수직 가운데 정렬 */
+}
+
+
+
+.search-bar {
+  /* flex: 0.55; */
+  flex: 0.6;
+  background-color: white;
+  padding: 7px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar input[type="text"] {
+  flex: 2;
+  height: 35px;
+  /* width: 50%; */
+  padding: 10px;
+  margin: 8px 50px;
+  /* box-sizing: border-box; */
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.inp:hover:not(:disabled) {
+  border: 1px solid #333;
+}
+.search-icon {
+  position: relative;
+  right: 85px;
+  color: #9aa0a6;
+}
+
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.logo{
+  width: 50px;
+  height: 50px;
+  padding: 0 10px;
+  display: flex;
+  align-self: center;
+}
+.inp {
+display: block;
+padding: 0 20px; 
+font-size: 16px;
+color: #333;
+border: 1px solid #ddd;
+background-color: #fff;
+-webkit-transition: 0.3s;
+transition: 0.3s;
+height: 18px;
+border-radius: 100px;
+}
+
+/* 메인 이미지 슬라이더 */
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+  margin-top: 50px;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+/* main 이미지 슬라이드 끝 */
+#phoneBt{
+  display: none;
+  position: relative;
+  left: 0;
+  
+}
+#searchIcon2{
+  border: 2px solid #888888;
+  border-radius: 50px;
+  padding: 6px 6px;
+  display: none;
+  position: relative;
+  left: 30px;
+  cursor: pointer;
+}
+#searchIcon{
+  cursor: pointer;
+}
+@media screen and (max-width: 790px) {
+  #phoneBt, #searchIcon2 {
+    display: block; 
+  }
+  #pcBt{
+    display: none; 
+  }
+  .search-bar{
+    display: none; 
+  }
+  footer{
+    width: 790px;
+  }
+}
+#searchInput {
+  /* 필요한 스타일링 */
+  width: 200px; /* 예시 너비 */
+  padding: 8px;
+  border: 1px solid #a8a7a7;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 100;
+  left: 150px;
+}

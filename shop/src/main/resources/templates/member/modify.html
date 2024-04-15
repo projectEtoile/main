@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate='~{layouts/layout1}'>
+
+<div layout:fragment="content">
+    <h1>관리자 유저 수정페이지</h1>
+    <form method="post" action="/admin/modify">
+        <input type="hidden" th:field="${member.id}" name="id"/>
+        <div>
+            <label for="name">이름:</label>
+            <input type="text" id="name" th:value="${member.name}" name="name"/>
+        </div>
+        <div>
+            <label for="email">이메일:</label>
+            <input type="email" id="email" th:value="${member.email}" name="email"/>
+        </div>
+        <div>
+            <label for="address">주소:</label>
+            <input type="text" id="address" th:value="${member.address}" name="address"/>
+        </div>
+        <div>
+            <label for="role">권한:</label>
+            <select id="role" name="role">
+                <option th:each="role : ${T(com.keduit.shop.constant.Role).values()}"
+                        th:value="${role}" th:text="${role}" th:selected="${role == member.role}"></option>
+            </select>
+        </div>
+        <button type="submit" th:formaction="@{/admin/modify(id=${member.id})}">수정하기</button>
+    </form>
+    <a th:href="@{/admin/view(id=${member.id})}">상세 정보 보기</a>
+    <a th:href="@{/admin/list}">목록</a>
+</div>
+</html>
