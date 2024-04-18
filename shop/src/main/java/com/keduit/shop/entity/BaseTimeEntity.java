@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseTimeEntity {
 
-    @CreatedDate
-    @Column(updatable = false) // 최초 등록일자는 업데이트되선 안됌.
-    private LocalDateTime regTime;
+  @CreatedDate
+  @Column(updatable = false)
+  private LocalDateTime regTime;
 
-    @LastModifiedDate
-    private LocalDateTime updateTime;
+  @LastModifiedDate
+  private LocalDateTime updateTime;
 }

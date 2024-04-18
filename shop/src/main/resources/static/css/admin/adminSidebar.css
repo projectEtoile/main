@@ -1,0 +1,78 @@
+/* 메뉴바 시작 */
+/* Fixed sidenav, full height */
+
+.sidenav {
+  height: 100%;
+  width: 170px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #f5f4f4;
+  overflow-x: hidden;
+  padding-top: 100px;
+  border-right: 1px solid #555555;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #535353;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+.dropdown-btn {
+  padding : 20px;
+}
+.sidenav a {
+  font-size: 13px;
+  color: #262626;
+  background-color: white;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #020000;
+}
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: rgb(204, 207, 204);
+  color: #000000;;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  /* background-color: #262626; */
+  /* padding-left: 8px; */
+}
+.mainPageA a{
+  background-color: #f5f4f4;;
+  
+  color: #262626;
+  font-size: 30px;
+  
+}
+.mainPageA {
+  position: relative;
+  bottom: 30px;
+  left: 20px;
+}
+
+
+/* 메뉴바 끝 */

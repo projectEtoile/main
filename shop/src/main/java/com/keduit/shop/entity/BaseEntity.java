@@ -14,13 +14,11 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 public abstract class BaseEntity extends BaseTimeEntity{
-    // 시간 2 작성or수정자 2 다 받고 싶으면 이거
-    // 시간 2 만 받고싶으면 baseTimeEntity
 
-    @CreatedBy
-    @Column(updatable = false)
-    private String createdBy;
+  @CreatedBy
+  @Column(updatable = false)
+  private String createdBy;
 
-    @LastModifiedBy
-    private String modifiedBy;
+  @LastModifiedBy
+  private String modifiedBy;
 }
