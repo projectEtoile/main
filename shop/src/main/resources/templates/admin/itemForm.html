@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<!--사용자 스크립트 추가-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+         const errorMessage = [[${errorMessage}]]
+         if(errorMessage){
+             alert(errorMessage);
+         }
+         bindDomEvent();
+     });
+
+               console.log("ddd");
+                     function bindDomEvent(){
+          $(".custom-file-input").on("change", function(){
+              let fileName = $(this).val().split("\\").pop();
+              let fileExt = fileName.substring(fileName.lastIndexOf(".")+1);
+              console.log("fileName =====> ", fileName);
+              console.log("fileExt =====> ", fileExt);
+
+              fileExt = fileExt.toLowerCase();
+
+              if(fileExt != "jpg" && fileExt != "jpeg" &&
+                  fileExt != "gif" && fileExt != "png" && fileExt != "bmp"){
+                  alert("이미지 파일만 등록이 가능합니다.");
+                  return;
+              }
+              $(this).siblings(".custom-file-label").html(fileName);
+          });
+      }
+
+
+       // 라벨 값도 넘겨주기
+           $(document).ready(function() {
+             $('#categorys').change(function() {
+               var selectedOptionGroupLabel = $(this).find(':selected').parent().attr('label');
+               $('#selectedGroupLabel').val(selectedOptionGroupLabel);
+             });
+           });
+
+<!--// 이미지 띄우기-->
+<!--        function PreviewImage() {-->
+<!--   var preview = new FileReader();-->
+<!--   preview.onload = function (e) {-->
+<!--       var img = document.getElementByClassName("user_image");-->
+<!--       img.src = e.target.result;-->
+<!--       img.style.width = "250px"; // 원하는 너비 설정-->
+<!--       img.style.height = "auto"; // 너비에 맞게 자동으로 높이 조절-->
+<!--   };-->
+<!--   preview.readAsDataURL(document.getElementByClassName("user_profile_img").files[0]);-->
+<!--};-->
+     function PreviewImage(input) {
+    var preview = new FileReader();
+    var img = input.previousElementSibling; // 해당 input 이전에 있는 img 요소 선택
+
+    preview.onload = function (e) {
+        img.src = e.target.result;
+        img.style.width = "250px"; // 원하는 너비 설정
+        img.style.height = "auto"; // 너비에 맞게 자동으로 높이 조절
+    };
+
+    preview.readAsDataURL(input.files[0]);
+};
+
+
+    </script>
+</th:block>
+
+
+<!-- 사용자 CSS 추가 -->
+
+<link th:href="@{/css/admin/itemForm.css}" rel="stylesheet" type="text/css">
+
+<script defer th:src="@{/js/admin/itemForm.js}" type="text/javascript"></script>
+
+<div layout:fragment="content">
+    <body>
+    <!-- 상품등록 시작 -->
+    <div class="container">
+        <form th:action="@{/admin/item/new}" method="post" enctype="multipart/form-data"
+              th:object="${itemFormDTO}">
+
+            <h1> 상품 등록 </h1><br><br><br>
+            <!--            <input type="hidden" th:field="*{id}">-->
+            <!--            <div class="box">-->
+            <!--                <label for="productC">상품코드<span style="color: red;"> *</span><span-->
+            <!--                        id="smallLetter">필수항목</span></label><br>-->
+            <!--                <input type="text" id="productC" name="productC" placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요">-->
+            <!--            </div>-->
+
+            <div class="box">
+                <label for="ProductN">상품 이름<span style="color: red;"> *</span></label><br>
+                <input type="text" id="productN" th:field="*{itemNm}" placeholder="상품 이름을 입력해 주세요">
+            </div>
+            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <label for="brand">브랜드 이름<span style="color: red;"> *</span></label><br>
+                <input type="text" id="brand" th:field="*{brandNm}" placeholder="브랜드 이름을 입력해 주세요">
+            </div>
+            <p th:if="${#fields.hasErrors('brandNm')}" th:errors="*{brandNm}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <!--            <label for="category">카테고리<span style="color: red;"> *</span></label><br>-->
+
+                <select th:field="*{level2}" id="categorys">
+                    <optgroup label="Top">
+                        <option value="후드/블라우스">블라우스</option>
+                        <option value="셔츠">셔츠</option>
+                        <option value="맨투맨">맨투맨/후드</option>
+                        <option value="니트/스웨터">니트/스웨터</option>
+                    </optgroup>
+                    <optgroup label="Outer">
+                        <option value="패딩">패딩</option>
+                        <option value="코트">코트</option>
+                        <option value="재킷">재킷</option>
+                        <option value="집업">집업</option>
+                    </optgroup>
+                    <optgroup label="Pants">
+                        <option value="슬랙스">슬랙스</option>
+                        <option value="청바지">청바지</option>
+                        <option value="트레이닝/레깅스">트레이닝/레깅스</option>
+                    </optgroup>
+                    <optgroup label="Skirt/Dress">
+                        <option value="미니">미니</option>
+                        <option value="미디">미디</option>
+                        <option value="롱">롱</option>
+                    </optgroup>
+                    <optgroup label="Shoes">
+                        <option value="부츠">부츠</option>
+                        <option value="힐/로퍼">힐/로퍼</option>
+                        <option value="운동화">운동화</option>
+                        <option value="슬리퍼">슬리퍼</option>
+                    </optgroup>
+                </select>
+            </div>
+            <input type="text" id="selectedGroupLabel" th:field="*{level1}" hidden="hidden">
+            <p th:if="${#fields.hasErrors('level1')}" th:errors="*{level1}"
+               class="fieldError">Incorrect data</p>
+
+
+            <div class="box">
+                <label for="price">가격<span style="color: red;"> *</span></label><br>
+                <input type="text" id="price" th:field="*{price}" placeholder="가격을 입력해 주세요">
+            </div>
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+               class="fieldError">Incorrect data</p>
+            <div class="box">
+                <label for="productD">상품 설명</label><br>
+                <input type="text" maxlength="100" id="productD" th:field="*{itemText}">
+            </div>
+            <p th:if="${#fields.hasErrors('itemText')}" th:errors="*{itemText}"
+               class="fieldError">Incorrect data</p>
+
+            <!--  <div class="box">
+
+                  <label>대표 이미지 업로드<span style="color: red;"> *</span></label><br>
+
+                  <input type="file" class="real-upload" accept="image/*" required multiple>
+                  <button class="upload">업로드</button>
+
+                  <ul class="image-preview"></ul>
+              </div>-->
+            <div class="box">
+
+                <img class="user_image" src="#" alt="">
+                <!-- onchange event 걸어주기  -->
+                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
+                       class="user_profile_img"/>
+
+                <img class="user_image" src="#" alt="">
+                <!-- onchange event 걸어주기  -->
+                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
+                       class="user_profile_img"/>
+
+                <img class="user_image" src="#" alt="">
+                <!-- onchange event 걸어주기  -->
+                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
+                       class="user_profile_img"/>
+
+            </div>
+            <!-- 상세이미지 업로드 수정 필요 -->
+            <!--            <div class="box">-->
+            <!--                <label>상세 이미지 업로드<span style="color: red;"> *</span></label><br>-->
+            <!--                <button type="button" onclick="document.getElementById('fileInput').click()">업로드</button>-->
+            <!--                <input type="file" name="file" id="fileInput" style="display: none;">-->
+
+            <!--            </div>-->
+
+            <!--  -->
+            <div class="box">
+                <label for="material">소재<span style="color: red;"> *</span></label><br>
+                <input type="text" id="material" th:field="*{material}">
+            </div>
+            <p th:if="${#fields.hasErrors('material')}" th:errors="*{material}"
+               class="fieldError">Incorrect data</p>
+
+            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
+               class="fieldError">Incorrect data</p>
+
+  <!--          <div class="box">
+                <label for="size">치수<span style="color: red;"> *</span></label><br>
+                <input type="text" id="size" name="size">
+            </div>-->
+<!--            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"-->
+<!--               class="fieldError">Incorrect data</p>-->
+
+
+            <div class="box">
+                <label>S 재고 수량</label><br>
+                <input type="number" th:field="*{stockS}" id="S"><br>
+                <label>M 재고 수량</label><br>
+                <input type="number" th:field="*{stockM}" id="M"><br>
+                <label>L 재고 수량</label><br>
+                <input type="number" th:field="*{stockL}" id="L"><br>
+                <label>FREE 재고 수량</label><br>
+                <input type="number" th:field="*{stockFree}" id="Free">
+            </div>
+
+            <p th:if="${#fields.hasErrors('stockS')}" th:errors="*{stockS}"
+               class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('stockM')}" th:errors="*{stockM}"
+               class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('stockL')}" th:errors="*{stockL}"
+               class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('stockFree')}" th:errors="*{stockFree}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box" hidden="hidden">
+                <select th:field="*{itemSellStatus}">
+                    <option value="SELL">판매중</option>
+                    <!--                    <option value="SOLD_OUT">품절</option>-->
+                </select>
+            </div>
+
+            <div class="submitBt">
+                <button style="background-color: aquamarine; width: 120px;"
+                        type="submit">
+                    판매 요청
+                </button>
+                <!--                th:formaction="@{/admin/item/new}"-->
+            </div>
+        </form>
+        <!-- form으로 바꾸기 -->
+
+    </div>
+
+    </body>
+</div>
+
+</html>
+
+
+
+
+

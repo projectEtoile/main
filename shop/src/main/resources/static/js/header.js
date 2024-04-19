@@ -87,12 +87,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // // 헤더 메뉴4 설정 --------------------------------------------------
 
-// 슬라이드쇼 시작 
+// 슬라이드쇼 시작
 let slideIndex = 1;
 
 function initializeSlideShow() {
   showSlides(slideIndex);
-  startSlideShow(); 
+  startSlideShow();
 }
 
 function plusSlides(n) {
@@ -110,7 +110,7 @@ let slideInterval;
 function startSlideShow() {
   slideInterval = setInterval(function() {
     plusSlides(1);
-  }, 3000); 
+  }, 3000);
 }
 
 function stopSlideShow() {
