@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table(name = "cart_item")
-public class CartItem extends BaseEntity {
+public class CartItem extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

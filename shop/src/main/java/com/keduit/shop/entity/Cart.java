@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor /*디폴트생성자*/
-public class Cart extends BaseEntity{
+public class Cart extends BaseTimeEntity{
     @Id
     @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

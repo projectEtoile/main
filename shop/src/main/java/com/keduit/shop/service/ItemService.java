@@ -3,6 +3,7 @@ package com.keduit.shop.service;
 import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
+import com.keduit.shop.repository.ItemImgRepository;
 import com.keduit.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,9 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final ItemImgService itemImgService;
 
-    public Long saveItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList){
+    public Long saveItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList) throws Exception{
 
         Item item = itemFormDTO.createItem(); // modelmapper을 이용하여 간단하게 메핑.
         // 이제 나머지 엔티티 필드들을 세팅해줘야한다
@@ -45,14 +47,10 @@ public class ItemService {
 
             // 여기선 item객체만 set하고 이제 나머지 값들을 set해야함.
             itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
-
+             
+            // 위 메서드에서 나머지 필드들을 모두 채우고 테이블에 등록까지 완료했다.
         }
 
-
-
-
-
-
-       return null;
+       return item.getId();
     }
 }

@@ -10,7 +10,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Size extends BaseEntity {
+public class Size{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "size_id") /*다른테이블에도 id가있으니까 구분하기위해 */
