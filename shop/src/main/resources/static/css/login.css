@@ -1,0 +1,1113 @@
+.clearfix:before,.clearfix:after {
+  content: "";
+  display: table
+}
+
+.clearfix:after {
+  clear: both
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.pull-right {
+  float: right !important
+}
+
+.pull-left {
+  float: left !important
+}
+
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: transparent no-repeat center;
+  vertical-align: top
+}
+
+.icon_user {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_join.svg")
+}
+
+.icon_sign_in {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_login.svg")
+}
+
+.icon_sign_out {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_logout.svg")
+}
+
+.icon_arrow_up {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_arrow_down_18.svg");
+  transform: rotate(180deg)
+}
+
+.icon_arrow_down {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_arrow_down_18.svg")
+}
+
+.icon_heart {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_heart_line.svg")
+}
+
+.icon_mypage {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_mypage.svg")
+}
+
+.icon_bag {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_bag.svg")
+}
+
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {
+  display: block
+}
+
+audio,canvas,progress,video {
+  display: inline-block;
+  vertical-align: baseline
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0
+}
+
+[hidden],template {
+  display: none
+}
+
+a {
+  background-color: transparent
+}
+
+a:active,a:hover {
+  outline: 0
+}
+
+abbr[title] {
+  border-bottom: 1px dotted
+}
+
+b,strong {
+  font-weight: bold
+}
+
+dfn {
+  font-style: italic
+}
+
+h1 {
+  font-size: 2em;
+  margin: .67em 0
+}
+
+mark {
+  color: #000;
+  background: #ff0
+}
+
+small {
+  font-size: 80%
+}
+
+sub,sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline
+}
+
+sup {
+  top: -.5em
+}
+
+sub {
+  bottom: -.25em
+}
+
+img {
+  border: 0
+}
+
+svg:not(:root) {
+  overflow: hidden
+}
+
+figure {
+  margin: 1em 40px
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0
+}
+
+pre {
+  overflow: auto
+}
+
+code,kbd,pre,samp {
+  font-family: monospace,monospace;
+  font-size: 1em
+}
+
+button,input,optgroup,select,textarea {
+  font: inherit;
+  margin: 0;
+  color: inherit
+}
+
+button {
+  overflow: visible
+}
+
+button,select {
+  text-transform: none
+}
+
+button,html input[type='button'],input[type='reset'],input[type='submit'] {
+  cursor: pointer;
+  -webkit-appearance: button
+}
+
+button[disabled],html input[disabled] {
+  cursor: default
+}
+
+button::-moz-focus-inner,input::-moz-focus-inner {
+  padding: 0;
+  border: 0
+}
+
+input {
+  line-height: normal
+}
+
+input[type='checkbox'],input[type='radio'] {
+  box-sizing: border-box;
+  padding: 0
+}
+
+input[type='number']::-webkit-inner-spin-button,input[type='number']::-webkit-outer-spin-button {
+  height: auto
+}
+
+
+fieldset {
+  margin: 0 2px;
+  padding: .35em .625em .75em;
+  border: 1px solid #c0c0c0
+}
+
+legend {
+  padding: 0;
+  border: 0
+}
+
+textarea {
+  overflow: auto
+}
+
+optgroup {
+  font-weight: bold
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse
+}
+
+td,th {
+  padding: 0
+}
+
+* {
+  font-weight: normal;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: normal;
+  font-style: normal
+}
+
+html,body {
+  width: 100%;
+  height: 100%
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  min-width: 1240px;
+  font-family: "ProximaNova-Light","Noto Sans KR","Apple SD Gothic Neo",AppleGothic,"돋움",Dotum,Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+body.scrollOff {
+  overflow: hidden;
+  touch-action: none
+}
+
+a {
+  text-decoration: none;
+  color: #000
+}
+
+address,em {
+  font-style: normal
+}
+
+hr {
+  display: none
+}
+
+table {
+  width: 100%;
+  border-collapse: separate
+}
+
+th,td {
+  word-break: break-all;
+  background-clip: padding-box
+}
+
+th.posr,td.posr {
+  position: relative
+}
+
+caption {
+  display: inline-block;
+  height: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 0
+}
+
+fieldset {
+  border: none
+}
+
+form {
+  margin: 0
+}
+
+input[type=radio],input[type=checkbox] {
+  padding: 0
+}
+
+input[type='number']::-webkit-inner-spin-button,input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0
+}
+
+button {
+  width: auto;
+  border: 0;
+  padding: 0;
+  background: none;
+  font-weight: normal
+}
+
+a,img,input,button,select,textarea {
+  vertical-align: middle
+}
+
+a:focus,a:active,a:hover,button:focus,button:active,button:hover {
+  text-decoration: none
+}
+
+ul,ol,dl {
+  margin: 0;
+  padding: 0
+}
+
+li,dl {
+  /* margin:0; */
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 0
+}
+
+strong,b {
+  font-weight: normal
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  font-weight: normal;
+  font-family: "ProximaNova-Thin","Noto Sans KR"
+}
+
+.mt20 {
+  margin-top: 20px !important
+}
+
+a.btn,button.btn,input.btn,span.btn {
+  display: inline-block;
+  min-width: 180px;
+  padding: 0 20px;
+  height: 50px;
+  text-align: center;
+  line-height: 48px;
+  border: 1px solid #333;
+  background-color: #fff;
+  color: #000;
+  font-family: "ProximaNova-Semibold","Apple SD Gothic Neo","NotoSansKR-Medium","Malgun Gothic","맑은 고딕",sans-serif;
+  font-size: 14px
+}
+
+a.btn.gray,button.btn.gray,input.btn.gray,span.btn.gray {
+  border-color: #7d7d7d;
+  background-color: #7d7d7d;
+  color: #fff
+}
+
+a.btn.black,button.btn.black,input.btn.black,span.btn.black {
+  border-color: #000;
+  background-color: #000;
+  color: #fff
+}
+
+a.btn.full_width,button.btn.full_width,input.btn.full_width,span.btn.full_width {
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 10px
+}
+
+a.btn.full_width span,button.btn.full_width span,input.btn.full_width span,span.btn.full_width span {
+  font-family: "Noto Sans KR";
+  font-size: 14px
+}
+
+#container .sub_title_wrap {
+  padding-top: 55px;
+  padding-bottom: 36px;
+  position: relative;
+  min-width: 1240px
+}
+
+#container .sub_title {
+  font-family: "ProximaNova-Thin","Noto Sans KR";
+  font-size: 44px;
+  line-height: 44px;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase
+}
+
+input[type=text],textarea,input[type=password],input[type=tel],input[type=number] {
+  height: 40px;
+  line-height: 38px;
+  padding-left: 20px;
+  border: none;
+  background-color: #f2f2f2;
+  border: 1px solid #f2f2f2;
+  font-size: 14px;
+  font-family: "ProximaNova-Regular","Noto Sans KR";
+  outline: none
+}
+
+input[type=text]:-ms-input-placeholder,textarea:-ms-input-placeholder,input[type=password]:-ms-input-placeholder,input[type=tel]:-ms-input-placeholder,input[type=number]:-ms-input-placeholder {
+  color: #a4a4a4
+}
+
+input[type=text]:-moz-placeholder,textarea:-moz-placeholder,input[type=password]:-moz-placeholder,input[type=tel]:-moz-placeholder,input[type=number]:-moz-placeholder {
+  color: #a4a4a4
+}
+
+input[type=text]::-webkit-input-placeholder,textarea::-webkit-input-placeholder,input[type=password]::-webkit-input-placeholder,input[type=tel]::-webkit-input-placeholder,input[type=number]::-webkit-input-placeholder {
+  color: #9d9d9d
+}
+
+input[type=text]:disabled:-moz-placeholder,textarea:disabled:-moz-placeholder,input[type=password]:disabled:-moz-placeholder {
+  color: #ccc
+}
+
+input[type=text]:disabled:disabled::-webkit-input-placeholder,textarea:disabled::-webkit-input-placeholder,input[type=password]:disabled::-webkit-input-placeholder {
+  color: #ccc
+}
+
+input[type=text]:disabled:-webkit-input-placeholder,textarea:disabled::-webkit-input-placeholder,input[type=password]:disabled::-webkit-input-placeholder {
+  color: #ccc
+}
+
+input[type=text].placeholder,textarea.placeholder,input[type=password].placeholder,input[type=tel].placeholder,input[type=number].placeholder {
+  color: #a4a4a4;
+  text-align: left
+}
+
+input[type=text]:focus,textarea:focus,input[type=password]:focus,input[type=tel]:focus,input[type=number]:focus {
+  background-color: #fff;
+  border: 1px solid #000
+}
+
+input[type=text]:disabled,textarea:disabled,input[type=password]:disabled,input[type=tel]:disabled,input[type=number]:disabled {
+  color: #aaa
+}
+
+input[type=text].readonly,textarea.readonly,input[type=password].readonly,input[type=tel].readonly,input[type=number].readonly {
+  background-color: #fbfbfb;
+  border-color: #f5f5f5;
+  color: #a4a4a4
+}
+
+input[type=text].readonly:focus,textarea.readonly:focus,input[type=password].readonly:focus,input[type=tel].readonly:focus,input[type=number].readonly:focus {
+  border: 1px solid #f5f5f5
+}
+
+input[type=text].full_width,textarea.full_width,input[type=password].full_width,input[type=tel].full_width,input[type=number].full_width {
+  width: 100%;
+  margin-bottom: 10px
+}
+
+span.input_button {
+  display: inline-block;
+  position: relative;
+  margin-right: 50px
+}
+
+span.input_button input[type=radio],span.input_button input[type=checkbox] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  z-index: 1;
+  opacity: 0
+}
+
+span.input_button input[type=radio]+label,span.input_button input[type=checkbox]+label {
+  display: block;
+  color: #000;
+  font-size: 14px;
+  font-family: "ProximaNova-Regular","Noto Sans KR";
+  line-height: 25px;
+  padding-left: 35px;
+  position: relative
+}
+
+span.input_button input[type=radio]+label:before,span.input_button input[type=checkbox]+label:before {
+  background: url("//static.wconcept.co.kr/web/images/common/spr-input.png") 0 0 no-repeat;
+  content: '';
+  display: block;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 0;
+  left: 0
+}
+
+span.input_button input[type=checkbox]:checked+label:before {
+  background-position: -30px 0
+}
+
+span.input_button input[type=checkbox]:disabled+label:before {
+  background-position: -60px 0
+}
+
+span.input_button input[type=radio]+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_n_25.svg")
+}
+
+span.input_button input[type=radio]:checked+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_c_25.svg")
+}
+
+span.input_button input[type=radio]:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_d_25.svg")
+}
+
+span.input_button input[type=radio]:checked:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_c_d_25.svg")
+}
+
+span.input_button.type2 input[type=radio],span.input_button.type2 input[type=checkbox] {
+  width: 20px;
+  height: 20px
+}
+
+span.input_button.type2 input[type=radio]+label,span.input_button.type2 input[type=checkbox]+label {
+  line-height: 20px;
+  padding-left: 24px;
+  color: #ccc
+}
+
+span.input_button.type2 input[type=radio]+label:before,span.input_button.type2 input[type=checkbox]+label:before {
+  width: 20px;
+  height: 20px;
+  background: url("//static.wconcept.co.kr/web/images/common/ico_checkbox2_s_disable.png") no-repeat;
+  background-size: 100%
+}
+
+span.input_button.type2 input[type=radio]:checked+label,span.input_button.type2 input[type=checkbox]:checked+label {
+  color: #000
+}
+
+span.input_button.type2 input[type=radio]:checked+label:before,span.input_button.type2 input[type=checkbox]:checked+label:before {
+  background: url("//static.wconcept.co.kr/web/images/common/ico_checkbox2_s_able.png") no-repeat;
+  background-size: 100%
+}
+
+span.input_button.mid {
+  margin-right: 0
+}
+
+span.input_button.mid input[type=radio],span.input_button.mid input[type=checkbox] {
+  width: 20px;
+  height: 20px
+}
+
+span.input_button.mid input[type=radio]+label,span.input_button.mid input[type=checkbox]+label {
+  padding-left: 29px;
+  line-height: 20px
+}
+
+span.input_button.mid input[type=radio]+label:before,span.input_button.mid input[type=checkbox]+label:before {
+  width: 20px;
+  height: 20px
+}
+
+span.input_button.mid input[type=radio]+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_n_20.svg")
+}
+
+span.input_button.mid input[type=radio]:checked+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_c_20.svg")
+}
+
+span.input_button.mid input[type=radio]:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_d_20.svg")
+}
+
+span.input_button.mid input[type=radio]:checked:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_c_d_20.svg")
+}
+
+span.input_button.mid input[type=radio]:disabled+label {
+  color: #a4a4a4
+}
+
+span.input_button.mid input[type=checkbox]+label:before {
+  background-position: -30px -60px
+}
+
+span.input_button.mid input[type=checkbox]:checked+label:before {
+  background-position: -60px -60px
+}
+
+span.input_button.mid input[type=checkbox]:disabled+label:before {
+  background-position: -30px -90px
+}
+
+span.input_button.small {
+  margin-right: 0
+}
+
+span.input_button.small input[type=radio],span.input_button.small input[type=checkbox] {
+  width: 17px;
+  height: 17px
+}
+
+span.input_button.small input[type=radio]+label,span.input_button.small input[type=checkbox]+label {
+  padding-left: 24px;
+  color: #666;
+  font-family: "ProximaNova-Light","Noto Sans KR";
+  line-height: 17px
+}
+
+span.input_button.small input[type=radio]+label:before,span.input_button.small input[type=checkbox]+label:before {
+  width: 17px;
+  height: 17px
+}
+
+span.input_button.small input[type=checkbox]+label:before {
+  background-position: -90px -30px
+}
+
+span.input_button.small input[type=checkbox]:checked+label:before {
+  background-position: -120px -30px
+}
+
+span.input_button.small input[type=checkbox]:disabled+label:before {
+  background-position: -90px -90px
+}
+
+span.input_button.small input[type=radio]+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_n_17.svg")
+}
+
+span.input_button.small input[type=radio]:checked+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_c_17.svg")
+}
+
+span.input_button.small input[type=radio]:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_d_17.svg")
+}
+
+span.input_button.small input[type=radio]:checked:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_radio_c_d_17.svg")
+}
+
+span.input_button.one.mid {
+  width: 20px;
+  height: 20px
+}
+
+span.input_button.radio2 input[type=checkbox]+label:before {
+  background-position: -150px -30px
+}
+
+span.input_button.radio2 input[type=checkbox]:checked+label:before {
+  background-position: -180px -30px
+}
+
+span.input_button.radio2 input[type=checkbox]:disabled+label:before {
+  background-position: -60px 0
+}
+
+span.input_button.square input[type=checkbox] {
+  width: 20px;
+  height: 20px
+}
+
+span.input_button.square input[type=checkbox]+label {
+  padding-left: 28px
+}
+
+span.input_button.square.mid input[type=checkbox]+label {
+  line-height: 22px;
+  margin-bottom: -2px
+}
+
+span.input_button.square input[type=checkbox]+label:before {
+  width: 20px;
+  height: 20px;
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_checkbox_square_20.svg");
+  background-position: 0 0
+}
+
+span.input_button.square input[type=checkbox]:checked+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_checkbox_square_s_20.svg");
+  background-position: 0 0
+}
+
+span.input_button.square input[type=checkbox]:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_checkbox_square_d_20.svg");
+  background-position: 0 0
+}
+
+span.input_button.stroke input[type=checkbox] {
+  width: 20px;
+  height: 20px
+}
+
+span.input_button.stroke input[type=checkbox]+label {
+  padding-left: 28px
+}
+
+span.input_button.stroke input[type=checkbox]+label:before {
+  width: 20px;
+  height: 20px;
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_checkbox_20s_off.svg");
+  background-position: 0 0
+}
+
+span.input_button.stroke input[type=checkbox]:checked+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_checkbox_20s_on.svg");
+  background-position: 0 0
+}
+
+span.input_button.stroke input[type=checkbox]:disabled+label:before {
+  background-image: url("//static.wconcept.co.kr/web/images/common/svg/ico_checkbox_20s_off.svg");
+  background-position: 0 0
+}
+
+.member_join {
+  width: 1240px;
+  margin: 0 auto
+}
+
+.member_join .join_cont {
+  padding-top: 60px;
+  border-top: 2px solid #171717
+}
+
+.member_join .sns_type {
+  border: 1px solid #e2e2e2;
+  border-right: 0
+}
+
+.member_join .sns_type li {
+  float: left;
+  position: relative;
+  width: 20%;
+  border-right: 1px solid #e2e2e2;
+  text-transform: uppercase;
+  text-align: center
+}
+
+.member_join .sns_type li a {
+  display: block;
+  height: 88px;
+  padding-top: 24px;
+  color: #333
+}
+
+.member_join .sns_type li a p {
+  display: inline-block;
+  text-align: left;
+  font-size: 20px;
+  line-height: 1.1
+}
+
+.member_join .sns_type li a p span {
+  display: block;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.1
+}
+
+.member_join .sns_type li a:before {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  margin: -1px 20px 0 0;
+  background: url("//static.wconcept.co.kr/web/images/common/spr-join-new.png") 0 0 no-repeat;
+  vertical-align: top;
+  content: ''
+}
+
+.member_join .sns_type li:first-child a:before {
+  background-position: -150px -50px
+}
+
+.member_join .sns_type li:nth-child(2) a:before {
+  background-position: -200px -50px
+}
+
+.member_join .sns_type li:nth-child(3) a:before {
+  background-position: -250px -50px
+}
+
+.member_join .sns_type li:nth-child(4) a:before {
+  background-position: -398px -50px
+}
+
+.member_join .sns_type li:nth-child(5) a:before {
+  background-position: -350px -50px
+}
+
+.member_join .sns_type:after {
+  display: block;
+  clear: both;
+  content: ''
+}
+
+.member_join .inp_group {
+  position: relative;
+  padding-bottom: 30px;
+  margin-bottom: 30px
+}
+
+.member_join .inp_group p label {
+  display: block;
+  padding-bottom: 5px;
+  color: #333;
+  font-size: 14px
+}
+
+.member_join .inp_group p input[type=text] {
+  margin-bottom: 0
+}
+
+.member_join .inp_group .incorrect {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fa5500;
+  font-family: "ProximaNova-Regular","Noto Sans KR";
+  font-size: 12px
+}
+
+.member_join .inp_group .incorrect:before {
+  display: inline-block;
+  background: url("//static.wconcept.co.kr/web/images/common/svg/ico_incorrect_11.svg") no-repeat;
+  width: 11px;
+  height: 11px;
+  margin: 3px 4px 0 3px;
+  vertical-align: top;
+  content: ''
+}
+
+.member_join .btn_group .btn {
+  margin-bottom: 0
+}
+
+.member_join .btn_group .link {
+  font-size: 0;
+  margin-top: 20px;
+  text-align: center
+}
+
+.member_join .btn_group .link li {
+  display: inline-block;
+  position: relative
+}
+
+.member_join .btn_group .link li:before {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 1px;
+  height: 12px;
+  background: #e2e2e2;
+  content: ''
+}
+
+.member_join .btn_group .link li a {
+  font-size: 12px;
+  padding: 5px 15px;
+  color: #777;
+}
+
+.member_join .btn_group .link li:first-child:before {
+  display: none
+}
+
+.member_join .login_wrap {
+  width: 735px;
+  margin: 0 auto
+}
+
+.member_join .login_wrap:after {
+  clear: both;
+  display: block;
+  content: ""
+}
+
+.member_join .login_wrap .inp_group {
+  float: left;
+  width: 525px;
+  padding-bottom: 16px;
+  margin-bottom: 26px
+}
+
+.member_join .login_wrap .inp_group p label {
+  float: left;
+  width: 105px;
+  padding-bottom: 0;
+  line-height: 40px
+}
+
+.member_join .login_wrap .inp_group p input {
+  float: left;
+  width: 420px
+}
+
+.member_join .login_wrap .inp_group p input[type="password"] {
+  margin-bottom: 17px
+}
+
+.member_join .login_wrap .inp_group p:after {
+  display: block;
+  clear: both;
+  content: ''
+}
+
+.member_join .login_wrap .inp_group .input_button {
+  margin: 0 0 20px 105px
+}
+
+.member_join .login_wrap .inp_group .incorrect {
+  margin-left: 105px
+}
+
+.member_join .login_wrap .btn_group {
+  float: right;
+  width: 190px
+}
+
+.member_join .login_wrap .btn_group .btn {
+  height: 100px
+}
+
+.new_join_wrap {
+  border: 1px solid #ccc;
+  border-width: 1px 0 1px 0
+}
+
+.new_join_wrap .join_email,.new_join_wrap .join_sns {
+  -webkit-display: flex;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 50px 0;
+  position: relative
+}
+
+.new_join_wrap .join_sns:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #f1f1f1;
+  position: absolute;
+  top: 0
+}
+
+.new_join_wrap [class*='tit_join_'] {
+  width: 354px;
+  font-size: 14px;
+  padding-top: 15px
+}
+
+.new_join_wrap [class*='tit_join_'] strong {
+  font-weight: bold
+}
+
+.new_join_wrap .tit_join_mail {
+  color: #333
+}
+
+.new_join_wrap .tit_join_sns {
+  color: #777
+}
+
+.new_join_wrap .join_opt {
+  width: 326px
+}
+
+.new_join_wrap .join_opt .btn {
+  width: 100%;
+  display: block
+}
+
+.new_join_wrap .sns_login {
+  border-width: 0;
+  height: 50px;
+  font-size: 14px
+}
+
+.new_join_wrap .sns_login.ty_kakao {
+  background: #fae100
+}
+
+.new_join_wrap .sns_login.ty_kakao>span {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 50px
+}
+
+.new_join_wrap .sns_login:not(.ty_kakao)>span:before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 17px;
+  background: url("//static.wconcept.co.kr/web/images/member/spr_join.png") no-repeat;
+  background-size: 405px auto;
+  vertical-align: middle;
+  margin-right: 8px
+}
+
+.new_join_wrap .sns_login.ty_kakao>span:before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url("//static.wconcept.co.kr/web/images/common/svg/ico_kakao_32.svg") no-repeat 0 0;
+  background-size: contain;
+  margin-right: 10px
+}
+
+.new_join_wrap .sns_type {
+  -webkit-display: flex;
+  display: flex;
+  justify-content: center;
+  border-width: 0;
+  margin-top: 24px
+}
+
+.new_join_wrap .sns_type li {
+  border-width: 0;
+  float: initial;
+  width: auto;
+  margin: 0 10px
+}
+
+.new_join_wrap .sns_type li a {
+  display: block;
+  position: relative;
+  width: 46px;
+  height: 46px;
+  font-size: 0;
+  text-indent: -9999px;
+  margin: 0 auto;
+  padding-top: 0
+}
+
+.new_join_wrap .sns_type li a:before {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 46px
+}
+
+.new_join_wrap .sns_type li.naver a:before {
+  background: url(//static.wconcept.co.kr/mobile/Images/member/svg/ico_sm_naver.svg) no-repeat 0 0;
+  background-size: cover
+}
+
+.new_join_wrap .sns_type li.kakao a:before {
+  background: url(//static.wconcept.co.kr/mobile/Images/member/svg/ico_sm_kakao.svg) no-repeat 0 0;
+  background-size: cover
+}
+
+.new_join_wrap .sns_type li.facebook a:before {
+  background: url(//static.wconcept.co.kr/mobile/Images/member/svg/ico_sm_facebook.svg) no-repeat 0 0;
+  background-size: cover
+}
+
+.new_join_wrap .sns_type li.instagram a:before {
+  background: url(//static.wconcept.co.kr/mobile/Images/member/svg/ico_sm_instagram.svg) no-repeat 0 0;
+  background-size: cover
+}
+
+.new_join_wrap .sns_type li.google a:before {
+  background: url(//static.wconcept.co.kr/mobile/Images/member/svg/ico_sm_google.svg) no-repeat 0 0;
+  background-size: cover
+}
+
+.new_join_wrap .sns_type li.apple a:before {
+  background: url(//static.wconcept.co.kr/mobile/Images/member/svg/ico_sm_apple.svg) no-repeat 0 0;
+  background-size: cover
+}
+
+.nonmember_order_inq {
+  text-align: center;
+  padding-top: 40px
+}
+
+.nonmember_order_inq .btn.gray {
+  width: 280px;
+  height: 50px
+}
