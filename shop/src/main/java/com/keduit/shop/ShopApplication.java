@@ -2,9 +2,8 @@ package com.keduit.shop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication/*(exclude = SecurityAutoConfiguration.class )*/
+@SpringBootApplication
 public class ShopApplication {
 
 	public static void main(String[] args) {
@@ -12,4 +11,3 @@ public class ShopApplication {
 	}
 
 }
-//윤효주 추가 되는거?
