@@ -38,10 +38,10 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
