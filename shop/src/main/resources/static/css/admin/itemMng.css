@@ -1,0 +1,131 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.tableBox{
+  margin-left: 200px;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  background-color: #ffffff;
+  /* box-sizing: border-box; */
+  box-shadow: 0 0 10px 5px rgba(184, 182, 182, 0.4);
+  border: 1px solid #c2bfbf;
+}
+
+.subBox{
+  width: 100%; /* 부모의 너비에 맞춤 */
+  height: 70px;
+  /* border-bottom: 1px solid #3d3d3d; */
+  background-color: #e6e3e3;
+  display: flex;
+  align-items: center;
+  color: #000000;
+  font-size: 25px;
+  /* padding-left: 50px; */
+  font-weight: 1000;
+}
+
+
+/* 테이블 css시작 */
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  margin-top: 50px;
+
+
+  /*이부분 4.20 잠시 수정 height: 100vh; */
+
+  /* 화면 전체 높이를 기준으로 중앙 정렬 */
+  /* margin-top: 15px;  */
+  /* body의 기본 마진 제거 */
+}
+table {
+border-collapse: collapse;
+}
+
+td {
+border: 1px solid #d9d9d9;;
+padding: 8px;
+max-height: 22px;
+height: 22px;
+width:120px;
+}
+
+tr:not(.top-row):hover {
+background-color: rgb(223, 239, 243);
+}
+.firstLine > td{
+font-weight: bold;
+}
+/* 테이블 css끝 */
+
+
+/* 검색창 시작 */
+.search-bar {
+
+  background-color: white;
+  padding: 7px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+
+  height: 35px;
+  width: 30%;
+  padding: 10px;
+  margin: 8px 50px;
+  /* box-sizing: border-box; */
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.inp:hover:not(:disabled) {
+  border: 1px solid #333;
+}
+.material-symbols-outlined {
+  position: relative;
+  right: 100px;
+  color: #5b5c5e;
+}
+.inp {
+  display: block;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #333;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  height: 18px;
+  border-radius: 100px;
+  }
+/* 검색창 끝 */
+button {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 100px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(79, 79, 223);
+  color: white;
+    }
+.finalButton{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 120px;
+}

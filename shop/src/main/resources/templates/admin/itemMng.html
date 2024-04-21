@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<!--사용자 스크립트 추가-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+    </script>
+</th:block>
+
+
+<div layout:fragment="content">
+    <link th:href="@{/css/admin/itemMng.css}" rel="stylesheet" type="text/css">
+    <body>
+    <!-- 상품등록 시작 -->
+    <div>
+        <div class="search-bar">
+            <input type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력하시오">
+            <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
+            <span class="material-symbols-outlined">
+        search
+      </span>
+        </div>
+    </div>
+
+    <div class="tableBox">
+        <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록</div>
+        <div class="tableContainer">
+            <table>
+                <tr class="firstLine">
+                    <td>상품코드</td>
+                    <td>상품명</td>
+                    <td>브랜드명</td>
+                    <td>상위 카테고리</td>
+                    <td>하위 카테고리</td>
+                    <td>소재</td>
+                    <td>총 재고 수량</td>
+                    <td>판매 상태</td>
+                    <td>상품 등록일</td>
+                    <td>상품 수정일</td>
+                </tr>
+                <tr th:each="items : ${items}">
+                    <td th:text="${items.id}" ><a href="#"></a></td>
+                    <td th:text="${items.itemNm}"></td>
+                    <td th:text="${items.brandNm}"></td>
+                    <td th:text="${items.level1}"></td>
+                    <td th:text="${items.level2}"></td>
+                    <td th:text="${items.material}"></td>
+                    <td th:text="${items.stockNumber}"></td>
+                    <td th:text="${items.itemSellStatus}"></td>
+                    <td th:text="${items.regTime}"></td>
+                    <td th:text="${items.updateTime}"></td>
+                </tr>
+<!--                <tr >-->
+<!--                    <td><a href="#">1234</a></td>-->
+<!--                    <td>폴로</td>-->
+<!--                    <td>MUSEE</td>-->
+<!--                    <td>503,200</td>-->
+<!--                    <td>o</td>-->
+<!--                    <td>15%</td>-->
+<!--                    <td>등록중</td>-->
+<!--                    <td>20240201</td>-->
+<!--                    <td>none</td>-->
+<!--                </tr>-->
+            </table>
+        </div>
+        <div class="finalButton">
+            <form action="">
+                <button>수정하기</button>
+            </form>
+        </div>
+    </div>
+
+    </body>
+</div>
+
+</html>
+
+
+
+
+
