@@ -83,6 +83,7 @@
             <artifactId>querydsl-apt</artifactId>
             <version>5.0.0</version>
         </dependency>
+
 		<!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
 		<!-- 페이지 레이아웃 잡기위한 의존성 주입. 메이븐에 검색.-->
 		<dependency>
