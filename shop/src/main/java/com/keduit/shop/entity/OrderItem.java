@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -48,5 +47,9 @@ public class OrderItem extends BaseTimeEntity {
     /*주문 취소시 재고 증가*/
     public void cancel() {
         this.getItem().addStock(count);
+    }
+
+    public enum OrderStatus {
+        ORDER, CANCEL
     }
 }
