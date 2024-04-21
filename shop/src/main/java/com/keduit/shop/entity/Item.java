@@ -47,7 +47,10 @@ public class Item extends BaseTimeEntity{
     private int stockL;  
 
     @Column(nullable = false)
-    private int stockFree;  
+    private int stockFree;
+
+    @Column(nullable = false)
+    private int stockNumber;  // 총 재고 수량. 필요한 칼럼.
 
     @Column(nullable = false)
     private String level1; /*상품상위카테고리*/
@@ -56,7 +59,7 @@ public class Item extends BaseTimeEntity{
     private String level2; /*상품하위카테고리*/
 
     @Column(nullable = false)
-    private int discountRate; // 1일 시 할인x
+    private int discountRate; // 기본 값 1. N * 상품 가격 으로 할인 예. 10프로 할인 일시 0.9로 등록
 
     @Lob
     @Column(nullable = false)
@@ -65,8 +68,6 @@ public class Item extends BaseTimeEntity{
     @Column(nullable = false)
     private String material; /*상품 소재*/
 
-    @Column(nullable = false)
-    private int stockNumber;  // 총 재고 수량. 필요한 칼럼.
 
     @Enumerated(EnumType.STRING)  /*도메인만들어줌*/
     private ItemSellStatus itemSellStatus = ItemSellStatus.SELL; // 디폴트SELL  /*상품 판매 현황*/

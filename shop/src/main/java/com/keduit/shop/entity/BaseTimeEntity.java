@@ -2,6 +2,7 @@ package com.keduit.shop.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,7 +23,7 @@ public  abstract class BaseTimeEntity {
 
     // 엔티티가 생성될 때 자동으로 현재 시간을 설정하는 필드
     // 이 필드는 엔티티가 처음 생성될 때만 값을 갖습니다.
-    @CreatedDate
+    @CreationTimestamp
     // updatable = false 속성은 이 필드가 엔티티가 수정될 때 변경되지 않도록 합니다.
     @Column(updatable = false)
     private LocalDateTime regTime;
