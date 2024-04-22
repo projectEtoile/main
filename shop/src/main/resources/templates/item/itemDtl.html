@@ -1,194 +1,666 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
-      layout:decorate='~{layouts/layout1}'>
-
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
+<!--<th:block layout:fragment="script">
 
-<!-- 사용자 스크립트 추가 -->
-<th:block layout:fragment="script">
-    <script th:inline="javascript" >
-        $(document).ready(function(){
-            calculateTotalPrice();
+</th:block>-->
+<th:block layout:fragment="content">
+    <body>
+    <section class="container">
+        <div class="contents">
+            <!-- 좌측상단 네비게이션 -->
+            <div class="navigation">
+                <ul class="inline">
+                    <li><a href="/2pro/hyo/hyo/main.html">HOME ></a></li>
+                    <li><a href="#">OUTER ></a></li>
+                    <li><a href="#">재킷</a></li>
+                </ul>
+            </div>
+            <!-- 상단 상품정보 -->
+            <div class="top_info_prod">
 
-            $("#count").change(function(){
-                calculateTotalPrice();
-            });
-        });
 
-        function calculateTotalPrice(){
-            const count = $("#count").val();
-            const price = $("#price").val();
-            const totalPrice = price * count;
-            $("#totalPrice").html(totalPrice + "원");
-        }
-        function order(){
-         // csrf 토큰값을 가져옴.
-            const token = $("meta[name='_csrf']").attr("content");
-            const header= $("meta[name='_csrf_header']").attr("content");
-            const url = "/order";
-            const paramData = {
-                              itemId: $("#itemId").val(),
-                              count: $("#count").val()
-            };
-            const param = JSON.stringify(paramData);
-            $.ajax({
-                    url: url,
-                    type:"POST",
-                    contentType: "application/json",
-                    data: param,
-                    beforeSend: function(xhr){
-                       // 데이터를 전송하기 전 헤더에 csrf 값을 생성
-                       xhr.setRequestHeader(header, token);
-                    },
-                    dataType:"json",
-                    cache: false,
-                    success: function(result, status){
-                            alert("주문이 완료되었습니다.");
-                            location.href='/';
-                    },
-                    error: function(jqXHR,status,error){
-                            if(jqXHR.status == '401'){
-                                alert("로그인 후 이용해주세요.");
-                                location.href='/member/login';
-                            }else{
-                            // 해당 메시지를 출력
-                                alert(jqXHR.responseText);
-                            }
-                    }
-            })
+                <!-- 좌측상품사진 -->
+                <div class="left_col">
+                    <div class="left_thumb_prod">
+                        <!-- 좌측 상품 큰사진 -->
+                        <div class="img_big">
+                            <img id="big_img"
+                                 src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_JR89872.jpg">
+                        </div>
+                        <!-- 좌측 상품 썸네일 -->
+                        <div class="img_thumb">
+                            <ul id="gallery" style="max-width: 525px">
+                                <li><a href="#"><img
+                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_JR89872.jpg"
+                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
+                                <li><a href="#"><img
+                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add1_YF37448.jpg"
+                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
+                                <li><a href="#"><img
+                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add2_OU32079.jpg"
+                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
+                                <li><a href="#"><img
+                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add3_AL61965.jpg"
+                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
+                                <li><a href="#"><img
+                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add4_FT97675.jpg"
+                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
+                                <!-- 썸네일 추가해야하거나 없애야될시 여기 이용 -->
+                                <!-- <li><a href="#"><img
+                                      src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add5_TN32553.jpg"
+                                      width="60" height="80" alt="thumbnail" class="small"></a></li> -->
 
-        }
-
-        function addCart(){
-         // csrf 토큰값을 가져옴.
-            const token = $("meta[name='_csrf']").attr("content");
-            const header= $("meta[name='_csrf_header']").attr("content");
-            const url = "/cart";
-            const paramData = {
-                              itemId: $("#itemId").val(),
-                              count: $("#count").val()
-            };
-            const param = JSON.stringify(paramData);
-            $.ajax({
-                    url: url,
-                    type:"POST",
-                    contentType: "application/json",
-                    data: param,
-                    beforeSend: function(xhr){
-                       // 데이터를 전송하기 전 헤더에 csrf 값을 생성
-                       xhr.setRequestHeader(header, token);
-                    },
-                    dataType:"json",
-                    cache: false,
-                    success: function(result, status){
-                            alert("장바구니 담기 완료되었습니다.");
-                            location.href='/';
-                    },
-                    error: function(jqXHR,status,error){
-                            if(jqXHR.status == '401'){
-                                alert("로그인 후 이용해주세요.");
-                                location.href='/member/login';
-                            }else{
-                            // 해당 메시지를 출력
-                                alert(jqXHR.responseText);
-                            }
-                    }
-            })
-
-        }
-    </script>
-</th:block>
-
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-    <style>
-        .mgb-15{
-            margin-bottom:15px;
-        }
-        .mgt-30{
-            margin-top:30px;
-        }
-        .mgt-50{
-            margin-top:50px;
-        }
-        .repImgDiv{
-            margin-right:15px;
-            height:auto;
-            width:50%;
-        }
-        .repImg{
-            width:100%;
-            height:400px;
-        }
-        .wd50{
-            height:auto;
-            width:50%;
-        }
-    </style>
-</th:block>
-
-<div layout:fragment="content" style="margin-left:25%; margin -right:25%">
-    <input type="hidden" id="itemId" th:value="${item.id}">
-    <div class="d-flex">
-        <div class="d-flex">
-            <!-- [0] 은 대표이미지-->
-            <img th:src="${item.itemImgDTOList[0].imgUrl}"
-                 th:alt="${item.itemNm}" class="rounded repImg">
-        </div>
-        <div class="wd50">
-            <span th:if="${item.itemSellStatus == T(com.keduit.shop.constant.ItemSellStatus).SELL}"
-                  class="bagdge nadge-primary mgb-15">판매중</span>
-            <!--   타입리프 문법. unless 의 경우도 조건을 같게 줘야함.  -->
-            <span th:unless="${item.itemSellStatus == T(com.keduit.shop.constant.ItemSellStatus).SELL}"
-                  class="badge btn-danger mgb-15">품절</span>
-            <div class="h4" th:text="${item.itemNm}"></div>
-            <hr class="my-4">
-            <div class="text-right">
-                <div class="4h text-danger text-left">
-                    <input type="hidden" th:value="${item.price}" id="price" name="price">
-                    <span th:text="${item.price}"></span>
-                </div>
-                <div class="input-group w-50">
-                    <div class="input-group-preprnd">
-                        <span class="input-group-text">수량</span>
-                        <input type="number" name="count" id="count" class="form-control" value="1" min="1">
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <hr class="my-4">
-                <div class="text-right mgt-50">
-                    <h5>결제금액</h5>
-                    <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+                <!-- 우측상품상세정보 -->
+                <div class="right_prod">
+
+                    <!-- 브랜드명,제품명-->
+                    <div class="right_info_prod">
+                        <a href="#" class="prod_brand">NOTIA</a>
+                        <h2 class="prod_name">OVER FIT SINGLE LEATHER JACKET - BLACK</h2>
+                    </div>
+                    <!-- 평점 -->
+                    <div class="grade_prod">
+                        <p class="star-grade">
+                        </p>
+                        <p class="grade_num">5</p>
+                        <p class="txt"><em id="reviewCnt1">87</em>개 리뷰</p>
+                    </div>
+                    <!-- 상품가격 -->
+                    <div class="price_prod">
+                        <dl class="price">
+                            <dt>정상가</dt>
+                            <dd class="normal">
+                                <em>219,000</em> 원
+                            </dd>
+                            <br>
+                            <dt>판매가</dt>
+                            <dd class="sale">
+
+                                <em>208,050</em> 원 <p class="sale_per">5%</p>
+                            </dd>
+                        </dl>
+                    </div>
+                    <!-- 포인트적립,배송비 -->
+                    <div class="etc_prod">
+                        <dl class="etc">
+                            <dt>포인트적립</dt>
+                            <dd class="point">
+                                <em>1,674</em> p 적립
+                            </dd>
+                        </dl>
+                    </div>
+                    <!-- 옵션선택박스 -->
+                    <div class="option_select">
+                        <dl class="option">
+                            <dt>사이즈</dt>
+                            <dd class="size">
+                                <select name="size" size="1" onchange="showTotalPrice()">
+                                    <!-- 사이즈 변동있을시 여기 수정 -->
+                                    <option value="">선택해주세요</option>
+                                    <option value="size1">S Size</option>
+                                    <option value="size1">M Size</option>
+                                    <option value="size1">L Size</option>
+                                    <option value="size1">FREE Size</option>
+                                    <!-- <option value="38">38</option> -->
+                                </select>
+                            </dd>
+                        </dl>
+                    </div>
+                    <!-- 총상품금액 -->
+                    <div class="total_price" id="total_price" style="display: none;">
+                        <ul>총상품금액
+                            <li class="total" id="total2"><span>208,050</span> 원</li>
+                            <!-- 상품수량조절 -->
+                            <label for="quantity"></label>
+                            <input type="number" id="quantity" value="1" min="1" onchange="calculateTotal()">
+                            <button class="prod_bt2" onclick="increaseQuantity()">+</button>
+                            <i class="fa-solid fa-caret-down" id="decreaseIcon"></i>
+                            <button class="prod_bt1" onclick="decreaseQuantity()">-</button>
+                            <i class="fa-solid fa-caret-up" id="increaseIcon"></i>
+                            <!-- <p id="total">총 가격: $109000</p> -->
+                        </ul>
+                    </div>
+                    <!-- 구매하기 -->
+                    <ul class="btn_group">
+                        <input type="hidden" id="itemId" th:value="${item.id}" name="itemId"/>
+                        <input type="hidden" id="count" value="1" name="count"/>
+                        <li><button type="button" class="btn" onclick="order()">바로 구매</button></li>
+                        <li><button type="button" class="btn2" onclick="addCart()">장바구니 담기</button></li>
+                    </ul>
+                    <input name="__RequestVerificationToken" type="hidden"
+                           value="CfDJ8Kwm-N6mTIJKoRK0f9xD4Ucnrpi77ag8DyZBAF1QRsOEVovvTT6Xe0OPiYchq2tlKKusTPEvFXoY4JxfAwR1kECu15sYkDngiuilB1-pENF7OMkrSAB-LeZ201KC6I7YBd7XvVeA-qI9jQV5lLjpoGc">
+                    <!-- 상품 요약 정보 -->
+                    <dl class="info_cottonusa">
+                        <dt>상품 요약 정보</dt>
+                        <dd>
+                            <ul>
+                                <li class="square">
+                                    <span>상품코드 :</span>
+                                    301631515
+                                </li>
+                                <li class="square">
+                                    <span>소재 :</span>
+                                    VEGAN LEATHER : 100 / VISCOSE : 100
+                                </li>
+                                <li class="square">
+                                    <span>제조사/원산지 :</span>
+                                    NOTIA / 대한민국
+                                </li>
+                                <li class="square">
+                                    <span>배송비 :</span>
+                                    70,000원 미만구매시 배송비 3,000원
+                                    <p>(제주 : 3,000원 / 도서산간 : 3,000원) 추가</p>
+                                </li>
+                                <li class="square">
+                                    <span>배송정보 :</span>
+                                    결제완료 후 평균 3일 이내 출고(공휴일 제외)
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
                 </div>
-                <div th:if="${item.itemSellStatus == T(com.keduit.shop.constant.ItemSellStatus).SELL}"
-                     class="text-right">
-                    <button type="button" class="btn btn-light border-primary btn-lg" onclick="addCart()">장바구니 담기</button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+
+            </div>
+
+            <!-- 하단 상품정보 -->
+            <!-- 상품추천 사진 -->
+            <div class="bot_info_prod">
+                <div class="pdt_side">
+                    <h4><a href="/Brand/103808" style="color:black;">More by NOTIA</a></h4>
+                    <ul>
+                        <li>
+                            <a href="prodDetail2.html">
+                                <img src="https://product-image.wconcept.co.kr/productimg/image/img0/98/301740098_GG69159.jpg"
+                                     alt="DEAUVILLE Multi Pocket Utility Leather Jacket_Black" width="150" height="200">
+                                <p class="price">395,290</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/30/303051330_CA35014.jpg?RS=300"
+                                     alt="EVA Italian Lambskin Leather Colorblock Biker Jacket_Black" width="150" height="200">
+                                <p class="price">413,200</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/28/303051328_YW14107.jpg?RS=300" width="
+                  150" height="200" alt=" EQUILIBRE Italian Lambs Leather Rider Jacket_White">
+                                <p class="price">343,100</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/27/303051327_UV73161.jpg?RS=300" width="
+                    150" height="200" alt=" EQUILIBRE Italian Lambs Leather Rider Jacket_Black">
+                                <p class="price">285,150</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/71/303049871.jpg?RS=300" width="150"
+                                     height="200" alt=" [SIGNATURE] EQUILIBRE Lambs Leather Rider Jacket_Black">
+                                <p class="price">285,150</p>
+                            </a>
+                        </li>
+
+                    </ul>
                 </div>
-                <div th:unless="${item.itemSellStatus == T(com.keduit.shop.constant.ItemSellStatus).SELL}"
-                     class="text-right">
-                    <button type="button" class="btn btn-danger btn-lg>">품절</button>
+            </div>
+            <!-- 하단탭1 -->
+            <ul id="detail" class="bot_tap1">
+                <li class="bot1_1"><a href="#bot_prod" id="bot_prod">DETAIL</a></li>
+                <li class="bot1_2"><a href="#bot_prod_rieview2">REVIEW</a></li>
+                <li class="bot1_3"><a href="#qna_prod">Q n A</a></li>
+                <li class="bot1_4"><a href="#randd">RETURN & DELIVERY</a></li>
+            </ul>
+            <!-- 하단 상품 상세 정보 -->
+            <div class="bot_prod_detail">
+                <div class="marketing">
+                    <p style="text-align: center; ">&nbsp;</p>
+                    <!-- 공지사항있을시추가 -->
+
+                    <!-- <p style="text-align: center; "><img
+                        src="http://product-image.wconcept.co.kr/images/upload/board/303051329/2024011811323934.jpg"
+                        title="2024011811323934.jpg"></p> -->
+
+                    <!-- 여기는 상품 바뀔때마다 해당 사진 p태그안에 변경혹은업데이트 -->
+                    <p>
+                        <img src="https://muuiel.diskn.com/Y7PaC9uf34">
+                        <img src="https://muuiel.diskn.com/i7PaCaq5Nu">
+                        <img src="https://muuiel.diskn.com/j7PaCaqdyu">
+                        <img src="https://muuiel.diskn.com/l7PaCaqkFn">
+                        <img src="https://muuiel.diskn.com/x7PaCaqsgd">
+                        <img src="https://muuiel.diskn.com/c7PaCa0dFD">
+                        <img src="https://muuiel.diskn.com/V7PaCdNBOE">
+                        <img src="https://muuiel.diskn.com/P7PaCdNIuT">
+                        <img src="https://muuiel.diskn.com/w7PaCdNQIM">
+                        <img src="https://muuiel.diskn.com/p7PaCdNuCn">
+                    </p>
+                </div>
+
+                <!-- 상품 정보 고시 -->
+                <div class="prod_info_default">
+                    <div class="info_line">
+                        <h3>상품 정보 고시</h3>
+                    </div>
+                    <table class="prod_info_tb">
+                        <colgroup style="width: 400px">
+                            <col style="width: 20%;">
+                            <col style="width: 80%;">
+                        </colgroup>
+                        <tbody>
+                        <tr class="info_col1">
+                            <th>소재</th>
+                            <td>VEGAN LEATHER : 100 / VISCOSE : 100</td>
+                        </tr>
+                        <tr class="info_col2">
+                            <th>색상</th>
+                            <td>JACKET_ONE</td>
+                        </tr>
+                        <tr class="info_col3">
+                            <th>치수</th>
+                            <td>JACKET_ONE</td>
+                        </tr>
+                        <tr class="info_col4">
+                            <th>제조자(수입자)</th>
+                            <td>NOTIA</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 후기쪽다시해야함 -->
+                <!-- 하단탭2 -->
+                <ul id="detail" class="bot_tap2">
+                    <li class="bot2_1"><a href="#bot_prod">DETAIL</a></li>
+                    <li class="bot2_2" id="bot_prod_rieview2"><a href="#bot_prod_rieview2">REVIEW</a></li>
+                    <li class="bot2_3"><a href="#qna_prod">Q n A</a></li>
+                    <li class="bot2_4"><a href="#randd">RETURN & DELIVERY</a></li>
+                </ul>
+                <!-- 후기 -->
+                <div class="bot_prod_review">
+                    <ul class="review_underline">
+                        <li><span class="divide">최신순</span></li>
+                        <li><span class="divide">평점 높은순</span></li>
+                        <li><span class="divide">평점 낮은순</span></li>
+                        <li><span>추천 순</span></li>
+                    </ul>
+                    <table class="review_table">
+                        <colgroup>
+                            <col style="width: 10%;">
+                            <col style="width: 70%;">
+                        </colgroup>
+                        <tbody>
+                        <!-- 후기 첫째줄 -->
+                        <tr class="first_review">
+                            <!-- 좌측 별그림 -->
+                            <td class="review_star">
+                                <div class="star-grade2"></div>
+                            </td>
+                            <!-- 우측 상품정보, 리뷰 -->
+                            <td class="review_right">
+                                <div class="review_option" id="bot_prod_rieview">
+                                    <p>구매옵션 : JACKET_ONE</p>
+                                    <p>사이즈정보 : 158cm,51kg</p>
+                                </div>
+                                <p class="review_date">2024.02.26</p>
+                                <ul>
+                                    <li class="review_radius">
+                                        <strong>사이즈</strong>
+                                        <em>큼</em>
+                                    </li>
+                                    <li class="review_radius">
+                                        <strong>색상</strong>
+                                        <em>같음</em>
+                                    </li>
+                                    <li class="review_radius">
+                                        <strong>소재</strong>
+                                        <em>같음</em>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="review_thumb1">
+                                        <img src="https://media.wconcept.co.kr/review/301631515/301631515_1708653362071.jpg?RS=300"
+                                             width="100px" height="100px">
+                                    </li>
+                                </ul>
+                                <div>
+                                    <br>
+                                    <p>어깨가 살짝 넓어보이긴 하는데, 활용도도 좋고 소재도 좋아요 이가격에 이정도 가죽자켓은 찾기 힘든거같아요!</p>
+                                </div>
+                                <div>
+                                    <br>
+                                    <button class="review_bt1">신고</button>
+                                    <button class="review_bt">숨김</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- 후기 두번째줄 -->
+                        <tr class="second_review">
+                            <!-- 좌측 별그림 -->
+                            <td class="review_star2">
+                                <div class="star-grade2"></div>
+                            </td>
+                            <!-- 우측 상품정보, 리뷰 -->
+                            <td>
+                                <div class="review_option">
+                                    <p>구매옵션 : JACKET_ONE</p>
+                                    <p>사이즈정보 : 158cm,51kg</p>
+                                </div>
+                                <p class="review_date">2024.02.26</p>
+                                <ul>
+                                    <li class="review_radius">
+                                        <strong>사이즈</strong>
+                                        <em>큼</em>
+                                    </li>
+                                    <li class="review_radius">
+                                        <strong>색상</strong>
+                                        <em>같음</em>
+                                    </li>
+                                    <li class="review_radius">
+                                        <strong>소재</strong>
+                                        <em>같음</em>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="review_thumb2">
+                                        <img src="https://media.wconcept.co.kr/review/301631515/301631515_1708653362071.jpg?RS=300"
+                                             width="100px" height="100px">
+                                    </li>
+                                </ul>
+                                <div>
+                                    <br>
+                                    <p>어깨가 살짝 넓어보이긴 하는데, 활용도도 좋고 소재도 좋아요 이가격에 이정도 가죽자켓은 찾기 힘든거같아요!</p>
+                                </div>
+                                <div>
+                                    <br>
+                                    <button class="review_bt1">신고</button>
+                                    <button class="review_bt">숨김</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- 후기 세번째줄 -->
+                        <tr class="third_review">
+                            <!-- 좌측 별그림 -->
+                            <td class="review_star3">
+                                <div class="star-grade2"></div>
+                            </td>
+                            <!-- 우측 상품정보, 리뷰 -->
+                            <td>
+                                <div class="review_option">
+                                    <p>구매옵션 : JACKET_ONE</p>
+                                    <p>사이즈정보 : 158cm,51kg</p>
+                                </div>
+                                <p class="review_date">2024.02.26</p>
+                                <ul>
+                                    <li class="review_radius">
+                                        <strong>사이즈</strong>
+                                        <em>큼</em>
+                                    </li>
+                                    <li class="review_radius">
+                                        <strong>색상</strong>
+                                        <em>같음</em>
+                                    </li>
+                                    <li class="review_radius">
+                                        <strong>소재</strong>
+                                        <em>같음</em>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="review_thumb3">
+                                        <img src="https://media.wconcept.co.kr/review/301631515/301631515_1708653362071.jpg?RS=300"
+                                             width="100px" height="100px">
+                                    </li>
+                                </ul>
+                                <div class="review_text">
+                                    <br>
+                                    <p>어깨가 살짝 넓어보이긴 하는데, 활용도도 좋고 소재도 좋아요 이가격에 이정도 가죽자켓은 찾기 힘든거같아요!</p>
+                                </div>
+                                <div>
+                                    <br>
+                                    <button class="review_bt1">신고</button>
+                                    <button class="review_bt">숨김</button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 하단탭3 -->
+                <ul id="detail" class="bot_tap3">
+                    <li class="bot3_1"><a href="#bot_prod">DETAIL</a></li>
+                    <li class="bot3_2"><a href="#bot_prod_rieview2">REVIEW</a></li>
+                    <li class="bot3_3"><a href="#qna_prod">Q n A</a></li>
+                    <li class="bot3_4"><a href="#randd">RETURN & DELIVERY</a></li>
+                </ul>
+                <!-- Q&A -->
+                <div class="QandA" id="qna_prod">
+                    <div class="qalist">
+                        <table class="myqna">
+                            <colgroup style="width: 400px">
+                                <col style="width: 20%;">
+                                <col style="width: 60%;">
+                                <col style="width: 20%;">
+                            </colgroup>
+                            <tbody>
+                            <tr class="qnaline1">
+                                <td class="qna_iconp">
+                                    <em class="qna_icon">답변완료</em>
+                                </td>
+                                <td class="question">
+                                    <p class="questionp"><a href="#">모델착용바지</a></p>
+                                    <span class="emailname">************@gmail.com</span>
+                                </td>
+                                <td class="qnadate">
+                                    2024.02.23
+                                </td>
+                            </tr>
+                            <tr class="question_detail">
+                                <td colspan="3">
+                                    <div class="cont">
+                                        <div class="ask">
+                                            <strong class="tit_sub">질문</strong>
+                                            <p class="qna_txt">모델 착용한 흑청바지 뭔가요</p>
+                                        </div>
+                                        <div class="answer">
+                                            <strong class="tit_sub">답변</strong>
+                                            <p class="qna_txt">
+                                                <span class="qnadate2">2024.02.26 09:57</span>
+                                                <br>
+                                                안녕하세요, 고객님! 저희 제품에 관심 가져주셔서 감사드립니다.
+                                                <br>
+                                                <br>
+                                                안녕하세요 고객님, 노티아입니다.
+                                                <br>
+                                                <br>
+                                                해당 제품은 STRAIGHT BLACK DENIM 입니다.
+                                                <br>
+                                                <br>
+                                                SMALL 사이즈를 착용하였고 모델 촬영을 위해 기장만 5CM 늘린 샘플을 제작하여 촬영을 했습니다.
+                                                <br>
+                                                <br>
+                                                구매 결정에 도움이 되셨길 바랍니다.
+                                                <br>
+                                                <br>
+                                                감사합니다.
+                                                <br>
+                                                궁금하신 사항은 언제든지 문의 부탁드립니다.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="qnaline">
+                                <td class="qna_iconp">
+                                    <em class="qna_icon">답변완료</em>
+                                </td>
+                                <td class="question">
+                                    <p class="questionp"><a href="#">모델착용바지</a></p>
+                                    <span class="emailname">************@gmail.com</span>
+                                </td>
+                                <td class="qnadate">
+                                    2024.02.23
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr class="qnaline">
+                                <td class="qna_iconp">
+                                    <em class="qna_icon">답변완료</em>
+                                </td>
+                                <td class="question">
+                                    <p class="questionp"><a href="#">모델착용바지</a></p>
+                                    <span class="emailname">************@gmail.com</span>
+                                </td>
+                                <td class="qnadate">
+                                    2024.02.23
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr class="qnaline">
+                                <td class="qna_iconp">
+                                    <em class="qna_icon">답변완료</em>
+                                </td>
+                                <td class="question">
+                                    <p class="questionp"><a href="#">모델착용바지</a></p>
+                                    <span class="emailname">************@gmail.com</span>
+                                </td>
+                                <td class="qnadate">
+                                    2024.02.23
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr class="qnaline">
+                                <td class="qna_iconp">
+                                    <em class="qna_icon">답변완료</em>
+                                </td>
+                                <td class="question">
+                                    <p class="questionp"><a href="#">모델착용바지</a></p>
+                                    <span class="emailname">************@gmail.com</span>
+                                </td>
+                                <td class="qnadate">
+                                    2024.02.23
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr class="qnaline6">
+                                <td class="qna_iconp">
+                                    <em class="qna_icon">답변완료</em>
+                                </td>
+                                <td class="question">
+                                    <p class="questionp"><a href="#">모델착용바지</a></p>
+                                    <span class="emailname">************@gmail.com</span>
+                                </td>
+                                <td class="qnadate">
+                                    2024.02.23
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- 하단탭4 -->
+                <ul id="detail" class="bot_tap4">
+                    <li class="bot4_1"><a href="#bot_prod">DETAIL</a></li>
+                    <li class="bot4_2"><a href="#bot_prod_rieview2">REVIEW</a></li>
+                    <li class="bot4_3"><a href="#qna_prod">Q n A</a></li>
+                    <li class="bot4_4"><a href="#randd">RETURN & DELIVERY</a></li>
+                </ul>
+                <!-- return and delivery -->
+                <div class="R_D" id="randd">
+                    <div class="bot_title">
+                        <h3>배송/교환/반품/AS 관련 유의사항</h3>
+                        <br>
+                        <p>상품상세설명에 배송/교환/반품/취소 관련 안내가 기재된 경우 다음 안내사항보다 우선 적용됩니다.</p>
+                    </div>
+                    <table class="randtb">
+                        <colgroup>
+                            <col width="270" class="randdleft">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th class="randdth1">배송정보</th>
+                            <td class="randdth2">
+                                <ul>
+                                    <li>상품별로 상품 특성 및 배송지에 따라 배송유형 및 소요기간이 달라집니다.</li>
+                                    <li>일부 주문상품 또는 예약상품의 경우 기본 배송일 외에 추가 배송 소요일이 발생될 수 있습니다.</li>
+                                    <li>동일 브랜드의 상품이라도 상품별 출고일시가 달라 각각 배송될 수 있습니다.</li>
+                                    <li>제주 및 도서산간 지역은 출고, 반품, 교환시 추가 배송비(항공, 도선료)가 부과 될 수 있습니다.</li>
+                                    <li>상품의 배송비는 공급업체의 정책에 따라 다르오며 공휴일 및 휴일은 배송이 불가합니다.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="randdth1">취소/반품/교환 안내</th>
+                            <td class="randdth2">
+                                <ul>
+                                    <!--  [ITDEV-4073]교환 반품 회수지정보    -->
+                                    <li>회수지 정보 : 서울특별시 동대문구 황물로 60(답십리동) 411호 다린아이엔씨 / 주식회사 다린아이엔씨</li>
+                                    <li>동일 브랜드의 상품이라도 교환/반품 회수지가 다를 수 있습니다. 상품상세 정보 또는 회수지 정보를 확인하신 후 반드시 지정된 회수지로 보내주세요.</li>
+                                    <li>상품을 지정된 회수지가 아닌곳으로 보내실 경우 택배 분실 또는 재발송에 따른 추가 비용이 발생할 수 있습니다.</li>
+                                    <li>고객센터나 "My Page&gt;주문취소/교환/반품 신청"을 통한 교환/반품 접수 없이 상품을 회수지로 보내실 경우 재발송에 따른 추가 비용이 발생할 수 있으며 경우에
+                                        따라서는 교환/반품이 어려울 수 있습니다.</li>
+                                    <!--  [ITDEV-4073]교환 반품 회수지정보    // -->
+                                    <li class="bold">상품하자 이외 사이즈, 색상교환 등 단순 변심에 의한 교환/반품 택배비 고객부담으로 왕복택배비가 발생합니다. (전자상거래 등에서의 소비자보호에 관한
+                                        법률 제18조(청약 철회등)9항에 의거 소비자의 사정에 의한 청약 철회 시 택배비는 소비자 부담입니다.)</li>
+                                    <li>결제완료 직후 즉시 주문취소는 "MY Page&gt; 취소/교환/반품 신청"에서 직접 처리 가능합니다.</li>
+                                    <li>주문완료 후 재고 부족 등으로 인해 주문 취소 처리가 될 수도 있는 점 양해 부탁드립니다.</li>
+                                    <li>주문상태가 상품준비중인 경우 취소신청이 가능하며 판매자의 승인 여부(이미 배송을 했거나 포장을 완료한 경우)에 따라 취소가 불가능할 수 있습니다.</li>
+                                    <li>교환 신청은 최초 1회에 한하며, 교환 배송 완료 후에는 추가 교환 신청은 불가합니다.</li>
+                                    <li>반품/교환은 미사용 제품에 한해 배송완료 후 7일 이내 접수하여 주십시오.</li>
+                                    <li>임의반품은 불가하오니 반드시 고객센터나 "MY Page&gt; 주문취소/교환/반품 신청"을 통해서 신청접수를 하시기 바랍니다.</li>
+                                    <li>상품하자, 오배송의 경우 택배비 무료로 교환/반품이 가능하지만 모니터의 색상차이, 착용감, 사이즈의 개인의 선호도는 상품의 하자 사유가 아닙니다.</li>
+                                    <!--<li>단 위생용품 및 가전, 가구, 귀금속 등의 경우 취소/교환/반품 요청이 제한될 수 있습니다.</li>-->
+                                    <!--<li>주문제작 상품 및 상품의 본품박스, 택 등이 제거되어 있을 경우 반품 / 교환이 불가능합니다.</li>-->
+                                    <li>고객 부주의로 상품이 훼손, 변경된 경우 반품 / 교환이 불가능 합니다.</li>
+                                    <li>취소/반품 대금환불이 지연 시 전자상거래법에 의거하여 환불지연 배상처리 절차가 진행됩니다.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="randdth1">반품/교환 불가능한 경우</th>
+                            <td class="randdth2">
+                                <ul>
+                                    <li>제품을 사용 또는 훼손한 경우, 사은품 누락, 상품 TAG, 보증서, 상품 부자재가 제거 혹은 분실된 경우</li>
+                                    <li>밀봉포장을 개봉했거나 내부 포장재를 훼손 또는 분실한 경우(단, 제품확인을 위한 개봉 제외)</li>
+                                    <li>시간이 경과되어 재판매가 어려울 정도로 상품가치가 상실된 경우</li>
+                                    <li>고객님의 요청에 따라 주문 제작되어 고객님 외에 사용이 어려운 경우</li>
+                                    <li>배송된 상품이 설치가 완료된 경우(가전, 가구 등)</li>
+                                    <li>기타 전자상거래 등에서의 소비자보호에 관한 법률이 정하는 청약철회 제한사유에 해당하는 경우</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="randdth1">A/S 안내</th>
+                            <td class="randdth2">
+                                <ul>
+                                    <li>A/S 기준이나 가능여부는 브랜드와 상품에 따라 다르므로 관련 문의는 더블유컨셉 고객센터를 통해 부탁드립니다.</li>
+                                    <li>상품불량에 의한 반품, 교환, A/S, 환불, 품질보증 및 피해보상 등에 관한 사항은 소비자분쟁해결기준(공정거래위원회 고시)에 따라 받으실 수 있습니다.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="jumbotron jumbotron-fluid mgt-30">
-        <div class="container">
-            <h4 class="display-5">상품 상세 설명</h4>
-            <hr calss="my-4">
-            <p class="lead" th:text="${item.itemDetail}"></p>
-        </div>
-    </div>
+    </section>
 
-    <div th:each="itemImg : ${item.itemImgDTOList}" class="text-center">
+    </main>
+    </body>
+</th:block>
 
-        <img th:if="${not #strings.isEmpty(itemImg.ImgUrl)}"
-             th:src="${itemImg.imgUrl}" th:alt="${item.itemNm}"
-             class="rounded mgb-15" width="100%">
-    </div>
-</div>
 </html>

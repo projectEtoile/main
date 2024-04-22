@@ -23,6 +23,7 @@ public class MainController {
     private final ItemImgRepository itemImgRepository;
 
     @GetMapping("/")
+
     public String main(Model model){
         List<Item> items = itemRepository.findAll();
 
@@ -32,6 +33,7 @@ public class MainController {
 
         model.addAttribute("items",items);
         model.addAttribute("itemImgs",itemImgs.get(0).getImgUrl());
+
 
         return "main";
     }
