@@ -89,14 +89,40 @@ public class Item extends BaseTimeEntity{
     this.itemSellStatus = itemFormDTO.getItemSellStatus();
     }*/
 
-    public void removeStock(int stockNumber) {
-        int restStock = this.stockNumber - stockNumber; /*재고계산*/
-        /*재고계산했는데 -가 나면 에러를 던질거임*/
-        if (restStock < 0) {
-            throw new OutOfStockException("상품 재고가 부족합니다. (현재 재고 수량: " + this.stockNumber + ")");
+    public void removeStock(String size, int stockNumber) {
+        switch (size) {
+            case "S":
+                if (this.stockS < stockNumber) {
+                    throw new OutOfStockException("S 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockS + ")");
+                }
+                this.stockS -= stockNumber;
+                break;
+            case "M":
+                if (this.stockM < stockNumber) {
+                    throw new OutOfStockException("M 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockM + ")");
+                }
+                this.stockM -= stockNumber;
+                break;
+            case "L":
+                if (this.stockL < stockNumber) {
+                    throw new OutOfStockException("L 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockL + ")");
+                }
+                this.stockL -= stockNumber;
+                break;
+            case "Free":
+                if (this.stockFree < stockNumber) {
+                    throw new OutOfStockException("Free 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockFree + ")");
+                }
+                this.stockFree -= stockNumber;
+                break;
+            default:
+                throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
-        this.stockNumber = restStock; /*reststock이 이제 재고가 되는것.*/
+
+        // 전체 재고 수량도 주문된 수량만큼 감소
+        this.stockNumber -= stockNumber;
     }
+
 
     /*주문 취소시 재고 증가*/
     public void addStock(int stockNumber) {

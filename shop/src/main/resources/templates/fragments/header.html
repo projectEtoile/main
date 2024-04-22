@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header">
 
@@ -12,8 +12,8 @@
         </div>
         <div class="container1">
             <div class="section">
-                <a href="/2pro/hyo/hyo/main.html">
-                    <img src="/2pro/myPage/로고2.png" alt="" style="width: 60px; width: 120px;">
+                <a href="/">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Etoile_logo_and_wordmark.svg/768px-Etoile_logo_and_wordmark.svg.png" alt="" style="width: 60px; width: 120px;">
                 </a>
             </div>
             <div class="section2">
@@ -27,22 +27,22 @@
                 <input type="text" id="searchInput" placeholder="Search here..." style="display: none;">
             </div>
             <div class="section" id="icon-box">
-                <a href="/2pro/project02_OIO/join.html">
+                <a href="/members/new">
         <span class="material-symbols-outlined">
           person_add
         </span>
                 </a>
-                <a href="/2pro/project02_OIO/login.html">
+                <a href="/members/login">
         <span class="material-symbols-outlined">
           login
         </span>
                 </a>
-                <a href="/2pro/myPage/myPageMain.html">
+                <a href="/orders">
         <span class="material-symbols-outlined">
           person
         </span>
                 </a>
-                <a href="/2pro/hyo/hyo/cart.html">
+                <a href="/cart">
         <span class="material-symbols-outlined">
           shopping_bag
         </span>
@@ -66,7 +66,7 @@
                         <li>
                             <a href="#">Outer</a>
                             <ul class="sub-dropdown-menu">
-                                <li><a href="/2pro/hyo/hyoju/Category_menu_Padding.html">패딩</a></li>
+                                <li><a href="/categoryPadding">패딩</a></li>
                                 <li><a href="/2pro/hyo/hyoju/Category_menu_Outer.html">코트</a></li>
                                 <li><a href="/2pro/hyo/hyoju/Category_menu_Jaket.html">재킷</a></li>
                                 <li style="padding-bottom: 80px;"><a href="#">집업</a></li>
@@ -113,7 +113,7 @@
                 <div class="dropdown" id="pcBt">
                     <button id="categoryBtn2">Outer</button>
                     <ul class="dropdown-menu">
-                        <li><a href="/2pro/hyo/hyoju/Category_menu_Padding.html">패딩</a></li>
+                        <li><a href="/categoryPadding">패딩</a></li>
                         <li><a href="/2pro/hyo/hyoju/Category_menu_Outer.html">코트</a></li>
                         <li><a href="/2pro/hyo/hyoju/Category_menu_Jaket.html">재킷</a></li>
                         <li><a href="#">집업</a></li>

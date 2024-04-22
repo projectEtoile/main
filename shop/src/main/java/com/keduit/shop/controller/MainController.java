@@ -15,6 +15,6 @@ import java.util.Optional;
 public class MainController {
     @GetMapping("/")
     public String main(){
-        return "template";
+        return "main";
     }
 }
