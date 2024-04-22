@@ -1,5 +1,6 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.dto.ItemImgDTO;
 import com.keduit.shop.entity.Item;
@@ -7,6 +8,8 @@ import com.keduit.shop.entity.ItemImg;
 import com.keduit.shop.repository.ItemImgRepository;
 import com.keduit.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,9 +57,9 @@ public class ItemService {
              
             // 위 메서드에서 나머지 필드들을 모두 채우고 테이블에 등록까지 완료했다.
         }
-
        return item.getId();
     }
+
 
     @Transactional(readOnly = true)
     public ItemFormDTO getItemDtl(Long itemId) {
@@ -75,5 +78,14 @@ public class ItemService {
         ItemFormDTO itemFormDTO = ItemFormDTO.of(item);
         itemFormDTO.setItemImgDTOList(itemImgDTOList);
         return itemFormDTO;
+    }
+    // 검색을 위한 메서드이므로 값이 변하지 않는다는 것을 알려줌
+    // 으로서 성능을 효울적으로 사용
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable){
+        return itemRepository.getAdminItemPage(adminItemSearchDTO, pageable);
+        // custom 한 레파지토리를 쓰기위해.
+        // 혹시 예외 시 아이탬서비스 impl 에 dsl 추가
+
     }
 }
