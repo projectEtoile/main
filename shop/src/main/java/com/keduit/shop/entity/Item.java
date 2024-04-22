@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item extends BaseTimeEntity{
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +41,10 @@ public class Item extends BaseTimeEntity{
     private int stockS;
 
     @Column(nullable = false)
-    private int stockM;  
+    private int stockM;
 
     @Column(nullable = false)
-    private int stockL;  
+    private int stockL;
 
     @Column(nullable = false)
     private int stockFree;
@@ -93,25 +93,25 @@ public class Item extends BaseTimeEntity{
         switch (size) {
             case "S":
                 if (this.stockS < stockNumber) {
-                    throw new OutOfStockException("S 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockS + ")");
+                    throw new OutOfStockException("S 사이즈 재고가 부족합니다. (현재 수량: " + this.stockS + ")");
                 }
                 this.stockS -= stockNumber;
                 break;
             case "M":
                 if (this.stockM < stockNumber) {
-                    throw new OutOfStockException("M 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockM + ")");
+                    throw new OutOfStockException("M 사이즈 재고가 부족합니다. (현재 수량: " + this.stockM + ")");
                 }
                 this.stockM -= stockNumber;
                 break;
             case "L":
                 if (this.stockL < stockNumber) {
-                    throw new OutOfStockException("L 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockL + ")");
+                    throw new OutOfStockException("L 사이즈 재고가 부족합니다. (현재 수량: " + this.stockL + ")");
                 }
                 this.stockL -= stockNumber;
                 break;
             case "Free":
                 if (this.stockFree < stockNumber) {
-                    throw new OutOfStockException("Free 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockFree + ")");
+                    throw new OutOfStockException("Free 사이즈 재고가 부족합니다. (현재 수량: " + this.stockFree + ")");
                 }
                 this.stockFree -= stockNumber;
                 break;
@@ -119,19 +119,32 @@ public class Item extends BaseTimeEntity{
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
 
-        // 전체 재고 수량도 주문된 수량만큼 감소
+        // 전체 재고 감소
         this.stockNumber -= stockNumber;
     }
 
+    public void addStock(String size, int stockNumber) {
+        switch (size) {
+            case "S":
+                this.stockS += stockNumber;
+                break;
+            case "M":
+                this.stockM += stockNumber;
+                break;
+            case "L":
+                this.stockL += stockNumber;
+                break;
+            case "Free":
+                this.stockFree += stockNumber;
+                break;
+            default:
+                throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
+        }
 
-    /*주문 취소시 재고 증가*/
-    public void addStock(int stockNumber) {
-
+        // 전체 재고 증가
         this.stockNumber += stockNumber;
     }
-
 }
-
     /*@CreationTimestamp
     private LocalDateTime regDate;  *//*등록 시간*//*
 

@@ -28,6 +28,7 @@ public class OrderItem extends BaseTimeEntity {
 
     private int orderPrice; /*주문금액*/
     private int count; /*수량*/
+    private String size;
 
 
  /*   public static OrderItem createOrderItem(Item item, int count) {
@@ -41,18 +42,14 @@ public class OrderItem extends BaseTimeEntity {
 
     }*/
 
-    public static OrderItem createOrderItem(Item item, int count) {
+    public static OrderItem createOrderItem(Item item, int count, String size) {
         OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setCount(count);
-        orderItem.setOrderPrice(item.getPrice() * count); // 주문 가격 = 상품 가격 * 주문 수량
+        orderItem.item = item;
+        orderItem.count = count;
+        orderItem.size = size; // 주문된 사이즈 정보 저장
+        orderItem.orderPrice = item.getPrice() * count;
 
-        // 주문 상품의 각 사이즈에 따른 재고를 감소시킴
-        item.removeStock("S", count);
-        item.removeStock("M", count);
-        item.removeStock("L", count);
-        item.removeStock("Free", count);
-
+        item.removeStock(size, count); // 주문된 사이즈의 재고 감소
         return orderItem;
     }
 
@@ -62,6 +59,6 @@ public class OrderItem extends BaseTimeEntity {
 
     /*주문 취소시 재고 증가*/
     public void cancel() {
-        this.getItem().addStock(count);
+        this.item.addStock(this.size, count); // 주문 취소 시 해당 사이즈의 재고 증가
     }
 }
