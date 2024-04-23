@@ -50,12 +50,11 @@ public class ItemController {
         try {
             itemService.saveItem(itemFormDTO, itemImgFileList);
         } catch (Exception e) {
-
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생했습니다.");
             return "item/itemForm";
         }
 
-        return "main";
+        return "template";
 
     }
 
@@ -69,10 +68,10 @@ public class ItemController {
 //        return "admin/itemMng";
 //    }
 
-
     @GetMapping({"admin/items/{page}", "admin/items"})
     // {} 이란 무엇인가? 어떤 값을 넣든 들어올 수 있음. 다만. 그 값을 로직에서 사용하기 위해.
     public String itemMangeListPage(Model model,
+
 
                                     // 여기서 @PathVariable 이란? 메핑된 url에서의 {num}.
                                     @PathVariable("page") Optional<Integer> page, // 유저에게 받는 page 숫자.
@@ -102,7 +101,6 @@ public class ItemController {
 
         // 전체 페이지 수를 출력해보자
         System.out.println(items.getTotalElements());
-
 
 
         return "admin/itemMng";

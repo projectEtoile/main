@@ -33,35 +33,20 @@
                         <!-- 좌측 상품 큰사진 -->
                         <div class="img_big">
                             <img id="big_img"
-                                 src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_JR89872.jpg">
+                                 th:src="${item.itemImgDTOList.get(0).imgUrl}" width="525"
+                                 height="700">
                         </div>
                         <!-- 좌측 상품 썸네일 -->
                         <div class="img_thumb">
                             <ul id="gallery" style="max-width: 525px">
-                                <li><a href="#"><img
-                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_JR89872.jpg"
+                                <li th:each="itemImgDTO, iterStat : ${item.itemImgDTOList}"><a href="#"><img
+                                        th:src="${itemImgDTO.imgUrl}"
                                         width="60" height="80" alt="thumbnail" class="small"></a></li>
-                                <li><a href="#"><img
-                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add1_YF37448.jpg"
-                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
-                                <li><a href="#"><img
-                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add2_OU32079.jpg"
-                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
-                                <li><a href="#"><img
-                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add3_AL61965.jpg"
-                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
-                                <li><a href="#"><img
-                                        src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add4_FT97675.jpg"
-                                        width="60" height="80" alt="thumbnail" class="small"></a></li>
-                                <!-- 썸네일 추가해야하거나 없애야될시 여기 이용 -->
-                                <!-- <li><a href="#"><img
-                                      src="https://product-image.wconcept.co.kr/productimg/image/img0/15/301631515_add5_TN32553.jpg"
-                                      width="60" height="80" alt="thumbnail" class="small"></a></li> -->
-
                             </ul>
                         </div>
                     </div>
                 </div>
+
                 <!-- 우측상품상세정보 -->
                 <div class="right_prod">
 
@@ -106,13 +91,13 @@
                         <dl class="option">
                             <dt>사이즈</dt>
                             <dd class="size">
-                                <select name="size" size="1" onchange="showTotalPrice()">
+                                <select name="size" onchange="showTotalPrice()">
                                     <!-- 사이즈 변동있을시 여기 수정 -->
                                     <option value="">선택해주세요</option>
-                                    <option value="size1">S Size</option>
-                                    <option value="size1">M Size</option>
-                                    <option value="size1">L Size</option>
-                                    <option value="size1">FREE Size</option>
+                                    <option value="S">S Size</option>
+                                    <option value="M">M Size</option>
+                                    <option value="L">L Size</option>
+                                    <option value="Free">FREE Size</option>
                                     <!-- <option value="38">38</option> -->
                                 </select>
                             </dd>
@@ -136,8 +121,12 @@
                     <ul class="btn_group">
                         <input type="hidden" id="itemId" th:value="${item.id}" name="itemId"/>
                         <input type="hidden" id="count" value="1" name="count"/>
-                        <li><button type="button" class="btn" onclick="order()">바로 구매</button></li>
-                        <li><button type="button" class="btn2" onclick="addCart()">장바구니 담기</button></li>
+                        <li>
+                            <button type="button" class="btn" onclick="order()">바로 구매</button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn2" onclick="addCart()">장바구니 담기</button>
+                        </li>
                     </ul>
                     <input name="__RequestVerificationToken" type="hidden"
                            value="CfDJ8Kwm-N6mTIJKoRK0f9xD4Ucnrpi77ag8DyZBAF1QRsOEVovvTT6Xe0OPiYchq2tlKKusTPEvFXoY4JxfAwR1kECu15sYkDngiuilB1-pENF7OMkrSAB-LeZ201KC6I7YBd7XvVeA-qI9jQV5lLjpoGc">
@@ -190,27 +179,31 @@
                         <li>
                             <a href="#">
                                 <img src="//product-image.wconcept.co.kr/productimg/image/img1/30/303051330_CA35014.jpg?RS=300"
-                                     alt="EVA Italian Lambskin Leather Colorblock Biker Jacket_Black" width="150" height="200">
+                                     alt="EVA Italian Lambskin Leather Colorblock Biker Jacket_Black" width="150"
+                                     height="200">
                                 <p class="price">413,200</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/28/303051328_YW14107.jpg?RS=300" width="
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/28/303051328_YW14107.jpg?RS=300"
+                                     width="
                   150" height="200" alt=" EQUILIBRE Italian Lambs Leather Rider Jacket_White">
                                 <p class="price">343,100</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/27/303051327_UV73161.jpg?RS=300" width="
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/27/303051327_UV73161.jpg?RS=300"
+                                     width="
                     150" height="200" alt=" EQUILIBRE Italian Lambs Leather Rider Jacket_Black">
                                 <p class="price">285,150</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/71/303049871.jpg?RS=300" width="150"
+                                <img src="//product-image.wconcept.co.kr/productimg/image/img1/71/303049871.jpg?RS=300"
+                                     width="150"
                                      height="200" alt=" [SIGNATURE] EQUILIBRE Lambs Leather Rider Jacket_Black">
                                 <p class="price">285,150</p>
                             </a>
@@ -609,20 +602,30 @@
                                 <ul>
                                     <!--  [ITDEV-4073]교환 반품 회수지정보    -->
                                     <li>회수지 정보 : 서울특별시 동대문구 황물로 60(답십리동) 411호 다린아이엔씨 / 주식회사 다린아이엔씨</li>
-                                    <li>동일 브랜드의 상품이라도 교환/반품 회수지가 다를 수 있습니다. 상품상세 정보 또는 회수지 정보를 확인하신 후 반드시 지정된 회수지로 보내주세요.</li>
+                                    <li>동일 브랜드의 상품이라도 교환/반품 회수지가 다를 수 있습니다. 상품상세 정보 또는 회수지 정보를 확인하신 후 반드시 지정된 회수지로
+                                        보내주세요.
+                                    </li>
                                     <li>상품을 지정된 회수지가 아닌곳으로 보내실 경우 택배 분실 또는 재발송에 따른 추가 비용이 발생할 수 있습니다.</li>
-                                    <li>고객센터나 "My Page&gt;주문취소/교환/반품 신청"을 통한 교환/반품 접수 없이 상품을 회수지로 보내실 경우 재발송에 따른 추가 비용이 발생할 수 있으며 경우에
-                                        따라서는 교환/반품이 어려울 수 있습니다.</li>
+                                    <li>고객센터나 "My Page&gt;주문취소/교환/반품 신청"을 통한 교환/반품 접수 없이 상품을 회수지로 보내실 경우 재발송에 따른 추가 비용이
+                                        발생할 수 있으며 경우에
+                                        따라서는 교환/반품이 어려울 수 있습니다.
+                                    </li>
                                     <!--  [ITDEV-4073]교환 반품 회수지정보    // -->
-                                    <li class="bold">상품하자 이외 사이즈, 색상교환 등 단순 변심에 의한 교환/반품 택배비 고객부담으로 왕복택배비가 발생합니다. (전자상거래 등에서의 소비자보호에 관한
-                                        법률 제18조(청약 철회등)9항에 의거 소비자의 사정에 의한 청약 철회 시 택배비는 소비자 부담입니다.)</li>
+                                    <li class="bold">상품하자 이외 사이즈, 색상교환 등 단순 변심에 의한 교환/반품 택배비 고객부담으로 왕복택배비가 발생합니다. (전자상거래
+                                        등에서의 소비자보호에 관한
+                                        법률 제18조(청약 철회등)9항에 의거 소비자의 사정에 의한 청약 철회 시 택배비는 소비자 부담입니다.)
+                                    </li>
                                     <li>결제완료 직후 즉시 주문취소는 "MY Page&gt; 취소/교환/반품 신청"에서 직접 처리 가능합니다.</li>
                                     <li>주문완료 후 재고 부족 등으로 인해 주문 취소 처리가 될 수도 있는 점 양해 부탁드립니다.</li>
-                                    <li>주문상태가 상품준비중인 경우 취소신청이 가능하며 판매자의 승인 여부(이미 배송을 했거나 포장을 완료한 경우)에 따라 취소가 불가능할 수 있습니다.</li>
+                                    <li>주문상태가 상품준비중인 경우 취소신청이 가능하며 판매자의 승인 여부(이미 배송을 했거나 포장을 완료한 경우)에 따라 취소가 불가능할 수
+                                        있습니다.
+                                    </li>
                                     <li>교환 신청은 최초 1회에 한하며, 교환 배송 완료 후에는 추가 교환 신청은 불가합니다.</li>
                                     <li>반품/교환은 미사용 제품에 한해 배송완료 후 7일 이내 접수하여 주십시오.</li>
                                     <li>임의반품은 불가하오니 반드시 고객센터나 "MY Page&gt; 주문취소/교환/반품 신청"을 통해서 신청접수를 하시기 바랍니다.</li>
-                                    <li>상품하자, 오배송의 경우 택배비 무료로 교환/반품이 가능하지만 모니터의 색상차이, 착용감, 사이즈의 개인의 선호도는 상품의 하자 사유가 아닙니다.</li>
+                                    <li>상품하자, 오배송의 경우 택배비 무료로 교환/반품이 가능하지만 모니터의 색상차이, 착용감, 사이즈의 개인의 선호도는 상품의 하자 사유가
+                                        아닙니다.
+                                    </li>
                                     <!--<li>단 위생용품 및 가전, 가구, 귀금속 등의 경우 취소/교환/반품 요청이 제한될 수 있습니다.</li>-->
                                     <!--<li>주문제작 상품 및 상품의 본품박스, 택 등이 제거되어 있을 경우 반품 / 교환이 불가능합니다.</li>-->
                                     <li>고객 부주의로 상품이 훼손, 변경된 경우 반품 / 교환이 불가능 합니다.</li>
@@ -648,7 +651,9 @@
                             <td class="randdth2">
                                 <ul>
                                     <li>A/S 기준이나 가능여부는 브랜드와 상품에 따라 다르므로 관련 문의는 더블유컨셉 고객센터를 통해 부탁드립니다.</li>
-                                    <li>상품불량에 의한 반품, 교환, A/S, 환불, 품질보증 및 피해보상 등에 관한 사항은 소비자분쟁해결기준(공정거래위원회 고시)에 따라 받으실 수 있습니다.</li>
+                                    <li>상품불량에 의한 반품, 교환, A/S, 환불, 품질보증 및 피해보상 등에 관한 사항은 소비자분쟁해결기준(공정거래위원회 고시)에 따라 받으실 수
+                                        있습니다.
+                                    </li>
                                 </ul>
                             </td>
                         </tr>

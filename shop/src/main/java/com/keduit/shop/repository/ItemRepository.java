@@ -11,11 +11,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-/*<Item, Long> = <entity이름, primary key의 데이터 타입>*/
-/*QuerydslPredicateExecutor : QueryDsl사용 시 조건에 맞는 조회를 위해 추가*/
 public interface ItemRepository extends JpaRepository<Item, Long>,
-        QuerydslPredicateExecutor<Item>
-        {
+    ItemRepositoryCustom{
 
     List<Item> findByItemNm(String itemNm);
 
@@ -27,6 +24,9 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
 
     Page<Item> findPageBy(Pageable page);
+
+
+
 
 
 
