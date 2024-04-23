@@ -87,54 +87,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // // 헤더 메뉴4 설정 --------------------------------------------------
 
-//// 슬라이드쇼 시작
-//let slideIndex = 1;
-//
-//function initializeSlideShow() {
-//  showSlides(slideIndex);
-//  startSlideShow();
-//}
-//
-//function plusSlides(n) {
-//  showSlides(slideIndex += n);
-//}
-//
-//// Thumbnail image controls
-//function currentSlide(n) {
-//  showSlides(slideIndex = n);
-//}
-//
-//// Automatic slideshow
-//let slideInterval;
-//
-//function startSlideShow() {
-//  slideInterval = setInterval(function() {
-//    plusSlides(1);
-//  }, 3000);
-//}
-//
-//function stopSlideShow() {
-//  clearInterval(slideInterval);
-//}
-//
-//// Show slides
-//function showSlides(n) {
-//  let i;
-//  let slides = document.getElementsByClassName("mySlides");
-//  let dots = document.getElementsByClassName("dot");
-//  if (n > slides.length) {slideIndex = 1}
-//  if (n < 1) {slideIndex = slides.length}
-//  for (i = 0; i < slides.length; i++) {
-//    slides[i].style.display = "none";
-//  }
-//  for (i = 0; i < dots.length; i++) {
-//    dots[i].className = dots[i].className.replace(" active", "");
-//  }
-//  slides[slideIndex-1].style.display = "block";
-//  dots[slideIndex-1].className += " active";
-//}
-//
-//document.addEventListener("DOMContentLoaded", initializeSlideShow);
+// 슬라이드쇼 시작
+let slideIndex = 1;
+
+function initializeSlideShow() {
+  showSlides(slideIndex);
+  startSlideShow();
+}
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+// Automatic slideshow
+let slideInterval;
+
+function startSlideShow() {
+  slideInterval = setInterval(function() {
+    plusSlides(1);
+  }, 3000);
+}
+
+function stopSlideShow() {
+  clearInterval(slideInterval);
+}
+
+// Show slides
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  if (slides.length > 0) {
+    slides[slideIndex-1].style.display = "block";
+    dots[slideIndex-1].className += " active";
+  }
+}
+
+
+document.addEventListener("DOMContentLoaded", initializeSlideShow);
 // 슬라이드쇼 끝
 
 // 검색아이콘 클릭 시작

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -94,6 +95,35 @@ public class ItemController {
         // 전체 페이지 수를 출력해보자
         System.out.println(items.getTotalElements());
 
+        model.addAttribute("items",items); // 뿌릴 키워드 설정.
         return "admin/itemMng";
     }
+
+    @GetMapping("/categoryPadding")
+    public String main() {
+        return "category/categoryPadding";
+    }
+
+
+    @GetMapping("/item/{itemId}")
+    public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
+        ItemFormDTO itemFormDTO = itemService.getItemDtl(itemId);
+        model.addAttribute("item", itemFormDTO);
+        return "item/itemDtl";
+    }
+
+    @GetMapping("/itemDtl/{itemId}")
+    public String showItemDetailPage(@PathVariable("itemId") Long itemId, Model model) {
+        try {
+            ItemFormDTO itemFormDTO = itemService.getItemDtl(itemId);
+            model.addAttribute("item", itemFormDTO);
+            return "item/itemDtl"; // 상품 상세 페이지의 뷰 이름을 반환합니다.
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
+            return "errorPage"; // 오류 페이지나 적절한 대체 페이지 경로를 지정
+        }
+
+    }
 }
+
+
