@@ -93,35 +93,40 @@ public class Item extends BaseTimeEntity{
         switch (size) {
             case "S":
                 if (this.stockS < stockNumber) {
-                    throw new OutOfStockException("S 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockS + ")");
+                    throw new OutOfStockException("S 사이즈 재고가 부족합니다.");
                 }
-                this.stockS -= stockNumber;
+                this.stockS -= stockNumber; // S 사이즈 감소
                 break;
             case "M":
                 if (this.stockM < stockNumber) {
-                    throw new OutOfStockException("M 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockM + ")");
+                    throw new OutOfStockException("M 사이즈 재고가 부족합니다.");
                 }
-                this.stockM -= stockNumber;
+                this.stockM -= stockNumber; // M 사이즈 감소
                 break;
             case "L":
                 if (this.stockL < stockNumber) {
-                    throw new OutOfStockException("L 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockL + ")");
+                    throw new OutOfStockException("L 사이즈 재고가 부족합니다.");
                 }
-                this.stockL -= stockNumber;
+                this.stockL -= stockNumber; // L 사이즈 감소
                 break;
             case "Free":
                 if (this.stockFree < stockNumber) {
-                    throw new OutOfStockException("Free 사이즈 상품 재고가 부족합니다. (현재 재고 수량: " + this.stockFree + ")");
+                    throw new OutOfStockException("Free 사이즈 재고가 부족합니다.");
                 }
-                this.stockFree -= stockNumber;
+                this.stockFree -= stockNumber; // Free 사이즈 감소
                 break;
             default:
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
 
-        // 전체 재고 수량도 주문된 수량만큼 감소
+        // 모든 사이즈의 재고 감소와 함께 stock_number 감소
         this.stockNumber -= stockNumber;
     }
+
+
+
+
+
 
 
     /*주문 취소시 재고 증가*/

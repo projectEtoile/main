@@ -19,6 +19,9 @@
     <link th:href="@{/css/itemDetail.css}" rel="stylesheet">
     <!--카테고리패딩 css-->
 
+    <!--폰트어썸-->
+    <script src="https://kit.fontawesome.com/934346761c.js" crossorigin="anonymous"></script>
+
     <!--네비 아이콘-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
@@ -31,13 +34,14 @@
             integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
             crossorigin="anonymous"></script>
     <!--네비게이션 js-->
-    <script th:src="@{/js/header.js}" type="text/javascript"></script>
+    <script src="/js/header.js" type="text/javascript"></script>
     <!--상세페이지 js-->
-    <script th:src="@{/js/itemDetail.js}" type="text/javascript"></script>
+    <script src="/js/itemDetail.js" type="text/javascript"></script>
     <!--카테고리패딩 js-->
-    <script th:src="@{/js/categoryPadding.js}" type="text/javascript"></script>
-    <th:block layout:fragment="script">
+    <!--<script src="/js/categoryPadding.js" type="text/javascript"></script>-->
 
+
+    <th:block layout:fragment="script">
     </th:block>
     <th:block layout:fragment="css">
     </th:block>

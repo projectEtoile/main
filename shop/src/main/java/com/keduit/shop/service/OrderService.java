@@ -32,48 +32,36 @@ public class OrderService {
 
     /*주문등록*/
     public Long order(OrderDTO orderDTO, String email) {
-        // 주문할 상품 조회
         Item item = itemRepository.findById(orderDTO.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
 
-        // 현재 로그인한 회원의 정보 조회
         Member member = memberRepository.findByEmail(email);
-
-        // 주문할 상품의 재고를 감소시킬 사이즈 설정
-        String selectedSize = orderDTO.getSize();
-
-        // 선택한 사이즈에 따라 주문할 상품의 재고 감소
-        switch (selectedSize) {
-            case "S":
-                item.removeStock("S", orderDTO.getCount());
-                break;
-            case "M":
-                item.removeStock("M", orderDTO.getCount());
-                break;
-            case "L":
-                item.removeStock("L", orderDTO.getCount());
-                break;
-            case "Free":
-                item.removeStock("Free", orderDTO.getCount());
-                break;
-            default:
-                throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
+        if (member == null) {
+            throw new EntityNotFoundException("회원 정보를 찾을 수 없습니다.");
         }
 
-        // 전체 재고를 다시 감소시키는 코드를 제거했습니다.
-        // item.removeStock(totalCount); // 이 부분이 중복 재고 감소를 일으킵니다.
+        // 사이즈 값 유효성 검사
+        String selectedSize = orderDTO.getSize(); // 이 부분
+        if (selectedSize == null || selectedSize.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 사이즈입니다."); // 유효하지 않은 사이즈 처리
+        }
 
-        // 주문 상품 생성
-        OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount());
+        // 주문 엔티티 생성
+        OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), selectedSize); // 이 부분 수정
         List<OrderItem> orderItemList = new ArrayList<>();
         orderItemList.add(orderItem);
 
-        // 주문 엔티티 생성
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
 
         return order.getId();
     }
+
+
+
+
+
+
 
 
     @Transactional(readOnly = true)
@@ -119,18 +107,20 @@ public class OrderService {
         Member member = memberRepository.findByEmail(email);
         List<OrderItem> orderItemList = new ArrayList<>();
 
-        for(OrderDTO orderDTO: orderDTOList){
+        for (OrderDTO orderDTO : orderDTOList) {
             Item item = itemRepository.findById(orderDTO.getItemId())
-                    .orElseThrow(EntityNotFoundException::new);
+                    .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
 
-            OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount());
+            // 올바른 사이즈 정보를 전달
+            OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), orderDTO.getSize()); // 이 부분 수정
             orderItemList.add(orderItem);
-
         }
+
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
-        return order.getId();
 
+        return order.getId();
     }
+
 
 }
