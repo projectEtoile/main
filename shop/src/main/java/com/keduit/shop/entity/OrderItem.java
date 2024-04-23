@@ -28,7 +28,7 @@ public class OrderItem extends BaseTimeEntity {
 
     private int orderPrice; /*주문금액*/
     private int count; /*수량*/
-    private String size;
+
 
 
  /*   public static OrderItem createOrderItem(Item item, int count) {

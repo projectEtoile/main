@@ -54,7 +54,7 @@ public class ItemController {
             return "item/itemForm";
         }
 
-        return "template";
+        return "main";
 
 
     }
