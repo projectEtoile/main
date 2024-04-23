@@ -64,6 +64,6 @@ public class OrderItem extends BaseTimeEntity {
 
     /*주문 취소시 재고 증가*/
     public void cancel() {
-        this.item.addStock(this.size, count); // 주문 취소 시 해당 사이즈의 재고 증가
+        this.item.addStock(this.count); // 주문 취소 시 해당 사이즈의 재고 증가
     }
 }

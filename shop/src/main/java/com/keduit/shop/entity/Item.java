@@ -133,23 +133,7 @@ public class Item extends BaseTimeEntity {
         this.stockNumber -= stockNumber;
     }
 
-    public void addStock(String size, int stockNumber) {
-        switch (size) {
-            case "S":
-                this.stockS += stockNumber;
-                break;
-            case "M":
-                this.stockM += stockNumber;
-                break;
-            case "L":
-                this.stockL += stockNumber;
-                break;
-            case "Free":
-                this.stockFree += stockNumber;
-                break;
-            default:
-                throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
-        }
+
 
 
 
