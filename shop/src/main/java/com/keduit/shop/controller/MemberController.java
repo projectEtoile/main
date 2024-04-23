@@ -42,7 +42,7 @@ public class MemberController {
     //BindingResult bindingResult: 에러발생시 MemberFormDTO(절대null을 주지않음) memberFormDTO결과리턴 에러가있음 다시 돌아가(유효성 체크)
     public String newMember(@Valid MemberFormDTO memberFormDTO,
                             BindingResult bindingResult, Model model) {
-        System.out.println("나오니?");
+        System.out.println("나오니?1111");
         /*memberFormDTO의 유효성 체크결과확인-> 에러이면 다시 입력 폼을 리턴*/
         /*유효성검사*/
         if (bindingResult.hasErrors()) {

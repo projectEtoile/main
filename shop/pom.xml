@@ -120,7 +120,20 @@
 			<artifactId>spring-security-oauth2-core</artifactId>
 		</dependency>
 
-    </dependencies>
+		<!--메일을 보내기위한-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+	</dependencies>
 
 
 	<build>

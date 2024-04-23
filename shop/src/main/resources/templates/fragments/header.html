@@ -48,7 +48,7 @@
 
                                 {% for row in data %}
 
-                                {% endfor %}
+
                                 <table border="1">
                                     <thead>
                                     <tr>
@@ -57,9 +57,11 @@
                                     </tr>
                                     </thead>
                                     <tbody><tr>
-                                        <td>{{ row.number }}</td>
-                                        <td>{{ row.keyword }}</td>
+                                    <tr th:each="searchRank : ${searchRankList}">
+                                        <td th:text="${searchRank.number}"></td>
+                                        <td th:text="${searchRank.keyword}"></td>
                                     </tr></tbody>
+                                     {% endfor %}
                                 </table>
                             </ul>
                             <div id="z-example">
@@ -70,12 +72,12 @@
                 </div>
             </nav>
             <div class="section" id="icon-box">
-                <a href="#">
+                <a href="/members/new">
         <span class="material-symbols-outlined">
           person_add
         </span>
                 </a>
-                <a href="#">
+                <a href="/members/login">
         <span class="material-symbols-outlined">
           login
         </span>
@@ -90,6 +92,9 @@
           shopping_bag
         </span>
                 </a>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="/members/logout">로그아웃</a>
+                </li>
             </div>
         </div>
         <div class="Category-container">
