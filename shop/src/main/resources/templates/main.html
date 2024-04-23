@@ -1,166 +1,37 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<th:block layout:fragment="content">
-    <body>
+<div class="text">Caption Three</div>
 
-    <main>
-        <!-- Slideshow container -->
-        <div class="slideshow-container">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/layout1}'>
+<div layout:fragment="content">
+    <h1>메인 페이지입니다.</h1>
 
-            <!-- Full-width images with number and caption text -->
-            <div class="mySlides fade">
-                <div class="numbertext">1 / 3</div>
-                <img src="https://as1.ftcdn.net/v2/jpg/02/64/00/92/1000_F_264009215_QxyfckXRbgsbiC1r3WZLdZfWtngYwyCC.jpg"
-                     style="width:100%">
-                <div class="text">Caption Text</div>
-            </div>
 
-            <div class="mySlides fade">
-                <div class="numbertext">2 / 3</div>
-                <img src="https://as1.ftcdn.net/v2/jpg/03/51/54/24/1000_F_351542401_6lJltIyx3mcETxWRyUEok4FO6UDVO44L.jpg"
-                     style="width:100%">
-                <div class="text">Caption Two</div>
-            </div>
 
-            <div class="mySlides fade">
-                <div class="numbertext">3 / 3</div>
-                <img src="https://as1.ftcdn.net/v2/jpg/03/56/60/08/1000_F_356600829_Tap0Oqzf0KVHYKmPXFiF09JyCdHSLVFe.jpg"
-                     style="width:100%">
-                <div class="text">Caption Three</div>
+
+    <th:block th:each="item : ${items}">
+        <div>
+            <div class="card">
+                <a th:href="'/item/' + ${item.id}">
+
+                    <div class="card-body">
+                        <h4 class="card-title">[[${item.itemNm}]]</h4>
+                        <p class="card-text">[[${item.stockNumber}]]</p>
+                        <h3 class="card-title text-danger">[[${item.price}]]원</h3>
+                    </div>
+
+                </a>
+
             </div>
 
             <!-- Next and previous buttons -->
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
-        <br>
-        </div>
 
-
-        </div>
-
-        <!-- The dots/circles -->
-        <div class="slides" style="text-align:center">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-        </div>
-
-
-        <div class="card">
-            <div class="contents_card">
-                <div class="card_blockcontent">
-
-                    <a href="https://www.lfmall.co.kr/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063176411.jpg" alt="자켓">
-                        <span>자켓</span>
-                    </a>
-
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447825303.png" alt="가방/잡화">
-                        <span>맨투맨</span>
-                    </a>
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447809974.png" alt="니트/스웨터">
-                        <span>니트/스웨터</span>
-                    </a>
-                    <a href="http://127.0.0.1:5500/1/nav+footer/Category_menu_Padding.html">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447705032.png" alt="스포츠">
-                        <span>패딩</span>
-                    </a>
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447732315.png" alt="명품">
-                        <span>코트</span>
-                    </a>
-
-
-                    <!-- <a href="https://www.lfmall.co.kr/app/exhibition/menu/501">
-                    <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447789913.png" alt="2">
-                    <span>자켓</span>
-                  </a> -->
-
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447841365.png" alt="가방/잡화">
-                        <span>슬랙스</span>
-                    </a>
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063196071.jpg" alt="슈즈">
-                        <span>슈즈</span>
-                    </a>
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063205831.jpg" alt="스포츠">
-                        <span>스포츠</span>
-                    </a>
-                    <a href="/app/exhibition/menu/501">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447858475.png" alt="명품">
-                        <span>스커트</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        </div>
-
-
-        <div class="card2">
-            <div class="cardTitle_brandlogo">
-                <p>추천 브랜드</p>
-            </div>
-            <div class="Brandlogo">
-                <ul class="brandlogo">
-                    <li>
-                        <a class="hazzys"
-                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1001?af=BNAPC29336&utm_source=naverP_BNAPC29336&utm_medium=display&utm_campaign=Sales&utm_term=%EB%8B%A5%EC%8A%A4_D_P%EB%A9%94%EC%9D%B8%ED%85%8D%EC%8A%A4%ED%8A%B8brand_DAKS2">
-                            <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625203782.jpg"
-                                 style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                        </a>
-                    </li>
-                    <li><a class="darks"
-                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1017?af=BNAPC29076&utm_source=naverP_BNAPC29076&utm_medium=display&utm_campaign=Sales&utm_term=%EC%A7%88%EC%8A%A4%ED%8A%9C%EC%96%B4%ED%8A%B8_P%ED%99%88%EB%A7%81%ED%81%ACbrand_J2">
-                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625206665.jpg"
-                             style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                    </li>
-
-                    <li><a class="jill" href="https://www.lfmall.co.kr/display.do?cmd=getBrandMain&TBRAND_CD=1009"><img
-                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625209812.jpg"
-                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                    </li>
-                    <li><a class="vanessa"
-                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1875?brandUrl=ATCORNER"><img
-                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625213187.jpg"
-                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                    </li>
-                    <li><a class="a.t" href="https://display.wconcept.co.kr/brand/102725"><img
-                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625217046.jpg"
-                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                    </li>
-                    <li><a class="isabel" href="https://www.isabelmarant.com/kr"><img
-                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625221012.jpg"
-                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                    </li>
-                    <!-- <li><a class="dunst" href="https://display.wconcept.co.kr/brand/105426"><img
-                        src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625225851.jpg" alt=""
-                        style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                  </li>
-                  <li><a class="till" href="https://display.wconcept.co.kr/brand/104236"><img
-                        src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625229979.jpg" alt=""
-                        style="min-height: calc(64.3821px); min-width: calc(137.778px);">
-                    </a>
-                  </li> -->
-
-                </ul>
-            </div>
-        </div>
+    </th:block>
+</div>
 
 
         <div class="card3">
@@ -494,4 +365,5 @@
 
     </body>
 </th:block>
+
 </html>
