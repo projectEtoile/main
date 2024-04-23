@@ -50,6 +50,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         if (StringUtils.equals("itemNm", searchBy)) { // 직접 url 입력시 Nm 이 NM으로 바뀌는 현상있음.
             return QItem.item.itemNm.like("%" + searchQuery + "%");
         } else if (StringUtils.equals("itemId", searchBy)) {
+
+            if(searchQuery.length() == 0 ){
+                return null;
+            }
+
             return QItem.item.id.eq(Long.parseLong(searchQuery));
         }
         // 여기서도 마찬가지. like 를 활용했다.

@@ -12,16 +12,19 @@
     <!-- 상품등록 시작 -->
 
     <div class="container">
+
+        <img th:src="@{itemFormDTO.itemImgDTOList[0].imgUrl}" >
+
         <form th:action="@{/admin/item/new}" method="post" enctype="multipart/form-data"
               th:object="${itemFormDTO}">
 
-            <h1> 상품 등록 </h1><br><br><br>
-            <!--            <input type="hidden" th:field="*{id}">-->
-            <!--            <div class="box">-->
-            <!--                <label for="productC">상품코드<span style="color: red;"> *</span><span-->
-            <!--                        id="smallLetter">필수항목</span></label><br>-->
-            <!--                <input type="text" id="productC" name="productC" placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요">-->
-            <!--            </div>-->
+            <!--            <h1> 상품 등록 </h1><br><br><br>-->
+            <!--                        <input type="text" th:field="*{id}" value="{id}" readonly>-->
+            <!--                        <div class="box">-->
+            <!--                            <label for="productC">상품코드<span style="color: red;"> *</span><span-->
+            <!--                                    id="smallLetter">필수항목</span></label><br>-->
+            <!--                            <input type="text" id="productC" name="productC" placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요">-->
+            <!--                        </div>-->
 
             <div class="box">
                 <label for="ProductN">상품 이름<span style="color: red;"> *</span></label><br>

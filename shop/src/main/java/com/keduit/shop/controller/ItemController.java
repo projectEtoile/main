@@ -96,4 +96,14 @@ public class ItemController {
 
         return "admin/itemMng";
     }
+
+    @GetMapping("/admin/item/modify/{itemId}")
+    public String adminItemDtl(Model model, @PathVariable("itemId") Long itemId){
+
+        ItemFormDTO itemFormDTO = itemService.getItemDtl(itemId);
+        System.out.println("#$$$$$$#$#$#$#$#$#$$$$"+itemFormDTO);
+        model.addAttribute("itemFormDTO",itemFormDTO);
+        return "admin/itemModify";
+
+    }
 }
