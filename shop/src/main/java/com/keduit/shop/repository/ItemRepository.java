@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
+
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long>,
@@ -21,7 +22,10 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);/*금액큰거부터 나오게하기*/
 
+
     Page<Item> findPageBy(Pageable page);
+
+
 
 
 
@@ -35,4 +39,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
     @Query(value = "select * from item i where i.item_text like " +
             " %:itemText% order by i.price desc", nativeQuery = true)
     List<Item> findByItemTextByNative(@Param("itemText") String itemText);
+
 }
