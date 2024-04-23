@@ -6,32 +6,24 @@
 <head>
     <title>Join</title>
 </head>
-<!--사용자 css 추가-->
-<th:block layout:fragment="css">
-    <style>
-        .fieldError {
-            color: #bd2130;
-        }
-    </style>
-</th:block>
+
 <!--사용자 js 추가-->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         $(document).ready(function(){
-            const errorMessage = [[${errorMessage}]]; <!--thymeleaf문법 th태그없이 처리하고싶을때 쓰는 인라인 표현식-->
-            if(errorMessage != null){
+            /* Thymeleaf에서 errorMessage 변수를 정상적으로 전달하는지 확인하고 있으므로 null 체크로 수정 */
+            const errorMessage = /*[[${errorMessage}]]*/ null; <!--thymeleaf문법 th태그없이 처리하고싶을때 쓰는 인라인 표현식-->
+            if(errorMessage !== null){ <!-- null 체크로 수정 -->
                 alert(errorMessage);
             }
-        })
+        });
     </script>
 </th:block>
 
 <div layout:fragment="content">
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/join.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/font.css}" type="text/css">
-    <form action="/Member/JoinComplete" id="frm" method="post" name="frm" onsubmit="return false;"
-          data-gtm-form-interact-id="0">
+    <form action="/members/new" role="form" method="post" th:object="${memberFormDTO}">
         <input type="hidden" name="JoinType" id="JoinType" value="C">
 
         <section id="container">
@@ -58,11 +50,10 @@
                         <th th:for="email">이메일 아이디 <span>*</span></th>
                         <td>
                             <p class="email">
-                                <input type="email" style="width: 125px;" name="email" id="custEmailId" th:field="*{email}"
+                                <input type="email" style="width: 125px;" name="email" th:field="*{email}"
                                        placeholder="이메일을 입력해주세요">
                                 <span class="txt_email">@</span>
-
-
+                                <input type="email" style="width: 125px;" name="email" >
                                 <!-- <select class="normal" style="width: 114px; display: none;" id="selectEmail"> -->
                                 <select class="normal" id="selectEmail">
                                     <option value="" selected="">선택</option>
@@ -73,19 +64,18 @@
                                     <option value="daum.net">daum.com</option>
                                     <option value="write">직접입력</option>
                                 </select>
-                            <p th:if="${#fields.hasErrors('email')}"
+                           <p id="validation1" class="incorrect"><label id="chkcustid">본인 소유의 이메일을 입력해 주세요.</label></p>
+                            <p th:if="${#fields.hasErrors( 'email')}"
                                th:errors="*{email}" class="fieldError">Incorrect data</p>
-                            </p>
-                            <p id="validation1" class="incorrect"><label id="chkcustid">본인 소유의 이메일을 입력해 주세요.</label></p>
                         </td>
                     </tr>
                     <tr>
                         <th th:for="password">비밀번호 <span>*</span></th>
                         <td>
-                            <input type="password" name="password" id="joinPw" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
+                            <input type="password" name="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
                             <p id="validation2" class="correct"><label id="chkcustpw"></label></p>
                             <p th:if="${#fields.hasErrors('password')}"
-                                th:errors="*{password}" class="fieldError">Incorrect data</p>
+                               th:errors="*{password}" class="fieldError">Incorrect data</p>
                         </td>
                     </tr>
                     <tr>
@@ -99,11 +89,11 @@
                         <th>이름 <span>*</span></th>
                         <td>
                             <p class="join_name va_m">
-                                <input type="text" name="name" id="join_name" placeholder="ex) 홍길동">
+                                <input type="text" name="name" id="join_name" th:field="*{name}" placeholder="ex) 홍길동">
                             </p>
                             <p id="validation7" class="correct correct va_m"><label id="checkname"></label></p>
-                            <!-- <p th:if="${#fields.hasErrors('name')}"
-                                th:errors="*{name}" class="fieldError">Incorrect data</p>-->
+                            <p th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}" class="fieldError">Incorrect data</p>
                         </td>
                     </tr>
 
@@ -117,7 +107,7 @@
                     <ul>
                         <li>
                             <span class="input_button checkbox"><input type="checkbox"
-                                                                       name="all_agree04"><label>만 14세 이상입니다. (필수)</label></span>
+                                                                       name="all_agree04"><label>만 14세 이상입니다.</label></span>
                         </li>
                         <li>
                             <span class="input_button checkbox"><input type="checkbox"
@@ -140,9 +130,9 @@
                     <button type="button" id="btnCancel" name="button" class="btn"
                             onclick="GA4EventPush('join_signup_click', '취소', 'join', 'join'); history.back(-1);">취소
                     </button>
-                    <button type="submit" class="btn btn-primary">
-                        확인
-                    </button>
+
+                        <button type="submit" class="btn btn-primary">회원가입</button>
+
                 </div>
             </div>
         </section>

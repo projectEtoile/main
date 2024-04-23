@@ -29,29 +29,32 @@
         <div class="member_join">
             <div class="join_cont">
                 <div class="login_wrap">
-                    <form action="/member/login" role="form" id="frmLogin" method="post">
-
+                    <form action="/member/login" role="form"  method="post">
+<!--                        id="frmLogin"-->
                         <div class="inp_group">
                             <p>
                                 <!--custId custPw 4.22 css id 검색 수정-->
                                 <label th:for="email">이메일 아이디</label>
-                                <input type="email" name="email" id="custId" class="form-control"
-                                       placeholder="이메일을 입력하세요">
+                                <!--<input type="email" name="email"  class="form-control"
+                                       placeholder="이메일을 입력하세요">-->
+                                <input type="email" class="form-control" name="email" placeholder="이메일을 입력해주세요">
                                 <!--<p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
                                    class="fieldError">Incorrect data</p>-->
-
                             </p>
+
+
                             <p class="mt20">
                                 <label th:for="password">비밀번호</label>
-                                <input type="password" name="password" id="custPw"  class="full_width"
-                                       placeholder="8자리 이상 입력해주세요">
+                               <!-- <input type="password" name="password"   class="full_width"
+                                       placeholder="8자리 이상 입력해주세요">-->
+                                <input type="password" class="form-control" name="password" placeholder="비밀번호을 입력해주세요">
                             </p>
 
                             <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"
                                                                        value="Y"><label for="idSave">이메일 아이디 저장</label></span>
+
                             <p th:if="${loginErrorMsg}"
                                th:text="${loginErrorMsg}" class="Error">Incorrect data</p>
-
                             <br>
 
                             <!--text(방식):출력해줘/ Incorrect data:그냥 확인차 에러 보이게-->
@@ -65,8 +68,8 @@
                                 로그인
                             </button>
                             <!--csrf:위조방지(시큐리티) parameterName,token 같이 보냄-->
-<!--                            <input type="hidden" th:name="${_csrf.parameterName}"-->
-<!--                                   th:value="${_csrf.token}">-->
+                            <input type="hidden" th:name="${_csrf.parameterName}"
+                                   th:value="${_csrf.token}">
 
                             <ul class="link">
 
@@ -95,19 +98,7 @@
 
             </div>
         </div>
-        <!--       <form id="frmKakao" method="post">
-                   <input type="hidden" name="KakaoType" id="KakaoType">
-                   <input type="hidden" name="KakaoID" id="KakaoID">
-                   <input type="hidden" name="KakaoName" id="KakaoName">
-                   <input type="hidden" name="KakaoEmail" id="KakaoEmail">
-                   <input type="hidden" name="KakaoEmailID" id="KakaoEmailID">
-                   <input type="hidden" name="KakaoMobile" id="KakaoMobile">
-                   <input type="hidden" name="KakaoGender" id="KakaoGender">
-                   <input type="hidden" name="KakaoBirthday" id="KakaoBirthday">
-                   <input type="hidden" name="KakaoAuthKey" id="KakaoAuthKey">
-                   <input name="__RequestVerificationToken" type="hidden"
-                          value="CfDJ8Kwm-N6mTIJKoRK0f9xD4UcDlMD-x8uS1qmUrQVqnJgfTAfLqRW6FmDeDyU_Rq20vYNnnMlF96ei3obgz3mxfLa25mqdhdvrZtk5z3PVc1JUHbS-UuR4w1ErZo39t-wpoe8hcHh0ul_8eZK9QVBVjf8">
-               </form>-->
+
     </section>
 </div>
 

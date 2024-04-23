@@ -25,7 +25,9 @@ public class MemberController {
     @GetMapping("/new")
     public String memberForm(Model model){
         model.addAttribute("memberFormDTO",new MemberFormDTO());
+        System.out.println("나오냐?????");
         return "member/memberForm";
+
     }
 
     /*@PostMapping("/new")
@@ -40,13 +42,14 @@ public class MemberController {
     //BindingResult bindingResult: 에러발생시 MemberFormDTO(절대null을 주지않음) memberFormDTO결과리턴 에러가있음 다시 돌아가(유효성 체크)
     public String newMember(@Valid MemberFormDTO memberFormDTO,
                             BindingResult bindingResult, Model model) {
-
+        System.out.println("나오니?");
         /*memberFormDTO의 유효성 체크결과확인-> 에러이면 다시 입력 폼을 리턴*/
         /*유효성검사*/
         if (bindingResult.hasErrors()) {
-            return "member/memberForm";// 로그인 실패 시 error 페이지로 이동
+            System.out.println("나오니?22");
+            return "member/memberForm";
         }
-
+        System.out.println("나오니?33");
         /*회원가입시 메일(findBy)이 중복된 경우 에러를 처리 */
         /*중복체크*/
         try {
