@@ -44,25 +44,25 @@ public class MemberController {
         /*memberFormDTO의 유효성 체크결과확인-> 에러이면 다시 입력 폼을 리턴*/
         /*유효성검사*/
         if (bindingResult.hasErrors()) {
-            return "member/memberForm";
+            return "member/memberForm";// 로그인 실패 시 error 페이지로 이동
         }
 
         /*회원가입시 메일(findBy)이 중복된 경우 에러를 처리 */
         /*중복체크*/
         try {
             Member member = Member.createMember(memberFormDTO, passwordEncoder);
-            memberService.saveMember(member);
-        }catch (IllegalStateException e){
+            memberService.saveMember(member);//새로 생성된 회원 객체를 데이터베이스에 저장합니다. 이를 통해 실제 회원가입이 완료
+        }catch (IllegalStateException e){//중복된 이메일 주소가 이미 존재하는 경우 등에는 예외 처리
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
-        return "redirect:/";
+        return "redirect:/";//회원가입이 성공하면 홈페이지로 리다이렉트
     }
 
     /*로그인*/
     @GetMapping("/login")
     public String loginMember(){
-        return "member/memberLoginForm";//페이지 리턴
+        return "member/login";//페이지 리턴
     }
 
     @GetMapping("/login/error")
@@ -73,6 +73,7 @@ public class MemberController {
         이렇게 추가된 정보는 뷰 템플릿에서 사용될 수 있습니다.
          */
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
-        return "member/memberLoginForm";
+        return "member/login";
     }
+
 }

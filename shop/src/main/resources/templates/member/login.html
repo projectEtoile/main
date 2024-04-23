@@ -1,129 +1,118 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/layout1}'>
 
 <head>
     <title>Login</title>
     <!--<link rel="shortcut icon" type="image/x-icon" th:href="@{image/logo.png}" sizes="16x16">
     <link rel="icon" type="image/x-icon" th:href="@{image/logo.png}" sizes="16x16">-->
 </head>
-<link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
-<link rel="stylesheet" th:href="@{/css/font.css}" type="text/css">
-
+<th:block layout:fragment="css">
+    <style>
+        .Error{
+            color:#bd2130;
+        }
+    </style>
+</th:block>
 
 <div layout:fragment="content">
-  <section id="container">
-    <div class="sub_title_wrap">
-        <h2 class="sub_title">
-            Login
-        </h2>
-    </div>
-    <div class="member_join">
-        <div class="join_cont">
-            <div class="login_wrap">
-<form action="/Member/Login?rUrl=https%3A%2F%2Fwww.wconcept.co.kr%2FMember%2FJoinInfo" id="frmLogin" method="post" name="frmLogin" onsubmit="return WCKMember.LoginSubmit();">
-  <input type="hidden" name="snsType" id="snsType">
-                    <input type="hidden" name="snsID" id="snsID">
-                    <input type="hidden" name="loginFlag" id="loginFlag" value="C">
-                    <input type="hidden" name="returnURL" id="returnURL" value="https://www.wconcept.co.kr/Member/JoinInfo">
-                    <input type="hidden" name="returnRTO" id="returnRTO" value="">
-                    <input type="hidden" name="snsAuthKey" id="snsAuthKey">
-                    <input type="hidden" name="snsName" id="snsName">
-                    <input type="hidden" name="snsEmail" id="snsEmail">
-                    <input type="hidden" name="snsEmailID" id="snsEmailID">
-                    <input type="hidden" name="snsFcustno" id="snsFcustno">
-                    <div class="inp_group">
-                        <p>
-                            <label th:for="inp_id">이메일 아이디</label>
-                            <input type="text" name="custId" id="custId" maxlength="50" class="full_width" value="" placeholder="이메일 아이디를 @까지 정확하게 입력하세요">
-                        </p>
-                        <p class="mt20">
-                            <label th:for="inp_pw">비밀번호</label>
-                            <input type="password" name="custPw" id="custPw" maxlength="20" class="full_width" placeholder="영문+숫자+특수문자 조합 8~16자리를 입력해주세요.">
-                        </p>
-                        <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave" value="Y"><label for="idSave">이메일 아이디 저장</label></span>
-                        <br>
-                        <text class="incorrect" style="display:none;" type="text" name="errorId" id="errorId">이메일 아이디를 입력해주세요.</text>
-                        <text class="incorrect" style="display:none;" type="text" name="errorPassword" id="errorPassword">비밀 번호를 입력해주세요.</text>
-                        <text class="incorrect" style="display:none;" type="text" name="errorNotAt" id="errorNotAt">이메일 아이디를 @까지 정확하게 입력해 주세요.</text>
-                        <text class="incorrect" style="display:none;" type="text" name="errorWrongIdPassword" id="errorWrongIdPassword">아이디 또는 비밀번호가 일치하지 않습니다. 다시 입력해주세요. <span id="failCount"></span></text>
-                        <text class="incorrect" style="display:none;" type="text" name="errorWrongSNS" id="errorWrongSNS">SNS계정으로 연결된 회원정보를 확인할 수 없습니다.</text>
-                        <text class="incorrect" style="display:none;" type="text" name="errorSystem" id="errorSystem">로그인에 실패했습니다. 고객센터에 문의해 주세요.</text>
-                        <text class="incorrect" style="display:none;" type="text" name="errorBlockId" id="errorBlockId">로그인이 제한된 계정입니다.</text>
-                    </div>
-                    <div class="btn_group">
-                        <button type="submit" class="btn full_width black" onclick="return GA4EventPush('login_type_click', '이메일', 'login/join', 'login'); WCKMember.LoginNormal(); ">로그인</button>
-                        <ul class="link">
-                            <li><a href="#" onclick="FindID();">아이디 찾기</a></li>
-                            <li><a href="#" onclick="FindPW();">비밀번호 찾기</a></li>
-                        </ul>
-                    </div>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8Kwm-N6mTIJKoRK0f9xD4UcDlMD-x8uS1qmUrQVqnJgfTAfLqRW6FmDeDyU_Rq20vYNnnMlF96ei3obgz3mxfLa25mqdhdvrZtk5z3PVc1JUHbS-UuR4w1ErZo39t-wpoe8hcHh0ul_8eZK9QVBVjf8"></form>            </div>
-            <div class="new_join_wrap">
-                <div class="join_email">
-                    <p class="tit_join_email">지금 가입하면 <strong>10% 할인 쿠폰+웰컴 쿠폰팩</strong> 증정</p>
-                    <div class="join_opt">
-                        <div class="btn_wrap">
-                            <a href="/2pro/project02_OIO/join.html" class="btn" onclick="GA4EventPush('login_signup_click', '이메일로 가입하기', 'login/join', 'login/join'); AMPLITUDE.ClickLogEvent('click_member_join', 'member_join');">이메일로 가입하기</a>
+    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font.css}" type="text/css">
+
+    <section id="container">
+        <div class="sub_title_wrap">
+            <h2 class="sub_title">
+                Login
+            </h2>
+        </div>
+        <div class="member_join">
+            <div class="join_cont">
+                <div class="login_wrap">
+                    <form action="/member/login" role="form" id="frmLogin" method="post">
+
+                        <div class="inp_group">
+                            <p>
+                                <!--custId custPw 4.22 css id 검색 수정-->
+                                <label th:for="email">이메일 아이디</label>
+                                <input type="email" name="email" id="custId" class="form-control"
+                                       placeholder="이메일을 입력하세요">
+                                <!--<p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
+                                   class="fieldError">Incorrect data</p>-->
+
+                            </p>
+                            <p class="mt20">
+                                <label th:for="password">비밀번호</label>
+                                <input type="password" name="password" id="custPw"  class="full_width"
+                                       placeholder="8자리 이상 입력해주세요">
+                            </p>
+
+                            <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"
+                                                                       value="Y"><label for="idSave">이메일 아이디 저장</label></span>
+                            <p th:if="${loginErrorMsg}"
+                               th:text="${loginErrorMsg}" class="Error">Incorrect data</p>
+
+                            <br>
+
+                            <!--text(방식):출력해줘/ Incorrect data:그냥 확인차 에러 보이게-->
+
+
+                        </div>
+                        <div class="btn_group">
+
+
+                            <button class="btn full_width black">
+                                로그인
+                            </button>
+                            <!--csrf:위조방지(시큐리티) parameterName,token 같이 보냄-->
+<!--                            <input type="hidden" th:name="${_csrf.parameterName}"-->
+<!--                                   th:value="${_csrf.token}">-->
+
+                            <ul class="link">
+
+                                <li><a href="#" onclick="FindPW();">비밀번호 찾기</a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div class="new_join_wrap">
+
+                    <div class="join_sns">
+                        <p class="tit_join_sns">SNS계정으로 이용해 보세요.</p>
+                        <div class="join_opt">
+                            <div class="btn_wrap">
+                                <a href="/oauth2/authorization/kakao"
+                                   onclick="WCKMember.CertSNS('kk', 'S'); GA4EventPush('login_type_click', '카카오'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_kakao');"
+                                   class="btn sns_login ty_kakao"><span>카카오로 시작하기</span></a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="join_sns">
-                    <p class="tit_join_sns">SNS계정으로 W컨셉을 이용해 보세요.</p>                    
-                    <div class="join_opt">
-                        <div class="btn_wrap">
-                            <a href="javascript:;" onclick="WCKMember.CertSNS('kk', 'S'); GA4EventPush('login_type_click', '카카오'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_kakao');" class="btn sns_login ty_kakao"><span>카카오로 시작하기</span></a>
-                        </div>
-                        <ul class="sns_type">
-                            <li class="naver"><a href="javascript:;" onclick="WCKMember.CertSNS('nv', 'S'); GA4EventPush('login_type_click', '네이버', 'login/join', 'login'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_naver');">naver</a></li>
-                            <!--<li class="kakao"><a href="javascript:;" onclick="WCKMember.CertSNS('kk', 'S'); GA4EventPush('login_type_click', '카카오', 'login/join', 'login'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_kakao');">kakao</a></li>-->
-                            <li class="facebook"><a href="javascript:;" onclick="WCKMember.CertSNS('fb', 'S'); GA4EventPush('login_type_click', '페이스북', 'login/join', 'login'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_facebook');">facebook</a></li>
-                            <li class="instagram"><a href="javascript:;" onclick="WCKMember.CertSNS('ig', 'S'); GA4EventPush('login_type_click', '인스타그램', 'login/join', 'login'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_instagram');">instagram</a></li>
-                            <li class="google"><a href="javascript:;" onclick="WCKMember.CertSNS('gg', 'S'); GA4EventPush('login_type_click', '구글', 'login/join', 'login'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_google');">google</a></li>
-                            <li class="apple"><a href="javascript:;" onclick="WCKMember.CertSNS('ap', 'S'); GA4EventPush('login_type_click', '애플', 'login/join', 'login'); AMPLITUDE.ClickLogEvent('click_login_type', 'login_apple');">apple</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="nonmember_order_inq">
-                        <a href="/Member/GuestOrder" class="btn gray" onclick="AMPLITUDE.ClickLogEvent('click_guest_order', 'guest_order');">비회원 주문조회</a>
+
             </div>
         </div>
-    </div>
-<form action="/Member/JoinInfoSNS" id="frmJoinSNS" method="post" name="frmJoinSNS">        <input type="hidden" name="JoinSNSType" id="JoinSNSType" value="">
-        <input type="hidden" name="JoinSNSID" id="JoinSNSID" value="">
-        <input type="hidden" name="JoinSNSName" id="JoinSNSName" value="">
-        <input type="hidden" name="JoinSNSEmailID" id="JoinSNSEmailID" value="">
-        <input type="hidden" name="JoinSNSEmail" id="JoinSNSEmail" value="">
-        <input type="hidden" name="JoinSNSAuthKey" id="JoinSNSAuthKey" value="">
-        <input type="hidden" name="JoinType" id="JoinType" value="S">
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8Kwm-N6mTIJKoRK0f9xD4UcDlMD-x8uS1qmUrQVqnJgfTAfLqRW6FmDeDyU_Rq20vYNnnMlF96ei3obgz3mxfLa25mqdhdvrZtk5z3PVc1JUHbS-UuR4w1ErZo39t-wpoe8hcHh0ul_8eZK9QVBVjf8"></form>
-    <form id="frmKakao" method="post">
-        <input type="hidden" name="KakaoType" id="KakaoType">
-        <input type="hidden" name="KakaoID" id="KakaoID">
-        <input type="hidden" name="KakaoName" id="KakaoName">
-        <input type="hidden" name="KakaoEmail" id="KakaoEmail">
-        <input type="hidden" name="KakaoEmailID" id="KakaoEmailID">
-        <input type="hidden" name="KakaoMobile" id="KakaoMobile">
-        <input type="hidden" name="KakaoGender" id="KakaoGender">
-        <input type="hidden" name="KakaoBirthday" id="KakaoBirthday">
-        <input type="hidden" name="KakaoAuthKey" id="KakaoAuthKey">
-    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Kwm-N6mTIJKoRK0f9xD4UcDlMD-x8uS1qmUrQVqnJgfTAfLqRW6FmDeDyU_Rq20vYNnnMlF96ei3obgz3mxfLa25mqdhdvrZtk5z3PVc1JUHbS-UuR4w1ErZo39t-wpoe8hcHh0ul_8eZK9QVBVjf8"></form>
-</section>
+        <!--       <form id="frmKakao" method="post">
+                   <input type="hidden" name="KakaoType" id="KakaoType">
+                   <input type="hidden" name="KakaoID" id="KakaoID">
+                   <input type="hidden" name="KakaoName" id="KakaoName">
+                   <input type="hidden" name="KakaoEmail" id="KakaoEmail">
+                   <input type="hidden" name="KakaoEmailID" id="KakaoEmailID">
+                   <input type="hidden" name="KakaoMobile" id="KakaoMobile">
+                   <input type="hidden" name="KakaoGender" id="KakaoGender">
+                   <input type="hidden" name="KakaoBirthday" id="KakaoBirthday">
+                   <input type="hidden" name="KakaoAuthKey" id="KakaoAuthKey">
+                   <input name="__RequestVerificationToken" type="hidden"
+                          value="CfDJ8Kwm-N6mTIJKoRK0f9xD4UcDlMD-x8uS1qmUrQVqnJgfTAfLqRW6FmDeDyU_Rq20vYNnnMlF96ei3obgz3mxfLa25mqdhdvrZtk5z3PVc1JUHbS-UuR4w1ErZo39t-wpoe8hcHh0ul_8eZK9QVBVjf8">
+               </form>-->
+    </section>
 </div>
 
 <th:block layout:fragment="script">
-  <script th:inline="javascript">
-  function FindID() {
-    const newWin = window.open("idInquiry.html", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no !import, width=600, height=900, left=400");
-    if(newWin == null) 
-      alert("팝업이 차단되어 있습니다. 팝업차단을 해제해 주세요.");
-  }
+    <script th:inline="javascript">
 
-  function FindPW() {
-    const newWin = window.open("pwInquiry.html", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
-    if(newWin == null) 
-      alert("팝업이 차단되어 있습니다. 팝업차단을 해제해 주세요.");
-  }
-  </script>
+    </script>
 </th:block>

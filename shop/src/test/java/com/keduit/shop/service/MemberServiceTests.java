@@ -25,7 +25,7 @@ public class MemberServiceTests {
         MemberFormDTO memberFormDTO = new MemberFormDTO();
         memberFormDTO.setEmail("test124@Hong.com");
         memberFormDTO.setName("홍길동");
-        memberFormDTO.setAddress("서울시 관악구 봉천동 123");
+
         memberFormDTO.setPassword("1234");
         return Member.createMember(memberFormDTO, passwordEncoder);
     }

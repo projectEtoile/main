@@ -28,6 +28,8 @@ public class Member extends BaseTimeEntity{
 
     private String address;
 
+    private boolean social;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -38,7 +40,7 @@ public class Member extends BaseTimeEntity{
         Member member = new Member();
         member.setName(memberFormDTO.getName());
         member.setEmail(memberFormDTO.getEmail());
-        member.setAddress(memberFormDTO.getAddress());
+
         String password = passwordEncoder.encode(memberFormDTO.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);
