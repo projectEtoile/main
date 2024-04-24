@@ -1,6 +1,5 @@
 package com.keduit.shop.entity;
 
-import com.keduit.shop.constant.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +28,7 @@ public class Order extends BaseTimeEntity {
     private LocalDateTime orderDate; /*주문일*/
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus; /*주문상태*/
+    private OrderItem.OrderStatus orderStatus; /*주문상태*/
 
 
     private String onDelivery; /*배송중*/
@@ -60,7 +59,7 @@ public class Order extends BaseTimeEntity {
         for (OrderItem orderItem : orderItemList) {
             order.addOrderItem(orderItem);
         }
-        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderStatus(OrderItem.OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;
     }
@@ -77,7 +76,7 @@ public class Order extends BaseTimeEntity {
     public void cancelOrder() {
 
         /*1. 주문 상태를 cancel로 변경*/
-        this.orderStatus = OrderStatus.CANCEL;
+        this.orderStatus = OrderItem.OrderStatus.CANCEL;
         /*2. 주문 상품의 주문 수량을 재고에서 증가시킴*/
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel();
