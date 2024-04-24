@@ -2,6 +2,7 @@ package com.keduit.shop.repository;
 
 import com.keduit.shop.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +22,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {//<이름
     @Query("update Member m set m.password = :password where m.email = :email")
     void updatePassword(@Param("password")String password, @Param("email")String email);
 }
+
 

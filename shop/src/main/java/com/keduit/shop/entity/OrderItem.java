@@ -29,6 +29,7 @@ public class OrderItem extends BaseTimeEntity {
     private int count; /*수량*/
 
 
+
  /*   public static OrderItem createOrderItem(Item item, int count) {
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
@@ -39,6 +40,22 @@ public class OrderItem extends BaseTimeEntity {
         return orderItem;
 
     }*/
+
+    public static OrderItem createOrderItem(Item item, int count, String size) {
+        OrderItem orderItem = new OrderItem();
+
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice() * count); // 주문 가격 = 상품 가격 * 주문 수량
+
+        // 주문 상품의 선택된 사이즈에 따른 재고를 감소시킴
+        item.removeStock(size, count); // 이 부분을 수정
+
+
+        item.removeStock(size, count); // 주문된 사이즈의 재고 감소
+        return orderItem;
+    }
+
 
     public int getTotalPrice() {
         return orderPrice * count;

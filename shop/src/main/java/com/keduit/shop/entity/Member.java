@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Member extends BaseTimeEntity{
+public class Member extends BaseEntity{
     @Id
     @Column(name="member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,9 @@ public class Member extends BaseTimeEntity{
 
 
     /*dto주면 entity 리턴하는애임 이게핵심. html폼에서 입력받는 주체가 dto 그걸 entity에 set해주는것 그걸리턴함*/
+
    public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
+
         Member member = new Member();
         member.setName(memberFormDTO.getName());
         member.setEmail(memberFormDTO.getEmail());

@@ -3,12 +3,41 @@ package com.keduit.shop.repository;
 import com.keduit.shop.entity.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.query.Param;
 
-public interface ItemRepository extends JpaRepository<Item, Long>{
 
-    // jpa 에서 제공하는 pageable 문법. Page는 리스트 타입의 일종이며 Item 을 객체로 가진다.
+import java.util.List;
+
+public interface ItemRepository extends JpaRepository<Item, Long>,
+    ItemRepositoryCustom{
+
+    List<Item> findByItemNm(String itemNm);
+
+    List<Item> findByItemNmOrItemText(String itemNm, String itemText);
+
+    List<Item> findByPriceLessThan(Integer price); /*이거 래퍼클래스로주는이유는 객체로 처리해줘야해서*/
+
+    List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);/*금액큰거부터 나오게하기*/
+
+
     Page<Item> findPageBy(Pageable page);
+
+
+
+
+
+
+    /*위에랑 다르게 JPQL사용하기*/
+    @Query("select i from Item i where i.itemText like" +
+            " %:itemText% order by i.price desc")
+    List<Item> findByItemText(@Param("itemText") String itemDetail);
+
+    /*nativeQuery 사용하면 데이터베이스에서 사용하는 쿼리문 그대로 사용해야함 위에랑 차이점을 확인하기.*/
+    @Query(value = "select * from item i where i.item_text like " +
+            " %:itemText% order by i.price desc", nativeQuery = true)
+    List<Item> findByItemTextByNative(@Param("itemText") String itemText);
 
 }

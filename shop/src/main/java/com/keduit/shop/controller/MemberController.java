@@ -18,15 +18,19 @@ import javax.validation.Valid;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
+
     //memberservice생성자 주입
+
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/new")
     public String memberForm(Model model){
+
         model.addAttribute("memberFormDTO",new MemberFormDTO());
         System.out.println("나오냐?????");
         return "member/memberForm";
+
 
     }
 
@@ -39,6 +43,7 @@ public class MemberController {
     }*/
 
     @PostMapping("/new")
+
     //BindingResult bindingResult: 에러발생시 MemberFormDTO(절대null을 주지않음) memberFormDTO결과리턴 에러가있음 다시 돌아가(유효성 체크)
     public String newMember(@Valid MemberFormDTO memberFormDTO,
                             BindingResult bindingResult, Model model) {
@@ -80,3 +85,4 @@ public class MemberController {
     }
 
 }
+

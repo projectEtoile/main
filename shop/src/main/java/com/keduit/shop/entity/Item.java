@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item extends BaseTimeEntity{
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +41,10 @@ public class Item extends BaseTimeEntity{
     private int stockS;
 
     @Column(nullable = false)
-    private int stockM;  
+    private int stockM;
 
     @Column(nullable = false)
-    private int stockL;  
+    private int stockL;
 
     @Column(nullable = false)
     private int stockFree;
@@ -89,23 +89,66 @@ public class Item extends BaseTimeEntity{
     this.itemSellStatus = itemFormDTO.getItemSellStatus();
     }*/
 
-    public void removeStock(int stockNumber) {
-        int restStock = this.stockNumber - stockNumber; /*재고계산*/
-        /*재고계산했는데 -가 나면 에러를 던질거임*/
-        if (restStock < 0) {
-            throw new OutOfStockException("상품 재고가 부족합니다. (현재 재고 수량: " + this.stockNumber + ")");
+    public void removeStock(String size, int stockNumber) {
+        switch (size) {
+            case "S":
+                if (this.stockS < stockNumber) {
+
+                    throw new OutOfStockException("S 사이즈 재고가 부족합니다.");
+
+                }
+                this.stockS -= stockNumber; // S 사이즈 감소
+                break;
+            case "M":
+                if (this.stockM < stockNumber) {
+
+                    throw new OutOfStockException("M 사이즈 재고가 부족합니다.");
+
+                }
+                this.stockM -= stockNumber; // M 사이즈 감소
+                break;
+            case "L":
+                if (this.stockL < stockNumber) {
+
+                    throw new OutOfStockException("L 사이즈 재고가 부족합니다.");
+
+                }
+                this.stockL -= stockNumber; // L 사이즈 감소
+                break;
+            case "Free":
+                if (this.stockFree < stockNumber) {
+
+                    throw new OutOfStockException("Free 사이즈 재고가 부족합니다.");
+
+                }
+                this.stockFree -= stockNumber; // Free 사이즈 감소
+                break;
+            default:
+                throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
-        this.stockNumber = restStock; /*reststock이 이제 재고가 되는것.*/
+
+
+        // 모든 사이즈의 재고 감소와 함께 stock_number 감소
+
+        this.stockNumber -= stockNumber;
     }
+
+
+
+
+
+
+
+
 
     /*주문 취소시 재고 증가*/
     public void addStock(int stockNumber) {
 
+
+
         this.stockNumber += stockNumber;
     }
-
 }
-
     /*@CreationTimestamp
     private LocalDateTime regDate;  *//*등록 시간*//*
 

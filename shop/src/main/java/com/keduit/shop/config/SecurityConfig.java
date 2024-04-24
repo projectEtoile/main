@@ -12,8 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration
 @EnableWebSecurity
+@Configuration
 public class SecurityConfig {
 
   @Bean
@@ -67,6 +67,13 @@ public class SecurityConfig {
   @Bean
   public AuthenticationSuccessHandler authenticationSuccessHandler(){
     return new CustomSocialLoginSuccessHandler(passwordEncoder());
+
   }
 
+
+  /*resource/static 폴더의 하위 파일은 인증에서 제외시키기*/
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+  }
 }
