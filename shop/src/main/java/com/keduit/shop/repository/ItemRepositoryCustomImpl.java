@@ -1,5 +1,6 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.QItem;
@@ -96,6 +97,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 //
 //        return null;
 
+    private BooleanExpression searchSellStatuEq(ItemSellStatus searchSellStatus){
+        System.out.println("---searchSellStatus=====> " + searchSellStatus);
+        return searchSellStatus == null? null: QItem.item.itemSellStatus.eq(searchSellStatus);
+        // 쿼리스트링 값이 널이면 널. 존재하면 입력된 설정값과 일치하는 것만 검색.
+    }
 
 
     @Override
@@ -109,7 +115,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(regDtsAfter(adminItemSearchDTO.getSearchDateType()), // 날짜 타입 설정.
                         searchByLikeOrEq(adminItemSearchDTO.getSearchBy(), adminItemSearchDTO.getSearchQuery()),
                         // id 혹은 상품명 검색. 해당 쿼리문자열까지.
-                        searchByLevel(adminItemSearchDTO.getLevel1(), adminItemSearchDTO.getLevel2()))
+                        searchByLevel(adminItemSearchDTO.getLevel1(), adminItemSearchDTO.getLevel2()),
+                        searchSellStatuEq(adminItemSearchDTO.getItemSellStatus()))
                 // 카테고리 설정 값. 
                 .orderBy(QItem.item.id.desc()) // 등록순.
                 .offset(pageable.getOffset()) // 데이터를 가지고 올 시작 인덱스 즉.0이게됬다
@@ -123,7 +130,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(regDtsAfter(adminItemSearchDTO.getSearchDateType()), // 날짜 타입 설정.
                         searchByLikeOrEq(adminItemSearchDTO.getSearchBy(),adminItemSearchDTO.getSearchQuery()),
                         // id 혹은 상품명 검색. 해당 쿼리문자열까지.
-                        searchByLevel(adminItemSearchDTO.getLevel1(),adminItemSearchDTO.getLevel2()))
+                        searchByLevel(adminItemSearchDTO.getLevel1(),adminItemSearchDTO.getLevel2()),
+                        searchSellStatuEq(adminItemSearchDTO.getItemSellStatus()))
                 .fetchOne(); // 하나의 결과값. 즉 몇개인지.
 
         System.out.println(total+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"); // 검색된 리스트들의 총 갯수를 출력한다.

@@ -84,10 +84,12 @@ $(document).ready(function(){
             const level2 = $("#level2").val() || null;
             const searchBy = $("#searchBy").val();
             const searchQuery = $("#searchQuery").val();
+            const itemSellStatus = $("#itemSellStatus").val();  // 판매 상태
 
             location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
                 + "&level1=" + level1
                 + "&level2=" + level2
                 + "&searchBy=" + searchBy
-                + "&searchQuery=" + searchQuery;
+                + "&searchQuery=" + searchQuery
+                + "&itemSellStatus=" + itemSellStatus;
         }

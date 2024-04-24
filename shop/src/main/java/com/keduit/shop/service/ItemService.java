@@ -28,19 +28,18 @@ public class ItemService {
     private final ItemImgService itemImgService;
     private final ItemImgRepository itemImgRepository;
 
-    public Long saveItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList) throws Exception{
+    public Long saveItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList) throws Exception {
 
         Item item = itemFormDTO.createItem(); // modelmapper을 이용하여 간단하게 메핑.
         // 이제 나머지 엔티티 필드들을 세팅해줘야한다
         int total = itemFormDTO.getStockFree()
-                +itemFormDTO.getStockL()
-                +itemFormDTO.getStockM()
-                +itemFormDTO.getStockS();
+                + itemFormDTO.getStockL()
+                + itemFormDTO.getStockM()
+                + itemFormDTO.getStockS();
 
         item.setStockNumber(total);
         item.setDiscountRate(1); // 기본값인 할인률1
 
-        System.out.println(item+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         itemRepository.save(item);
 
@@ -55,16 +54,16 @@ public class ItemService {
 
             // 여기선 item객체만 set하고 이제 나머지 값들을 set해야함.
             itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
-             
+
             // 위 메서드에서 나머지 필드들을 모두 채우고 테이블에 등록까지 완료했다.
         }
-       return item.getId();
+        return item.getId();
     }
 
     // 검색을 위한 메서드이므로 값이 변하지 않는다는 것을 알려줌
     // 으로서 성능을 효울적으로 사용
     @Transactional(readOnly = true)
-    public Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable){
+    public Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable) {
         return itemRepository.getAdminItemPage(adminItemSearchDTO, pageable);
         // custom 한 레파지토리를 쓰기위해.
         // 혹시 예외 시 아이탬서비스 impl 에 dsl 추가
@@ -79,7 +78,7 @@ public class ItemService {
         // modelMapper을 활용해보자.
         List<ItemImgDTO> itemImgDTOList = new ArrayList<>();
 
-        for(ItemImg itemImg : itemImgList){ // 꺼낸 값을 List타입에 담는데. itemImg에 매핑하기 위한작업.
+        for (ItemImg itemImg : itemImgList) { // 꺼낸 값을 List타입에 담는데. itemImg에 매핑하기 위한작업.
 
             ItemImgDTO itemImgDTO = ItemImgDTO.of(itemImg);
             // for문에서의 하나의 itemImg 객체를 itemImgDTO로 변환했다.
@@ -104,5 +103,26 @@ public class ItemService {
 
         return itemFormDTO;
         // 이걸 넘겨주면 서비스 역할은 끝.
+    }
+
+    public Long updateItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList) throws Exception {
+
+        Item item = itemRepository.findById(itemFormDTO.getId())
+                .orElseThrow(EntityNotFoundException::new); // DTO에 담긴 id로 해당 아이탬 찾아냄.
+
+        item.updateItem(itemFormDTO);   // DTO에 있던 정보들로 새로 업데이트.
+        // 하지만 itemimgList와 idList는 아직 업데이트되지않음
+        List<Long> itemImgIds = itemFormDTO.getItemImgIds();
+
+
+        // 이미지 등록
+        for (int i = 0; i < itemImgFileList.size(); i++) {
+
+            System.out.println("******* " + i + " ------ " + itemImgIds.get(i) + " ----" + itemImgFileList.get(i));
+//      상품이미지를 업데이트 하기 위해
+//      updateItemImg()메소드에 상품이미지 아이디와 상품이미지 파일 정보를 파라미터로 전달 함.
+            itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
+        }
+        return item.getId();
     }
 }

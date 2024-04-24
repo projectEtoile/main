@@ -43,16 +43,13 @@ public class ItemController {
         if (bindingResult.hasErrors()) {
             return "admin/itemForm";
         }
-
         try {
             itemService.saveItem(itemFormDTO, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생했습니다.");
             return "item/itemForm";
         }
-
         return "template";
-
     }
 
 //    @GetMapping("admin/items")
@@ -79,15 +76,15 @@ public class ItemController {
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         // 일단 페이지 너블 따로 생성. 값 설정까지.
 
-        Page<Item> items = itemService.getAdminItemPage(adminItemSearchDTO,pageable);
+        Page<Item> items = itemService.getAdminItemPage(adminItemSearchDTO, pageable);
 
         System.out.println("----- items.getContent() : " + items.getContent());
-        System.out.println("----- adminItemSearchDTO: " + adminItemSearchDTO );
+        System.out.println("----- adminItemSearchDTO: " + adminItemSearchDTO);
 
         model.addAttribute("items", items);
         model.addAttribute("adminItemSearchDTO", adminItemSearchDTO); // 검색어 유지시키기 위한 설정!
         model.addAttribute("maxPage", 10); // 부트스트랩 페이징 뷰를 위한?
-                                                            // 맞다. 1부터 10까지 선택 가능하게할지!
+        // 맞다. 1부터 10까지 선택 가능하게할지!
 
         // Page 와 Slice의 차이! Page는 일단 총 수량 계산. Slice는 딱 정해진것만 가져옴. 성능 더 좋음
 
@@ -98,12 +95,37 @@ public class ItemController {
     }
 
     @GetMapping("/admin/item/modify/{itemId}")
-    public String adminItemDtl(Model model, @PathVariable("itemId") Long itemId){
+    public String adminItemDtl(Model model, @PathVariable("itemId") Long itemId) {
 
         ItemFormDTO itemFormDTO = itemService.getItemDtl(itemId);
-        System.out.println("#$$$$$$#$#$#$#$#$#$$$$"+itemFormDTO);
-        model.addAttribute("itemFormDTO",itemFormDTO);
+        System.out.println("#$$$$$$#$#$#$#$#$#$$$$" + itemFormDTO);
+        model.addAttribute("itemFormDTO", itemFormDTO);
         return "admin/itemModify";
 
+    }
+
+    @PostMapping("/admin/item/modify/{itemId}")
+    public String itemUpdate(@Valid ItemFormDTO itemFormDTO,
+                             BindingResult bindingResult,
+                             @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
+                             Model model) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(" post 수정 유효성 검사 실패@@@@@@@@@@@@@@@@@@@");
+            System.out.println(itemFormDTO.getItemImgIds());
+            return "item/itemForm"; // 유효성 검사 실패시 돌아간다.
+            // 하지만 이럼 수정했던 정보가 날아가므로 html에서 유효성 검사를 모두 한다.
+
+        }
+        try {
+            itemService.updateItem(itemFormDTO, itemImgFileList);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다.");
+            System.out.println(itemFormDTO.getItemImgIds());
+            System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            return "redirect:/admin/item/modify/1";
+        }
+        System.out.println(itemFormDTO.getItemImgIds());
+        System.out.println("포스트수정 응답받음@@@@@@@@@@@@@@@@@");
+        return "redirect:/admin/item/new";
     }
 }
