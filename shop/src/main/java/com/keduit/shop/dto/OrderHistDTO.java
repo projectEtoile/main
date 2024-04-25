@@ -2,6 +2,7 @@ package com.keduit.shop.dto;
 
 import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.entity.Order;
+import com.keduit.shop.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +20,7 @@ public class OrderHistDTO {
     /*필드*/
     private Long orderId;  // 주문 아이디
     private String orderDate;
-    private OrderStatus orderStatus;  // 주문상태
+    private OrderItem.OrderStatus orderStatus;  // 주문상태
 
     /*생성자*/
     public OrderHistDTO(Order order) {
