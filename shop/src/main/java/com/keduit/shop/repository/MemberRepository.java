@@ -3,6 +3,24 @@ package com.keduit.shop.repository;
 import com.keduit.shop.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+public interface MemberRepository extends JpaRepository<Member, Long> {//<이름, 타입>
     Member findByEmail(String email);
+
+    @Query("select m from Member m where m.email = :email and m.social=false")
+    Optional<Member> getWithRoles(String email);
+
+    //password update
+    @Modifying
+    @Transactional
+    @Query("update Member m set m.password = :password where m.email = :email")
+    void updatePassword(@Param("password")String password, @Param("email")String email);
 }
+
+
