@@ -90,7 +90,6 @@ public class MemberController {
         if(Utilit.empty(email)){
             return Utility.jsHistoryBack("이메일을 입력해주세요");
         }
-
     }*/
 
 }
