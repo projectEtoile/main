@@ -53,5 +53,7 @@ public class MemberService implements UserDetailsService {
     public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
         return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
     }
+
+
 }
 

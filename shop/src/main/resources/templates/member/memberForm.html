@@ -50,8 +50,8 @@
                         <th th:for="email">이메일 아이디 <span>*</span></th>
                         <td>
                             <label th:for="email"></label>
-                            <input type="text" style="width: 125px;" th:field="*{email}">
-                            <span class="txt_email">@</span>
+                            <input type="text" th:field="*{email}" placeholder="이메일을 입력해주세요">
+<!--                            <span class="txt_email">@</span>-->
                             <!--                            <input type="email" style="width: 125px;" name="email">-->
                             <!-- <select class="normal" style="width: 114px; display: none;" id="selectEmail"> -->
                             <!--                            <select class="normal" id="selectEmail">-->
@@ -99,6 +99,7 @@
 
                     </tbody>
                 </table>
+<!--                <input type="checkbox">-->
                 <div class="join_agreement">
                     <p class="all_check_desc"><span class="input_button checkbox"><label
                     >전체 동의합니다.<br> <span>전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다.<br> 선택항목에 대한 동의를 거부하는 경우에도 회원가입 서비스는 이용 가능합니다.</span></label></span>
@@ -121,14 +122,13 @@
                         </li>
                     </ul>
                 </div>
-                <div class="join_btn_wrap">
-                    <button type="button" id="btnCancel" name="button" class="btn"
-                            onclick="GA4EventPush('join_signup_click', '취소', 'join', 'join'); history.back(-1);">취소
-                    </button>
 
-                    <button type="submit">회원가입</button>
+                <div class="text-center">
+                        <button type="submit" class="btn btn-primary">회원가입</button>
+
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 </div>
+
             </div>
         </section>
 
