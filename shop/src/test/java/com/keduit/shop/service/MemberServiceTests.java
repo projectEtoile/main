@@ -1,5 +1,6 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Member;
 import org.junit.jupiter.api.DisplayName;
