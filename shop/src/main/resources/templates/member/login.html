@@ -107,7 +107,7 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         function FindPW() {
-            const newWin = window.open("member/pwInquiry.html", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
+            const newWin = window.open("pw", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
             if(newWin == null)
                 alert("팝업이 차단되어 있습니다. 팝업차단을 해제해 주세요.");
         }
