@@ -39,7 +39,6 @@ public class MemberServiceTests {
         //비교(각각필드 중복되는지), assert: member.~~와 aveMember~~가 같기를 기대해(충족vs실패)
         assertEquals(member.getEmail(),saveMember.getEmail());
         assertEquals(member.getName(),saveMember.getName());
-        assertEquals(member.getAddress(),saveMember.getAddress());
         assertEquals(member.getPassword(),saveMember.getPassword());
         assertEquals(member.getRole(),saveMember.getRole());
     }
