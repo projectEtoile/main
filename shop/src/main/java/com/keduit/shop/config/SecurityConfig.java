@@ -72,8 +72,5 @@ public class SecurityConfig {
 
 
   /*resource/static 폴더의 하위 파일은 인증에서 제외시키기*/
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-  }
+
 }
