@@ -66,7 +66,6 @@ public class CustomOAouth2UserService extends DefaultOAuth2UserService {
             //회원 추가
             Member member = new Member();
             member.setName("KAKAO");
-            member.setAddress("");
             member.setEmail(email);
             member.setPassword(passwordEncoder.encode("1111"));
             member.setSocial(true);

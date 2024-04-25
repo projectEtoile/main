@@ -12,19 +12,22 @@
     <!-- 상품등록 시작 -->
 
     <div class="container">
-        <form th:action="@{/admin/item/new}" method="post" enctype="multipart/form-data"
-              th:object="${itemFormDTO}">
 
+        <form th:action="@{/admin/item/modify/*{itemFormDTO.id}}" method="post" enctype="multipart/form-data"
+              th:object="${itemFormDTO}">
             <h1> 상품 등록 </h1><br><br><br>
-            <!--            <input type="hidden" th:field="*{id}">-->
-            <!--            <div class="box">-->
-            <!--                <label for="productC">상품코드<span style="color: red;"> *</span><span-->
-            <!--                        id="smallLetter">필수항목</span></label><br>-->
-            <!--                <input type="text" id="productC" name="productC" placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요">-->
-            <!--            </div>-->
+            <div class="box">
+
+                <label for="id">상품코드<span style="color: red;"> *</span></label><br>
+                <input type="text" th:field="*{id}" id="id" readonly>
+
+
+                <!--                <input type="text" id="productC" name="productC" placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요">-->
+            </div>
 
             <div class="box">
-                <label for="ProductN">상품 이름<span style="color: red;"> *</span></label><br>
+                <label for="ProductN">상품 이름<span style="color: red;"> *</span><span
+                        id="smallLetter">필수항목</span></label><br>
                 <input type="text" id="productN" th:field="*{itemNm}" placeholder="상품 이름을 입력해 주세요">
             </div>
             <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
@@ -49,9 +52,9 @@
                 <select th:field="*{level2}" id="categorys">
                     <optgroup label="Top">
                         <option value="">카테고리를 반드시 선택해주세요</option>
-                        <option value="블라우스">블라우스</option>
+                        <option value="후드/블라우스">블라우스</option>
                         <option value="셔츠">셔츠</option>
-                        <option value="맨투맨/후드">맨투맨/후드</option>
+                        <option value="맨투맨">맨투맨/후드</option>
                         <option value="니트/스웨터">니트/스웨터</option>
                     </optgroup>
                     <optgroup label="Outer">
@@ -83,22 +86,51 @@
                class="fieldError">Incorrect data</p>
 
             <div class="box">
+                <div th:if="${not #lists.isEmpty(itemFormDTO.itemImgDTOList)}">
+                    <div th:each="itemImgDTO, status: ${itemFormDTO.itemImgDTOList}">
 
-                <img class="user_image" src="#" alt="">
-                <!-- onchange event 걸어주기  -->
-                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
-                       class="user_profile_img"/>
+                            <img class="user_image" th:src="${itemImgDTO.imgUrl}" alt="#">
 
-                <img class="user_image" src="#" alt="">
-                <!-- onchange event 걸어주기  -->
-                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
-                       class="user_profile_img"/>
+                            <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);"
+                                   type="file"
+                                   class="user_profile_img custom-file-input"/>
 
-                <img class="user_image" src="#" alt="">
-                <!-- onchange event 걸어주기  -->
-                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
-                       class="user_profile_img"/>
+
+                            <input type="text" name="itemImgIds" th:value="${itemImgDTO.id}">
+
+                            <!--       #strings: 문자 관련 유틸리티 객체-->
+                            <label class="custom-file-label"
+                                   th:text="${not #strings.isEmpty(itemImgDTO.oriImgName)}
+                      ? ${itemImgDTO.oriImgName} : '상품이미지' + ${status.index+1}"></label>
+
+                    </div>
+                </div>
             </div>
+
+            <!--            <div class="box">-->
+            <!--                <div th:if="${itemFormDTO.itemImgDTOList.size() > 0}">-->
+            <!--                    <img class="user_image" th:src="${itemFormDTO.itemImgDTOList[0].imgUrl}" alt="#">-->
+            <!--                    &lt;!&ndash; onchange event 걸어주기  &ndash;&gt;-->
+            <!--                                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"-->
+            <!--                                       class="user_profile_img"/>-->
+            <!--                    <input type="text" name="itemFormDTO.itemImgIds[0]" th:value="${itemFormDTO.itemImgDTOList[0].id}">-->
+            <!--                </div>-->
+            <!--                <div th:if="${itemFormDTO.itemImgDTOList.size() > 1}">-->
+            <!--                    <img class="user_image" th:src="${itemFormDTO.itemImgDTOList[1].imgUrl}" alt="#">-->
+            <!--                    &lt;!&ndash; onchange event 걸어주기  &ndash;&gt;-->
+            <!--                    <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"-->
+            <!--                           class="user_profile_img"/>-->
+            <!--                    <input type="text" name="itemFormDTO.itemImgIds[1]" th:value="${itemFormDTO.itemImgDTOList[1].id}">-->
+            <!--                </div>-->
+            <!--                <div th:if="${itemFormDTO.itemImgDTOList.size() > 2}">-->
+            <!--                    <img class="user_image" th:src="${itemFormDTO.itemImgDTOList[2].imgUrl}" alt="#">-->
+            <!--                    &lt;!&ndash; onchange event 걸어주기  &ndash;&gt;-->
+            <!--                    <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"-->
+            <!--                           class="user_profile_img"/>-->
+            <!--                    <input type="text" name="itemFormDTO.itemImgIds[2]" th:value="${itemFormDTO.itemImgDTOList[2].id}">-->
+            <!--                </div>-->
+            <!--            </div>-->
+
 
             <div class="box">
                 <label for="productD">상품 설명</label><br>
@@ -113,15 +145,6 @@
             </div>
             <p th:if="${#fields.hasErrors('material')}" th:errors="*{material}"
                class="fieldError">Incorrect data</p>
-
-
-            <!--          <div class="box">
-                          <label for="size">치수<span style="color: red;"> *</span></label><br>
-                          <input type="text" id="size" name="size">
-                      </div>-->
-            <!--            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"-->
-            <!--               class="fieldError">Incorrect data</p>-->
-
 
             <div class="box">
                 <label>S 재고 수량</label><br>
@@ -143,10 +166,16 @@
             <p th:if="${#fields.hasErrors('stockFree')}" th:errors="*{stockFree}"
                class="fieldError">Incorrect data</p>
 
-            <div class="box" hidden="hidden">
-                <select th:field="*{itemSellStatus}">
+            <!--            <div hidden="hidden">-->
+            <!--                <select th:field="*{itemSellStatus}">-->
+            <!--                    <option value="SELL">판매중</option>-->
+            <!--                    &lt;!&ndash;                    <option value="SOLD_OUT">품절</option>&ndash;&gt;-->
+            <!--                </select>-->
+            <!--            </div>-->
+            <div class="box">
+                <select th:field="*{itemSellStatus}" class="custom-select">
                     <option value="SELL">판매중</option>
-                    <!--                    <option value="SOLD_OUT">품절</option>-->
+                    <option value="STOP_SALE">판매 중지</option>
                 </select>
             </div>
 

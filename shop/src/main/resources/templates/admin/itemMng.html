@@ -9,132 +9,206 @@
     <!--${items.number} 이부분은 현제 페이지를 나타낸다.? -->
     <form th:action="@{'/admin/items/' + ${items.number}}"
           role="form" method="get" th:object="${items}">
-    <body>
+        <body>
 
-    <!--  start: (현재페이지 번호 / 보여줄 페이지 수) * 보여줄 페이지 수 + 1-->
-    <!--  end: 현재 화면에서 보여줄 마지막 페이지 번호-->
+        <!--  start: (현재페이지 번호 / 보여줄 페이지 수) * 보여줄 페이지 수 + 1-->
+        <!--  end: 현재 화면에서 보여줄 마지막 페이지 번호-->
 
-    <!-- th:with은 블록에서 자주 사용될 값을 변수에 담아주는 역할! 그냥 변수 선언이라고 보면된다-->
-    <div th:with="start=${(items.number/maxPage)*maxPage + 1},
-                  end=(${(items.totalPages == 0) ? 1 :
-                  (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) :
-                  items.totalPages)})" >
+        <!--         th:with은 블록에서 자주 사용될 값을 변수에 담아주는 역할! 그냥 변수 선언이라고 보면된다-->
+        <!--            <div th:with="start=${(items.number/maxPage)*maxPage + 1},-->
+        <!--                          end=(${(items.totalPages == 0) ? 1 :-->
+        <!--                          (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) :-->
+        <!--                          items.totalPages)})" >-->
 
-        <ul >
-            <li th:classappend="${items.first}?'disabled'">
-                <a th:onclick="'javascript: page('+ ${items.number - 1} + ')'"
-                   aria-label='Previous'>
-                    <span aria-hidden='true'>Previous</span>
-                </a>
-            </li>
-            <!--      Page객체에서 number는 현재 페이지를 나타냄-->
-            <!--      [[${page}]]: 타임리프에서 HTML 콘텐츠 영역 안에 직접 데이터를 출력할 때 사용-->
-            <!--      Page객체에서 시작페이지는 0부터 이므로 해당 페이지를 호출할 때에는 page-1을 함.-->
-            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
-                th:classappend="${items.number eq page - 1}?'active':''">
-                <a th:onclick="'javascript:page(' + ${page - 1} + ')'"
-                   th:inline="text" class="page-link">[[${page}]]</a>
-            </li>
+        <!--                <ul>-->
+        <!--                    <li th:classappend="${items.first}?'disabled'">-->
+        <!--                        <a th:onclick="'javascript: page('+ ${items.number - 1} + ')'"-->
+        <!--                           aria-label='Previous'>-->
+        <!--                            <span aria-hidden='true'>Previous</span>-->
+        <!--                        </a>-->
+        <!--                    </li>-->
+        <!--                    &lt;!&ndash;      Page객체에서 number는 현재 페이지를 나타냄&ndash;&gt;-->
+        <!--                    &lt;!&ndash;      [[${page}]]: 타임리프에서 HTML 콘텐츠 영역 안에 직접 데이터를 출력할 때 사용&ndash;&gt;-->
+        <!--                    &lt;!&ndash;      Page객체에서 시작페이지는 0부터 이므로 해당 페이지를 호출할 때에는 page-1을 함.&ndash;&gt;-->
+        <!--                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"-->
+        <!--                        th:classappend="${items.number eq page - 1}?'active':''">-->
+        <!--                        <a th:onclick="'javascript:page(' + ${page - 1} + ')'"-->
+        <!--                           th:inline="text" class="page-link">[[${page}]]</a>-->
+        <!--                    </li>-->
 
-            <li class="page-item" th:classappend="${items.last}?'disabled'">
-                <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'"
-                   aria-label='Next' class="page-link">
-                    <span aria-hidden='true'>Next</span>
-                </a>
-            </li>
+        <!--                    <li class="page-item" th:classappend="${items.last}?'disabled'">-->
+        <!--                        <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'"-->
+        <!--                           aria-label='Next' class="page-link">-->
+        <!--                            <span aria-hidden='true'>Next</span>-->
+        <!--                        </a>-->
+        <!--                    </li>-->
 
-        </ul>
-    </div>
+        <!--                </ul>-->
+        <!--            </div>-->
 
-    <div class="form-inline justify-content-center" th:object="${adminItemSearchDTO}">
-        <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
-            <option value="all">전체기간</option>
-            <option value="1d">1일</option>
-            <option value="1w">1주</option>
-            <option value="1m">1개월</option>
-            <option value="6m">6개월</option>
-        </select>
-<!--        <select th:field="*{searchSellStatus}" class="form-control" style="width:auto;">-->
-<!--            <option value="">판매상태(전체)</option>-->
-<!--            <option value="SELL">판매</option>-->
-<!--            <option value="SOLD_OUT">품절</option>-->
-<!--        </select>-->
-        <select th:field="*{level1}" id="level1">
-            <option value="null">상위카테고리 선택</option>
-            <option value="Top">Top</option>
-            <option value="Outer">Outer</option>
-            <option value="Pants">Pants</option>
-            <option value="Skirt/Dress">Skirt/Dress</option>
-            <option value="Shoes">Shoes</option>
-        </select>
-        <select th:field="*{level2}" id="level2" style="display:none;">
-            <!-- 각 상위 카테고리에 따른 하위 카테고리들은 JavaScript에서 동적으로 추가됩니다. -->
-        </select>
+        <!--            <div class="" th:object="${adminItemSearchDTO}">-->
+        <!--                <select th:field="*{searchDateType}" class="form-control" style="width:auto;">-->
+        <!--                    <option value="all">전체기간</option>-->
+        <!--                    <option value="1d">1일</option>-->
+        <!--                    <option value="1w">1주</option>-->
+        <!--                    <option value="1m">1개월</option>-->
+        <!--                    <option value="6m">6개월</option>-->
+        <!--                </select>-->
+        <!--        &lt;!&ndash;        <select th:field="*{searchSellStatus}" class="form-control" style="width:auto;">&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <option value="">판매상태(전체)</option>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <option value="SELL">판매</option>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <option value="SOLD_OUT">품절</option>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </select>&ndash;&gt;-->
+        <!--                <select th:field="*{level1}" id="level1">-->
+        <!--                    <option value="null">상위카테고리 선택</option>-->
+        <!--                    <option value="Top">Top</option>-->
+        <!--                    <option value="Outer">Outer</option>-->
+        <!--                    <option value="Pants">Pants</option>-->
+        <!--                    <option value="Skirt/Dress">Skirt/Dress</option>-->
+        <!--                    <option value="Shoes">Shoes</option>-->
+        <!--                </select>-->
+        <!--                <select th:field="*{level2}" id="level2" style="display:none;">-->
+        <!--                    &lt;!&ndash; 각 상위 카테고리에 따른 하위 카테고리들은 JavaScript에서 동적으로 추가됩니다. &ndash;&gt;-->
+        <!--                </select>-->
 
-        <select th:field="*{searchBy}" class="form-control" style="width:auto;">
-            <option value="itemNm">상품명</option>
-            <option value="itemId">상품코드</option>
-        </select>
-        <input th:field="*{searchQuery}" type="text" class="form-control"
-               placeholder="상품명 혹은 상품코드를 입력해주세요">
-        <button id="searchBtn" type="submit">검색</button>
+        <!--                <select th:field="*{searchBy}" class="form-control" style="width:auto;">-->
+        <!--                    <option value="itemNm">상품명</option>-->
+        <!--                    <option value="itemId">상품코드</option>-->
+        <!--                </select>-->
+        <!--                <input th:field="*{searchQuery}" type="text" class=""-->
+        <!--                       placeholder="상품명 혹은 상품코드를 입력해주세요">-->
+        <!--                <button id="searchBtn" type="submit">검색</button>-->
 
+
+        <!--                    <div th:text="*{level2}" id="level2value" hidden="hidden"></div>-->
+
+        <!--            </div>-->
+        <div th:with="start=${(items.number/maxPage)*maxPage + 1},
+              end=(${(items.totalPages == 0) ? 1 :
+              (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) :
+              items.totalPages)})" class="pagination-container">
+
+            <ul class="pagination-list">
+                <li th:classappend="${items.first}?'disabled':''" class="pagination-item pagination-item-previous">
+                    <a th:onclick="'javascript: page('+ ${items.number - 1} + ')'" aria-label='Previous'
+                       class="pagination-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                    th:classappend="${items.number eq page - 1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+                       class="page-link pagination-link">
+                        [[${page}]]
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${items.last}?'disabled':''">
+                    <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'" aria-label='Next'
+                       class="page-link pagination-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="search-container" th:object="${adminItemSearchDTO}">
+            <select th:field="*{searchDateType}" class="form-control search-select">
+                <option value="all">전체기간</option>
+                <option value="1d">1일</option>
+                <option value="1w">1주</option>
+                <option value="1m">1개월</option>
+                <option value="6m">6개월</option>
+            </select>
+
+            <select th:field="*{level1}" id="level1" class="form-control search-select">
+                <option value="null">상위카테고리 선택</option>
+                <option value="Top">Top</option>
+                <option value="Outer">Outer</option>
+                <option value="Pants">Pants</option>
+                <option value="Skirt/Dress">Skirt/Dress</option>
+                <option value="Shoes">Shoes</option>
+            </select>
+
+            <select th:field="*{level2}" id="level2" style="display:none;" class="form-control search-select">
+                <!-- 각 상위 카테고리에 따른 하위 카테고리들은 JavaScript에서 동적으로 추가됩니다. -->
+            </select>
+
+            <select th:field="*{searchBy}" class="form-control search-select">
+                <option value="itemNm">상품명</option>
+                <option value="itemId">상품코드</option>
+            </select>
+
+            <select th:field="*{itemSellStatus}" class="form-control search-select">
+                <option value="">판매상태(전체)</option>
+                <option value="SELL">판매</option>
+                <option value="SOLD_OUT">품절</option>
+                <option value="STOP_SALE">판매중지</option>
+            </select>
+
+            <input th:field="*{searchQuery}" type="text" class="search-input" placeholder="상품명 혹은 상품코드를 입력해주세요">
+            <button id="searchBtn" type="submit" class="search-btn">검색</button>
 
             <div th:text="*{level2}" id="level2value" hidden="hidden"></div>
+        </div>
 
-    </div>
 
-
-    <!-- 상품등록 시작 -->
-    <div>
-        <div class="search-bar">
-            <input type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력하시오">
-            <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
-            <span class="material-symbols-outlined">
+        <!-- 상품등록 시작 -->
+        <div>
+            <div class="search-bar">
+                <input type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력하시오">
+                <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
+                <span class="material-symbols-outlined">
         search
       </span>
+            </div>
         </div>
-    </div>
 
-    <div class="tableBox">
-        <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p th:text="${items.totalElements}"></p></div>
-        <div class="tableContainer">
-            <table>
-                <tr class="firstLine">
-                    <td>상품코드</td>
-                    <td>상품명</td>
-                    <td>브랜드명</td>
-                    <td>상위 카테고리</td>
-                    <td>하위 카테고리</td>
-                    <td>소재</td>
-                    <td>총 재고 수량</td>
-                    <td>판매 상태</td>
-                    <td>상품 등록일</td>
-                    <td>상품 수정일</td>
-                </tr>
-                <tr th:each="items, status: ${items.getContent()}">
-                    <!--status: ${items.getContent()} 이부분은 page 처리를 하기위해?-->
-                    <td th:text="${items.id}" ><a href="#"></a></td>
-                    <td th:text="${items.itemNm}"></td>
-                    <td th:text="${items.brandNm}"></td>
-                    <td th:text="${items.level1}"></td>
-                    <td th:text="${items.level2}"></td>
-                    <td th:text="${items.material}"></td>
-                    <td th:text="${items.stockNumber}"></td>
-                    <td th:text="${items.itemSellStatus}"></td>
-                    <td th:text="${items.regTime}"></td>
-                    <td th:text="${items.updateTime}"></td>
-                </tr>
-            </table>
-        </div>
-        <div class="finalButton">
-            <form action="">
-                <button>수정하기</button>
-            </form>
-        </div>
-    </div>
+        <div class="tableBox">
+            <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p th:text="${items.totalElements}"></p>
+            </div>
+            <div class="tableContainer">
+                <table>
+                    <tr class="firstLine">
+                        <td>상품코드</td>
+                        <td>상품명</td>
+                        <td>브랜드명</td>
+                        <td>가격</td>
+                        <td>상위 카테고리</td>
+                        <td>하위 카테고리</td>
+                        <td>소재</td>
+                        <td>총 재고 수량</td>
+                        <td>판매 상태</td>
+                        <td>상품 등록일</td>
+                        <td>상품 수정일</td>
+                    </tr>
+                    <tr th:each="items, status: ${items.getContent()}">
+                        <!--status: ${items.getContent()} 이부분은 page 처리를 하기위해?-->
+                        <td th:text="${items.id}"><a href="#"></a></td>
 
-    </body>
+                        <td><a th:href="'/admin/item/modify/'+${items.id}" th:text="${items.itemNm}"></a></td>
+
+                        <td th:text="${items.brandNm}"></td>
+                        <td th:text="${items.price}+' 원'"></td>
+                        <td th:text="${items.level1}"></td>
+                        <td th:text="${items.level2}"></td>
+                        <td th:text="${items.material}"></td>
+                        <td th:text="${items.stockNumber}"></td>
+                        <td th:text="${items.itemSellStatus}"></td>
+                        <td th:text="${items.regTime}"></td>
+                        <td th:text="${items.updateTime}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="finalButton">
+                <form action="">
+                    <button>수정하기</button>
+                </form>
+            </div>
+        </div>
+
+        </body>
     </form>
 </div>
 

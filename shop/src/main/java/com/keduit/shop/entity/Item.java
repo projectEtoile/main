@@ -1,6 +1,7 @@
 package com.keduit.shop.entity;
 
 import com.keduit.shop.constant.ItemSellStatus;
+import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.exception.OutOfStockException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -72,7 +73,23 @@ public class Item extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)  /*도메인만들어줌*/
     private ItemSellStatus itemSellStatus = ItemSellStatus.SELL; // 디폴트SELL  /*상품 판매 현황*/
 
-/*    @Column(nullable = false)
+    public void updateItem(ItemFormDTO itemFormDTO) {
+        this.itemNm = itemFormDTO.getItemNm();
+        this.brandNm = itemFormDTO.getBrandNm();
+        this.level1 = itemFormDTO.getLevel1();
+        this.level2 = itemFormDTO.getLevel2();
+        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+        this.price = itemFormDTO.getPrice();
+        this.material = itemFormDTO.getMaterial();
+        this.itemText = itemFormDTO.getItemText();
+        this.stockS = itemFormDTO.getStockS();
+        this.stockM = itemFormDTO.getStockM();
+        this.stockL = itemFormDTO.getStockL();
+        this.stockFree = itemFormDTO.getStockFree();
+        this.stockNumber = itemFormDTO.getStockS()+itemFormDTO.getStockM()+itemFormDTO.getStockL()+itemFormDTO.getStockFree();
+    }
+
+    /*    @Column(nullable = false)
     private String thImgUrl; *//*상품 썸네일 사진*//*
 
     @Column(nullable = false)
@@ -133,22 +150,14 @@ public class Item extends BaseTimeEntity {
         this.stockNumber -= stockNumber;
     }
 
-
-
-
-
-
-
-
-
     /*주문 취소시 재고 증가*/
     public void addStock(int stockNumber) {
 
-
-
         this.stockNumber += stockNumber;
     }
+
 }
+
     /*@CreationTimestamp
     private LocalDateTime regDate;  *//*등록 시간*//*
 
