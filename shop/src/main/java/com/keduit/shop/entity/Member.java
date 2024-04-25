@@ -1,7 +1,9 @@
 package com.keduit.shop.entity;
 
 import com.keduit.shop.constant.Role;
+import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.MemberFormDTO;
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,12 +28,15 @@ public class Member extends BaseTimeEntity{
 
     private String password;
 
-
     private boolean social;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
+    private Integer age;
 
 
     /*dto주면 entity 리턴하는애임 이게핵심. html폼에서 입력받는 주체가 dto 그걸 entity에 set해주는것 그걸리턴함*/
@@ -45,6 +50,8 @@ public class Member extends BaseTimeEntity{
         String password = passwordEncoder.encode(memberFormDTO.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);
+        member.setAge(memberFormDTO.getAge());
+        member.setSex(memberFormDTO.getSex());
         return member;
     }
 }

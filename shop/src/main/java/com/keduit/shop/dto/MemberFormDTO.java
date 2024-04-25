@@ -1,5 +1,7 @@
 package com.keduit.shop.dto;
 
+import com.keduit.shop.constant.Sex;
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -22,5 +24,9 @@ public class MemberFormDTO {
 
     @NotEmpty(message = "비밀번호는 필수 입력입니다.")
     private String password;
+
+    private int age;
+
+    private Sex sex;
 
 }
