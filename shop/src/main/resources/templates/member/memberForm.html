@@ -50,8 +50,8 @@
                         <th th:for="email">이메일 아이디 <span>*</span></th>
                         <td>
                             <label th:for="email"></label>
-                            <input type="text" style="width: 125px;" th:field="*{email}">
-                            <span class="txt_email">@</span>
+                            <input type="text" th:field="*{email}" placeholder="이메일을 입력해주세요">
+<!--                            <span class="txt_email">@</span>-->
                             <!--                            <input type="email" style="width: 125px;" name="email">-->
                             <!-- <select class="normal" style="width: 114px; display: none;" id="selectEmail"> -->
                             <!--                            <select class="normal" id="selectEmail">-->
@@ -114,14 +114,11 @@
                         </li>
                     </ul>
                 </div>
-                <div class="join_btn_wrap">
-                    <button type="button" id="btnCancel" name="button" class="btn"
-                            onclick="GA4EventPush('join_signup_click', '취소', 'join', 'join'); history.back(-1);">취소
-                    </button>
 
+                <div class="text-center">
                         <button type="submit" class="btn btn-primary">회원가입</button>
-
                 </div>
+
             </div>
         </section>
 
