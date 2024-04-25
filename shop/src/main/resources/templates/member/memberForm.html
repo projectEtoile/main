@@ -127,7 +127,7 @@
                     </button>
 
                     <button type="submit">회원가입</button>
-
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 </div>
             </div>
         </section>
