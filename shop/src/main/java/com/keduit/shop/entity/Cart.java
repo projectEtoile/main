@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor /*디폴트생성자*/
-public class Cart extends BaseTimeEntity{
+public class Cart extends BaseEntity{
     @Id
     @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,6 @@ public class Cart extends BaseTimeEntity{
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") /*외래키(FK)지정,name = "member_id" : 외래키의 이름 */
     private Member member;
-
-
 
     public static Cart createCart(Member member){
         Cart cart = new Cart();
