@@ -1,18 +1,26 @@
 package com.keduit.shop.controller;
 
+import com.keduit.shop.dto.AdminItemSearchDTO;
+import com.keduit.shop.dto.AdminMemberSearchDTO;
 import com.keduit.shop.dto.MemberFormDTO;
+import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/members")
@@ -92,5 +100,29 @@ public class MemberController {
             return Utility.jsHistoryBack("이메일을 입력해주세요");
         }
     }*/
+    @GetMapping({"/admin/{page}", "/admin"})
+    public String memberMangeListPage(Model model,
+                                      @PathVariable("page") Optional<Integer> page, // 유저에게 받는 page 숫자.
+                                      AdminMemberSearchDTO adminMemberSearchDTO) { //쿼리문을 날리기 위한 정보들!
+
+
+
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+
+
+        Page<Member> members = memberService.getAdminMemberPage(adminMemberSearchDTO, pageable);
+
+        System.out.println("----- members.getContent() : " + members.getContent());
+        System.out.println("----- adminMemberSearchDTO: " + adminMemberSearchDTO);
+
+        model.addAttribute("members", members);
+        model.addAttribute("adminMemberSearchDTO", adminMemberSearchDTO);
+        model.addAttribute("maxPage", 10);
+
+        System.out.println(members.getNumber()+"@@@@@@@@@@@@@@@@@@@@@@");
+
+
+        return "admin/memberMng";
+    }
 
 }
