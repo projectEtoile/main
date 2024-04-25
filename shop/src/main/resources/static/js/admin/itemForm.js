@@ -20,3 +20,29 @@
 
     preview.readAsDataURL(input.files[0]);
 };
+
+//        $(document).ready(function(){
+//            const errorMessage = [[${errorMessage}]]
+//            if(errorMessage){
+//                alert(errorMessage);
+//            }
+//            bindDomEvent();
+//        });
+//
+//        function bindDomEvent(){
+//            $(".custom-file-input").on("change", function(){
+//                let fileName = $(this).val().split("\\").pop();
+//                let fileExt = fileName.substring(fileName.lastIndexOf(".")+1);
+//                console.log("fileName =====> ", fileName);
+//                console.log("fileExt =====> ", fileExt);
+//
+//                fileExt = fileExt.toLowerCase();
+//
+//                if(fileExt != "jpg" && fileExt != "jpeg" &&
+//                    fileExt != "gif" && fileExt != "png" && fileExt != "bmp"){
+//                    alert("이미지 파일만 등록이 가능합니다.");
+//                    return;
+//                }
+//                $(this).siblings(".custom-file-label").html(fileName);
+//            });
+//        }
