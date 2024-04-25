@@ -480,7 +480,7 @@ a.btn_more span em,button.btn_more span em,input.btn_more span em,span.btn_more 
   vertical-align: top
 }
 
-input[type=text],textarea,input[type=password],input[type=tel],input[type=number], select#selectEmail.normal, select#selectEmail.normal option {
+input[type=text],input[type=email],textarea,input[type=password],input[type=tel],input[type=number], select#selectEmail.normal, select#selectEmail.normal option {
   height: 40px;
   line-height: 38px;
   padding-left: 20px;

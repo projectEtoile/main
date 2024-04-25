@@ -4,7 +4,7 @@
       layout:decorate='~{layouts/layout1}'>
 
 <head>
-    <title>Login</title>
+    <title>비밀번호 찾기</title>
     <!--<link rel="shortcut icon" type="image/x-icon" th:href="@{image/logo.png}" sizes="16x16">
     <link rel="icon" type="image/x-icon" th:href="@{image/logo.png}" sizes="16x16">-->
 </head>
@@ -20,6 +20,25 @@
     <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/font.css}" type="text/css">
 
+    <!--일단 안나오니까 스크립트써서 해봄. -->
+<script>
+    function FindPw__submit(form){
+        form.name.value = form.name.value.trim();
+        if (form.name.value.length == 0){
+            alert('이름을 입력해주세요');
+            form.name.focus();
+            return;
+        }
+        form.email.value = form.email.value.trim();
+        if (form.email.value.length == 0){
+            alert('이메일을 입력해주세요');
+            form.email.focus();
+            return;
+        }
+        form.submit();
+    }
+</script>
+
     <section id="container">
         <div class="sub_title_wrap">
             <h2 class="sub_title">
@@ -29,25 +48,23 @@
         <div class="member_join">
             <div class="join_cont">
                 <div class="login_wrap">
-                    <form action="/member/login" role="form"  method="post">
-<!--                        id="frmLogin"-->
+                    <form action="/members/doFindLoginPw" role="form"  method="post">
+                        <!--                        id="frmLogin"-->
                         <div class="inp_group">
+                            <p class="mt20">
+                                <label th:for="name">이름</label>
+                                <!-- <input type="password" name="password"   class="full_width"
+                                        placeholder="8자리 이상 입력해주세요">-->
+                                <input type="text" class="form-control" name="name" placeholder="이름을 입력해주세요">
+                            </p>
                             <p>
                                 <!--custId custPw 4.22 css id 검색 수정-->
-                                <label th:for="email">이메일 아이디</label>
+                                <label th:for="email">이메일</label>
                                 <!--<input type="email" name="email"  class="form-control"
                                        placeholder="이메일을 입력하세요">-->
                                 <input type="email" class="form-control" name="email" placeholder="이메일을 입력해주세요">
                                 <!--<p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
                                    class="fieldError">Incorrect data</p>-->
-                            </p>
-
-
-                            <p class="mt20">
-                                <label th:for="password">비밀번호</label>
-                               <!-- <input type="password" name="password"   class="full_width"
-                                       placeholder="8자리 이상 입력해주세요">-->
-                                <input type="password" class="form-control" name="password" placeholder="비밀번호을 입력해주세요">
                             </p>
 
                             <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"
@@ -64,17 +81,14 @@
                         <div class="btn_group">
 
 
-                            <button class="btn full_width black">
+                            <button class="btn full_width black" th:href="login">
                                 로그인
                             </button>
                             <!--csrf:위조방지(시큐리티) parameterName,token 같이 보냄-->
                             <input type="hidden" th:name="${_csrf.parameterName}"
                                    th:value="${_csrf.token}">
 
-                            <ul class="link">
 
-                                <li><a href="findLoginPw">비밀번호 찾기</a></li>
-                            </ul>
                         </div>
                     </form>
                 </div>
