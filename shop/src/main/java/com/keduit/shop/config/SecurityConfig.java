@@ -38,11 +38,16 @@ public class SecurityConfig {
 //    permitAll(): 모든 사용자가 인증(로그인) 없이 해당 경로에 접근 가능
 //    hasRole("ADMIN"): 관리자인 경우 /admin/으로 접근하는 경로를 통과시킴
 //    anyRequest().authenticated() 위의 경우 이외의 페이지는 인증 절차가 필요.
-    http.authorizeRequests()
-            .mvcMatchers("/", "/members/**",
-                    "/item/**", "/images/**").permitAll()
-            .mvcMatchers("/admin/**").hasRole("ADMIN")
-            .anyRequest().authenticated();
+//    http.authorizeRequests()
+//            .mvcMatchers("/", "/members/**",
+//                    "/item/**", "/images/**","/admin/**").permitAll()
+//            .anyRequest().authenticated();
+    http
+            .authorizeRequests()
+            .anyRequest().permitAll()
+            .and()
+            .csrf().disable();
+
 
 //    인증되지 않은 사용자가 리소스 접근하여 실패했을 때 처리하는 핸들러 등록
     http.exceptionHandling()

@@ -22,13 +22,6 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/new")
-    public String memberForm(Model model){
-        model.addAttribute("memberFormDTO",new MemberFormDTO());
-        System.out.println("나오냐?????");
-        return "member/memberForm";
-
-    }
 
     /*@PostMapping("/new")
     public String memberForm(MemberFormDTO memberFormDTO){
@@ -37,6 +30,13 @@ public class MemberController {
 
         return "redirect:/";
     }*/
+
+    @GetMapping("/new")
+    public String memberForm(Model model){
+        model.addAttribute("memberFormDTO",new MemberFormDTO());
+        System.out.println("나오냐?????");
+        return "member/memberForm";
+    }
 
     @PostMapping("/new")
     //BindingResult bindingResult: 에러발생시 MemberFormDTO(절대null을 주지않음) memberFormDTO결과리턴 에러가있음 다시 돌아가(유효성 체크)
@@ -75,6 +75,7 @@ public class MemberController {
         "loginErrorMsg"라는 이름으로 모델에 추가합니다.
         이렇게 추가된 정보는 뷰 템플릿에서 사용될 수 있습니다.
          */
+        System.out.println("로그인 실패@@@@@@@@@@@@@@@@@@@@@@");
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
         return "member/login";
     }

@@ -24,7 +24,7 @@
     <link rel="stylesheet" th:href="@{/css/join.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/font.css}" type="text/css">
     <form action="/members/new" role="form" method="post" th:object="${memberFormDTO}">
-        <input type="hidden" name="JoinType" id="JoinType" value="C">
+        <!--        <input type="hidden" name="JoinType" id="JoinType" value="C">-->
 
         <section id="container">
             <div class="sub_title_wrap">
@@ -49,50 +49,50 @@
                     <tr>
                         <th th:for="email">이메일 아이디 <span>*</span></th>
                         <td>
-                            <p class="email">
-                                <input type="text" style="width: 125px;" name="email" th:field="*{email}">
-                                <span class="txt_email">@</span>
-                                <input type="email" style="width: 125px;" name="email" >
-                                <!-- <select class="normal" style="width: 114px; display: none;" id="selectEmail"> -->
-                                <select class="normal" id="selectEmail">
-                                    <option value="" selected="">선택</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                    <option value="hanmail.net">hanmail.com</option>
-                                    <option value="nate.com">nate.com</option>
-                                    <option value="daum.net">daum.com</option>
-                                    <option value="write">직접입력</option>
-                                </select>
-                           <p id="validation1" class="incorrect"><label id="chkcustid">본인 소유의 이메일을 입력해 주세요.</label></p>
-                            <p th:if="${#fields.hasErrors( 'email')}"
-                               th:errors="*{email}" class="fieldError">Incorrect data</p>
+                            <label th:for="email"></label>
+                            <input type="text" style="width: 125px;" th:field="*{email}">
+                            <span class="txt_email">@</span>
+                            <!--                            <input type="email" style="width: 125px;" name="email">-->
+                            <!-- <select class="normal" style="width: 114px; display: none;" id="selectEmail"> -->
+                            <!--                            <select class="normal" id="selectEmail">-->
+                            <!--                                <option value="" selected="">선택</option>-->
+                            <!--                                <option value="naver.com">naver.com</option>-->
+                            <!--                                <option value="gmail.com">gmail.com</option>-->
+                            <!--                                <option value="hanmail.net">hanmail.com</option>-->
+                            <!--                                <option value="nate.com">nate.com</option>-->
+                            <!--                                <option value="daum.net">daum.com</option>-->
+                            <!--                                <option value="write">직접입력</option>-->
+                            <!--                            </select>-->
+                            <!--                            <p id="validation1" class="incorrect"><label id="chkcustid">본인 소유의 이메일을 입력해 주세요.</label></p>-->
+                            <!--                            <p th:if="${#fields.hasErrors( 'email')}"-->
+                            <!--                               th:errors="*{email}" class="fieldError">Incorrect data</p>-->
                         </td>
                     </tr>
                     <tr>
-                        <th th:for="password">비밀번호 <span>*</span></th>
+                        <th>비밀번호 <span>*</span></th>
                         <td>
-                            <input type="password" name="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
-                            <p id="validation2" class="correct"><label id="chkcustpw"></label></p>
-                            <p th:if="${#fields.hasErrors('password')}"
-                               th:errors="*{password}" class="fieldError">Incorrect data</p>
+                            <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
+                            <!--                            <p id="validation2" class="correct"><label id="chkcustpw"></label></p>-->
+                            <!--                            <p th:if="${#fields.hasErrors('password')}"-->
+                            <!--                               th:errors="*{password}" class="fieldError">Incorrect data</p>-->
                         </td>
                     </tr>
-                    <tr>
-                        <th>비밀번호 확인 <span>*</span></th>
-                        <td>
-                            <input type="password" name="joinPwConfirm" id="joinPwConfirm" maxlength="16">
-                            <p id="validation3" class="correct"><label id="chkcustpwconfirm"></label></p>
-                        </td>
-                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <th>비밀번호 확인 <span>*</span></th>-->
+                    <!--                        <td>-->
+                    <!--                            <input type="password" name="joinPwConfirm" id="joinPwConfirm" maxlength="16">-->
+                    <!--                            <p id="validation3" class="correct"><label id="chkcustpwconfirm"></label></p>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
                     <tr>
                         <th>이름 <span>*</span></th>
                         <td>
                             <p class="join_name va_m">
-                                <input type="text" name="name" id="join_name" th:field="*{name}" placeholder="ex) 홍길동">
+                                <input type="text" th:field="*{name}" placeholder="ex) 홍길동">
                             </p>
-                            <p id="validation7" class="correct correct va_m"><label id="checkname"></label></p>
-                            <p th:if="${#fields.hasErrors('name')}"
-                                th:errors="*{name}" class="fieldError">Incorrect data</p>
+                            <!--                            <p id="validation7" class="correct correct va_m"><label id="checkname"></label></p>-->
+                            <!--                            <p th:if="${#fields.hasErrors('name')}"-->
+                            <!--                               th:errors="*{name}" class="fieldError">Incorrect data</p>-->
                         </td>
                     </tr>
 
@@ -100,27 +100,23 @@
                     </tbody>
                 </table>
                 <div class="join_agreement">
-                    <p class="all_check_desc"><span class="input_button checkbox"><input type="checkbox"><label
+                    <p class="all_check_desc"><span class="input_button checkbox"><label
                     >전체 동의합니다.<br> <span>전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다.<br> 선택항목에 대한 동의를 거부하는 경우에도 회원가입 서비스는 이용 가능합니다.</span></label></span>
                     </p>
                     <ul>
                         <li>
-                            <span class="input_button checkbox"><input type="checkbox"
-                                                                       name="all_agree04"><label>만 14세 이상입니다.</label></span>
+                            <span class="input_button checkbox"><label>만 14세 이상입니다.</label></span>
                         </li>
                         <li>
-                            <span class="input_button checkbox"><input type="checkbox"
-                                                                       name="all_agree01"><label>이용약관 동의(필수)</label></span>
+                            <span class="input_button checkbox"><label>이용약관 동의(필수)</label></span>
                             <button type="button" class="#">내용보기</button>
                         </li>
                         <li>
-                            <span class="input_button checkbox"><input type="checkbox"
-                                                                       name="all_agree02"><label>개인정보 수집 및 이용에 대한 동의(필수)</label></span>
+                            <span class="input_button checkbox"><label>개인정보 수집 및 이용에 대한 동의(필수)</label></span>
                             <button type="button" class="#">내용보기</button>
                         </li>
                         <li>
-                            <span class="input_button checkbox"><input type="checkbox"
-                                                                       name="all_agree03"><label>개인정보 수집 및 이용안내(선택)</label></span>
+                            <span class="input_button checkbox"><label>개인정보 수집 및 이용안내(선택)</label></span>
                             <button type="button" class="#">내용보기</button>
                         </li>
                     </ul>
@@ -130,7 +126,7 @@
                             onclick="GA4EventPush('join_signup_click', '취소', 'join', 'join'); history.back(-1);">취소
                     </button>
 
-                        <button type="submit" class="btn btn-primary">회원가입</button>
+                    <button type="submit">회원가입</button>
 
                 </div>
             </div>

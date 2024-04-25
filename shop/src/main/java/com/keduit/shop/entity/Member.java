@@ -26,7 +26,6 @@ public class Member extends BaseTimeEntity{
 
     private String password;
 
-    private String address;
 
     private boolean social;
 
