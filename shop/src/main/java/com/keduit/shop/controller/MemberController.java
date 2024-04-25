@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -97,15 +99,17 @@ public class MemberController {
 //
 //}
 
+/*
 @GetMapping("/pwRestSuccess")
     public String showPwRestSuccessPage(){
         return "pwRestSuccess";
 }
 
 
-@GetMapping("/pw")
+*/
+/*@GetMapping("/pw")
     public String findpw(){
-        return "member/pwInquiry";
+        return "member/pwInquiry*/";
     }
 /*    @GetMapping("/doFindLoginPw")
     public String doFindLoginPw(String email){
@@ -113,6 +117,25 @@ public class MemberController {
             return Utility.jsHistoryBack("이메일을 입력해주세요");
         }
     }*/
+//Email과 name의 일치여부를 check하는 컨트롤러
+@GetMapping("/findPw")
+public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userName){
+    Map<String,Boolean> json = new HashMap<>();
+    boolean pwFindCheck = UserService.userEmailCheck(userEmail,userName);
+
+    System.out.println(pwFindCheck);
+    json.put("check", pwFindCheck);
+    return json;
+}
+
+//등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
+@PostMapping("/sendEmail")
+public @ResponseBody void sendEmail(String userEmail, String userName){
+    MailDto dto = sendEmailService.createMailAndChangePassword(userEmail, userName);
+    sendEmailService.mailSend(dto);
+
+}
+
     @GetMapping({"/admin/{page}", "/admin"})
     public String memberMangeListPage(Model model,
                                       @PathVariable("page") Optional<Integer> page, // 유저에게 받는 page 숫자.
