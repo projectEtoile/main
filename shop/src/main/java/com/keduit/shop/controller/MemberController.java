@@ -100,7 +100,7 @@ public class MemberController {
             return Utility.jsHistoryBack("이메일을 입력해주세요");
         }
     }*/
-    @GetMapping({"/admin/members/{page}", "/admin/members"})
+    @GetMapping({"/admin/{page}", "/admin"})
     public String memberMangeListPage(Model model,
                                       @PathVariable("page") Optional<Integer> page, // 유저에게 받는 page 숫자.
                                       AdminMemberSearchDTO adminMemberSearchDTO) { //쿼리문을 날리기 위한 정보들!

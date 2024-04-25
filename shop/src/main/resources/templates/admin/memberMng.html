@@ -10,37 +10,37 @@
     <form th:action="@{'/members/admin/members/' + ${members.number}}"
           role="form" method="get" th:object="${members}">
         <body>
+                <div th:with="start=${(members.number/maxPage)*maxPage + 1},
+                      end=(${(members.totalPages == 0) ? 1 :
+                      (start + (maxPage - 1) < members.totalPages ? start + (maxPage - 1) :
+                      members.totalPages)})" class="pagination-container">
+
+                    <ul class="pagination-list">
+                        <li th:classappend="${members.first}?'disabled':''" class="pagination-item pagination-item-previous">
+                            <a th:onclick="'javascript: page('+ ${members.number - 1} + ')'" aria-label='Previous'
+                               class="pagination-link">
+                                <span aria-hidden='true'>Previous</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                            th:classappend="${members.number eq page - 1}?'active':''">
+                            <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+                               class="page-link pagination-link">
+                                [[${page}]]
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${members.last}?'disabled':''">
+                            <a th:onclick="'javascript:page(' + ${members.number + 1} + ')'" aria-label='Next'
+                               class="page-link pagination-link">
+                                <span aria-hidden='true'>Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
 
-        <div th:with="start=${(members.number/maxPage)*maxPage + 1},
-              end=(${(members.totalPages == 0) ? 1 :
-              (start + (maxPage - 1) < members.totalPages ? start + (maxPage - 1) :
-              members.totalPages)})" class="pagination-container">
-
-            <ul class="pagination-list">
-                <li th:classappend="${members.first}?'disabled':''" class="pagination-item pagination-item-previous">
-                    <a th:onclick="'javascript: page('+ ${members.number - 1} + ')'" aria-label='Previous'
-                       class="pagination-link">
-                        <span aria-hidden='true'>Previous</span>
-                    </a>
-                </li>
-
-                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
-                    th:classappend="${members.number eq page - 1}?'active':''">
-                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
-                       class="page-link pagination-link">
-                        [[${page}]]
-                    </a>
-                </li>
-
-                <li class="page-item" th:classappend="${members.last}?'disabled':''">
-                    <a th:onclick="'javascript:page(' + ${members.number + 1} + ')'" aria-label='Next'
-                       class="page-link pagination-link">
-                        <span aria-hidden='true'>Next</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
 
         <!--        <div class="search-container" th:object="${adminItemSearchDTO}">-->
         <!--            <select th:field="*{searchDateType}" class="form-control search-select">-->
@@ -95,7 +95,8 @@
         </div>
 
         <div class="tableBox">
-            <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p th:text="${members.totalElements}"></p>
+            <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p
+                    th:text="${members.totalElements}"></p>
             </div>
             <div class="tableContainer">
                 <table>

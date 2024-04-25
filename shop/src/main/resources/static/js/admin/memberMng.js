@@ -102,7 +102,12 @@ $(document).ready(function(){
 });
 
 // 선택되지 않았을 시 null 적용.
-function page(page){
-    // 검색 조건이 없으므로 경로에 아무런 파라미터도 추가하지 않음
-    location.href= page;
+function page(page) {
+    if (page === null || page === undefined) {
+        // 페이지 번호가 없는 경우 또는 null인 경우
+        location.href = '/members';
+    } else {
+        // 페이지 번호가 있는 경우
+        location.href = '/members/admin/' + page;
+    }
 }
