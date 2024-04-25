@@ -1,8 +1,11 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.dto.AdminMemberSearchDTO;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,6 +48,10 @@ public class MemberService implements UserDetailsService {
                 .password(member.getPassword())
                 .roles(member.getRole().toString())
                 .build();
+    }
+
+    public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
+        return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
     }
 }
 
