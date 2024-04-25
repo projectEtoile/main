@@ -1,21 +1,536 @@
-       .content-mg{
-          margin-left:25%;
-          margin-right:25%;
-          margin-top:2%;
-          margin-bottom:100px;
-      }
-        .repImgDiv{
-          margin-right:15px;
-          margin-left:15px;
-          height:auto;
-      }
-        .repImg{
-          height:100px;
-          width:100px;
-      }
-        .fs18{
-          font-size:18px
-      }
-        .fs24{
-          font-size:24px
-      }
+
+.shoppingbag {
+    width: 1240px;
+    margin: 0 auto;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    min-width: 1240px;
+    font-family: ProximaNova-Light, "Noto Sans KR", "Apple SD Gothic Neo", AppleGothic, 돋움, Dotum, Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+#container .sub_title_wrap .sub_title {
+    color: #000;
+}
+#container .sub_title {
+    font-family: "ProximaNova-Thin","Noto Sans KR";
+    font-size: 44px;
+    line-height: 44px;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+}
+#container .sub_title {
+    font-family: "ProximaNova-Thin","Noto Sans KR";
+    font-size: 44px;
+    line-height: 44px;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: normal;
+    font-family: "ProximaNova-Thin","Noto Sans KR";
+}
+* {
+
+    font-weight: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-weight: normal;
+    font-style: normal;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+#container .sub_title_wrap {
+    padding-top: 55px;
+    padding-bottom: 36px;
+    position: relative;
+    min-width: 1240px;
+}
+div {
+    display: block;
+}
+
+.shoppingbag .step li+li:before {
+    content: "";
+    width: 7px;
+    height: 12px;
+    background: url(//static.wconcept.co.kr/web/images/common/ico_order_step_12.png) no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 3px;
+    left: 13px;
+}
+.shoppingbag .step li+li {
+    padding-left: 37px;
+}
+
+li, dl {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul, ol, dl {
+    margin: 0;
+    padding: 0;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.shoppingbag .step li.active {
+    color: white;
+}
+.shoppingbag .step li {
+    display: inline;
+    font-size: 14px;
+    color: #a1a1a1;
+    position: relative;
+}
+li, dl {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.shoppingbag .bag_wrap .bag_cont {
+    float: left;
+    width: 920px;
+}
+.shoppingbag .step {
+    width: 500px;
+    margin: -16px auto 80px;
+    text-align: center;
+}
+.shoppingbag .tit {
+    position: relative;
+    margin-bottom: 15px;
+    font-size: 24px;
+    line-height: 34px;
+}
+.shoppingbag .tit em {
+    vertical-align: middle;
+    font-family: "ProximaNova-Regular";
+}
+.shoppingbag .tit span, .shoppingbag .tit em {
+    display: inline-block;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: normal;
+    font-family: "ProximaNova-Thin", "Noto Sans KR";
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+colgroup {
+    display: table-column-group;
+}
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+col {
+    display: table-column;
+}
+a, input, button, select, textarea {
+    vertical-align: middle;
+}
+input {
+    line-height: normal;
+}
+button, input, optgroup, select, textarea {
+    font: inherit;
+    margin: 0;
+    color: inherit;
+}
+table.cols thead th {
+    height: 68px;
+    font-family: "NotoSansKR-Medium";
+    font-size: 14px;
+    padding: 0 14px;
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #b5b5b5;
+}
+th, td {
+    word-break: break-all;
+    background-clip: padding-box;
+    padding: 0;
+}
+th {
+
+    font-weight: bold;
+    text-align: -internal-center;
+}
+table {
+    border-top: 2px solid #171717;
+    border-bottom: 1px solid #171717;
+    table-layout: fixed;
+    margin-bottom: 60px;
+    width: 100%;
+    border-collapse: separate;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.shoppingbag .tbl_product th {
+    padding: 25px 0;
+    border-bottom-color: #d9d9d9;
+}
+table.cols thead th {
+    height: 68px;
+    font-family: "NotoSansKR-Medium";
+    font-size: 14px;
+    padding: 0 14px;
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #b5b5b5;
+}
+.shoppingbag .tbl_product th {
+    padding: 25px 0;
+    border-bottom-color: #d9d9d9;
+}
+.shoppingbag .tbl_product td {
+    padding: 14px 0;
+    text-align: center;
+    height: auto;
+    border-top-width: 0;
+    border-bottom: 1px solid #f9f9f9;
+}
+table.cols tbody tr td {
+    height: 68px;
+    font-family: "ProximaNova-Regular", "Noto Sans KR";
+    text-align: center;
+    vertical-align: middle;
+    padding: 14px 0;
+}
+table tbody tr:first-child th, table tbody tr:first-child td {
+    border-color: transparent;
+    border: none;
+}
+table tbody td {
+    padding: 0 19px;
+    color: #000;
+    font-size: 14px;
+    border-top: 1px solid #d9d9d9;
+}
+table tbody td p {
+    display: inline-block;
+}
+p {
+    margin: 0;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.shoppingbag .tbl_product {
+    margin-bottom: 60px;
+}
+.shoppingbag .tbl_product+.tbl_under_box {
+    margin-top: -10px;
+}
+.shoppingbag .tbl_under_box {
+    overflow: hidden;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.shoppingbag .bx_btn:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+.shoppingbag .bx_btn button:first-child {
+    margin-right: 10px;
+}
+.shoppingbag .bx_btn button {
+    height: 50px;
+    line-height: 50px;
+}
+a.btn, button.btn, input.btn, span.btn {
+    display: inline-block;
+    min-width: 180px;
+    height: 50px;
+    text-align: center;
+    line-height: 48px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    font-family: ProximaNova-Semibold, "Apple SD Gothic Neo", NotoSansKR-Medium, "Malgun Gothic", "맑은 고딕", sans-serif;
+    font-size: 14px;
+    padding: 0px 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(51, 51, 51);
+    border-image: initial;
+}
+
+button {
+    width: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    font-weight: normal;
+    overflow: visible;
+}
+button, html input[type='button'], input[type='reset'], input[type='submit'] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+button, select {
+    text-transform: none;
+}
+button, input, optgroup, select, textarea {
+    font: inherit;
+    margin: 0;
+    color: inherit;
+}
+a.btn.gray, button.btn.gray, input.btn.gray, span.btn.gray {
+    border-color: #7d7d7d;
+    background-color: #7d7d7d;
+    color: #fff;
+}
+.shoppingbag .tbl_under_box .shoppingbag_count_limit_notify {
+    width: 460px;
+}
+.shoppingbag_count_limit_notify .unorder_list li {
+    position: relative;
+    padding-left: 0.563rem;
+    font-size: 13px;
+    color: #7b7b7b;
+    line-height: 19px;
+    word-break: keep-all;
+}
+.unorder_list li {
+    position: relative;
+    padding-left: 15px;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgb(102, 102, 102);
+    font-family: ProximaNova-Regular, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+}
+li, dl {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.shoppingbag_count_limit_notify .unorder_list li:before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 1.5px;
+    background: #7b7b7b;
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+.unorder_list li:before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background: #171717;
+    position: absolute;
+    left: 0;
+    top: 6px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.shoppingbag .bag_wrap .payment {
+    float: right;
+    width: 300px;
+    margin-top: 53px;
+}
+.shoppingbag .bag_wrap .payment .bx_total {
+    padding: 19px;
+    border: 1px solid #e9e9e9;
+}
+.shoppingbag .bx_total li:first-child {
+    margin-top: 0;
+}
+.shoppingbag .bx_total li {
+    margin: 9px 0 0 0;
+    color: #333;
+    overflow: hidden;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+li, dl {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.shoppingbag .bx_total li:not(.promotion) strong {
+    width: calc(100% - 114px);
+}
+.shoppingbag .bx_total li strong {
+    font-size: 14px;
+    text-align: left;
+    display: inline-block;
+}
+.shoppingbag .bx_total li * {
+    font-family: "ProximaNova-Regular", "Noto Sans KR";
+}
+strong, b {
+    font-weight: normal;
+}
+b, strong {
+    font-weight: bold;
+}
+strong {
+    font-weight: bold;
+}
+.shoppingbag .bx_total li p:not(.extra_fee_ctns) em {
+    margin-right: 2px;
+    font-size: 18px;
+}
+address, em {
+    font-style: normal;
+}
+/* em {
+    font-style: italic;
+} */
+.shoppingbag .bx_total li p {
+    width: 114px;
+    text-align: right;
+    font-family: "ProximaNova-Regular";
+    font-size: 14px;
+}
+.shoppingbag .bx_total li strong, .shoppingbag .bx_total li p {
+    display: inline-block;
+}
+.shoppingbag .bx_total li * {
+    font-family: "ProximaNova-Regular", "Noto Sans KR";
+}
+.shoppingbag .bx_total li.total {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #d9d9d9;
+    width: 100%;
+}
+.shoppingbag .bx_total li.total strong {
+    color: #fa5500;
+}
+.shoppingbag .bx_total li.total p:not(.extra_fee_ctns) {
+    color: #fa5500;
+}
+.shoppingbag .bx_total li.point {
+    margin-top: 10px;
+    color: #666;
+    overflow: visible;
+}
+.shoppingbag .bx_total li.point:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+.shoppingbag .bx_total li.point {
+    margin-top: 10px;
+    color: #666;
+    overflow: visible;
+}
+.shoppingbag .bag_wrap .payment:not(.final) .btn_order {
+    height: 60px;
+    line-height: 60px;
+}
+.shoppingbag .btn_order {
+    width: 100%;
+    height: 70px;
+    background-color: #000;
+    font-family: "ProximaNova-Regular", "Noto Sans KR";
+    font-size: 16px;
+    line-height: 70px;
+    color: #fff;
+    margin-top: 20px;
+}
+button {
+    width: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    font-weight: normal;
+}
+button, html input[type='button'], input[type='reset'], input[type='submit'] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    font: inherit;
+    margin: 0;
+    color: inherit;
+}
+.shoppingbag .btn_gift_selected {
+    width: 100%;
+    height: 44px;
+    line-height: 42px;
+    font-size: 14px;
+    color: #000;
+    background: #fff;
+    border: 1px solid #000;
+    margin-top: 10px;
+}
+
+
+li.ix-list-item span {
+    color: #fff;
+}

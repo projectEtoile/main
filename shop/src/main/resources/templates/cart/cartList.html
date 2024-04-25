@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout2}'>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -8,58 +8,158 @@
 </head>
 
 <div layout:fragment="content" class="content-mg">
-    <div layout:fragment="content" class="content-mg">
-        <h2 class="mb-4">장바구니 목록</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <td>
-                    <input type="checkbox" id="checkAll" onclick="checkAll()">&nbsp;&nbsp;전체선택
-                </td>
-                <td>상품정보</td>
-                <td>상품금액</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cartItem : ${cartItems}">
-                <td class="text-center align-middle">
-                    <input type="checkbox" name="cartChkBox"
-                           th:value="${cartItem.cartItemId}">
-                </td>
-                <td class="d-flex">
-                    <div class="repImgDiv align-self-center">
-                        <img th:src="${cartItem.imgUrl}" th:alt="${cartItem.itemNm}" class="rounded repImg">
-                    </div>
-                    <div class="align-self-center">
-                        <span class="fs24 font-weight-bold" th:text="${cartItem.itemNm}"></span>
-                        <div class="fs18 font-weight-light">
-                        <span class="input-group mt-2">
-                        <span class="align-self-center mr-2" th:id="'price_' + ${cartItem.cartItemId}"
-                              th:data-price="${cartItem.price}"
-                              th:text="${cartItem.price} + '원'"></span>
-                        <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
-                               th:value="${cartItem.count}" min="1" onchange="changeCount(this)"
-                               class="form-control mr-2">
-                        <button class="close" type="button" aria-label="Close">
-                            <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</span>
-                        </button>
-                        </span>
+    <main>
+        <section id="container">
+            <div class="sub_title_wrap">
+                <h2 class="sub_title">
+                    shopping bag
+                </h2>
+            </div>
+            <div class="shoppingbag">
+
+                <ul class="step">
+                    <li class="active">쇼핑백</li>
+                    <li>
+                        "주문결제"
+                    </li>
+                    <li>
+                        "주문완료"
+                    </li>
+                </ul>
+                <div class="bag_wrap">
+                    <div class="bag_cont">
+                        <h3 class="tit first_title">
+                            쇼핑백 상품
+                            <span>(
+                        <em>0</em>
+                        )
+                    </span>
+                        </h3>
+                        <table class="cols tbl_product">
+                            <colgroup>
+                                <col>
+                                <col style="width:80px;">
+                                <col style="width:150px;">
+                                <col style="width:150px;">
+                                <col style="width:130px;">
+                                <col style="width:30px;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>
+                                <span class="input_button small square">
+                                    <input type="checkbox" name="checkAll" id="checkAll" class="check_all"
+                                           checked="checked" onclick="WCKBasket.BasketAllSelect(this);">
+                                    <label for="checkAll">
+                                        <!-- "&nbsp;" -->
+                                    </label>
+                                </span>
+                                    <input type="hidden" id="hdchk" value="0">
+                                </th>
+                                <th>상품정보</th>
+                                <th>수량</th>
+                                <th>가격</th>
+                                <th>쿠폰할인</th>
+                                <th colspan="2">선택</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="7" style="text-align: center;">
+                                    <p>쇼핑백에 담긴 상품이 없습니다.</p>
+                                    <p></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="tbl_uder_box">
+                            <div class="bx_btn">
+                                <button type="button" name="button" class="btn" onclick="WCKBasket.RemoveBasketAll();">
+                                    선택상품삭제
+                                </button>
+                                <button type="button" name="button" class="btn gray" onclick="history.go(-1);">쇼핑계속하기
+                                </button>
+
+                            </div>
+                            <div class="shoppingbag_count_limit_notify">
+                                <ul class="unorder_list">
+                                    <li>
+                                        쇼핑백에 상품은 최대 100개까지 담을 수 있습니다.
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </td>
-                <td class="text-center align-middle">
-                <span th:id="'totalPrice_' + ${cartItem.cartItemId}" name="totalPrice"
-                      th:text="${cartItem.price * cartItem.count} + '원'"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <h2 class="text-center">
-            총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
-        </h2>
-        <div class="text-center mt-3">
-            <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+                    <div class="payment">
+                        <div class="bx_total">
+                            <!-- <h3>주문금액 -->
+                            <ul>
+                                <li>
+                                    <strong>총 상품 금액</strong>
+                                    <p>
+                                        <em id="counterTotal">0</em>
+                                        원
+                                    </p>
+                                </li>
+                                <li>
+                                    <strong>배송비</strong>
+                                    <p>
+                                        <span>+</span>
+                                        <em id="counterTotdeliveryamt">0</em>
+                                        원
+                                    </p>
+                                </li>
+                                <li class="total">
+                                    <strong>총 결제금액</strong>
+                                    <p>
+                                        <em id="counterTotalAmt">0</em>
+                                        원
+                                    </p>
+                                </li>
+                                <li class="point">
+                                    <strong>적립예정 포인트</strong>
+                                    <p>
+                                        <em id="counterTotalcybermoney">0</em>
+                                        p
+                                    </p>
+                                </li>
+                            </ul>
+                            <button type="button" name="button"
+                                    onclick="WCKBasket.ProcessOrder('cart_order'); AMPLITUDE.LogClickEvent(7,'click_cart_selectorder','cart_order','cart_order');"
+                                    class="btn_order">선택상품 주문하기
+                            </button>
+                            <button type="button" onclick="WCKBasket.NoMemberGiftOrder('cart_order');"
+                                    class="btn_gift_selected">선물하기
+                            </button>
 
-        </div>
-    </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="buyitwith" data-itemcd>
+                    <!-- <h3 class="tit_carousel">Buy it with</h3> -->
+                    <div class="lst_carousel about_cont ix-slide-max-apply"
+                         data-ix-options="view-length:6; move-length:6; auto-play:false;">
+
+                        <li class="ix-list-item ix-clone" data-origin-idx="13" data-idx="2" aria-hidden="true"
+                            style="width: 190px; margin-bottom: 80px; margin-left: 0px; margin-right: 20px; ">
+                            <span>--></span></li>
+                        <!--
+                                                        <div class="img">
+                                                            <img src="//product-image.wconcept.co.kr/productimg/image/img1/74/302216874.jpg?RS=300" alt="spring tweed jacket_black">
+                                                        </div> -->
+                        <div class="text no_front">
+
+
+                            <div class="ix-controller">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+</div>
 </html>
