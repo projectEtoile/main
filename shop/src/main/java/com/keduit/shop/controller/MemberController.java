@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -68,6 +69,7 @@ public class MemberController {
         return "member/login";//페이지 리턴
     }
 
+
     @GetMapping("/login/error")
     public String loginError(Model model){
 
@@ -79,7 +81,8 @@ public class MemberController {
         return "member/login";
     }
 
-    /*비밀번호 찾기*/
+
+
     @GetMapping("/findLoginPw")
     public String findLoginPw(){
         return "member/findLoginPw";
