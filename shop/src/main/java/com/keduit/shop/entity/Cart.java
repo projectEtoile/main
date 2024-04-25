@@ -26,7 +26,7 @@ public class Cart extends BaseTimeEntity{
     @JoinColumn(name = "member_id") /*외래키(FK)지정,name = "member_id" : 외래키의 이름 */
     private Member member;
 
-    private Long aa;
+
 
     public static Cart createCart(Member member){
         Cart cart = new Cart();
