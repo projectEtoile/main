@@ -3,6 +3,8 @@ package com.keduit.shop.controller;
 import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.service.MemberService;
+import com.sun.mail.imap.Utility;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+@EqualsAndHashCode
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -78,5 +81,19 @@ public class MemberController {
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
         return "member/login";
     }
+
+    /*비밀번호 찾기*/
+    @GetMapping("/findLoginPw")
+    public String findLoginPw(){
+        return "member/findLoginPw";
+    }
+
+/*    @GetMapping("/doFindLoginPw")
+    public String doFindLoginPw(String email){
+        if(Utilit.empty(email)){
+            return Utility.jsHistoryBack("이메일을 입력해주세요");
+        }
+
+    }*/
 
 }
