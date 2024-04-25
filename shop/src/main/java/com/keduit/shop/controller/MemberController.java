@@ -84,16 +84,6 @@ public class MemberController {
 
 
 
-    @GetMapping("/findLoginPw")
-    public String findLoginPw(){
-        return "member/findLoginPw";
-    }
 
-/*    @GetMapping("/doFindLoginPw")
-    public String doFindLoginPw(String email){
-        if(Utilit.empty(email)){
-            return Utility.jsHistoryBack("이메일을 입력해주세요");
-        }
-    }*/
 
 }
