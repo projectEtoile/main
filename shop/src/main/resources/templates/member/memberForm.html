@@ -51,21 +51,21 @@
                         <td>
                             <p class="email">
                                 <input type="text" style="width: 125px;" name="email" th:field="*{email}">
-                                <span class="txt_email">@</span>
-                                <input type="email" style="width: 125px;" name="email" >
+<!--                                <span class="txt_email">@</span>-->
+<!--                                <input type="email" style="width: 125px;" name="email" >-->
                                 <!-- <select class="normal" style="width: 114px; display: none;" id="selectEmail"> -->
-                                <select class="normal" id="selectEmail">
-                                    <option value="" selected="">선택</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                    <option value="hanmail.net">hanmail.com</option>
-                                    <option value="nate.com">nate.com</option>
-                                    <option value="daum.net">daum.com</option>
-                                    <option value="write">직접입력</option>
-                                </select>
+<!--                                <select class="normal" id="selectEmail">-->
+<!--                                    <option value="" selected="">선택</option>-->
+<!--                                    <option value="naver.com">naver.com</option>-->
+<!--                                    <option value="gmail.com">gmail.com</option>-->
+<!--                                    <option value="hanmail.net">hanmail.com</option>-->
+<!--                                    <option value="nate.com">nate.com</option>-->
+<!--                                    <option value="daum.net">daum.com</option>-->
+<!--                                    <option value="write">직접입력</option>-->
+<!--                                </select>-->
                            <p id="validation1" class="incorrect"><label id="chkcustid">본인 소유의 이메일을 입력해 주세요.</label></p>
-                            <p th:if="${#fields.hasErrors( 'email')}"
-                               th:errors="*{email}" class="fieldError">Incorrect data</p>
+<!--                            <p th:if="${#fields.hasErrors( 'email')}"-->
+<!--                               th:errors="*{email}" class="fieldError">Incorrect data</p>-->
                         </td>
                     </tr>
                     <tr>
@@ -73,8 +73,8 @@
                         <td>
                             <input type="password" name="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요">
                             <p id="validation2" class="correct"><label id="chkcustpw"></label></p>
-                            <p th:if="${#fields.hasErrors('password')}"
-                               th:errors="*{password}" class="fieldError">Incorrect data</p>
+                          <!--  <p th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}" class="fieldError">Incorrect data</p>-->
                         </td>
                     </tr>
                     <tr>
@@ -91,8 +91,8 @@
                                 <input type="text" name="name" id="join_name" th:field="*{name}" placeholder="ex) 홍길동">
                             </p>
                             <p id="validation7" class="correct correct va_m"><label id="checkname"></label></p>
-                            <p th:if="${#fields.hasErrors('name')}"
-                                th:errors="*{name}" class="fieldError">Incorrect data</p>
+                            <!--<p th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}" class="fieldError">Incorrect data</p>-->
                         </td>
                     </tr>
 
