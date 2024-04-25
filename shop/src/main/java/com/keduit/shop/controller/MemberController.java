@@ -3,8 +3,6 @@ package com.keduit.shop.controller;
 import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.service.MemberService;
-import com.sun.mail.imap.Utility;
-import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-@EqualsAndHashCode
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor

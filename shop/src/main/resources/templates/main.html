@@ -1,133 +1,495 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
-      layout:decorate='~{layouts/layout1}'>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<th:block layout:fragment="content">
+    <body>
 
-<th:block layout:fragment="css">
-    <style>
-        .carousel-inner > .item {
-            height: 350px;
-        }
-        .margin{
-            margin-bottom:30px;
-        }
-        .banner{
-            height: 300px;
-        }
-        .card-text{
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        a:hover{
-            text-decoration:none;
-        }
-        .center{
-            text-align:center;
-        }
-        .banner{
-            position: absolute; top:0; left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</th:block>
-<th:block layout:fragment="script">
-    <script th:inline="javascript">
-        $(document).ready(function(){
-            $('#searchBtn').on("click", function(e){
-                e.preventDefault();
-                page(0);
-            })
-        });
+    <main>
+        <!-- Slideshow container -->
+        <div class="slideshow-container">
 
-        function page(page){
-            const searchDateType = $("#searchDateType").val();  // 상품 등록 기간
-            const searchSellStatus = $("#searchSellStatus").val();  // 판매 상태
-            const searchBy = $("#searchBy").val();          // 조회 유형
-            const searchQuery = $("#searchQuery").val();    // 검색어
-
-            location.href="/?%20" +"searchQuery=" + searchQuery+"&page="+page
-           ;
-
-        }
-    </script>
-</th:block>
-
-<div layout:fragment="content">
-
-    <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active item">
-                <img class="d-block w-100 banner"
-                     src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png"
-                     alt="First slide">
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="https://as1.ftcdn.net/v2/jpg/02/64/00/92/1000_F_264009215_QxyfckXRbgsbiC1r3WZLdZfWtngYwyCC.jpg"
+                     style="width:100%">
+                <div class="text">Caption Text</div>
             </div>
-        </div>
-    </div>
-    <input type="hidden" name="searchQuery" th:value="${itemSearchDTO.searchQuery}">
-    <div th:if="${not #strings.isEmpty(itemSearchDTO.searchQuery)}" class="center">
-        <p class="h3 font-weight-bold" th:text="${itemSearchDTO.searchQuery} + '검색 결과'"></p>
-    </div>
-    <div class="row">
-        <th:block th:each="item, status: ${items.getContent()}">
-            <div class="col-md-4 margin">
-                <div class="card">
-                    <a th:href="'/item/'+${item.id}" class="text-dark">
-                        <img th:src="${item.itemUrl}" class="card-img-top"
-                             th:alt="${item.itemNm}" height="400">
-                        <div class="card-body">
-                            <h4 class="card_title">
-                                <!-- 태그 사이에 그냥 출력 할 때 문법.-->
-                                [[${item.itemNm}]]
-                            </h4>
-                            <p class="cart-text">[[${item.itemDetail}]]</p>
-                            <h3 class="cart-title text-danger">[[${item.price}]]원</h3>
-                        </div>
 
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="https://as1.ftcdn.net/v2/jpg/03/51/54/24/1000_F_351542401_6lJltIyx3mcETxWRyUEok4FO6UDVO44L.jpg"
+                     style="width:100%">
+                <div class="text">Caption Two</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="https://as1.ftcdn.net/v2/jpg/03/56/60/08/1000_F_356600829_Tap0Oqzf0KVHYKmPXFiF09JyCdHSLVFe.jpg"
+                     style="width:100%">
+                <div class="text">Caption Three</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+        </div>
+
+
+        </div>
+
+        <!-- The dots/circles -->
+        <div class="slides" style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+
+
+        <div class="card">
+            <div class="contents_card">
+                <div class="card_blockcontent">
+
+                    <a href="https://www.lfmall.co.kr/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063176411.jpg" alt="자켓">
+                        <span>자켓</span>
+                    </a>
+
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447825303.png" alt="가방/잡화">
+                        <span>맨투맨</span>
+                    </a>
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447809974.png" alt="니트/스웨터">
+                        <span>니트/스웨터</span>
+                    </a>
+                    <a href="http://127.0.0.1:5500/1/nav+footer/Category_menu_Padding.html">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447705032.png" alt="스포츠">
+                        <span>패딩</span>
+                    </a>
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447732315.png" alt="명품">
+                        <span>코트</span>
+                    </a>
+
+
+                    <!-- <a href="https://www.lfmall.co.kr/app/exhibition/menu/501">
+                    <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447789913.png" alt="2">
+                    <span>자켓</span>
+                  </a> -->
+
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447841365.png" alt="가방/잡화">
+                        <span>슬랙스</span>
+                    </a>
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063196071.jpg" alt="슈즈">
+                        <span>슈즈</span>
+                    </a>
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063205831.jpg" alt="스포츠">
+                        <span>스포츠</span>
+                    </a>
+                    <a href="/app/exhibition/menu/501">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447858475.png" alt="명품">
+                        <span>스커트</span>
                     </a>
                 </div>
             </div>
-        </th:block>
-    </div>
+        </div>
+        </div>
 
-    <div th:with="start=${(items.number/maxPage)*maxPage + 1},
-                  end=(${(items.totalPages == 0) ? 1 :
-                  (start + (maxPage - 1) <
-                  items.totalPages ? start + (maxPage - 1) :
-                  items.totalPages)})">
-        <ul class="pagination justify-content-center">
 
-            <li class="page-item" th:classappend="${items.first}?'disabled'">
-                <!--<a th:onclick="'javascript:page(' + ${items.number - 1} + ')'"
-                   aria-label='Previous' class="page-link">-->
-                <a th:href="@{'/'+'?searchQuery=' + ${itemSearchDTO.searchQuery} + '&page=' + ${items.number - 1}} "
-                   aria-label='Previous' class="page-link">
-                    <span aria-hidden='true'>Previous</span>
-                </a>
-            </li>
-            <!-- page 객체에서 number 는 현재 페이지를 나타냄
-                  [[${page}]] : 타임리프에서 html 콘텐츠 영역안에 직접 데이터를 출력할 때 사용
-                   Page 객체에서 시작페이지는 0부터 해당 페이지를 호출할 때에는 page -1 을 해야함.-->
-            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
-                th:classappend="${items.number eq page - 1}?'active':''">
-                <!--???-->
-                <a th:href="@{'/'+'?searchQuery=' + ${itemSearchDTO.searchQuery}
-                + '&page=' + ${page - 1}}" th:inline="text" class="page-link">
-                    [[${page}]]
-                </a>
-                <!--                <a th:onclick="'javascript:page(' + ${page - 1} + ')'"
-                                   th:inline="text" class="page-link">[[${page}]]</a>-->
-            </li>
+        <div class="card2">
+            <div class="cardTitle_brandlogo">
+                <p>추천 브랜드</p>
+            </div>
+            <div class="Brandlogo">
+                <ul class="brandlogo">
+                    <li>
+                        <a class="hazzys"
+                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1001?af=BNAPC29336&utm_source=naverP_BNAPC29336&utm_medium=display&utm_campaign=Sales&utm_term=%EB%8B%A5%EC%8A%A4_D_P%EB%A9%94%EC%9D%B8%ED%85%8D%EC%8A%A4%ED%8A%B8brand_DAKS2">
+                            <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625203782.jpg"
+                                 style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                        </a>
+                    </li>
+                    <li><a class="darks"
+                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1017?af=BNAPC29076&utm_source=naverP_BNAPC29076&utm_medium=display&utm_campaign=Sales&utm_term=%EC%A7%88%EC%8A%A4%ED%8A%9C%EC%96%B4%ED%8A%B8_P%ED%99%88%EB%A7%81%ED%81%ACbrand_J2">
+                        <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625206665.jpg"
+                             style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                    </li>
 
-            <li class="page-item" th:classappend="${items.last}?'disabled'">
-                <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'"
-                   aria-label='Next' class="page-link">
-                    <span aria-hidden='true'>Next</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+                    <li><a class="jill" href="https://www.lfmall.co.kr/display.do?cmd=getBrandMain&TBRAND_CD=1009"><img
+                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625209812.jpg"
+                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                    </li>
+                    <li><a class="vanessa"
+                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1875?brandUrl=ATCORNER"><img
+                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625213187.jpg"
+                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                    </li>
+                    <li><a class="a.t" href="https://display.wconcept.co.kr/brand/102725"><img
+                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625217046.jpg"
+                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                    </li>
+                    <li><a class="isabel" href="https://www.isabelmarant.com/kr"><img
+                            src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625221012.jpg"
+                            style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                    </li>
+                    <!-- <li><a class="dunst" href="https://display.wconcept.co.kr/brand/105426"><img
+                        src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625225851.jpg" alt=""
+                        style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                  </li>
+                  <li><a class="till" href="https://display.wconcept.co.kr/brand/104236"><img
+                        src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625229979.jpg" alt=""
+                        style="min-height: calc(64.3821px); min-width: calc(137.778px);">
+                    </a>
+                  </li> -->
 
-</div>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="card3">
+            <div class="cardTitle">
+                <p>이달의 신상품</p>
+            </div>
+            <div class="alll">
+                <div class="saleProduct1">
+                    <div class="swiper-wrapper" style="transform: translate3d(0px,0px,0px);
+   transition-duration:0ms ; transition-delay:0ms ;">
+
+
+                        <div class="swiper-slide" style="width: 295px; margin-right:20px;">
+                            <div>
+
+                                <div class="ProductImage_1">
+
+                                    <div class="ProductImage_1_2 wh294-374">
+                                        <img src="//product-image.wconcept.co.kr/productimg/image/img0/70/305585670_KK30620.jpg"
+
+                                             class="ProductImage_hover">
+
+
+                                        <img
+                                                src="//product-image.wconcept.co.kr/productimg/image/img0/70/305585670_add1_RN40532.jpg?thumbnail=60x80"
+                                                class="ProductImage_base">
+
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a class="text-logo-title" href="/2pro/jongw/상세페이지/prodDetail3.html">
+                                        <strong>KAMJA</strong>
+                                    </a>
+                                    <a class="ProductName txtLine1"
+                                       href="/2pro/jongw/상세페이지/prodDetail3.html">V-NECK
+                                        ROSE HOODIE</a>
+                                    <div class="ProductPrice">
+
+                                        <span class="ProductPrice_lastprice">109,000</span>
+                                        <!-- <span i class="fa-regular fa-heart"></i></span>
+                                    <i class="fa-solid fa-cart-shopping"></i> -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+
+
+                        <div class="swiper-slide swiper-slide-next" style="width: 295px; margin-right: 20px;">
+                            <div>
+                                <div class="ProductImage_1">
+                                    <div class="ProductImage_1_2 wh294-374"><img
+                                            src="https://nimg.lfmall.co.kr/file/product/prd/HZ/2024/320/HZPA4A373I2_01.jpg?1706253425000"
+
+                                            class="ProductImage_hover"><img
+                                            src="https://nimg.lfmall.co.kr/file/product/prd/EFMW/2022/320/EFMWXX00175_00.jpg?1686106027000"
+                                            class="ProductThumbImage_baseImg__osoIA ProductImage_base">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="text-logo-title"
+                               href="https://www.lfmall.co.kr/app/exhibition/brandGroup/19339?brandUrl=19339&productSaleType=3&saleType=3">
+                                <strong>OLIVE DES OLIVE</strong>
+                            </a><br>
+                            <a class="ProductName_product  txtLine1 "
+                               href="https://www.lfmall.co.kr/app/product/EFMWXX00175?has_init=Y">크롭 더블 버튼 자켓
+                            </a>
+                            <div class="ProductPrice">
+                                <span class="ProductPrice_discount">5%</span>
+                                <span class="ProductPrice_Baseprice">219,000</span>
+                                <span class="ProductPrice_lastprice">208,050</span>
+                                <!-- <span i class="fa-regular fa-heart"></i></span>
+                            <i class="fa-solid fa-cart-shopping"></i> -->
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                        <div class="swiper-wrapper" style="transform: translate3d(0px,0px,0px);
+          transition-duration:0ms ; transition-delay:0ms ;">
+
+
+                            <div class="swiper-slide" style="width: 295px; margin-right:20px;">
+                                <div>
+
+                                    <div class="ProductImage_1">
+
+                                        <div class="ProductImage_1_2 wh294-374">
+                                            <img src="https://nimg.lfmall.co.kr/file/product/prd/HZ/2023/320/HZPA3F801N2_01.jpg?1706163168000"
+                                                 class="ProductImage_hover">
+
+
+                                            <img src="https://nimg.lfmall.co.kr/file/product/prd/HS/2024/320/HSSW4BC12BK_00.jpg?1706170298000"
+                                                 class="ProductImage_base">
+
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a class="text-logo-title"
+                                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1002?brandUrl=HAZZYS&productSaleType=1&brandId=HS&saleType=1%2C3">
+                                            <strong>HAZZYS LADIES</strong>
+                                        </a>
+                                        <a class="ProductName txtLine1"
+                                           href="https://www.lfmall.co.kr/app/product/HSSW4BC12BK">블랙 스트라이프 버튼 장식
+                                            반팔 스웨터
+                                        </a>
+                                        <div class="ProductPrice">
+                                            <span class="ProductPrice_discount">14%</span>
+                                            <span class="ProductPrice_Baseprice">170,140</span>
+                                            <span class="ProductPrice_lastprice">114,480</span>
+                                            <!-- <span i class="fa-regular fa-heart"></i></span>
+                                        <i class="fa-solid fa-cart-shopping"></i> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide" style="width: 295px; margin-right: 20px;">
+                                <div>
+
+                                    <div class="ProductImage_1">
+
+                                        <div class="ProductImage_1_2 wh294-374">
+                                            <img src="https://nimg.lfmall.co.kr/file/product/prd/HZ/2023/320/HZPA3F801N2_01.jpg?1706163168000"
+                                                 class="ProductImage_hover">
+
+
+                                            <img src="//product-image.wconcept.co.kr/productimg/image/img0/98/301740098_GG69159.jpg"
+
+                                                 class="ProductImage_base">
+
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a class="text-logo-title" href="/itemDtl2">
+                                            <strong>NOTIA</strong>
+                                        </a>
+                                        <a class="ProductName txtLine1"
+                                           href="/templates/item/itemDtl2.html">RUSTLE BAND PANTS-CREAM
+                                        </a>
+                                        <div class="ProductPrice">
+                                            <span class="ProductPrice_discount">9%</span>
+                                            <span class="ProductPrice_Baseprice">438,000</span>
+                                            <span class="ProductPrice_lastprice">395,290</span>
+                                            <!-- <span i class="fa-regular fa-heart"></i></span>
+                                      <i class="fa-solid fa-cart-shopping"></i> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alll">
+                <div class="saleProduct1">
+                    <div class="swiper-wrapper" style="transform: translate3d(0px,0px,0px);
+   transition-duration:0ms ; transition-delay:0ms ;">
+
+
+                        <div class="swiper-slide" style="width: 295px; margin-right:20px;">
+                            <div>
+
+                                <div class="ProductImage_1">
+
+                                    <div class="ProductImage_1_2 wh294-374">
+                                        <img src="https://nimg.lfmall.co.kr/file/product/prd/HZ/2023/320/HZPA3F801N2_01.jpg?1706163168000"
+                                             class="ProductImage_hover">
+
+
+                                        <img
+                                                src="https://nimg.lfmall.co.kr/file/product/prd/HS/2024/1500/HSSW4AC11P2_00.jpg?2024-01-15T15:05:02.000+09:00"
+                                                class="ProductImage_base">
+
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a class="text-logo-title"
+                                       href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1002?brandUrl=HAZZYS&productSaleType=1&brandId=HS&saleType=1%2C3">
+                                        <strong>HAZZYS LADIES</strong>
+                                    </a>
+                                    <a class="ProductName txtLine1"
+                                       href="https://www.lfmall.co.kr/app/product/HZPA3F801N2">[아이코닉]핑크
+                                        베이비 케이블
+                                        가디건</a>
+                                    <div class="ProductPrice">
+                                        <span class="ProductPrice_discount">5%</span>
+                                        <span class="ProductPrice_Baseprice">239,000</span>
+                                        <span class="ProductPrice_lastprice">227,050</span>
+                                        <!-- <span i class="fa-regular fa-heart"></i></span>
+                                  <i class="fa-solid fa-cart-shopping"></i> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="swiper-wrapper" style="transform: translate3d(0px,0px,0px);
+   transition-duration:0ms ; transition-delay:0ms ;">
+
+
+                            <div class="swiper-slide" style="width: 295px; margin-right:20px;">
+                                <div>
+
+                                    <div class="ProductImage_1">
+
+                                        <div class="ProductImage_1_2 wh294-374">
+                                            <img src="https://nimg.lfmall.co.kr/file/product/prd/HZ/2023/320/HZPA3F801N2_01.jpg?1706163168000"
+                                                 class="ProductImage_hover">
+
+
+                                            <img
+                                                    src="https://nimg.lfmall.co.kr/file/product/prd/HS/2024/1500/HSSW4AC12BK_00.jpg?2024-01-25T17:10:14.000+09:00"
+                                                    class="ProductImage_base">
+
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a class="text-logo-title"
+                                           href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1002?brandUrl=HAZZYS&productSaleType=1&brandId=HS&saleType=1%2C3">
+                                            <strong>HAZZYS LADIES</strong>
+                                        </a>
+                                        <a class="ProductName txtLine1"
+                                           href="https://www.lfmall.co.kr/app/product/HSSW4AC12BK">블랙 스트랑
+                                            브이넥 가디건</a>
+                                        <div class="ProductPrice">
+                                            <span class="ProductPrice_discount">19%</span>
+                                            <span class="ProductPrice_Baseprice">229,000</span>
+                                            <span class="ProductPrice_lastprice">185,490</span>
+                                            <!-- <span i class="fa-regular fa-heart"></i></span>
+                                      <i class="fa-solid fa-cart-shopping"></i> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide swiper-slide-next" style="width: 295px; margin-right: 20px;">
+                                <div>
+                                    <div class="ProductImage_1">
+                                        <div class="ProductImage_1_2 wh294-374"><img
+                                                src="//product-image.wconcept.co.kr/productimg/image/img0/15/301631515_JR89872.jpg"
+
+                                                class="ProductImage_hover"><img
+                                                src="//product-image.wconcept.co.kr/productimg/image/img0/15/301631515_JR89872.jpg"
+
+                                                class="ProductImage_base">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="text-logo-title" href="/2pro/jongw/상세페이지/prodDetail.html">
+                                    <strong>NOTIA</strong>
+                                    <a class="ProductName_product  txtLine1 "
+                                       href="/2pro/jongw/상세페이지/prodDetail.html">OVER
+                                        FIT SINGLE LEATHER JACKET</a>
+                                    <div class="ProductPrice">
+                                        <span class="ProductPrice_discount">5%</span>
+                                        <span class="ProductPrice_Baseprice">219,000</span>
+                                        <span class="ProductPrice_lastprice">208,050 </span>
+                                        <!-- <span i class="fa-regular fa-heart"></i></span>
+                                <i class="fa-solid fa-cart-shopping"></i> -->
+                                    </div>
+                            </div>
+                            <div>
+
+                            </div>
+
+                            <div class="swiper-wrapper" style="transform: translate3d(0px,0px,0px);
+      transition-duration:0ms ; transition-delay:0ms ;">
+
+
+                                <div class="swiper-slide" style="width: 295px; margin-right:20px;">
+                                    <div>
+
+                                        <div class="ProductImage_1">
+
+                                            <div class="ProductImage_1_2 wh294-374">
+                                                <img src="https://nimg.lfmall.co.kr/file/product/prd/HZ/2023/320/HZPA3F801N2_01.jpg?1706163168000"
+                                                     class="ProductImage_hover">
+
+
+                                                <img
+                                                        src="https://nimg.lfmall.co.kr/file/product/prd/EFMW/2023/1500/EFMWXX00717_00.jpg?2024-01-25T16:38:51.000+09:00"
+                                                        class="ProductImage_base">
+
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a class="text-logo-title"
+                                               href="https://www.lfmall.co.kr/app/exhibition/brandGroup/19339?brandUrl=19339&productSaleType=3&saleType=3">
+                                                <strong>OLIVE DES OLIVE</strong></a>
+                                            <a class="ProductName txtLine1"
+                                               href="https://www.lfmall.co.kr/app/product/EFMWXX00717?has_init=Y">코튼 볼륨
+                                                소매
+                                                블라우스</a>
+                                            <div class="ProductPrice">
+                                                <span class="ProductPrice_discount">32%</span>
+                                                <span class="ProductPrice_Baseprice">218,000</span>
+                                                <span class="ProductPrice_lastprice">148,240 </span>
+                                                <!-- <span i class="fa-regular fa-heart"></i></span>
+                                          <i class="fa-solid fa-cart-shopping"></i> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    </body>
+</th:block>
 </html>
