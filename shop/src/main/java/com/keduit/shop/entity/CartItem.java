@@ -27,12 +27,14 @@ public class CartItem extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item;
     private int count; /*장바구니에 몇개들어갔는지 알기위해*/ /*상품하나가 여러 카트에들어갈수있으니까 다대일*/
+    private String size;
 
-    public static CartItem createCartItem(Cart cart, Item item, int count) {
+    public static CartItem createCartItem(Cart cart, Item item, int count, String size) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
         cartItem.setCount(count);
+        cartItem.setSize(size);
         return cartItem;
     }
 
