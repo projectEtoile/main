@@ -249,42 +249,55 @@ document.addEventListener("DOMContentLoaded", function () {
              });
          }
 
-               <!--장바구니담기 이벤트 처리하기 -->
-                        function addCart(){
-                      <!--csrf토큰 값을 가져옴-->
-                          const token = $("meta[name='_csrf']").attr("content");
-                          const header = $("meta[name='_csrf_header']").attr("content");
-                          <!--ajax비동기통신-->
-                          const url = "/cart";
-                          const paramData = {
-                              itemId: $("#itemId").val(),
-                              count: $("#count").val()
-                          };
-                          const param = JSON.stringify(paramData);
+                 <!--장바구니담기 이벤트 처리하기 -->
+                         function addCart(){
+                       <!--csrf토큰 값을 가져옴-->
+                           const token = $("meta[name='_csrf']").attr("content");
+                           const header = $("meta[name='_csrf_header']").attr("content");
+                           <!--ajax비동기통신-->
+                           const url = "/cart";
+                           const paramData = {
+                               itemId: $("#itemId").val(),
+                               count: $("#count").val()
+                           };
+                           const param = JSON.stringify(paramData);
 
-                          $.ajax({
-                              url : url,
-                              type : "POST",
-                              contentType : "application/json",
-                              data : param,
-                              beforeSend : function(xhr){
-                                  <!--데이터를 전송하기 전에 헤더에 csrf 값을 생성해줘야함-->
-                                  xhr.setRequestHeader(header, token);
-                              },
-                              dataType : "json",
-                              cache : false,
-                              success : function(result, status){
-                                  alert("상품을 장바구니에 담았습니다.");
-                                  location.href='/';
-                              },
-                              error : function(jqXHR, status, error){
-                                  if(jqXHR.status == '401'){
-                                      alert("로그인 후 이용해 주세요.");
-                                      location.href='/member/login';
-                                  } else {
-                                      <!--그이외에는 해당 메세지를 출력-->
-                                      alert(jqXHR.responseText);
-                                  }
-                              }
-                          })
-                      }
+                           $.ajax({
+                               url : url,
+                               type : "POST",
+                               contentType : "application/json",
+                               data : param,
+                               beforeSend : function(xhr){
+                                   <!--데이터를 전송하기 전에 헤더에 csrf 값을 생성해줘야함-->
+                                   xhr.setRequestHeader(header, token);
+                               },
+                               dataType : "json",
+                               cache : false,
+                               success : function(result, status){
+                                   alert("상품을 장바구니에 담았습니다.");
+                                   location.href='/';
+                               },
+                               error : function(jqXHR, status, error){
+                                   if(jqXHR.status == '401'){
+                                       alert("로그인 후 이용해 주세요.");
+                                       location.href='/member/login';
+                                   } else {
+                                       <!--그이외에는 해당 메세지를 출력-->
+                                       alert(jqXHR.responseText);
+                                   }
+                               }
+                           })
+                       }
+
+                       function addToCart() {
+                           var selectedSize = document.querySelector('select[name="size"]').value;
+                           var quantity = parseInt(document.getElementById("quantity").value);
+
+                           if (selectedSize === '' || isNaN(quantity) || quantity < 1) {
+                               alert("사이즈와 수량을 선택하세요.");
+                               return;
+                           }
+
+                           // 장바구니에 상품을 담는 로직
+                           addCart();
+                       }

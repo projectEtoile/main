@@ -56,20 +56,36 @@ public class CartService {
         }
     }
 
+
+
     /*목록읽어오기*/
     @Transactional(readOnly = true)
     public List<CartDetailDTO> getCartList(String email) {
-        List<CartDetailDTO> cartDetailDTOList = new ArrayList<>();
-
         Member member = memberRepository.findByEmail(email);
-        Cart cart = cartRepository.findByMemberId(member.getId());
-        if (cart == null) {
-            return cartDetailDTOList;
+
+        if (member == null) {
+            // 로그 추가
+            System.out.println("Member not found for email: " + email);
+            return new ArrayList<>(); // 멤버를 찾지 못하면 빈 리스트 반환
         }
 
-        cartDetailDTOList =
-                cartItemRepository.findCartDetailDTOList(cart.getId());
-        return cartDetailDTOList;
+        Cart cart = cartRepository.findByMemberId(member.getId());
+
+        if (cart == null) {
+            // 로그 추가
+            System.out.println("Cart not found for member id: " + member.getId());
+            return new ArrayList<>(); // 카트가 없으면 빈 리스트 반환
+        }
+
+        List<CartDetailDTO> cartDetailDTOList = cartItemRepository.findCartDetailDTOList(cart.getId());
+
+        if (cartDetailDTOList == null || cartDetailDTOList.isEmpty()) {
+            // 로그 추가
+            System.out.println("CartDetailDTO list is empty for cart id: " + cart.getId());
+            return new ArrayList<>(); // 결과가 없거나 null인 경우 빈 리스트 반환
+        }
+
+        return cartDetailDTOList; // 결과가 있는 경우 반환
     }
 
 

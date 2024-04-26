@@ -119,19 +119,13 @@ function stopSlideShow() {
 
 // Show slides
 function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
+    var slides = document.getElementsByClassName("mySlides");
+    if (n >= slides.length) {slideIndex = 0}
+    if (n < 0) {slideIndex = slides.length - 1}
+    for (var i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none"; // 이 부분에서 스타일을 설정하기 전에 해당 DOM 요소가 올바르게 참조되었는지 확인하세요.
+    }
+    slides[slideIndex].style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", initializeSlideShow);

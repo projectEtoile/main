@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,10 +49,18 @@ public class CartController {
 
     @GetMapping("/cart")
     public String orderHist(Principal principal, Model model) {
-        List<CartDetailDTO> cartDetailDTOList = cartService.getCartList(principal.getName());
-        model.addAttribute("cartItems", cartDetailDTOList);
-        return "cart/cartList";
+        String email = principal.getName(); // 로그인한 사용자의 이메일
+        List<CartDetailDTO> cartDetailDTOList = cartService.getCartList(email);
+
+        if (cartDetailDTOList == null || cartDetailDTOList.isEmpty()) {
+            model.addAttribute("cartItems", new ArrayList<>()); // 기본 빈 리스트 추가
+        } else {
+            model.addAttribute("cartItems", cartDetailDTOList); // 데이터가 존재하면 추가
+        }
+
+        return "cart/cartList"; // 반환되는 뷰 이름 확인
     }
+
 
     /*put : 전체수정, patch: 일부수정*/
     @PatchMapping("/cartItem/{cartItemId}")
