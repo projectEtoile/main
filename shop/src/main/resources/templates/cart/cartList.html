@@ -92,15 +92,14 @@
                                 </td>
                                 <td>
                                     <!-- 삭제 버튼 -->
-                                    <button type="button" aria-label="Close" onclick="deleteCartItem(this)">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" aria-label="Close" th:if="${cartItem != null}"
+                                            th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</button>
                                 </td>
                             </tr>
                             </tbody>
                             <tfoot>
                             <!-- 쇼핑백이 비어 있을 때 -->
-                            <tr th:if="${#lists.isEmpty(cartItems)}">
+                            <tr th:if="${cartItems == null or #lists.isEmpty(cartItems)}">
                                 <td colspan="7" style="text-align: center;">
                                     쇼핑백에 담긴 상품이 없습니다.
                                 </td>
@@ -132,8 +131,9 @@
                                 <li>
                                     <strong>총 상품 금액</strong>
                                     <p>
-                                        <em id="counterTotal">0</em>
-                                        원
+                                        <em th:id="'totalPrice_' + ${cartItem.cartItemId}" name="totalPrice"
+                                            th:text="${cartItem.price * cartItem.count} + '원'"></em>
+
                                     </p>
                                 </li>
                                 <li>
@@ -147,7 +147,7 @@
                                 <li class="total">
                                     <strong>총 결제금액</strong>
                                     <p>
-                                        <em id="counterTotalAmt">0</em>
+                                        <em id="orderTotalPrice" class="text-danger">0원</em>
                                         원
                                     </p>
                                 </li>
@@ -160,7 +160,7 @@
                                 </li>
                             </ul>
                             <button type="button" name="button"
-                                    onclick="WCKBasket.ProcessOrder('cart_order'); AMPLITUDE.LogClickEvent(7,'click_cart_selectorder','cart_order','cart_order');"
+                                    onclick="orders()"
                                     class="btn_order">선택상품 주문하기
                             </button>
                             <button type="button" onclick="WCKBasket.NoMemberGiftOrder('cart_order');"
