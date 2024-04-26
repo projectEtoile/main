@@ -105,9 +105,9 @@ $(document).ready(function(){
 function page(page) {
     if (page === null || page === undefined) {
         // 페이지 번호가 없는 경우 또는 null인 경우
-        location.href = '/members';
+        location.href = '/admin/members';
     } else {
         // 페이지 번호가 있는 경우
-        location.href = '/members/admin/' + page;
+        location.href = '/admin/members/' + page;
     }
 }

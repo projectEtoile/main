@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -30,7 +31,8 @@ public class SecurityConfig {
                 .logout()
                 // 로그아웃 처리 url
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true);
 
         http.oauth2Login().loginPage("/members/login")
                 .successHandler(authenticationSuccessHandler());
@@ -40,18 +42,18 @@ public class SecurityConfig {
         // anyRequest().authenticated() 위의 경우 이외의 페이지는 인증 절차가 필요.
         http.authorizeRequests()
                 .mvcMatchers("/", "/members/**",
-                        "/item/**", "/images/**", "/admin/**").permitAll()
+                        "/item/**", "/images/**", "/image/**").permitAll()
+                .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
-//    http
-//            .authorizeRequests()
-//            .anyRequest().permitAll()
-//            .and()
-//            .csrf().disable();
 
 
 //    인증되지 않은 사용자가 리소스 접근하여 실패했을 때 처리하는 핸들러 등록
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+        http
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
         return http.build();
 
@@ -74,8 +76,8 @@ public class SecurityConfig {
         return new CustomSocialLoginSuccessHandler(passwordEncoder());
 
     }
-
-
     /*resource/static 폴더의 하위 파일은 인증에서 제외시키기*/
+
+
 
 }
