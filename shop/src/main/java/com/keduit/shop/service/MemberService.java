@@ -1,6 +1,7 @@
 package com.keduit.shop.service;
 
 import com.keduit.shop.dto.AdminMemberSearchDTO;
+import com.keduit.shop.dto.MailDto;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor//필요한 부분만 생성자로
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
+    private final MailService mailService; // MailService 주입
 
     public Member saveMember(Member member) {//새로운 멤버를 등록할 시 중복x
         validateDuplicateMember(member);//중복 여부를 검증하는 과정
@@ -49,11 +51,14 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
-
-    public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
-        return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
+    // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
+    public MailDto createMailAndChangePassword(String memberEmail) {
+        return mailService.createMailAndChangePassword(memberEmail);
     }
 
 
+    public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
+       return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
+    }
 }
 
