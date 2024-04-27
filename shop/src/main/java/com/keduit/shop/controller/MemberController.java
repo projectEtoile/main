@@ -98,7 +98,7 @@ public class MemberController {
 //        return "member/findLoginPw";
 //    }
 
-    @GetMapping("/findLoginPw")
+    @GetMapping("/findpw")
     public String findLoginPw(){
         return "member/pwInquiry";
     }
