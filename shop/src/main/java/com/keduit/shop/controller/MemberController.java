@@ -102,10 +102,10 @@ public class MemberController {
     public String findLoginPw(){
         return "member/pwInquiry";
     }
-@GetMapping("/pwRestSuccess")
+    @GetMapping("/pwRestSuccess")
     public String showPwRestSuccessPage(){
         return "pwRestSuccess";
-}
+    }
 
 
 

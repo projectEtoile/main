@@ -56,7 +56,7 @@ public class MemberService implements UserDetailsService {
     }
     // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
 
-    public MailDto createMailAndChangePassword(String memberEmail) {
+    public  MailDto createMailAndChangePassword(String memberEmail) {
         String tempPassword = getTempPassword(); // 임시 비밀번호 생성
         MailDto dto = new MailDto();
         dto.setAddress(memberEmail);
