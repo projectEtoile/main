@@ -127,8 +127,6 @@ public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userN
     return json;
 }
 */
-//이메일 보내기
-    private final MailService mailService;
 
 
     @Transactional
