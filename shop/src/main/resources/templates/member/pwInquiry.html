@@ -90,9 +90,11 @@
                                 <!-- //as-is 에러메세지 -->
                             </div>
 
-                            <div class="btn_bottom_wrap">
-                                <button type="button" name="button" class="btn full black" id="finalFindPW">확인</button>
-                            </div>
+                            <form action="/members/sendEmail" method="post">
+                                <label for="memberEmail">이메일:</label>
+                                <input type="email" id="memberEmail" name="memberEmail" required>
+                                <button type="submit">확인</button>
+                            </form>
 
                             <div class="btn_bottom_wrap">
                                 <button type="button" name="button" class="btn full movelogin">SNS 로그인</button>
@@ -161,7 +163,7 @@
             </div>
 
     </div>
-
+    </div>
 </body>
 
 
