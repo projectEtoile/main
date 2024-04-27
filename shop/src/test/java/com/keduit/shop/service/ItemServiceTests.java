@@ -37,7 +37,7 @@ public class ItemServiceTests {
     @DisplayName("상품 100개 등록해보기")
     void saveItem() throws Exception {
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
 
 
             ItemFormDTO itemFormDTO = new ItemFormDTO();

@@ -9,6 +9,7 @@ import java.util.Optional;
 // 스프링 JPA의 Auditing기능을 이용하여
 // 엔티티가 저장, 수정 될 때 자동으로
 // 등록일, 수정일, 등록자, 수정자등을 입력해 줌.
+//상품 등록 및 수정, 주문 처리, 사용자 관리할때
 public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {

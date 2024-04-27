@@ -3,7 +3,6 @@ package com.keduit.shop.service;
 import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Member;
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
