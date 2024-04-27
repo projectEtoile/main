@@ -1,9 +1,6 @@
 package com.keduit.shop.controller;
 
-import com.keduit.shop.dto.AdminItemSearchDTO;
-import com.keduit.shop.dto.AdminMemberSearchDTO;
-import com.keduit.shop.dto.MailDto;
-import com.keduit.shop.dto.MemberFormDTO;
+import com.keduit.shop.dto.*;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.MemberRepository;
@@ -37,6 +34,7 @@ public class MemberController {
     //memberservice생성자 주입
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
 
     @GetMapping("/new")
     public String memberForm(Model model){
@@ -87,12 +85,12 @@ public class MemberController {
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
         return "member/login";
     }
-//@PostMapping("/findpw")
-//    public String findPw(@RequestBody UserPwRequestDto userPwRequestDto) {
-//        UserService.userCheck(userPwRequestDto);
-//        return "/member/pwsuccess";
-//
-//}
+/*@PostMapping("/findpw")
+    public String findPw(@RequestBody UserPwRequestDto userPwRequestDto) {
+       UserService.userCheck(userPwRequestDto);
+        return "/member/pwsuccess";
+
+}*/
 
     /*비밀번호 찾기*/
 //    @GetMapping("/findLoginPw")
