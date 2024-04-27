@@ -55,7 +55,7 @@ public class MemberService implements UserDetailsService {
     }
     // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
     public MailDto createMailAndChangePassword(String memberEmail) {
-        return mailService.createMailAndChangePassword(memberEmail);
+        return MemberService.createMailAndChangePassword(memberEmail);
     }
 
 

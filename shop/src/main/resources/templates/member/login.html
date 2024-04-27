@@ -30,7 +30,7 @@
             <div class="join_cont">
                 <div class="login_wrap">
                     <form action="/members/login" role="form"  method="post">
-<!--                        id="frmLogin"-->
+                        <!--                        id="frmLogin"-->
                         <div class="inp_group">
                             <p>
                                 <!--custId custPw 4.22 css id 검색 수정-->
@@ -45,13 +45,13 @@
 
                             <p class="mt20">
                                 <label th:for="password">비밀번호</label>
-                               <!-- <input type="password" name="password"   class="full_width"
-                                       placeholder="8자리 이상 입력해주세요">-->
+                                <!-- <input type="password" name="password"   class="full_width"
+                                        placeholder="8자리 이상 입력해주세요">-->
                                 <input type="password" class="form-control" name="password" placeholder="비밀번호을 입력해주세요">
                             </p>
 
-<!--                            <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"-->
-<!--                                                                       value="Y"><label for="idSave">이메일 아이디 저장</label></span>-->
+                            <!--                            <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"-->
+                            <!--                                                                       value="Y"><label for="idSave">이메일 아이디 저장</label></span>-->
 
                             <p th:if="${loginErrorMsg}"
                                th:text="${loginErrorMsg}" class="Error">Incorrect data</p>

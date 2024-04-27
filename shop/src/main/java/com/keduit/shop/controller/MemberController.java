@@ -2,6 +2,7 @@ package com.keduit.shop.controller;
 
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.AdminMemberSearchDTO;
+import com.keduit.shop.dto.MailDto;
 import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
