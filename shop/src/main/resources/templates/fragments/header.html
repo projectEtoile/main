@@ -13,7 +13,8 @@
         <div class="container1">
             <div class="section">
                 <a href="/">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Etoile_logo_and_wordmark.svg/768px-Etoile_logo_and_wordmark.svg.png" alt="" style="width: 60px; width: 120px;">
+                    <img src="/image/logo.png"
+                         alt="logo" style="width: 60px; width: 120px;">
                 </a>
             </div>
             <div class="section2">
@@ -56,12 +57,14 @@
                                         <th>인기검색어</th>
                                     </tr>
                                     </thead>
-                                    <tbody><tr>
+                                    <tbody>
+                                    <tr>
                                     <tr th:each="searchRank : ${searchRankList}">
                                         <td th:text="${searchRank.number}"></td>
                                         <td th:text="${searchRank.keyword}"></td>
-                                    </tr></tbody>
-                                     {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                    {% endfor %}
                                 </table>
                             </ul>
                             <div id="z-example">
@@ -72,29 +75,41 @@
                 </div>
             </nav>
             <div class="section" id="icon-box">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="/members/logout">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                </li>
+
+                <li sec:authorize="isAnonymous()">
+                    <a href="/members/login">
+                        <span class="material-symbols-outlined">
+                          login
+                        </span>
+                    </a>
+                </li>
+
                 <a href="/members/new">
-        <span class="material-symbols-outlined">
-          person_add
-        </span>
+                    <span class="material-symbols-outlined">
+                      person_add
+                    </span>
                 </a>
-                <a href="/members/login">
-        <span class="material-symbols-outlined">
-          login
-        </span>
-                </a>
-                <a href="/orders">
+
+                <a href="/mypage/myOrder">
         <span class="material-symbols-outlined">
           person
         </span>
                 </a>
+
                 <a href="/cart">
         <span class="material-symbols-outlined">
           shopping_bag
         </span>
                 </a>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="/members/logout">로그아웃</a>
-                </li>
+
+
             </div>
         </div>
         <div class="Category-container">

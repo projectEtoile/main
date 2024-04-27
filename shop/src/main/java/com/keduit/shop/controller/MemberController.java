@@ -1,6 +1,8 @@
 package com.keduit.shop.controller;
 
-import com.keduit.shop.dto.*;
+import com.keduit.shop.dto.AdminItemSearchDTO;
+import com.keduit.shop.dto.AdminMemberSearchDTO;
+import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.MemberRepository;
@@ -31,13 +33,13 @@ import java.util.Optional;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
-
+    //memberservice생성자 주입
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/new")
-    public String memberForm(Model model) {
-        model.addAttribute("memberFormDTO", new MemberFormDTO());
+    public String memberForm(Model model){
+        model.addAttribute("memberFormDTO",new MemberFormDTO());
         System.out.println("나오냐?????");
         return "member/memberForm";
     }
@@ -59,7 +61,7 @@ public class MemberController {
         try {
             Member member = Member.createMember(memberFormDTO, passwordEncoder);
             memberService.saveMember(member);//새로 생성된 회원 객체를 데이터베이스에 저장합니다. 이를 통해 실제 회원가입이 완료
-        } catch (IllegalStateException e) {//중복된 이메일 주소가 이미 존재하는 경우 등에는 예외 처리
+        }catch (IllegalStateException e){//중복된 이메일 주소가 이미 존재하는 경우 등에는 예외 처리
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
@@ -68,13 +70,13 @@ public class MemberController {
 
     /*로그인*/
     @GetMapping("/login")
-    public String loginMember() {
+    public String loginMember(){
         return "member/login";//페이지 리턴
     }
 
 
     @GetMapping("/login/error")
-    public String loginError(Model model) {
+    public String loginError(Model model){
 
         /* "아이디 혹은 비밀번호를 확인해주세요"라는 메시지를
         "loginErrorMsg"라는 이름으로 모델에 추가합니다.
@@ -85,24 +87,29 @@ public class MemberController {
         return "member/login";
     }
 //@PostMapping("/findpw")
-    // public String findPw(@RequestBody UserPwRequestDto userPwRequestDto) {
-    //     UserService.userCheck(userPwRequestDto);
+//    public String findPw(@RequestBody UserPwRequestDto userPwRequestDto) {
+//        UserService.userCheck(userPwRequestDto);
 //        return "/member/pwsuccess";
 //
 //}
 
-    /*
-    @GetMapping("/pwRestSuccess")
-        public String showPwRestSuccessPage(){
-            return "pwRestSuccess";
-    }
+    /*비밀번호 찾기*/
+//    @GetMapping("/findLoginPw")
+//    public String findLoginPw(){
+//        return "member/findLoginPw";
+//    }
 
-
-    */
-    @GetMapping("/pw")
-    public String findpw() {
+    @GetMapping("/findLoginPw")
+    public String findLoginPw(){
         return "member/pwInquiry";
     }
+@GetMapping("/pwRestSuccess")
+    public String showPwRestSuccessPage(){
+        return "pwRestSuccess";
+}
+
+
+
 
     /*    @GetMapping("/doFindLoginPw")
         public String doFindLoginPw(String email){
@@ -134,27 +141,13 @@ public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userN
 
     }
 
-    @GetMapping({"/admin/{page}", "/admin"})
-    public String memberMangeListPage(Model model,
-                                      @PathVariable("page") Optional<Integer> page, // 유저에게 받는 page 숫자.
-                                      AdminMemberSearchDTO adminMemberSearchDTO) { //쿼리문을 날리기 위한 정보들!
 
 
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+//    ------------------- 마이페이지 컨트롤러 ----------------------
 
-
-        Page<Member> members = memberService.getAdminMemberPage(adminMemberSearchDTO, pageable);
-
-        System.out.println("----- members.getContent() : " + members.getContent());
-        System.out.println("----- adminMemberSearchDTO: " + adminMemberSearchDTO);
-
-        model.addAttribute("members", members);
-        model.addAttribute("adminMemberSearchDTO", adminMemberSearchDTO);
-        model.addAttribute("maxPage", 10);
-
-        System.out.println(members.getNumber()+"@@@@@@@@@@@@@@@@@@@@@@");
-
-
-        return "admin/memberMng";
+    @GetMapping("/checkPw")
+    public String checkPw(){
+        return "mypage/checkPw";
     }
+
 }

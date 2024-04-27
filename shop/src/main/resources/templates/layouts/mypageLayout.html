@@ -22,6 +22,8 @@
     <!--글씨체 css-->
     <link th:href="@{/css/font.css}" rel="stylesheet">
 
+    <!-- 마이페이지 사이드 바 css-->
+    <link th:href="@{/css/mypage/mypageSidebar.css}" rel="stylesheet">
 
     <!--폰트어썸-->
     <script src="https://kit.fontawesome.com/934346761c.js" crossorigin="anonymous"></script>
@@ -52,6 +54,8 @@
 </head>
 <body>
 <div th:replace="fragments/header::header"></div>
+<div th:replace="fragments/mypageSidebar :: mypageSidebar"></div>
+
 <div layout:fragment="content" class="content">
 
 </div>

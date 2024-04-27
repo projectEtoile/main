@@ -2,6 +2,7 @@ package com.keduit.shop.service;
 
 import com.keduit.shop.dto.AdminMemberSearchDTO;
 import com.keduit.shop.dto.MailDto;
+import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -21,7 +23,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor//필요한 부분만 생성자로
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
-    private final MailService mailService; // MailService 주입
+    private final PasswordEncoder passwordEncoder;
 
     public Member saveMember(Member member) {//새로운 멤버를 등록할 시 중복x
         validateDuplicateMember(member);//중복 여부를 검증하는 과정
@@ -58,7 +60,14 @@ public class MemberService implements UserDetailsService {
 
 
     public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
-       return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
+        return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
+    }
+
+    public boolean checkPw(String getPass,String getName) {
+        Member member = memberRepository.findByEmail(getName);
+
+        return passwordEncoder.matches(getPass,member.getPassword());
+
     }
 }
 

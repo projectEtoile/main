@@ -23,7 +23,8 @@
 <div layout:fragment="content">
     <link rel="stylesheet" th:href="@{/css/join.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/font.css}" type="text/css">
-    <form action="/members/new" role="form" method="post" th:object="${memberFormDTO}">
+    <form th:action="@{/members/new}" role="form" method="post" th:object="${memberFormDTO}">
+
         <!--        <input type="hidden" name="JoinType" id="JoinType" value="C">-->
 
         <section id="container">
@@ -64,8 +65,8 @@
                             <!--                                <option value="write">직접입력</option>-->
                             <!--                            </select>-->
                             <!--                            <p id="validation1" class="incorrect"><label id="chkcustid">본인 소유의 이메일을 입력해 주세요.</label></p>-->
-                            <!--                            <p th:if="${#fields.hasErrors( 'email')}"-->
-                            <!--                               th:errors="*{email}" class="fieldError">Incorrect data</p>-->
+                                                        <p th:if="${#fields.hasErrors( 'email')}"
+                                                        th:errors="*{email}" class="fieldError">Incorrect data</p>
                         </td>
                     </tr>
                     <tr>
@@ -88,11 +89,34 @@
                         <th>이름 <span>*</span></th>
                         <td>
                             <p class="join_name va_m">
-                                <input type="text" th:field="*{name}" placeholder="ex) 홍길동">
+                                <input type="text" th:field="*{name}" placeholder="ex) 홍길동" minlength="1" maxlength="20" required><br>
                             </p>
                             <!--                            <p id="validation7" class="correct correct va_m"><label id="checkname"></label></p>-->
                             <!--                            <p th:if="${#fields.hasErrors('name')}"-->
                             <!--                               th:errors="*{name}" class="fieldError">Incorrect data</p>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>나이 <span>*</span></th>
+                        <td>
+                            <p class="join_name va_m">
+                                <input type="number" th:name="*{age}" placeholder="ex) 21" min="1" max="120" required>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>성별 <span>*</span></th>
+                        <td>
+                            <p class="join_name va_m">
+                                <label>
+                                    <input type="radio" th:field="*{sex}" th:value="${T(com.keduit.shop.constant.Sex).FEMALE}" required>
+                                    여성
+                                </label>
+                                <label>
+                                    <input type="radio" th:field="*{sex}" th:value="${T(com.keduit.shop.constant.Sex).MALE}" required>
+                                    남성
+                                </label>
+                            </p>
                         </td>
                     </tr>
 
