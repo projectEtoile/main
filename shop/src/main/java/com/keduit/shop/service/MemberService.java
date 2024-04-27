@@ -24,7 +24,7 @@ import javax.transaction.Transactional;
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final MailService mailService;
     public Member saveMember(Member member) {//새로운 멤버를 등록할 시 중복x
         validateDuplicateMember(member);//중복 여부를 검증하는 과정
         return memberRepository.save(member);//새로운 회원을 실제로 등록하고, 등록된 회원 객체를 반환하는 과정
