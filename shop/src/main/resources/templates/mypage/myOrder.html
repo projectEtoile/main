@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/mypageLayout}'>
+<div layout:fragment="content">
+    <link th:href="@{/css/mypage/myOrder.css}" rel="stylesheet" type="text/css">
+
+    <div class="mainSection2">
+        <div class="myPageContainer">
+
+            <div class="dateContainer">
+                <button class="lb">최근 1개월</button>
+                <button class="button3">01월</button>
+                <button class="button3">12월</button>
+                <input type="date">
+                ~
+                <input type="date">
+                <button class="lb" style="background: #222">검색</button>
+            </div>
+        </div>
+
+        <ul class="smallText">
+            <li class="smallText">한번에 조회 가능한 기간은 최대 6개월이며 2008년 1월 1일 이후의 주문에 대해서만 조회하실 수 있습니다.</li>
+            <li class="smallText">옵션 및 배송지 변경은 주문접수 또는 결제완료 상태일 경우 주문상세조회에서 하실 수 있습니다.</li>
+        </ul>
+
+        <table class="itemTable">
+            <colgroup>
+                <col width="30px">
+                <col width="108px">
+                <col width="326px">
+                <col width="90px">
+                <col width="100px">
+                <col width="90px">
+            </colgroup>
+            <thead>
+            <tr class="firstline2">
+                <th scope="col"><input type="checkbox"></th>
+                <th scope="col">일자/주문번호</th>
+                <th scope="col">주문상품정보</th>
+                <th scope="col">결제금액</th>
+                <th scope="col">진행상태</th>
+                <th scope="col">비고</th>
+            </tr>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>02.10/123</th>
+                <th>ZEROSTREET</th>
+                <th>12,000</th>
+                <th>배송중</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>02.11/124</th>
+                <th>Amour moier</th>
+                <th>35,000</th>
+                <th>배송준비중</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>02.12/125</th>
+                <th>Ssecondo</th>
+                <th>75,000</th>
+                <th>배송완료</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="lastTr">
+                <th><input type="checkbox"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+        <div class="buttons">
+            <button>배송조회</button>
+            <button>교환, 반품 신청</button>
+            <button>리뷰 작성</button>
+
+        </div>
+        <div class="imgBox">
+            <img src="/image/deliveryInform.png" alt="deliveryInform" class="lastimg">
+        </div>
+    </div>
+
+
+    <div class="mainSection1"></div>
+
+
+</div>
+</html>
