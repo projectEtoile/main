@@ -4,6 +4,7 @@ import com.keduit.shop.constant.Sex;
 import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -14,10 +15,10 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
+@ToString
 public class MemberFormDTO {
     @NotBlank(message = "이름은 필수 입력입니다.")
     private String name;
-
 
     @NotEmpty(message = "이메일은 필수 입력입니다.")
     private String email;
@@ -25,7 +26,7 @@ public class MemberFormDTO {
     @NotEmpty(message = "비밀번호는 필수 입력입니다.")
     private String password;
 
-    private int age;
+    private Integer age = null;
 
     private Sex sex;
 

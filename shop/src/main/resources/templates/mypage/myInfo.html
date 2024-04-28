@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/mypageLayout}'>
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<div layout:fragment="content" style="margin : 0px;" >
+    <link th:href="@{/css/mypage/myInfo.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/mypage/myInfo.js}" type="text/javascript"></script>
+    <form th:action="@{/mypage/updateInfo}" role="form" method="post" th:object="${memberFormDTO}">
+
+
+        <div class="mainSection2">
+
+            <p class="subTit"> 기본정보</p>
+            <div class="star">
+                <p><span>*</span> 필수 입력 항목</p>
+            </div>
+            <!-- <form action=""> -->
+            <table>
+                <tr>
+                    <th style="border: none;">이메일 아이디</th>
+                    <td style="border: none;">&nbsp; [[${memberFormDTO.email}]]</td>
+
+                </tr>
+
+                <div id="existingElements">
+                    <th>비밀번호</th>
+                    <td> ********
+                        <button style="margin-left: 100px; margin-top: 4px;" id="toggleButtonC"
+                                onclick="viewShow(event)">비밀번호 변경
+                        </button>
+                </div>
+
+                <div id="elementToToggle2" class="hidden">
+                    <div class="hdBox" style="width: 650px;">
+                        <input type="password" id="newPw1" style="width: 300px; min-width: 300px;">
+                        <span class="blSp"> &nbsp;새 비밀번호</span> <br>
+                        <div style="display: flex;">
+                            <input type="password" id="newPw2"
+                                   style="margin-top: 10px; width: 300px; min-width: 300px; height: 40px;">
+                            <span class="blSp" style="margin-top: 15px;">&nbsp; 새 비밀번호 확인</span>
+
+                            <button style="width: 80px; min-width: 80px;" onclick="changePw(event)">변경하기</button>
+                            <button id="toggleButtonD" style="width: 80px; min-width: 80px;"
+                                    onclick="viewHidden(event)">취소하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <input type="text" th:field="*{name}" placeholder="ex) 홍길동" style="margin-top: 10px;" minlength="1" maxlength="20" required>
+                        <button onclick="event.preventDefault();">본인인증</button>
+                        <br>
+                        <p class="smText">※ 이름, 휴대폰번호, 생년월일 변경이 필요하신 경우 본인인증 완료하시면 자동으로 일괄 변경됩니다.</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>나이</th>
+                    <td>
+                        <span>만</span>
+                        <input type="number" th:field="*{age}" placeholder="ex) 21세" style="width: 100px;" min="0" max="120">
+                        <span>세</span>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <th>성별</th>
+                    <td>
+                        <select th:field="*{sex}" style="width: 350px;">
+                            <option value="FEMALE">여성</option>
+                            <option value="MALE">남성</option>
+                        </select>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+                    <th>휴대폰번호</th>
+                    <td><input type="text" class="sminput" value="010"><input type="text" class="sminput"
+                                                                              value="1596"><input type="text"
+                                                                                                  class="sminput"
+                                                                                                  value="7532">
+                    </td>
+                </tr>
+                <tr>
+                    </td>
+                </tr>
+                <!--                <tr>-->
+                <!--                    <th>이메일<span>*</span></th>-->
+                <!--                    <td><input type="text" class="sminput" style="margin-right: 0;"> @ <input type="text" class="sminput"-->
+                <!--                                                                                              style="margin-right: 12px;">-->
+                <!--                        <select name="" id="#">-->
+                <!--                            <option value="">직접입력</option>-->
+                <!--                            <option value="">naver.com</option>-->
+                <!--                            <option value="">gmail.com</option>-->
+                <!--                        </select>-->
+                <!--                    </td>-->
+                <!--                </tr>-->
+                <tr>
+                    <th>이벤트 정보<span>*</span></th>
+                    <td style="display: flex; flex-direction: column;">
+                        <div style="display: flex; align-items: center;">
+                            <label class="radio-container" style="margin-top: 22px;">수신
+                                <input type="radio" name="radio" id="toggleButtonA">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container" style="margin-top: 22px;">비 수신
+                                <input type="radio" name="radio" checked="checked" id="toggleButtonB">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <br>
+
+                        <div id="elementToToggle" class="hidden">
+                            <div class="hdBox">
+                                <input type="checkbox" checked>광고성 정보 수신 및 마케팅 활용 동의(선택) <br>
+                                <input type="checkbox" checked>이메일
+                                <input type="checkbox" checked>SMS
+                            </div>
+                        </div>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>가입경로</th>
+                    <td><select name="" id="" style="width: 350px;">
+                        <option value="">가입경로 선택</option>
+                        <option value="">상품 구매</option>
+                        <option value="">이벤트 참여</option>
+                        <option value="">광고메일 수신</option>
+                        <option value="">지인 추천</option>
+                        <option value="">기타</option>
+                    </select></td>
+                </tr>
+
+            </table>
+            <div class="btBox">
+<!--                <button class="button4">취소</button>-->
+                <button class="button5" type="submit" onclick="updateInfo(event)">수정</button>
+            </div>
+
+
+        </div>
+        <div class="mainSection1"></div>
+            </form>
+</div>
+</html>
