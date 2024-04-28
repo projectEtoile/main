@@ -1,185 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
 <head>
     <title>비밀번호 찾기</title>
-</head>
-
-
-
-<th:block layout:fragment="css">
     <style>
         body {
             min-width: auto;
         }
     </style>
-</th:block>
-
-<div layout:fragment="content">
-
-    <link th:href="@{/css/idInquiry.css}" rel="stylesheet" type="text/css">
-
-    <body>
-    <div class="popup member ty_unite ps-container ps-theme-default" style="width: 580px;"
-         data-ps-id="07c6be70-30ec-74ce-b1dd-abc1bd75ca97">
-        <!-- 팝업사이즈 고정 width: 580px x height: 870px -->
-        <div class="header">
-            <h1>비밀번호 찾기</h1>
-        </div>
-        <div class="body" id="tabmain">
-            <input type="hidden" id="FindMainType" value="P">
-
-            <div id="findTagdiv">
-                <div class="tab_content content2 active">
-                    <h2 class="hide">비밀번호 찾기</h2>
-                    <!-- 비밀번호 찾기 : 입력 -->
-                    <div class="tab_ctns_wrap ty_certify_method" id="divpwfind">
-                        <h3 class="ctns_desc">
-                            이메일로 가입한 회원이신 경우 <br>이메일 아이디를 입력해 주세요.
-                        </h3>
-
-    <h4 class="ctns_desc_sub">
-        SNS 간편가입 회원은 <br>로그인 화면에서 가입하신 SNS 로그인을 이용해 주세요.
-    </h4>
-
-    <div class="bx">
-
-                            <div class="find_pw_ctns">
-
-
-                                <!-- //as-is 에러메세지 -->
-
-                                <div class="flex_box ctns_phone">
-                                    <div class="inputs_phone">
-                    <span class="input_text">
-                        <input type="password" style="display:none">
-                        <input type="tel" pattern="[0-9]{12}" inputmode="tel" maxlength="14" name="phoneNum" value=""
-                               class="phoneNum" placeholder="이메일을 입력해 주세요." autofocus="">
-                    </span>
-                                    </div>
-                                    <p class="btn_certify">
-                                        <button type="button" class="btn_certify_num" id="idsmsnum">인증번호</button>
-                                        <input type="hidden" id="certiIdx">
-                                    </p>
-                                </div>
-
-                                <!-- as-is 에러메세지 -->
-                                <p class="input_alarm" name="errorHp" id="errorHp" style="display: none;">이메일을
-                                    입력해주세요.</p>
-                                <p class="input_alarm" name="errorHp2" id="errorHp2" style="display:none;">이메일을 정확하게
-                                    입력해주세요.</p>
-                                <p class="input_alarm" name="errorHpchar" id="errorHpchar" style="display:none;">휴대폰번호는
-                                    숫자만 입력하실 수 있습니다.</p>
-                                <!-- //as-is 에러메세지 -->
-
-                                <div class="insert_certify_num" style="display:none;">
-                                    <div class="input_number">
-                                        <span class="input_text"><input type="number" inputmode="numeric"
-                                                                        name="certiNum" id="certiNum"
-                                                                        class="noscrollNum"
-                                                                        oninput="maxLengthCheck(this)" maxlength="6"
-                                                                        value=""
-                                                                        placeholder="인증번호 6자리를 입력해 주세요."></span>
-                                    </div>
-                                    <div class="left_time">
-                                        <span id="spanTime">02:59</span>
-                                    </div>
-                                </div>
-
-                                <!-- as-is 에러메세지 -->
-
-                                <!-- //as-is 에러메세지 -->
-                            </div>
-
-                            <form action="/members/sendEmail" method="post">
-                                <label for="memberEmail">이메일:</label>
-                                <input type="email" id="memberEmail" name="memberEmail" required>
-                                <button type="submit">확인</button>
-                            </form>
-
-                            <div class="btn_bottom_wrap">
-                                <button type="button" name="button" class="btn full movelogin">SNS 로그인</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- //비밀번호 찾기 : 입력 -->
-                    <!-- 비밀번호 찾기 : 재설정 -->
-                    <div class="tab_ctns_wrap ty_certify_method" id="divpwnew" style="display:none">
-                        <h3 class="ctns_desc">
-                            새로운 비밀번호를 입력해 주세요.
-                        </h3>
-
-                        <h4 class="ctns_desc_sub">
-                            영문+숫자+특수문자 조합 8~16자리
-                        </h4>
-                        <div class="bx">
-                            <div class="find_pw_ctns">
-                                <input type="hidden" id="custid">
-                                <input type="hidden" id="excustno">
-                                <div class="inputs_pw">
-                                    <span class="input_text"><input type="password" id="textnewpw" name="" value=""
-                                                                    placeholder="새 비밀번호를 입력해 주세요."></span>
-                                </div>
-                                <div class="inputs_pw">
-                                    <span class="input_text"><input type="password" id="textnewpwconfi" name="" value=""
-                                                                    placeholder="새 비밀번호를 한 번 더 입력해 주세요."></span>
-                                </div>
-                                <!-- as-is 에러메세지 -->
-                                <p class="input_alarm" id="chkcustpw"></p>
-                                <!-- //as-is 에러메세지 -->
-                            </div>
-
-                            <div class="btn_bottom_wrap">
-                                <button type="button" name="button" class="btn full black" id="btnchangepw">확인</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- //비밀번호 찾기 : 재설정 -->
-
-                    <ul class="dot_notify">
-                        <li>비밀번호 찾기에 어려움이 있으시다면 고객센터 <span>1566-5027</span>로 문의 바랍니다.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <!-- 일치정보 없음#2 비밀번호 찾기 case -->
-        <div class="popup ty_unite st_alert ps-container ps-theme-default" style="display:none;" id="divpwfail"
-             data-ps-id="53bfd865-6563-4451-e131-25503b6ebed3">
-            <h1 class="hide">일치정보 없음</h1>
-            <div class="body">
-                <div class="tab_ctns_wrap">
+</head>
+<body layout:fragment="content">
+<link th:href="@{/css/idInquiry.css}" rel="stylesheet" type="text/css">
+<div class="popup member ty_unite ps-container ps-theme-default" style="width: 580px;"
+     data-ps-id="07c6be70-30ec-74ce-b1dd-abc1bd75ca97">
+    <div class="header">
+        <h1>비밀번호 찾기</h1>
+    </div>
+    <div class="body" id="tabmain">
+        <input type="hidden" id="FindMainType" value="P">
+        <div id="findTagdiv">
+            <div class="tab_content content2 active">
+                <h2 class="hide">비밀번호 찾기</h2>
+                <div class="tab_ctns_wrap ty_certify_method" id="divpwfind">
                     <h3 class="ctns_desc">
-                        입력하신 정보로 <br>가입된 계정이 없습니다.
+                        이메일로 가입한 회원이신 경우 <br>이메일 아이디를 입력해 주세요.
                     </h3>
-
-                    <div class="btn_bottom_wrap">
-                        <button type="button" name="button" class="btn full black movejoin">회원가입</button>
+                    <h4 class="ctns_desc_sub">
+                        SNS 간편가입 회원은 <br>로그인 화면에서 가입하신 SNS 로그인을 이용해 주세요.
+                    </h4>
+                    <div class="bx">
+                        <div class="find_pw_ctns">
+                            <div class="flex_box ctns_phone">
+                                <div class="inputs_phone">
+                                        <span class="input_text">
+                                            <input type="password" style="display:none">
+                                            <input type="tel" pattern="[0-9]{12}" inputmode="tel" maxlength="14" name="phoneNum" value="" class="phoneNum" placeholder="전송받은 인증번호를 입력해 주세요." autofocus="">
+                                        </span>
+                                </div>
+                                <p class="btn_certify">
+                                    <button type="button" class="btn_certify_num" id="idsmsnum">인증번호</button>
+                                    <input type="hidden" id="certiIdx">
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
+                    <form id="sendEmailForm" action="/members/sendEmail" method="post" onsubmit="return sendEmail()">
+                        <label for="memberEmail">이메일:</label>
+                        <input type="email" id="memberEmail" name="memberEmail" required>
+                        <button type="submit">확인</button>
+                    </form>
+                    <div class="btn_bottom_wrap">
+                        <button type="button" name="button" class="btn full movelogin">SNS 로그인</button>
+                    </div>
                 </div>
             </div>
-
+        </div>
     </div>
-    </div>
-</body>
-
-
-
+</div>
 <script src="//static.wconcept.co.kr/web/js/wconcept.desktop.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
 <script src="//static.wconcept.co.kr/web/js/wconcept.desktop.member.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
-<script
-    src="//static.wconcept.co.kr/web/js/wconcept.desktop.member.findidpw.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
-
+<script src="//static.wconcept.co.kr/web/js/wconcept.desktop.member.findidpw.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
 <script>
-    var WCKMemberFindIDPW = new WCKMemberFindIDPW();
-    var WCKMember = new WCKMember();
-    WCKMember.InitializeIDPWAll(WCKMemberFindIDPW);
-
-
+    function sendEmail() {
+        var form = document.getElementById("sendEmailForm");
+        var email = document.getElementById("memberEmail").value;
+        if (email.trim() !== "") {
+            form.submit();
+            alert("이메일이 전송되었습니다.");
+            window.close();
+            return true;
+        } else {
+            alert("이메일을 입력하세요.");
+            return false;
+        }
+    }
 </script>
-</div>
+</body>
 </html>

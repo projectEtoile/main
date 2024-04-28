@@ -5,12 +5,12 @@ import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.repository.MemberRepositoryCustom;
-import com.keduit.shop.service.MailService;
 import com.keduit.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ public class MemberController {
     //memberservice생성자 주입
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
+
 
     @GetMapping("/new")
     public String memberForm(Model model){
@@ -98,8 +98,8 @@ public class MemberController {
 //        return "member/findLoginPw";
 //    }
 
-    @GetMapping("/findpw")
-    public String findLoginPw(){
+    @GetMapping("/pw")
+        public String findpw(){
         return "member/pwInquiry";
     }
     @GetMapping("/pwRestSuccess")
@@ -129,15 +129,15 @@ public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userN
 */
 
 
-    @Transactional
     @PostMapping("/sendEmail")
     public String sendEmail(@RequestParam("memberEmail") String memberEmail) {
-        MailDto dto = mailService.createMailAndChangePassword(memberEmail);
-        mailService.mailSend(dto);
-        return "/member/login";
-
+        // 메일 전송을 위한 MailDto 생성
+        MailDto dto = memberService.createMailAndChangePassword(memberEmail);
+        // 생성된 메일을 전송
+        memberService.mailSend(dto);
+        // 로그인 페이지로 리다이렉트
+        return "redirect:/members/login";
     }
-
 
 
 //    ------------------- 마이페이지 컨트롤러 ----------------------
