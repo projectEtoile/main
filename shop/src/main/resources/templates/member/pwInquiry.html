@@ -13,62 +13,50 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
     <!-- 사용자 js 추가 -->
-   <!-- <th:block layout:fragment="script">
+   <th:block layout:fragment="script">
         <script th:inline="javascript">
-            $(document).ready(function(){
-                // 인증메일 발송
-                $("button[name='sendCertCode']").click(function() {
-                    const csrfToken = $("meta[name='_csrf']").attr("content");
-                    const memberEmail = $("#memberEmail").val();
-                    const requestData = { "memberEmail": memberEmail};
-                    $.ajax({
-                        url: "/members/sendEmail",
-                        type: "POST",
-                        contentType: "application/json",
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        data: JSON.stringify(requestData),
-                        cache: false,
-                        success: function(result, status){
-                            alert("인증번호가 발송되었습니다.");
-                        },
-                        error: function(jqXHR, status, error) {
-                            alert("인증번호 발송중 오류가 발생하였습니다.");
-                            console.error("인증번호 발송중 오류가 발생하였습니다.", error);
-                        }
-                    });
-                });
+            $(document).ready(function () {
+                $("#sendEmailBtn").click(function (){
+                    var email = $("#memberEmail").val(); // 이메일 입력란의 값 가져오기
 
-                // 인증번호 확인
-                $("button[name='verifyCode']").click(function() {
-                    verifyCode();
+                    if (email.trim() !== "") { // 이메일이 입력되었는지 확인
+                        var requestData = {
+                            "email": email
+                        };
+
+                        // CSRF 토큰 가져오기
+                        var csrfToken = $("meta[name='_csrf']").attr("content");
+                        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+                        // AJAX 요청 설정
+                        $.ajax({
+                            type: "POST",
+                            url: "/members/findPassword",
+                            contentType: "application/json",
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 설정
+                            },
+                            data: JSON.stringify(requestData), // 이메일 데이터를 JSON 문자열로 전송
+                            success: function(response) {
+                                // 이메일 전송에 성공한 경우
+                                alert("이메일이 전송되었습니다.");
+                            },
+                            error: function(xhr, status, error) {
+                                // 이메일 전송에 실패한 경우
+                                alert("이메일 전송에 실패했습니다.");
+                                console.error("이메일 전송에 실패했습니다.", error);
+                            }
+                        });
+                    } else {
+                        alert("이메일을 입력하세요."); // 이메일이 입력되지 않았을 때 알림 메시지 출력
+                    }
+
+                    event.preventDefault(); // 폼의 기본 동작인 페이지 리로드를 막음
                 });
             });
-            function verifyCode() {
-                var memberEmail = $("#memberEmail").val();
-                var certCode = $("#certCode").val();
-                const csrfToken = $("meta[name='_csrf']").attr("content");
-                $.ajax({
-                    type: "POST",
-                    url: "/members/*",
-                    contentType: "application/json",
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    data: JSON.stringify({ "memberEmail": memberEmail, "certCode": certCode }),
-                    success: function(response) {
-                        alert("인증에 성공했습니다.");
-                    },
-                    error: function(error) {
-                        alert("인증에 실패했습니다. 올바른 인증코드를 입력해주세요.");
-                    }
-                });
-            }
-
-        </script>
-    </th:block> -->
-   <script>
+        </script>-->
+    </th:block>
+  <!-- <script>
         $(document).ready(function () {
             alert("테스트 실행되면 나오기");
             $("#sendEmailBtn").click(function (){
@@ -81,7 +69,7 @@
                     // 이메일이 입력되었을 때만 폼 제출
                     var formData = new FormData(form); // 폼 데이터 생성
                     var xhr = new XMLHttpRequest(); // AJAX 요청 생성
-                    xhr.open("POST", "/members/sendEmail", true); // POST 요청 설정
+                    xhr.open("POST", "/members/findPassword", true); // POST 요청 설정
                     xhr.onload = function () {
                         if (xhr.status === 200) { // 요청이 성공했을 때
                             alert("이메일이 전송되었습니다."); // 알림 메시지 출력
@@ -99,7 +87,7 @@
             });
 
         });
-    </script>
+    </script>-->
 </head>
 
 <!-- HTML body -->
@@ -130,7 +118,7 @@
                         <div class="bx">
                             <div>
                                 <!-- 이메일 입력 폼 -->
-                                <form id="sendEmailForm" action="/members/sendEmail" method="post">
+                                <form id="sendEmailForm" action="/members/findPassword" method="post">
                                     <label for="memberEmail">이메일:</label>
                                     <input type="email" id="memberEmail" name="memberEmail" required>
                                     <button type="button" id="sendEmailBtn" name="verifyCode" >확인</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->

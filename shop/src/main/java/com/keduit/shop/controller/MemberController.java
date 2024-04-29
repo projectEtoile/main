@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -80,10 +81,7 @@ public class MemberController {
     @GetMapping("/login/error")
     public String loginError(Model model){
 
-        /* "아이디 혹은 비밀번호를 확인해주세요"라는 메시지를
-        "loginErrorMsg"라는 이름으로 모델에 추가합니다.
-        이렇게 추가된 정보는 뷰 템플릿에서 사용될 수 있습니다.
-         */
+
         System.out.println("로그인 실패@@@@@@@@@@@@@@@@@@@@@@");
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
         return "member/login";
@@ -134,17 +132,21 @@ public class MemberController {
         memberService.mailSend(dto);
         return "member/login";
     }*/
-    @PostMapping("/sendEmail")
+    @PostMapping("/findPassword")
 
-    public ResponseEntity<Void> kendVerificationCode(@RequestBody Map<String, String> requestData) {
-        String email = requestData.get("email");
-        System.out.println("email::::::::::::::::::::: " + email);
-        String key = memberService.generateKey(); // 키 생성
-        System.out.println("key:::::::::::::::::::::::: " + key);
-        // 이메일 발송
-        memberService.sendEmail(email, key);
+    public ResponseEntity<Void> findPassword(@RequestParam("email") String email) {
+        System.out.println("findpassword====================");
+        try {
+            // 임시 비밀번호 생성
+            String temporaryPassword = memberService.generateTemporaryPassword();
 
-        return ResponseEntity.ok().build();
+            // 이메일 발송
+            memberService.sendTemporaryPasswordByEmail(email, temporaryPassword);
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

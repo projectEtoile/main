@@ -68,7 +68,32 @@ public class MemberService implements UserDetailsService {
     // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
 
 
+    public String generateTemporaryPassword() {
+        System.out.println("generateTemporaryPassword====================================");
+        SecureRandom random = new SecureRandom();
+        StringBuilder temporaryPassword = new StringBuilder(10);
 
+        // 임시 비밀번호는 영문 대소문자, 숫자를 조합한 10자리 문자열로 생성
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (int i = 0; i < 10; i++) {
+            temporaryPassword.append(chars.charAt(random.nextInt(chars.length())));
+        }
+
+        return temporaryPassword.toString();
+    }
+
+    public void sendTemporaryPasswordByEmail(String to, String temporaryPassword) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        String subject = "임시 비밀번호 안내";
+        String text = "임시 비밀번호는: " + temporaryPassword + " 입니다.";
+
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.send(message);
+    }
     public void sendEmail(String to, String key) {
         System.out.println("sendemailservice====================================================");
         SimpleMailMessage message = new SimpleMailMessage();
