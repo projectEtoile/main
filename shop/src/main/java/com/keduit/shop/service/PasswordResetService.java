@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+//비밀번호 재설정 기능을 제공하는 서비스
 @Service
 public class PasswordResetService {
 
@@ -31,7 +33,7 @@ public class PasswordResetService {
         String encodedPassword = passwordEncoder.encode(newPassword);
         member.setPassword(encodedPassword);
 
-        // 회원 정보 저장
+        // 회원 정보 저장하여 비밀번호를 업데이트
         memberRepository.save(member);
 
         return true;

@@ -1,79 +1,98 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
+
 <head>
     <title>비밀번호 찾기</title>
+
+    <!-- CSS 스타일 -->
     <style>
         body {
             min-width: auto;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            alert("테스트 실행되면 나오기");
+            $("#sendEmail").click(function (){
+
+                alert("클릭이벤트 시작!!");
+                var form = document.getElementById("sendEmailForm"); // 이메일을 전송할 폼 가져오기
+                var email = document.getElementById("memberEmail").value; // 이메일 입력란의 값 가져오기
+                alert("email+++"+email);
+                if (email.trim() !== "") { // 이메일이 입력되었는지 확인
+                    // 이메일이 입력되었을 때만 폼 제출
+                    var formData = new FormData(form); // 폼 데이터 생성
+                    var xhr = new XMLHttpRequest(); // AJAX 요청 생성
+                    xhr.open("POST", form.action); // POST 요청 설정
+                    xhr.onload = function () {
+                        if (xhr.status === 200) { // 요청이 성공했을 때
+                            alert("이메일이 전송되었습니다."); // 알림 메시지 출력
+                        } else {
+                            alert("이메일 전송에 실패했습니다."); // 전송 실패 메시지 출력
+                        }
+                    };
+                    xhr.send(formData); // AJAX 요청 전송
+                } else {
+                    alert("이메일을 입력하세요."); // 이메일이 입력되지 않았을 때 알림 메시지 출력
+                }
+                event.preventDefault(); // 폼의 기본 동작인 페이지 리로드를 막음
+
+
+            })
+
+        });
+    </script>
 </head>
-<body layout:fragment="content">
-<link th:href="@{/css/idInquiry.css}" rel="stylesheet" type="text/css">
-<div class="popup member ty_unite ps-container ps-theme-default" style="width: 580px;"
-     data-ps-id="07c6be70-30ec-74ce-b1dd-abc1bd75ca97">
-    <div class="header">
-        <h1>비밀번호 찾기</h1>
-    </div>
-    <div class="body" id="tabmain">
-        <input type="hidden" id="FindMainType" value="P">
-        <div id="findTagdiv">
-            <div class="tab_content content2 active">
-                <h2 class="hide">비밀번호 찾기</h2>
-                <div class="tab_ctns_wrap ty_certify_method" id="divpwfind">
-                    <h3 class="ctns_desc">
-                        이메일로 가입한 회원이신 경우 <br>이메일 아이디를 입력해 주세요.
-                    </h3>
-                    <h4 class="ctns_desc_sub">
-                        SNS 간편가입 회원은 <br>로그인 화면에서 가입하신 SNS 로그인을 이용해 주세요.
-                    </h4>
-                    <div class="bx">
-                        <div class="find_pw_ctns">
-                            <div class="flex_box ctns_phone">
-                                <div class="inputs_phone">
-                                        <span class="input_text">
-                                            <input type="password" style="display:none">
-                                            <input type="tel" pattern="[0-9]{12}" inputmode="tel" maxlength="14" name="phoneNum" value="" class="phoneNum" placeholder="전송받은 인증번호를 입력해 주세요." autofocus="">
-                                        </span>
-                                </div>
-                                <p class="btn_certify">
-                                    <button type="button" class="btn_certify_num" id="idsmsnum">인증번호</button>
-                                    <input type="hidden" id="certiIdx">
-                                </p>
+
+<!-- HTML body -->
+<body>
+
+<!-- Thymeleaf 레이아웃의 내용 -->
+<div layout:fragment="content">
+    <link th:href="@{/css/idInquiry.css}" rel="stylesheet" type="text/css">
+    <div class="popup member ty_unite ps-container ps-theme-default" style="width: 580px;"
+         data-ps-id="07c6be70-30ec-74ce-b1dd-abc1bd75ca97">
+        <!-- 팝업사이즈 고정 width: 580px x height: 870px -->
+        <div class="header">
+            <h1>비밀번호 찾기</h1>
+        </div>
+        <div class="body" id="tabmain">
+            <input type="hidden" id="FindMainType" value="P">
+            <div id="findTagdiv">
+                <div class="tab_content content2 active">
+                    <h2 class="hide">비밀번호 찾기</h2>
+                    <!-- 비밀번호 찾기 : 입력 -->
+                    <div class="tab_ctns_wrap ty_certify_method" id="divpwfind">
+                        <h3 class="ctns_desc">
+                            이메일로 가입한 회원이신 경우 <br>이메일 아이디를 입력해 주세요.
+                        </h3>
+                        <h4 class="ctns_desc_sub">
+                            SNS 간편가입 회원은 <br>로그인 화면에서 가입하신 SNS 로그인을 이용해 주세요.
+                        </h4>
+                        <div class="bx">
+                            <div class="find_pw_ctns">
+                                <!-- 이메일 입력 폼 -->
+                                <form id="sendEmailForm" action="/members/sendEmail" method="post">
+                                    <label for="memberEmail">이메일:</label>
+                                    <input type="email" id="memberEmail" name="memberEmail" required>
+                                    <button type="button" id="sendEmail" >확인</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
+                                </form>
+                            </div>
+                            <div class="btn_bottom_wrap">
+                                <button type="button" name="button" class="btn full movelogin">SNS 로그인</button>
                             </div>
                         </div>
                     </div>
-                    <form id="sendEmailForm" action="/members/sendEmail" method="post" onsubmit="return sendEmail()">
-                        <label for="memberEmail">이메일:</label>
-                        <input type="email" id="memberEmail" name="memberEmail" required>
-                        <button type="submit">확인</button>
-                    </form>
-                    <div class="btn_bottom_wrap">
-                        <button type="button" name="button" class="btn full movelogin">SNS 로그인</button>
-                    </div>
+                    <!-- //비밀번호 찾기 : 입력 -->
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="//static.wconcept.co.kr/web/js/wconcept.desktop.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
-<script src="//static.wconcept.co.kr/web/js/wconcept.desktop.member.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
-<script src="//static.wconcept.co.kr/web/js/wconcept.desktop.member.findidpw.min.js?v=411dffd7a8164fcabd4152001f43e01f"></script>
-<script>
-    function sendEmail() {
-        var form = document.getElementById("sendEmailForm");
-        var email = document.getElementById("memberEmail").value;
-        if (email.trim() !== "") {
-            form.submit();
-            alert("이메일이 전송되었습니다.");
-            window.close();
-            return true;
-        } else {
-            alert("이메일을 입력하세요.");
-            return false;
-        }
-    }
-</script>
+
+<!-- JavaScript 스크립트 -->
+
 </body>
 </html>

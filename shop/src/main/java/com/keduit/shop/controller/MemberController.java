@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.keduit.shop.entity.QMember.member;
+
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -108,7 +110,18 @@ public class MemberController {
     }
 
 
+    // 비밀번호 재설정 페이지로 이동
 
+    // 비밀번호 재설정 폼에서 새로운 비밀번호를 입력받아 처리하는 메서드
+    @PostMapping("/pw")
+    public String resetPassword(@RequestParam("memberEmail") String memberEmail, Model model) {
+        // 이메일로 임시 비밀번호 생성 및 전송
+        MailDto dto = memberService.createMailAndChangePassword(memberEmail);
+        memberService.mailSend(dto);
+
+        // 비밀번호 재설정 성공 페이지로 이동
+        return "member/pwRestSuccess";
+    }
 
     /*    @GetMapping("/doFindLoginPw")
         public String doFindLoginPw(String email){
@@ -135,8 +148,7 @@ public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userN
         MailDto dto = memberService.createMailAndChangePassword(memberEmail);
         // 생성된 메일을 전송
         memberService.mailSend(dto);
-        // 로그인 페이지로 리다이렉트
-        return "redirect:/members/login";
+        return "member/login";
     }
 
 

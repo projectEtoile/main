@@ -100,8 +100,8 @@ public class MemberService implements UserDetailsService {
             message.setTo(mailDto.getAddress());
             message.setSubject(mailDto.getTitle());
             message.setText(mailDto.getMessage());
-            message.setFrom("보낸이@naver.com");
-            message.setReplyTo("보낸이@naver.com");
+            message.setFrom("ozaki7475@naver.com");
+            message.setReplyTo("ozaki7475@naver.com");
             System.out.println("message"+message);
             javaMailSender.send(message);
             System.out.println("이메일이 성공적으로 전송되었습니다.");
