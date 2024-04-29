@@ -33,63 +33,43 @@ public class CartService {
 
     /*장바구니 추가하기*/
     public Long addCart(CartItemDTO cartItemDTO, String email) {
+        /*장바구니에 넣을 상품 조회*/
         Item item = itemRepository.findById(cartItemDTO.getItemId()).orElseThrow(EntityNotFoundException::new);
+        /*로그인 한 회원 엔티티 조회*/
         Member member = memberRepository.findByEmail(email);
-
+        /*현재 회원의 장바구니가 있는지 조회*/
         Cart cart = cartRepository.findByMemberId(member.getId());
+        /*카트(장바구니)가있는지없는지확인 없으면 생성하고 있으면 수량증가*/
         if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
         }
-
-        CartItem existingCartItem = cartItemRepository.findByCartIdAndItemIdAndSize(
-                cart.getId(), item.getId(), cartItemDTO.getSize()
-        );
-
-        if (existingCartItem != null) {
-            existingCartItem.addCount(cartItemDTO.getCount());
-            cartItemRepository.save(existingCartItem); // 수량 업데이트 후 저장
-            return existingCartItem.getId();
+        /*장바구니에 상품이 들어있는지 확인 후 있으면 수량add 없으면 장바구니상품추가(save)*/
+        CartItem saveCartItem = cartItemRepository.findByCartIdAndItemIdAndSize(cart.getId(), item.getId(), cartItemDTO.getSize());/*장바구니에 상품이있는지없는지확인*/
+        if (saveCartItem != null) {
+            saveCartItem.addCount(cartItemDTO.getCount()); /*이미 장바구니에 상품이 있으면 수량만증가*/
+            return saveCartItem.getId();
         } else {
-            CartItem newCartItem = CartItem.createCartItem(
-                    cart, item, cartItemDTO.getCount(), cartItemDTO.getSize() // 사이즈 추가
-            );
-            cartItemRepository.save(newCartItem); // 새 카트 아이템 저장
-            return newCartItem.getId();
+            CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDTO.getCount(), cartItemDTO.getSize());/*없으면 생성*/
+            cartItemRepository.save(cartItem);
+            return cartItem.getId();
         }
     }
-
-
-
 
     /*목록읽어오기*/
     @Transactional(readOnly = true)
     public List<CartDetailDTO> getCartList(String email) {
+        List<CartDetailDTO> cartDetailDTOList = new ArrayList<>();
+
         Member member = memberRepository.findByEmail(email);
-
-        if (member == null) {
-            // 로그 추가
-            System.out.println("Member not found for email: " + email);
-            return new ArrayList<>(); // 멤버를 찾지 못하면 빈 리스트 반환
-        }
-
         Cart cart = cartRepository.findByMemberId(member.getId());
-
         if (cart == null) {
-            // 로그 추가
-            System.out.println("Cart not found for member id: " + member.getId());
-            return new ArrayList<>(); // 카트가 없으면 빈 리스트 반환
+            return cartDetailDTOList;
         }
 
-        List<CartDetailDTO> cartDetailDTOList = cartItemRepository.findCartDetailDTOList(cart.getId());
-
-        if (cartDetailDTOList == null || cartDetailDTOList.isEmpty()) {
-            // 로그 추가
-            System.out.println("CartDetailDTO list is empty for cart id: " + cart.getId());
-            return new ArrayList<>(); // 결과가 없거나 null인 경우 빈 리스트 반환
-        }
-
-        return cartDetailDTOList; // 결과가 있는 경우 반환
+        cartDetailDTOList =
+                cartItemRepository.findCartDetailDTOList(cart.getId());
+        return cartDetailDTOList;
     }
 
 

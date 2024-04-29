@@ -1,27 +1,29 @@
- $(document).ready(function() {
-     $("input[name=cartChkBox]").change(function() {
-         getOrderTotalPrice(); // 제대로 동작하는지 확인
-     });
- });
+      $(document).ready(function(){
+            $("input[name=cartChkBox]").change(function(){
+                getOrderTotalPrice();
+            })
+        })
 
- function getOrderTotalPrice() {
-     let orderTotalPrice = 0;
-     $("input[name=cartChkBox]:checked").each(function() {
-         const cartItemId = $(this).val();
-         const price = $("#price_" + cartItemId).attr("data-price"); // 데이터 바인딩 확인
-         const count = $("#count_" + cartItemId).val(); // 값 확인
-         orderTotalPrice += price * count;
-     });
-     $("#orderTotalPrice").html(orderTotalPrice + '원'); // 최종 값 확인
- }
+         function getOrderTotalPrice(){
+            let orderTotalPrice = 0;
+            $("input[name=cartChkBox]:checked").each(function(){
+                const cartItemId = $(this).val();
+                const price = $("#price_"+cartItemId).attr("data-price");
+                const count = $("#count_"+cartItemId).val();
+                orderTotalPrice += price * count;
+            });
+            $("#orderTotalPrice").html(orderTotalPrice)+ '원';
+        }
 
- function changeCount(obj) {
-     const count = obj.value; // 입력된 값 확인
-     const cartItemId = obj.id.split("_")[1];
-     const price = $("#price_" + cartItemId).data('price');
-     const totalPrice = count * price;
-     $("#totalPrice_" + cartItemId).html(totalPrice + "원"); // 값 확인
- }
+        function changeCount(obj){
+            const count = obj.value;
+            const cartItemId = obj.id.split("_")[1];
+            const price = $("#price_" + cartItemId).data('price');
+            const totalPrice = count * price;
+            $("#totalPrice_" + cartItemId).html(totalPrice + "원");
+            getOrderTotalPrice();
+            updateCartItemCount(cartItemId, count);
+        }
         function checkAll(){
           if($("#checkAll").prop("checked")){
             $("input[name=cartChkBox]").prop("checked", true);

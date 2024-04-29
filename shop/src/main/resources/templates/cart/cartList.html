@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout2}">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout2}">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
+<body>
 <div layout:fragment="content" class="content-mg">
     <main>
         <section id="container">
@@ -59,52 +60,18 @@
                                 <th>상품사진</th>
                                 <th>수량</th>
                                 <th>가격</th>
-                                <th>상품이름</th>
                                 <th>사이즈</th>
+                                <th colspan="2">선택</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <!-- 상품 목록 -->
-                            <tr th:each="cartItem : ${cartItems}">
-                                <td>
-                                    <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
-                                </td>
-                                <td>
-                                    <!-- 상품 이미지 -->
-                                    <img th:src="${cartItem.imgUrl}" th:alt="${cartItem.itemNm}" class="rounded repImg">
-                                </td>
-                                <td>
-                                    <!-- 수량 입력 -->
-                                    <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
-                                           th:value="${cartItem.count}" min="1" onchange="changeCount(this)" class="form-control">
-                                </td>
-                                <td>
-                                    <!-- 가격 표시 -->
-                                    <span th:id="'price_' + ${cartItem.cartItemId}" th:text="${cartItem.price} + '원'"></span>
-                                </td>
-                                <td>
-                                    <!-- 상품명 표시 -->
-                                    <span class="fs24 font-weight-bold" th:text="${cartItem.itemNm}"></span>
-                                </td>
-                                <td>
-                                    <!-- 사이즈 표시 -->
-                                    <span th:text="${cartItem.size}"></span>
-                                </td>
-                                <td>
-                                    <!-- 삭제 버튼 -->
-                                    <button type="button" aria-label="Close" th:if="${cartItem != null}"
-                                            th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</button>
+                            <tr>
+                                <td colspan="7" style="text-align: center;">
+                                    <p>쇼핑백에 담긴 상품이 없습니다.</p>
+                                    <p></p>
                                 </td>
                             </tr>
                             </tbody>
-                            <tfoot>
-                            <!-- 쇼핑백이 비어 있을 때 -->
-                            <tr th:if="${cartItems == null or #lists.isEmpty(cartItems)}">
-                                <td colspan="7" style="text-align: center;">
-                                    쇼핑백에 담긴 상품이 없습니다.
-                                </td>
-                            </tr>
-                            </tfoot>
                         </table>
                         <div class="tbl_uder_box">
                             <div class="bx_btn">
@@ -131,9 +98,8 @@
                                 <li>
                                     <strong>총 상품 금액</strong>
                                     <p>
-                                        <em th:id="'totalPrice_' + ${cartItem.cartItemId}" name="totalPrice"
-                                            th:text="${cartItem.price * cartItem.count} + '원'"></em>
-
+                                        <em id="counterTotal">0</em>
+                                        원
                                     </p>
                                 </li>
                                 <li>
@@ -147,7 +113,7 @@
                                 <li class="total">
                                     <strong>총 결제금액</strong>
                                     <p>
-                                        <em id="orderTotalPrice" class="text-danger">0원</em>
+                                        <em id="counterTotalAmt">0</em>
                                         원
                                     </p>
                                 </li>
@@ -160,7 +126,7 @@
                                 </li>
                             </ul>
                             <button type="button" name="button"
-                                    onclick="orders()"
+                                    onclick="WCKBasket.ProcessOrder('cart_order'); AMPLITUDE.LogClickEvent(7,'click_cart_selectorder','cart_order','cart_order');"
                                     class="btn_order">선택상품 주문하기
                             </button>
                             <button type="button" onclick="WCKBasket.NoMemberGiftOrder('cart_order');"
@@ -178,10 +144,7 @@
                         <li class="ix-list-item ix-clone" data-origin-idx="13" data-idx="2" aria-hidden="true"
                             style="width: 190px; margin-bottom: 80px; margin-left: 0px; margin-right: 20px; ">
                             <span>--></span></li>
-                        <!--
-                                                        <div class="img">
-                                                            <img src="//product-image.wconcept.co.kr/productimg/image/img1/74/302216874.jpg?RS=300" alt="spring tweed jacket_black">
-                                                        </div> -->
+
                         <div class="text no_front">
 
 
@@ -196,5 +159,6 @@
     </main>
 </div>
 
-
+</div>
+</body>
 </html>

@@ -25,7 +25,7 @@ public class CartController {
 
     /*ResponseBody한다는건 데이터를넘겨주겠다는것*/
     @PostMapping("/cart")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal) {
+    public ResponseEntity order(@Valid @RequestBody CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) { /*bindingResult가 error가있는가? 확인*/
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
@@ -34,6 +34,7 @@ public class CartController {
             }
             return new ResponseEntity(sb.toString(), HttpStatus.BAD_REQUEST); /*에러가났다는것에대한 내용을 전달함*/
         }
+
         /*에러안난상황*/
         String email = principal.getName();
         Long cartItemId;
