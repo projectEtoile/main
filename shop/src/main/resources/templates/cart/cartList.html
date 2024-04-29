@@ -48,34 +48,61 @@
                             <thead>
                             <tr>
                                 <th>
-                                <span class="input_button small square">
-                                    <input type="checkbox" name="checkAll" id="checkAll" class="check_all"
-                                           checked="checked" onclick="WCKBasket.BasketAllSelect(this);">
-                                    <label for="checkAll">
-                                        <!-- "&nbsp;" -->
-                                    </label>
-                                </span>
+                                    <span class="input_button small square">
+                                        <input type="checkbox" id="checkAll" onclick="checkAll()">&nbsp;&nbsp;전체선택
+                                        <label for="checkAll">
+                                            <!-- "&nbsp;" -->
+                                        </label>
+                                    </span>
                                     <input type="hidden" id="hdchk" value="0">
                                 </th>
                                 <th>상품사진</th>
+                                <th>상품이름</th>
                                 <th>수량</th>
-                                <th>가격</th>
                                 <th>사이즈</th>
-                                <th colspan="2">선택</th>
+                                <th colspan="2">가격</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="7" style="text-align: center;">
-                                    <p>쇼핑백에 담긴 상품이 없습니다.</p>
-                                    <p></p>
+                            <tr th:each="cartItem : ${cartItems}">
+                                <td class="text-center align-middle">
+                                    <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}"
+                                           onchange="getOrderTotalPrice()">
+                                </td>
+                                <td class="d-flex">
+                                    <div class="repImgDiv align-self-center">
+                                        <img th:src="${cartItem.imgUrl}" th:alt="${cartItem.itemNm}"
+                                             class="rounded repImg">
+                                    </div>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <span class="fs24 font-weight-bold" th:text="${cartItem.itemNm}"></span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
+                                           th:value="${cartItem.count}" min="1" oninput="changeCount(this)"
+                                           class="form-control mr-2">
+
+                                </td>
+                                <td class="text-center align-middle">
+                                    <span th:text="${cartItem.size}"></span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <span th:id="'price_' + ${cartItem.cartItemId}" name="totalPrice"
+                                          th:text="${cartItem.price * cartItem.count} + '원'"></span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <button class="close" type="button" aria-label="Close">
+                                        <span aria-hidden="true" th:data-id="${cartItem.cartItemId}"
+                                              onclick="deleteCartItem(this)">&times;</span>
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="tbl_uder_box">
                             <div class="bx_btn">
-                                <button type="button" name="button" class="btn" onclick="WCKBasket.RemoveBasketAll();">
+                                <button type="button" name="button" class="btn" onclick="removeSelectedItems();">
                                     선택상품삭제
                                 </button>
                                 <button type="button" name="button" class="btn gray" onclick="history.go(-1);">쇼핑계속하기
@@ -98,8 +125,8 @@
                                 <li>
                                     <strong>총 상품 금액</strong>
                                     <p>
-                                        <em id="counterTotal">0</em>
-                                        원
+                                        <em id="orderTotalPrice">0</em>
+
                                     </p>
                                 </li>
                                 <li>
@@ -107,7 +134,7 @@
                                     <p>
                                         <span>+</span>
                                         <em id="counterTotdeliveryamt">0</em>
-                                        원
+
                                     </p>
                                 </li>
                                 <li class="total">
@@ -117,13 +144,14 @@
                                         원
                                     </p>
                                 </li>
-                                <li class="point">
+                                <!--포인트부분-->
+                              <!--  <li class="point">
                                     <strong>적립예정 포인트</strong>
                                     <p>
                                         <em id="counterTotalcybermoney">0</em>
                                         p
                                     </p>
-                                </li>
+                                </li>-->
                             </ul>
                             <button type="button" name="button"
                                     onclick="WCKBasket.ProcessOrder('cart_order'); AMPLITUDE.LogClickEvent(7,'click_cart_selectorder','cart_order','cart_order');"
