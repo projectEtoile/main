@@ -1,4 +1,4 @@
-package com.keduit.shop.dto;
+/*package com.keduit.shop.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,4 +10,4 @@ public class MailDto {
     private String address;
     private String title;
     private String message;
-}
+}*/

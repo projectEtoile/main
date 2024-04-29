@@ -12,10 +12,66 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-    <script>
+    <!-- 사용자 js 추가 -->
+   <!-- <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            $(document).ready(function(){
+                // 인증메일 발송
+                $("button[name='sendCertCode']").click(function() {
+                    const csrfToken = $("meta[name='_csrf']").attr("content");
+                    const memberEmail = $("#memberEmail").val();
+                    const requestData = { "memberEmail": memberEmail};
+                    $.ajax({
+                        url: "/members/sendEmail",
+                        type: "POST",
+                        contentType: "application/json",
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        data: JSON.stringify(requestData),
+                        cache: false,
+                        success: function(result, status){
+                            alert("인증번호가 발송되었습니다.");
+                        },
+                        error: function(jqXHR, status, error) {
+                            alert("인증번호 발송중 오류가 발생하였습니다.");
+                            console.error("인증번호 발송중 오류가 발생하였습니다.", error);
+                        }
+                    });
+                });
+
+                // 인증번호 확인
+                $("button[name='verifyCode']").click(function() {
+                    verifyCode();
+                });
+            });
+            function verifyCode() {
+                var memberEmail = $("#memberEmail").val();
+                var certCode = $("#certCode").val();
+                const csrfToken = $("meta[name='_csrf']").attr("content");
+                $.ajax({
+                    type: "POST",
+                    url: "/members/*",
+                    contentType: "application/json",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: JSON.stringify({ "memberEmail": memberEmail, "certCode": certCode }),
+                    success: function(response) {
+                        alert("인증에 성공했습니다.");
+                    },
+                    error: function(error) {
+                        alert("인증에 실패했습니다. 올바른 인증코드를 입력해주세요.");
+                    }
+                });
+            }
+
+        </script>
+    </th:block> -->
+   <script>
         $(document).ready(function () {
             alert("테스트 실행되면 나오기");
-            $("#sendEmail").click(function (){
+            $("#sendEmailBtn").click(function (){
 
                 alert("클릭이벤트 시작!!");
                 var form = document.getElementById("sendEmailForm"); // 이메일을 전송할 폼 가져오기
@@ -25,7 +81,7 @@
                     // 이메일이 입력되었을 때만 폼 제출
                     var formData = new FormData(form); // 폼 데이터 생성
                     var xhr = new XMLHttpRequest(); // AJAX 요청 생성
-                    xhr.open("POST", form.action); // POST 요청 설정
+                    xhr.open("POST", "/members/sendEmail", true); // POST 요청 설정
                     xhr.onload = function () {
                         if (xhr.status === 200) { // 요청이 성공했을 때
                             alert("이메일이 전송되었습니다."); // 알림 메시지 출력
@@ -40,7 +96,7 @@
                 event.preventDefault(); // 폼의 기본 동작인 페이지 리로드를 막음
 
 
-            })
+            });
 
         });
     </script>
@@ -72,12 +128,12 @@
                             SNS 간편가입 회원은 <br>로그인 화면에서 가입하신 SNS 로그인을 이용해 주세요.
                         </h4>
                         <div class="bx">
-                            <div class="find_pw_ctns">
+                            <div>
                                 <!-- 이메일 입력 폼 -->
                                 <form id="sendEmailForm" action="/members/sendEmail" method="post">
                                     <label for="memberEmail">이메일:</label>
                                     <input type="email" id="memberEmail" name="memberEmail" required>
-                                    <button type="button" id="sendEmail" >확인</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
+                                    <button type="button" id="sendEmailBtn" name="verifyCode" >확인</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
                                 </form>
                             </div>
                             <div class="btn_bottom_wrap">

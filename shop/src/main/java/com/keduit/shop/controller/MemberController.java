@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -113,7 +114,7 @@ public class MemberController {
     // 비밀번호 재설정 페이지로 이동
 
     // 비밀번호 재설정 폼에서 새로운 비밀번호를 입력받아 처리하는 메서드
-    @PostMapping("/pw")
+    /*@PostMapping("/pw")
     public String resetPassword(@RequestParam("memberEmail") String memberEmail, Model model) {
         // 이메일로 임시 비밀번호 생성 및 전송
         MailDto dto = memberService.createMailAndChangePassword(memberEmail);
@@ -121,34 +122,29 @@ public class MemberController {
 
         // 비밀번호 재설정 성공 페이지로 이동
         return "member/pwRestSuccess";
-    }
-
-    /*    @GetMapping("/doFindLoginPw")
-        public String doFindLoginPw(String email){
-            if(Utilit.empty(email)){
-                return Utility.jsHistoryBack("이메일을 입력해주세요");
-            }
-        }*/
-//Email과 name의 일치여부를 check하는 컨트롤러
-/*@GetMapping("/findPw")
-public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userName){
-    Map<String,Boolean> json = new HashMap<>();
-    boolean pwFindCheck = UserService.userEmailCheck(userEmail,userName);
-
-    System.out.println(pwFindCheck);
-    json.put("check", pwFindCheck);
-    return json;
-}
-*/
+    }*/
 
 
-    @PostMapping("/sendEmail")
+
+    /*@PostMapping("/sendEmail")
     public String sendEmail(@RequestParam("memberEmail") String memberEmail) {
         // 메일 전송을 위한 MailDto 생성
         MailDto dto = memberService.createMailAndChangePassword(memberEmail);
         // 생성된 메일을 전송
         memberService.mailSend(dto);
         return "member/login";
+    }*/
+    @PostMapping("/sendEmail")
+
+    public ResponseEntity<Void> kendVerificationCode(@RequestBody Map<String, String> requestData) {
+        String email = requestData.get("email");
+        System.out.println("email::::::::::::::::::::: " + email);
+        String key = memberService.generateKey(); // 키 생성
+        System.out.println("key:::::::::::::::::::::::: " + key);
+        // 이메일 발송
+        memberService.sendEmail(email, key);
+
+        return ResponseEntity.ok().build();
     }
 
 
