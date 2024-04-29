@@ -73,7 +73,7 @@
 
                             <ul class="link">
                                 <li>
-                                    <button><a onclick="openFindPWPopup()">비밀번호 찾기</a></button>
+                                    <button><a onclick="openFindPWPopup(); return false;">비밀번호 찾기</a></button>
                                 </li>
                             </ul>
                         </div>
@@ -105,9 +105,12 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        function openFindPWPopup() {
-            window.open("/members/pw", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
-        }
+
+
+            function openFindPWPopup() {
+                window.open("/members/pw", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
+            }
+
     </script>
 </th:block>
 </html>

@@ -68,42 +68,22 @@ public class MemberService implements UserDetailsService {
     // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
 
 
-    public String generateTemporaryPassword() {
-        System.out.println("generateTemporaryPassword====================================");
-        SecureRandom random = new SecureRandom();
-        StringBuilder temporaryPassword = new StringBuilder(10);
-
-        // 임시 비밀번호는 영문 대소문자, 숫자를 조합한 10자리 문자열로 생성
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (int i = 0; i < 10; i++) {
-            temporaryPassword.append(chars.charAt(random.nextInt(chars.length())));
-        }
-
-        return temporaryPassword.toString();
-    }
-
-    public void sendTemporaryPasswordByEmail(String to, String temporaryPassword) {
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        String subject = "임시 비밀번호 안내";
-        String text = "임시 비밀번호는: " + temporaryPassword + " 입니다.";
-
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        javaMailSender.send(message);
-    }
-    public void sendEmail(String to, String key) {
+//이멜 보내는 서비스
+    public void sendEmail(String to, String key) {//to: 이멜 주소 수신 , key: 인증번호or임시비번
         System.out.println("sendemailservice====================================================");
         SimpleMailMessage message = new SimpleMailMessage();
 
-        String subject = "shoppingmall 인증번호 입니다.";
-        String text = "인증번호는: " + key;
+        String subject = "shoppingmall 인증번호 입니다.";//제목
+        String text = "인증번호는: " + key;//내용
 
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
+        // 이메일 주소를 RFC 5321에 따라 올바른 형식으로 설정
+        String from = "<example@example.com>"; // 이메일 주소 예시
+
+        message.setTo(to);// 수신자 이메일 주소를 설정
+        message.setSubject(subject);// 이메일의 제목을 설정
+        message.setText(text);// 이메일의 본문 내용을 설정
+        // 보내는 이메일 주소 설정
+        message.setFrom(from);
         javaMailSender.send(message);
     }
 

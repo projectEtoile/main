@@ -1,12 +1,16 @@
+$(document).ready(function() {
+    document.getElementById("sendEmailBtn").addEventListener("click", function(event) {
+        sendMail(event);
+    });
+});
 function sendMail(event) {
     event.preventDefault(); // 폼의 기본 동작인 페이지 리로드를 막음
-    console.log('버튼 눌림');
 
     var email = $("#memberEmail").val(); // 이메일 입력란의 값 가져오기
 
     if (email.trim() !== "") { // 이메일이 입력되었는지 확인
         var requestData = {
-            "email": email
+            "memberEmail": email // 사용자가 입력한 이메일 주소
         };
 
         // CSRF 토큰 가져오기
@@ -17,6 +21,7 @@ function sendMail(event) {
         $.ajax({
             type: "POST",
             url: "/members/findPassword",
+
             contentType: "application/json",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 설정

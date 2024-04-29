@@ -82,11 +82,16 @@
                                 <form id="sendEmailForm" action="/members/findPassword" method="post">
                                     <label for="memberEmail">이메일:</label>
                                     <input type="email" id="memberEmail" name="memberEmail" required>
-                                    <button type="button" id="sendEmailBtn" name="verifyCode" onclick="sendMail(event)">확인</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
+                                    <button type="button" id="sendEmailBtn" name="verifyCode" >인증번호</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
+                                </form>
+                                <!--인증번호 입력폼-->
+                                <form  method="post">
+
+                                    <input type="text" id="#" name="#" required placeholder="인증번호를 입력하세요">
                                 </form>
                             </div>
                             <div class="btn_bottom_wrap">
-                                <button type="button" name="button" class="btn full movelogin">SNS 로그인</button>
+                                <button type="button" name="button" class="btn full movelogin">비밀번호 변경</button>
                             </div>
                         </div>
                     </div>

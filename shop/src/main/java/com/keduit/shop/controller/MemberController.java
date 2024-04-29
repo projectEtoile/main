@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -132,19 +133,30 @@ public class MemberController {
         memberService.mailSend(dto);
         return "member/login";
     }*/
-    @PostMapping("/findPassword")
 
-    public ResponseEntity<Void> findPassword(@RequestParam("email") String email) {
+    @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
+    public ResponseEntity<Void> findPassword(@RequestBody Map<String, String> requestBody) {//@RequestBody:컨트롤러에서 요청 데이터를 JSON 형식으로 받기 위해
+        // 요청 데이터에서 이메일 주소 추출
+        String email = requestBody.get("memberEmail");
+
+        // 이메일 주소가 유효한지 검증
+        if (email == null || email.isEmpty()) {
+            // 이메일이 유효하지 않은 경우 또는 빈 문자열일 경우
+            return ResponseEntity.badRequest().build();
+        }
+
         System.out.println("findpassword====================");
         try {
             // 임시 비밀번호 생성
-            String temporaryPassword = memberService.generateTemporaryPassword();
+            String temporaryPassword = memberService.generateKey();
 
             // 이메일 발송
-            memberService.sendTemporaryPasswordByEmail(email, temporaryPassword);
+            memberService.sendEmail(email, temporaryPassword);
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            // 예외 발생 시 로깅
+            System.out.println("예외로 가긴가요~~~~~~~~~~~~~~~~");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
