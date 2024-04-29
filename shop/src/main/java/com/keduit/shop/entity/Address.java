@@ -1,10 +1,15 @@
 package com.keduit.shop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,14 +17,18 @@ public class Address {
     private Long id;
 
 
-    private Integer postalCode;
-    private String roadName;
-    private String localAddress;
+    private String postcode;
+    private String roadAddress;
+    private String jibunAddress;
 
-    private String detailedAddress;
+    private String detailAddress;
 
-    private  String dong;
+    private String extraAddress;
 
-    private Boolean check;
+    private Boolean selectAddress;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id")
+    private Member member;
 
 }

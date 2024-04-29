@@ -1,8 +1,11 @@
 package com.keduit.shop.controller.mypage;
 
 import com.keduit.shop.constant.Sex;
+import com.keduit.shop.dto.AddressDTO;
 import com.keduit.shop.dto.MemberFormDTO;
+import com.keduit.shop.entity.Address;
 import com.keduit.shop.entity.Member;
+import com.keduit.shop.repository.AddressRepository;
 import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -28,6 +32,7 @@ public class MypageMemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AddressRepository addressRepository;
 
 
     @GetMapping("/checkPw")
@@ -128,10 +133,80 @@ public class MypageMemberController {
         // 여기서는 save를 했는데 아이탬 수정에선 왜 따로 save가 없는지 차이 질문.
     }
 
+//    @GetMapping("/address")
+//    public String myAddress() {
+//        return "mypage/address";
+//    }
+
+    @PostMapping("/addAddress")
+    public @ResponseBody ResponseEntity addAddress(@RequestBody AddressDTO addressDTO,Principal principal,BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            StringBuilder sb = new StringBuilder();
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError fieldError : fieldErrors) {
+                sb.append(fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+        }
+
+        System.out.println("서버 응답 받음");
+        Address address = new Address();
+        address.setPostcode(addressDTO.getPostcode());
+        address.setRoadAddress(addressDTO.getRoadAddress());
+        address.setJibunAddress(addressDTO.getJibunAddress());
+        address.setDetailAddress(addressDTO.getDetailAddress());
+        address.setExtraAddress(addressDTO.getExtraAddress());
+
+        System.out.println(addressDTO.getSelectAddress());
+
+        if(addressDTO.getSelectAddress().equals(true)){
+            System.out.println("트루로직");
+            List<Address> allAddresses = addressRepository.findAll();
+            for (Address address1 : allAddresses) {
+                address1.setSelectAddress(false);
+            }
+            addressRepository.saveAll(allAddresses);
+
+            address.setSelectAddress(true);
+
+        }else{
+            System.out.println("펄스로직");
+            address.setSelectAddress(false);
+        }
+
+
+        Member member =  memberRepository.findByEmail(principal.getName());
+
+        address.setMember(member);
+
+        addressRepository.save(address);
+
+        // 저장된 주소 정보를 확인하는 메시지를 반환합니다.
+        return new ResponseEntity("주소가 등록되었습니다", HttpStatus.OK);
+    }
+
     @GetMapping("/address")
-    public String myAddress() {
+    public String address(Model model){
+
+        List<Address> addresses = addressRepository.findAll();
+
+        model.addAttribute("addresses",addresses);
+
         return "mypage/address";
     }
 
+//    @GetMapping("/address/{addressId}")
+//    public String addressModify(Model model,@PathVariable("addressId") Long addressId){
+//
+//        Address address = addressRepository.findById(addressId).orElseThrow(EntityNotFoundException::new);
+//
+//        AddressDTO addressDTO = AddressDTO.of(address);
+//
+//        model.addAttribute("addressDTO",addressDTO);
+//        return ;
+//
+//
+//    }
 
 }

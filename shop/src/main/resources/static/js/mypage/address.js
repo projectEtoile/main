@@ -1,3 +1,54 @@
+
+function registerAddress(event) {
+event.preventDefault();
+
+var selectAddress;
+
+// 체크박스의 상태에 따라 selectAddress 값을 설정
+if (document.getElementById("selectAddress").checked) {
+    selectAddress = true;
+} else {
+    selectAddress = false;
+}
+console.log(selectAddress);
+
+    // 주소 정보를 입력 받아서 객체로 만듭니다.
+    var addressData = {
+        postcode: document.getElementById("postcode").value,
+        roadAddress: document.getElementById("roadAddress").value,
+        jibunAddress: document.getElementById("jibunAddress").value,
+        detailAddress: document.getElementById("detailAddress").value,
+        extraAddress: document.getElementById("extraAddress").value,
+        selectAddress: selectAddress
+    };
+console.log(addressData);
+    // CSRF 토큰 가져오기
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+    // AJAX 요청 설정
+    $.ajax({
+        type: "POST",
+        url: "/mypage/addAddress", // 서버의 엔드포인트 URL
+        contentType: "application/json",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰을 요청 헤더에 포함
+        },
+        data: JSON.stringify(addressData), // 주소 정보를 JSON 문자열로 변환하여 요청 본문에 포함
+        success: function(response) {
+            // 요청이 성공한 경우
+            alert(response); // 서버에서 반환한 메시지를 알림으로 표시
+        },
+        error: function(xhr, status, error) {
+            // 요청이 실패한 경우
+            alert("주소 등록에 실패했습니다.");
+            console.error("주소 등록에 실패했습니다.", error);
+        }
+    });
+}
+
+
+
 $(document).ready(function() {
   // 모달 열기
   $("#openModalBtn").click(function() {
@@ -37,15 +88,15 @@ $(document).ready(function() {
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample4_postcode').value = data.zonecode;
-                document.getElementById("sample4_roadAddress").value = roadAddr;
-                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("roadAddress").value = roadAddr;
+                document.getElementById("jibunAddress").value = data.jibunAddress;
 
                 // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
                 if(roadAddr !== ''){
-                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                    document.getElementById("extraAddress").value = extraRoadAddr;
                 } else {
-                    document.getElementById("sample4_extraAddress").value = '';
+                    document.getElementById("extraAddress").value = '';
                 }
 
                 var guideTextBox = document.getElementById("guide");
