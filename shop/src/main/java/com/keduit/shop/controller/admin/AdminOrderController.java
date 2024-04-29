@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor // 싱글톤 패턴 주입받기 위한
 public class AdminOrderController {
 
-    @GetMapping("/main")
-    public String itemForm() {
-        return "admin/main";
-    }
+
 
 }

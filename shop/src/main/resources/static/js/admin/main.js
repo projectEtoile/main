@@ -58,20 +58,24 @@ $(document).ready(function() {
         }
     });
 
+
+
     var context2 = $('#myChart2')[0].getContext('2d');
+    var maleValue = document.getElementById('male').textContent;
+    var femaleValue = document.getElementById('female').textContent;
     var myChart2 = new Chart(context2, {
         type: 'pie', // 차트의 형태
         data: { // 차트에 들어갈 데이터
             labels: [
                 //x 축
-                'Top','Outer','Pants','Skirt/Dress','Shoes'
+                'Top','Outer'
             ],
             datasets: [
                 { //데이터
                     label: '매출', //차트 제목
                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                     data: [
-                        10,20,30,20,20 //x축 label에 대응되는 데이터 값
+                        maleValue,femaleValue //x축 label에 대응되는 데이터 값
                     ],
                     backgroundColor: [
                         //색상

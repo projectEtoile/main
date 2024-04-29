@@ -83,35 +83,7 @@
         <!--                    <div th:text="*{level2}" id="level2value" hidden="hidden"></div>-->
 
         <!--            </div>-->
-        <div th:with="start=${(items.number/maxPage)*maxPage + 1},
-              end=(${(items.totalPages == 0) ? 1 :
-              (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) :
-              items.totalPages)})" class="pagination-container">
 
-            <ul class="pagination-list">
-                <li th:classappend="${items.first}?'disabled':''" class="pagination-item pagination-item-previous">
-                    <a th:onclick="'javascript: page('+ ${items.number - 1} + ')'" aria-label='Previous'
-                       class="pagination-link">
-                        <span aria-hidden='true'>Previous</span>
-                    </a>
-                </li>
-
-                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
-                    th:classappend="${items.number eq page - 1}?'active':''">
-                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
-                       class="page-link pagination-link">
-                        [[${page}]]
-                    </a>
-                </li>
-
-                <li class="page-item" th:classappend="${items.last}?'disabled':''">
-                    <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'" aria-label='Next'
-                       class="page-link pagination-link">
-                        <span aria-hidden='true'>Next</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
 
         <div class="search-container" th:object="${adminItemSearchDTO}">
             <select th:field="*{searchDateType}" class="form-control search-select">
@@ -146,25 +118,26 @@
                 <option value="SOLD_OUT">품절</option>
                 <option value="STOP_SALE">판매중지</option>
             </select>
+            <br>
 
-            <input th:field="*{searchQuery}" type="text" class="search-input" placeholder="상품명 혹은 상품코드를 입력해주세요">
-            <button id="searchBtn" type="submit" class="search-btn">검색</button>
 
             <div th:text="*{level2}" id="level2value" hidden="hidden"></div>
-        </div>
 
 
-        <!-- 상품등록 시작 -->
-        <div>
-            <div class="search-bar">
-                <input type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력하시오">
-                <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
-                <span class="material-symbols-outlined">
-        search
-      </span>
+            <!-- 상품등록 시작 -->
+            <div>
+                <div class="search-bar">
+                    <input th:field="*{searchQuery}" type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력">
+                    <!--                <input  type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력해주세요">-->
+                    <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
+                    <button id="searchBtn" type="submit" class="search-btn">검색
+<!--                        <span class="material-symbols-outlined">-->
+<!--        search-->
+<!--      </span>-->
+                    </button>
+                </div>
             </div>
         </div>
-
         <div class="tableBox">
             <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p th:text="${items.totalElements}"></p>
             </div>
@@ -206,6 +179,46 @@
                     <button>수정하기</button>
                 </form>
             </div>
+
+
+        </div>
+
+        <div th:with="start=${(items.number/maxPage)*maxPage + 1},
+              end=(${(items.totalPages == 0) ? 1 :
+              (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) :
+              items.totalPages)})" class="pagination-container">
+
+            <ul class="pagination-list">
+                <li th:classappend="${items.first} ? 'disabled' : ''" class="pagination-item pagination-item-previous">
+                    <!-- 페이지가 0인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${items.number != 0}" th:onclick="'javascript: page(' + (${items.number - 1}) + ')'"
+                       aria-label='Previous' class="pagination-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                    <a th:unless="${items.number != 0}" aria-label='Previous' class="pagination-link disabled">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                    th:classappend="${items.number eq page - 1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+                       class="page-link pagination-link">
+                        [[${page}]]
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${items.last} ? 'disabled' : ''">
+                    <!-- 페이지가 마지막 페이지인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${!items.last}" th:onclick="'javascript:page(' + (${items.number + 1}) + ')'"
+                       aria-label='Next' class="page-link pagination-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                    <a th:if="${items.last}" aria-label='Next' class="page-link pagination-link disabled">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         </body>
