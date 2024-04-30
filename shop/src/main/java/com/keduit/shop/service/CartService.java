@@ -30,28 +30,28 @@ public class CartService {
 
     /*장바구니 추가하기*/
     public Long addCart(CartItemDTO cartItemDTO, String email) {
-        /*장바구니에 넣을 상품 조회*/
         Item item = itemRepository.findById(cartItemDTO.getItemId()).orElseThrow(EntityNotFoundException::new);
-        /*로그인 한 회원 엔티티 조회*/
         Member member = memberRepository.findByEmail(email);
-        /*현재 회원의 장바구니가 있는지 조회*/
         Cart cart = cartRepository.findByMemberId(member.getId());
-        /*카트(장바구니)가있는지없는지확인 없으면 생성하고 있으면 수량증가*/
+
         if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
         }
-        /*장바구니에 상품이 들어있는지 확인 후 있으면 수량add 없으면 장바구니상품추가(save)*/
-        CartItem saveCartItem = cartItemRepository.findByCartIdAndItemIdAndSize(cart.getId(), item.getId(), cartItemDTO.getSize());/*장바구니에 상품이있는지없는지확인*/
-        if (saveCartItem != null) {
-            saveCartItem.addCount(cartItemDTO.getCount()); /*이미 장바구니에 상품이 있으면 수량만증가*/
-            return saveCartItem.getId();
+
+        CartItem cartItem = cartItemRepository.findByCartIdAndItemIdAndSize(cart.getId(), item.getId(), cartItemDTO.getSize());
+        if (cartItem != null) {
+            cartItem.addCount(cartItemDTO.getCount()); // 기존 수량에 새로운 수량 추가
+            cartItemRepository.save(cartItem); // 변경된 내용 저장
         } else {
-            CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDTO.getCount(), cartItemDTO.getSize());/*없으면 생성*/
+            cartItem = CartItem.createCartItem(cart, item, cartItemDTO.getCount(), cartItemDTO.getSize());
             cartItemRepository.save(cartItem);
-            return cartItem.getId();
         }
+
+        return cartItem.getId();
     }
+
+
 
     /*목록읽어오기*/
     @Transactional(readOnly = true)
