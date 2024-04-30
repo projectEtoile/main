@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
- <div th:fragment="header">
+<div th:fragment="header">
 
     <nav>
         <div class="top-area">
@@ -37,11 +37,11 @@
                     </a>
                 </li>
 
-                    <a href="/members/login" sec:authorize="isAnonymous()">
+                <a href="/members/login" sec:authorize="isAnonymous()">
                         <span class="material-symbols-outlined">
                           login
                         </span>
-                    </a>
+                </a>
 
                 <a href="/members/new" sec:authorize="isAnonymous()">
                     <span class="material-symbols-outlined">
@@ -69,6 +69,7 @@
                                 <span id="rank-title">제로초</span>
                             </div>
 
+
                             <!-- 실시간 급상승 추가 -->
                             <div id="real-time-rankings">
                                 <ul style="posiotion: absolute; top: -15px;right: 0;">
@@ -82,10 +83,12 @@
                                         </thead>
                                         <tbody>
                                         <!-- 데이터를 반복하여 표시 -->
-                                        <tr th:each="searchRank : ${searchRankList}">
-                                            <td th:text="${searchRank.number}"></td> <!-- 순위 -->
-                                            <td th:text="${searchRank.keyword}"></td> <!-- 인기검색어 -->
+                                        <th:block th:each="searchRank : ${searchRankList}">
+                                        <tr>
+                                            <td th:text="${searchRank.getNumber()}"></td> <!-- 순위 -->
+                                            <td th:text="${searchRank.getKeyword()}"></td> <!-- 인기검색어 -->
                                         </tr>
+                                        </th:block>
                                         </tbody>
                                     </table>
                                     <div id="z-example">
@@ -93,6 +96,7 @@
                                     </div>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                 </nav>
@@ -205,5 +209,5 @@
             </div>
         </div>
     </nav>
- </div>
+</div>
 </html>
