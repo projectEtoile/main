@@ -92,18 +92,14 @@ public class CartService {
         cartItemRepository.delete(cartItem);
     }
 
+    @Transactional
     public Long orderCartItem(CartOrderDTO cartOrderDTO, String email) {
         CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId())
-                .orElse(null);
-        if (cartItem == null) {
-            System.out.println("Cart item not found for ID: " + cartOrderDTO.getCartItemId());
-            return null;
-        }
+                .orElseThrow(() -> new EntityNotFoundException("Cart item not found for ID: " + cartOrderDTO.getCartItemId()));
 
         Member member = memberRepository.findByEmail(email);
         if (member == null) {
-            System.out.println("Member not found for email: " + email);
-            return null;
+            throw new IllegalStateException("Member not found for email: " + email);
         }
 
         Order order = new Order();
@@ -111,18 +107,19 @@ public class CartService {
         order.setOrderDate(LocalDateTime.now());
         order.setOrderStatus(OrderStatus.ORDER);
 
-        // 각 항목의 수량과 단가를 사용하여 order_price 계산
         int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
-
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(cartItem.getItem());
         orderItem.setCount(cartOrderDTO.getCount());
-        orderItem.setOrderPrice(totalPrice); // 계산된 총 가격 설정
+        orderItem.setOrderPrice(totalPrice);
         order.addOrderItem(orderItem);
 
         orderRepository.save(order);
+        cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
+
         return order.getId();
     }
+
 
     @Transactional(readOnly = true)
     public int getTotalCartItemCount(String email) {
@@ -132,6 +129,35 @@ public class CartService {
             return 0;
         }
         return cart.getCartItems().size();
+    }
+
+
+    @Transactional
+    public void orderAndRemoveCartItems(List<CartOrderDTO> cartOrderDTOList, String email) {
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
+            throw new IllegalStateException("Member not found for email: " + email);
+        }
+
+        for (CartOrderDTO cartOrderDTO : cartOrderDTOList) {
+            CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId())
+                    .orElseThrow(() -> new EntityNotFoundException("Cart item not found for ID: " + cartOrderDTO.getCartItemId()));
+
+            Order order = new Order();
+            order.setMember(member);
+            order.setOrderDate(LocalDateTime.now());
+            order.setOrderStatus(OrderStatus.ORDER);
+
+            int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItem(cartItem.getItem());
+            orderItem.setCount(cartOrderDTO.getCount());
+            orderItem.setOrderPrice(totalPrice);
+            order.addOrderItem(orderItem);
+
+            orderRepository.save(order);
+            cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
+        }
     }
 
 
