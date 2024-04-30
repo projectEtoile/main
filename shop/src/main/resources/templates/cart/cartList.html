@@ -5,6 +5,7 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 </head>
 
 <body>
@@ -80,14 +81,15 @@
                                 </td>
                                 <td class="text-center align-middle">
                                     <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
-                                           th:value="${cartItem.count}" min="1" oninput="changeCount(this)"
+                                           th:value="${cartItem.count}" min="1" onchange="changeCount(this)"
                                            class="form-control mr-2">
-
                                 </td>
+
                                 <td class="text-center align-middle">
                                     <span th:text="${cartItem.size}"></span>
                                 </td>
                                 <td class="text-center align-middle">
+
                                     <span th:id="'price_' + ${cartItem.cartItemId}" name="totalPrice"
                                           th:text="${cartItem.price * cartItem.count} + '원'"></span>
                                 </td>
@@ -145,13 +147,13 @@
                                     </p>
                                 </li>
                                 <!--포인트부분-->
-                              <!--  <li class="point">
-                                    <strong>적립예정 포인트</strong>
-                                    <p>
-                                        <em id="counterTotalcybermoney">0</em>
-                                        p
-                                    </p>
-                                </li>-->
+                                <!--  <li class="point">
+                                      <strong>적립예정 포인트</strong>
+                                      <p>
+                                          <em id="counterTotalcybermoney">0</em>
+                                          p
+                                      </p>
+                                  </li>-->
                             </ul>
                             <button type="button" name="button"
                                     onclick="WCKBasket.ProcessOrder('cart_order'); AMPLITUDE.LogClickEvent(7,'click_cart_selectorder','cart_order','cart_order');"

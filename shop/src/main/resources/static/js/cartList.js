@@ -4,26 +4,27 @@ $(document).ready(function(){
     });
 });
 
-function getOrderTotalPrice(){
+function getOrderTotalPrice() {
     let orderTotalPrice = 0;
-    $("input[name=cartChkBox]:checked").each(function(){
+    $("input[name=cartChkBox]:checked").each(function () {
         const cartItemId = $(this).val();
-        const price = parseFloat($("#price_"+cartItemId).text().replace('원', '').replace(',', ''));
-        const count = parseInt($("#count_"+cartItemId).val());
+        const price = parseFloat($("#price_" + cartItemId).text().replace('원', '').replace(',', ''));
+        const count = parseInt($("#count_" + cartItemId).val());
         orderTotalPrice += price * count;
     });
     $("#orderTotalPrice").text(orderTotalPrice.toLocaleString() + '원');
 }
 
+
 function changeCount(obj){
-    const count = obj.value;
-    const cartItemId = obj.id.split("_")[1];
-    const price = parseFloat($("#price_" + cartItemId).text().replace('원', '').replace(',', ''));
-    const totalPrice = count * price;
-    $("#totalPrice_" + cartItemId).text(totalPrice.toLocaleString() + "원");
-    getOrderTotalPrice();
-    updateCartItemCount(cartItemId, count);
-}
+            const count = obj.value;
+            const cartItemId = obj.id.split("_")[1];
+            const price = $("#price_" + cartItemId).data('price');
+            const totalPrice = count * price;
+            $("#totalPrice_" + cartItemId).html(totalPrice + "원");
+            getOrderTotalPrice();
+            updateCartItemCount(cartItemId, count);
+        }
 function checkAll(){
     if($("#checkAll").prop("checked")){
         $("input[name=cartChkBox]").prop("checked", true);
