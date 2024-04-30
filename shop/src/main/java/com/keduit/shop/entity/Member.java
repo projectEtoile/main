@@ -37,7 +37,7 @@ public class Member extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    private int age;
+    private Integer age;
 
 
     /*dto주면 entity 리턴하는애임 이게핵심. html폼에서 입력받는 주체가 dto 그걸 entity에 set해주는것 그걸리턴함*/

@@ -1,5 +1,9 @@
 package com.keduit.shop.controller.mypage;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.AddressDTO;
 import com.keduit.shop.dto.MemberFormDTO;
@@ -187,13 +191,35 @@ public class MypageMemberController {
     }
 
     @GetMapping("/address")
-    public String address(Model model){
+    public String address(Model model,Principal principal){
 
-        List<Address> addresses = addressRepository.findAll();
+        Member member = memberRepository.findByEmail(principal.getName());
+
+        List<Address> addresses = addressRepository.findAllByMember(member);
+
 
         model.addAttribute("addresses",addresses);
 
         return "mypage/address";
+    }
+
+    @GetMapping("/modify")
+    public @ResponseBody ResponseEntity addressModify(@RequestParam("id") Long id,Principal principal) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        objectMapper.registerModule(new JavaTimeModule());
+
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        Address address = addressRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        String jsonValue;
+
+            jsonValue = objectMapper.writeValueAsString(address);
+            System.out.println(jsonValue);
+
+        return new ResponseEntity(jsonValue, HttpStatus.OK);
     }
 
 //    @GetMapping("/address/{addressId}")

@@ -49,6 +49,62 @@ console.log(addressData);
 
 
 
+
+
+$(document).ready(function() {
+    // 모달 열기 함수
+    window.openModalBtnModify = function(id) {
+        console.log(id);
+
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+        // REST API 엔드포인트 URL
+        var apiUrl = "/mypage/modify";
+
+        // AJAX 요청
+        $.ajax({
+            type: "GET",
+            url: apiUrl + "?id=" + id,
+            beforeSend: function(xhr) {
+                // CSRF 토큰을 헤더에 포함
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function(response) {
+            var addressData = JSON.parse(response);
+            console.log(addressData);
+            console.log(addressData.roadAddress);
+
+
+                // 예시: $("#myModal").text(response);
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때 실행할 코드
+                console.error("REST API 요청 실패:", error);
+            }
+        });
+
+
+        $("#myModal").css("display", "block");
+    };
+
+    // 모달 닫기
+    $(".close, .modal").click(function(event) {
+        if (event.target == $("#myModal")[0] || event.target.className == "close") {
+            $("#myModal").css("display", "none");
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
 $(document).ready(function() {
   // 모달 열기
   $("#openModalBtn").click(function() {

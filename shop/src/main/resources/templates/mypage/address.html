@@ -46,12 +46,12 @@
                     <th th:text="${addresses.detailAddress}"></th>
                     <th th:text="${addresses.extraAddress}"></th>
                     <th th:text="${addresses.selectAddress}"></th>
-                    <td><a th:href="'/mypage/address/'+${addresses.id}">수정</a></td>
+                    <td> <button th:onclick="'openModalBtnModify(' + ${addresses.id} + ')'">수정</button> </td>
                 </tr>
 
                 </thead>
             </table>
-
+            <button id="openModalBtnModify()">수정 열기</button>
             <!-- 모달 버튼 -->
             <button id="openModalBtn">모달 열기</button>
 
