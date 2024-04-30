@@ -1,0 +1,45 @@
+.sideNavBox1 {
+  height: 800px;
+  width: 155px;
+  border-right: 1px solid rgb(229, 229, 229);
+  margin-left: 220px;
+  /* margin-left: 250px; */
+}
+
+.sideNavBox1 a {
+  text-decoration: none;
+  color: #757575;
+  font-size: 15px;
+  margin-bottom: 7px;
+  display: inline-block;
+}
+
+.sideNavBox1 a:hover {
+  color: black;
+}
+
+.sideNavBox1 h1 {
+  padding-top: 40px;
+  margin-bottom: 20px;
+  display: block;
+  font-size: 17px !important;
+  /* line-height: 21px; */
+}
+
+.sideNavBox1 #bigA {
+  font-size: 20px;
+  margin-left: 10px;
+  color: black;
+}
+
+.sideNavBox1 #bigB {
+  font-size: 20px;
+  margin-left: 10px;
+  color: black;
+}
+
+.mainSection1 {
+            float: left; /* 왼쪽으로 정렬 */
+            width: 20%; /* 적절한 너비 설정 */
+            /* 추가적인 스타일링 */
+        }
