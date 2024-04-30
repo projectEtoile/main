@@ -89,9 +89,9 @@
                                     <span th:text="${cartItem.size}"></span>
                                 </td>
                                 <td class="text-center align-middle">
-    <span th:id="'price_' + ${cartItem.cartItemId}" name="totalPrice"
-          th:text="${cartItem.price * cartItem.count} + '원'"
-          th:data-price="${cartItem.price}"></span>
+                                    <span th:id="'price_' + ${cartItem.cartItemId}" name="totalPrice"
+                                          th:text="${cartItem.price * cartItem.count} + '원'"
+                                          th:data-price="${cartItem.price}"></span>
                                 </td>
 
                                 <td class="text-center align-middle">

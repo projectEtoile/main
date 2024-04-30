@@ -1,23 +1,19 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.dto.CartDetailDTO;
 import com.keduit.shop.dto.CartItemDTO;
 import com.keduit.shop.dto.CartOrderDTO;
 import com.keduit.shop.dto.OrderDTO;
-import com.keduit.shop.entity.Cart;
-import com.keduit.shop.entity.CartItem;
-import com.keduit.shop.entity.Item;
-import com.keduit.shop.entity.Member;
-import com.keduit.shop.repository.CartItemRepository;
-import com.keduit.shop.repository.CartRepository;
-import com.keduit.shop.repository.ItemRepository;
-import com.keduit.shop.repository.MemberRepository;
+import com.keduit.shop.entity.*;
+import com.keduit.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +26,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
     /*장바구니 추가하기*/
     public Long addCart(CartItemDTO cartItemDTO, String email) {
@@ -95,29 +92,38 @@ public class CartService {
         cartItemRepository.delete(cartItem);
     }
 
-    public Long orderCartItem(List<CartOrderDTO> cartOrderDTOList, String email) {
-
-        List<OrderDTO> orderDTOList = new ArrayList<>();
-        for(CartOrderDTO cartOrderDto :cartOrderDTOList){
-            CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId())
-                    .orElseThrow(EntityNotFoundException::new);
-            OrderDTO orderDTO = new OrderDTO();
-            orderDTO.setItemId(cartItem.getItem().getId());
-            orderDTO.setCount(cartItem.getCount());
-            orderDTOList.add(orderDTO);
-        }
-//     주문 로직을 호출하여 처리
-        Long orderId = orderService.orders(orderDTOList, email);
-
-//    주문이 완료된 상품을 장바구니에서 삭제하기
-        for (CartOrderDTO cartOrderDTO: cartOrderDTOList){
-            CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId())
-                    .orElseThrow(EntityNotFoundException::new);
-            cartItemRepository.delete(cartItem);
+    public Long orderCartItem(CartOrderDTO cartOrderDTO, String email) {
+        CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId())
+                .orElse(null);
+        if (cartItem == null) {
+            System.out.println("Cart item not found for ID: " + cartOrderDTO.getCartItemId());
+            return null;
         }
 
-        return orderId;
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
+            System.out.println("Member not found for email: " + email);
+            return null;
+        }
+
+        Order order = new Order();
+        order.setMember(member);
+        order.setOrderDate(LocalDateTime.now());
+        order.setOrderStatus(OrderStatus.ORDER);
+
+        // 각 항목의 수량과 단가를 사용하여 order_price 계산
+        int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(cartItem.getItem());
+        orderItem.setCount(cartOrderDTO.getCount());
+        orderItem.setOrderPrice(totalPrice); // 계산된 총 가격 설정
+        order.addOrderItem(orderItem);
+
+        orderRepository.save(order);
+        return order.getId();
     }
 
 }
+
 

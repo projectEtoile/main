@@ -137,51 +137,42 @@ function removeSelectedItems() {
 
 
 
-function orders(){
+function orders() {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
+    let requests = []; // AJAX 요청들을 저장할 배열
+    const url = "/cart/orders"; // 이곳에 정의된 URL을 사용하여 서버에 요청을 보냅니다.
 
-    const url = "/cart/orders";
-    const dataList = new Array();
-    const paramData = new Object();
-
-    // 체크된 장바구니의 상품 아이디를 전달하기 위해서
-    // dataList배열에 장바구니 상품아이디를 객체로 만들어 저장함.
-    $("input[name=cartChkBox]:checked").each(function(){
+    // 체크된 장바구니 항목들을 반복하면서 각각에 대한 주문 요청을 준비합니다.
+    $("input[name=cartChkBox]:checked").each(function() {
         const cartItemId = $(this).val();
-        const data = new Object();
-        data["cartItemId"] = cartItemId;
-        dataList.push(data);
-        console.log("===== dataList : " + dataList);
+        const count = $("#count_" + cartItemId).val(); // 수량 정보를 가져옵니다.
+        const paramData = JSON.stringify({ cartOrderDTOList: [{ cartItemId: cartItemId, count: count }] });
+
+        // AJAX 요청을 배열에 저장합니다.
+        requests.push(
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json",
+                data: paramData,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                }
+            })
+        );
     });
 
-    // 장바구니 상품 아이디를 저장해 둔 dataList배열을 paramData 객체에 추가함.
-    paramData['cartOrderDTOList']= dataList;
-
-    const param = JSON.stringify(paramData);
-
-    $.ajax({
-        url: url,
-        type: "POST",
-        contentType: "application/json",
-        data: param,
-        beforeSend: function(xhr){
-            xhr.setRequestHeader(header, token);
+    // 모든 AJAX 요청이 완료된 후 처리
+    $.when.apply($, requests).then(
+        function() {
+            alert("모든 주문이 성공적으로 처리되었습니다.");
+            location.reload(); // 성공 후 페이지를 새로고침하여 변경된 내용을 반영
         },
-        dataType: "json",
-        cache: false,
-        success: function(result, status){
-            alert("주문이 완료 되었습니다.");
-            location.href = "/orders";
-        },
-        error: function(jqXHR, status, error){
-            if(jqXHR.status == '401'){
-                alert("로그인 후 이용해주세요.");
-                location.href= "/members/login";
-            } else {
-                alert(jqXHR.responseJSON.messages);
-            }
+        function() {
+            alert("주문 처리 중 오류가 발생했습니다.");
         }
-    });
-
+    );
 }
+
+

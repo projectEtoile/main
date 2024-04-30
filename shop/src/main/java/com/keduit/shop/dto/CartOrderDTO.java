@@ -16,4 +16,5 @@ public class CartOrderDTO {
 //  가지고 있는 cartorderDTOList를 선언 함.
     private Long cartItemId;
     private List<CartOrderDTO> cartOrderDTOList;
+    private int count;
 }

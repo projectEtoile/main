@@ -46,4 +46,8 @@ public class CartItem extends BaseEntity {
     public void updateCount(int count) {
         this.count = count;
     }
+
+    public int getPrice() {
+        return this.item.getPrice(); // 여기서 item은 CartItem이 참조하는 Item 객체입니다.
+    }
 }
