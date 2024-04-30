@@ -2,8 +2,11 @@ package com.keduit.shop.repository;
 
 import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminItemSearchDTO;
+import com.keduit.shop.dto.MainItemDTO;
+import com.keduit.shop.dto.QMainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.QItem;
+import com.keduit.shop.entity.QItemImg;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -140,5 +143,44 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         // 항상 검색값의 총 갯수인 total dsl 쿼리문도 짜야한다!!!
 
         return new PageImpl<>(result, pageable, total); // 이건 디폴트 메서드. Ctrl 클릭으로 확인해보자
+    }
+
+    @Override
+    public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        List<MainItemDTO> result = jpaQueryFactory
+                .select(
+                        new QMainItemDTO(
+                                item.id,
+                                item.itemNm,
+                                item.brandNm,
+                                item.itemText,
+                                itemImg.imgUrl,
+                                item.price,
+                                item.discountRate,
+                                item.itemSellStatus)
+                ).from(itemImg)
+                .join(itemImg.item, item)
+
+                .where(itemNmLike(searchDTO.getSearchQuery()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = jpaQueryFactory
+                .select(Wildcard.count)
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemNmLike(searchDTO.getSearchQuery()))
+                .fetchOne();
+        return new PageImpl<>(result, pageable, total);
+    }
+
+    private BooleanExpression itemNmLike(String searchQuery) {
+        return StringUtils.isEmpty(searchQuery) ? null :
+                QItem.item.itemNm.like("%" + searchQuery + "%");
     }
 }

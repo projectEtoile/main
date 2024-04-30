@@ -3,6 +3,7 @@ package com.keduit.shop.service;
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.dto.ItemImgDTO;
+import com.keduit.shop.dto.MainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
 import com.keduit.shop.entity.QItemImg;
@@ -127,4 +128,11 @@ public class ItemService {
         }
         return item.getId();
     }
+
+    @Transactional(readOnly = true)
+    public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
+        return itemRepository.getMainItemPage(searchDTO, pageable);
+
+    }
+
 }

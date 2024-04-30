@@ -37,23 +37,27 @@ public class ItemServiceTests {
     @DisplayName("상품 100개 등록해보기")
     void saveItem() throws Exception {
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i < 31; i++) {
 
 
             ItemFormDTO itemFormDTO = new ItemFormDTO();
 
-            itemFormDTO.setItemNm("테스트 상품명!");
-            itemFormDTO.setBrandNm("테스트 브랜드명!");
-            itemFormDTO.setPrice(88888);
+            itemFormDTO.setItemNm("테스트 상품명 " + i);
+            itemFormDTO.setBrandNm("테스트 브랜드명 "  + i);
+            itemFormDTO.setPrice(8888 + (i * 50));
             itemFormDTO.setLevel1("Outer");
             itemFormDTO.setLevel2("코트");
-            itemFormDTO.setItemText("테스트 상품 설명!");
-            itemFormDTO.setMaterial("테스트 상품 소재!");
+            itemFormDTO.setItemText("테스트 상품 설명 " + i);
+            itemFormDTO.setMaterial("테스트 상품 소재 " + i);
             itemFormDTO.setStockFree(10);
             itemFormDTO.setStockM(20);
             itemFormDTO.setStockL(30);
             itemFormDTO.setStockS(40);
-            itemFormDTO.setItemSellStatus(ItemSellStatus.SELL);
+            if(i%3==0) {
+                itemFormDTO.setItemSellStatus(ItemSellStatus.STOP_SALE);
+            } else {
+                itemFormDTO.setItemSellStatus(ItemSellStatus.SELL);
+            }
 
             List<MultipartFile> multipartFileList = createMultipartFiles();
 
