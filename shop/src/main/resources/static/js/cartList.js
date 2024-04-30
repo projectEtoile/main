@@ -91,6 +91,27 @@ function deleteCartItem(obj){
     });
 }
 
+$(document).ready(function() {
+    updateCartItemCount();
+});
+
+function updateCartItemCount() {
+    $.ajax({
+        url: '/cart/count', // 서버의 API 경로
+        type: 'GET',
+        success: function(count) {
+            $('#cartItemCount').text(count); // 받아온 수량으로 업데이트
+        },
+        error: function(xhr, status, error) {
+            console.error("장바구니 상품 수를 가져오는 데 실패했습니다:", xhr.responseJSON);
+        }
+    });
+}
+
+
+
+
+
 function removeSelectedItems() {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
