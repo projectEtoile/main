@@ -89,6 +89,50 @@ function deleteCartItem(obj){
     });
 }
 
+function removeSelectedItems() {
+    const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+
+    // 체크된 장바구니 상품들을 배열로 저장
+    const checkedItems = $("input[name=cartChkBox]:checked").map(function () {
+        return $(this).val();
+    }).get();
+
+    if (checkedItems.length === 0) {
+        alert("삭제할 상품을 선택하세요.");
+        return;
+    }
+
+    if (confirm("선택한 상품을 삭제하시겠습니까?")) {
+        // 선택한 상품들에 대해 삭제 요청 보내기
+        checkedItems.forEach(function (cartItemId) {
+            const url = "/cartItem/" + cartItemId;
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: "json",
+                cache: false,
+                success: function (result, status) {
+                    console.log("장바구니 상품을 삭제했습니다.");
+                    // 상품 삭제 후 페이지 새로고침
+                    location.reload();
+                },
+                error: function (jqXHR, status, error) {
+                    if (jqXHR.status == '401') {
+                        alert("로그인 후 이용해주세요.");
+                        location.href = '/member/login';
+                    } else {
+                        alert(jqXHR.responseJSON.message);
+                    }
+                }
+            });
+        });
+    }
+}
+
 
 
 function orders(){

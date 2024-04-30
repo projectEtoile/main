@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
                      cache: false,
                      success: function(result, status) {
                          alert("상품을 장바구니에 담았습니다.");
-                         location.href='/';
+                         location.href=location.href;
                      },
                      error: function(jqXHR, status, error) {
                          if (jqXHR.status == '401') {
