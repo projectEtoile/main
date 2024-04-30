@@ -18,7 +18,7 @@
         $(document).ready(function () {
             alert("테스트 실행되면 나오기");
             $("#sendEmailBtn").click(function (){
-
+ㄳ
                 alert("클릭이벤트 시작!!");
                 var form = document.getElementById("sendEmailForm"); // 이메일을 전송할 폼 가져오기
                 var email = document.getElementById("memberEmail").value; // 이메일 입력란의 값 가져오기
@@ -82,12 +82,21 @@
                                 <form id="sendEmailForm" action="/members/findPassword" method="post">
                                     <label for="memberEmail">이메일:</label>
                                     <input type="email" id="memberEmail" name="memberEmail" required>
-                                    <button type="button" id="sendEmailBtn" name="verifyCode" >인증번호</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
+                                    <button type="button" id="sendEmailBtn" name="verifyCode" >이메일인증</button> <!-- 확인 버튼에 onclick 이벤트 추가 -->
                                 </form>
                                 <!--인증번호 입력폼-->
-                                <form  method="post">
+                                <form id="verifyCodeForm" action="/members/verifyCode" method="post">
+                                    <label for="verificationCode">인증번호:</label>
+                                    <input type="text" id="verificationCode" name="verificationCode" required>
+                                    <button type="button" id="verifyCodeBtn" onclick="verifyCode()">확인</button>
+                                </form>
 
-                                    <input type="text" id="#" name="#" required placeholder="인증번호를 입력하세요">
+                                <div id="verificationMessage" style="display: none;"></div>
+
+                                <form id="changePasswordForm" action="/members/changePassword" method="post" style="display: none;">
+                                    <label for="newPassword">새 비밀번호:</label>
+                                    <input type="password" id="newPassword" name="newPassword" required>
+                                    <button type="submit">비밀번호 변경</button>
                                 </form>
                             </div>
                             <div class="btn_bottom_wrap">

@@ -40,4 +40,20 @@ function sendMail(event) {
     } else {
         alert("이메일을 입력하세요."); // 이메일이 입력되지 않았을 때 알림 메시지 출력
     }
+
+    function verifyCode() {
+        var verificationCode = document.getElementById("verificationCode").value;
+        // Ajax를 사용하여 서버에 인증번호를 전송하고 확인하는 작업 수행
+
+        // 임시로 인증번호가 일치한다고 가정
+        var isCodeCorrect = true;
+
+        if (isCodeCorrect) {
+            document.getElementById("verificationMessage").innerText = "인증번호가 일치합니다.";
+            document.getElementById("verifyCodeForm").style.display = "none"; // 인증번호 입력 폼 숨기기
+            document.getElementById("changePasswordForm").style.display = "block"; // 비밀번호 변경 폼 표시
+        } else {
+            alert("인증번호가 일치하지 않습니다. 다시 시도해주세요.");
+        }
+    }
 }
