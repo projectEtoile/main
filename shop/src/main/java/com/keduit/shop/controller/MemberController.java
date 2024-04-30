@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +41,10 @@ public class MemberController {
     //memberservice생성자 주입
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
+    private String key;
+    // key와 해당 유효시간을 저장할 맵
+    private Map<String, LocalDateTime> keyExpirationMap = new HashMap<>();
 
 
     @GetMapping("/new")
@@ -135,9 +141,12 @@ public class MemberController {
     }*/
 
     @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
-    public ResponseEntity<Void> findPassword(@RequestBody Map<String, String> requestBody) {//@RequestBody:컨트롤러에서 요청 데이터를 JSON 형식으로 받기 위해
+    public ResponseEntity<Void> findPassword(@RequestBody Map<String, String> requestBody
+    ) {//@RequestBody:컨트롤러에서 요청 데이터를 JSON 형식으로 받기 위해
         // 요청 데이터에서 이메일 주소 추출
         String email = requestBody.get("memberEmail");
+//        String email = principal.getName();
+        // 프린시펄 갯 네임
 
         // 이메일 주소가 유효한지 검증
         if (email == null || email.isEmpty()) {
@@ -147,11 +156,21 @@ public class MemberController {
 
         System.out.println("findpassword====================");
         try {
-            // 임시 비밀번호 생성
-            String temporaryPassword = memberService.generateKey();
+            // 랜덤한 8글자 숫자
+            Member member10 = memberRepository.findByEmail(email);
+
+//            member10.setPassword("12345678");
+            String newPw = passwordEncoder.encode("12345678");
+
+            member10.setPassword(newPw);
+
+            memberRepository.save(member10);
+
+            // 임시번호 생성
+//            String temporaryPassword = memberService.generateKey();
 
             // 이메일 발송
-            memberService.sendEmail(email, temporaryPassword);
+            memberService.sendEmail(email, "12345678");
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -159,6 +178,15 @@ public class MemberController {
             System.out.println("예외로 가긴가요~~~~~~~~~~~~~~~~");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    //    이메일 인증번호 일치 여부
+    @PostMapping("/verify")
+    public  ResponseEntity<Void>  match(@RequestBody Map<String, String> requestData){
+        String keymatch = requestData.get("verificationCode");
+        System.out.println("keymatch: " + keymatch);
+        System.out.println("key: " + key);
+        if(!keymatch.equals(key)){return ResponseEntity.badRequest().build();}
+        else {return ResponseEntity.ok().build();}
     }
 
 

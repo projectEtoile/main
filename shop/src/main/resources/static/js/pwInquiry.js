@@ -2,6 +2,9 @@ $(document).ready(function() {
     document.getElementById("sendEmailBtn").addEventListener("click", function(event) {
         sendMail(event);
     });
+        $("#changePasswordBtn").click(function() {
+            window.location.href = "/mypage/checkPw"; // 비밀번호 변경 페이지로 이동
+    });
 });
 function sendMail(event) {
     event.preventDefault(); // 폼의 기본 동작인 페이지 리로드를 막음
@@ -30,6 +33,8 @@ function sendMail(event) {
             success: function(response) {
                 // 이메일 전송에 성공한 경우
                 alert("이메일이 전송되었습니다.");
+                alert("임시 비밀번호를 발급받으신 경우 안전한 쇼핑몰 정보 관리를 위해서 마이페이지에 비밀번호를 변경하셔야합니다.");
+
             },
             error: function(xhr, status, error) {
                 // 이메일 전송에 실패한 경우
@@ -41,7 +46,7 @@ function sendMail(event) {
         alert("이메일을 입력하세요."); // 이메일이 입력되지 않았을 때 알림 메시지 출력
     }
 
-    function verifyCode() {
+   /* function verifyCode() {
         var verificationCode = document.getElementById("verificationCode").value;
         // Ajax를 사용하여 서버에 인증번호를 전송하고 확인하는 작업 수행
 
@@ -55,5 +60,5 @@ function sendMail(event) {
         } else {
             alert("인증번호가 일치하지 않습니다. 다시 시도해주세요.");
         }
-    }
+    }*/
 }

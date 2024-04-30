@@ -69,12 +69,12 @@ public class MemberService implements UserDetailsService {
 
 
 //이멜 보내는 서비스
-    public void sendEmail(String to, String key) {//to: 이멜 주소 수신 , key: 인증번호or임시비번
+    public void sendEmail(String to, String newPw) {//to: 이멜 주소 수신 , key: 인증번호or임시비번
         System.out.println("sendemailservice====================================================");
         SimpleMailMessage message = new SimpleMailMessage();
 
         String subject = "shoppingmall 인증번호 입니다.";//제목
-        String text = "인증번호는: " + key;//내용
+        String text = "인증번호는: " + "12345678";//내용
 
         // 이메일 주소를 RFC 5321에 따라 올바른 형식으로 설정
         String from = "<example@example.com>"; // 이메일 주소 예시
