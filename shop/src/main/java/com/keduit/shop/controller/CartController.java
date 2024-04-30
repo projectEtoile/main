@@ -59,6 +59,10 @@ public class CartController {
             model.addAttribute("cartItems", cartDetailDTOList); // 데이터가 존재하면 추가
         }
 
+        // 카트에 있는 총 상품 항목의 수를 모델에 추가
+        int totalCartItemCount = cartService.getTotalCartItemCount(email);
+        model.addAttribute("totalCartItemCount", totalCartItemCount);
+
         return "cart/cartList"; // 반환되는 뷰 이름 확인
     }
 
@@ -108,6 +112,12 @@ public class CartController {
     }
 
 
-
+    @GetMapping("/cart/totalItemCount")
+    public String getTotalCartItemCount(Principal principal, Model model) {
+        String email = principal.getName();
+        int totalCartItemCount = cartService.getTotalCartItemCount(email);
+        model.addAttribute("totalCartItemCount", totalCartItemCount);
+        return "cart/totalItemCount"; // 총 상품 항목 수를 보여줄 HTML 페이지의 이름
+    }
 
 }

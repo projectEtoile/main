@@ -124,6 +124,16 @@ public class CartService {
         return order.getId();
     }
 
+    @Transactional(readOnly = true)
+    public int getTotalCartItemCount(String email) {
+        Member member = memberRepository.findByEmail(email);
+        Cart cart = cartRepository.findByMemberId(member.getId());
+        if (cart == null) {
+            return 0;
+        }
+        return cart.getCartItems().size();
+    }
+
 
 
 }
