@@ -1,5 +1,6 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.dto.AdminOrderSearchDTO;
 import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
 import com.keduit.shop.dto.OrderItemDTO;
@@ -119,4 +120,7 @@ public class OrderService {
     }
 
 
+    public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pageable pageable) {
+        return orderRepository.getAdminOrderPage(adminOrderSearchDTO, pageable);
+    }
 }

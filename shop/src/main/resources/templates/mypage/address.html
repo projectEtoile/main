@@ -17,19 +17,28 @@
     <script th:src="@{/js/mypage/address.js}" type="text/javascript"></script>
 
         <div class="mainSection2">
+            <div style="display: flex;">
+            <h5>배송지 관리</h5>
 
+            <ul class="smallText">
+                <li class="smallText">주문 시 기본배송지로 선택된 주소지로 배송됩니다.</li>
+                <li class="smallText">반드시 하나의 주소지는 기본배송지로 설정해주세요.</li>
+            </ul>
+        </div>
             <table class="itemTable">
                 <colgroup>
-                    <col width="70px">
-                    <col width="200px">
-                    <col width="326px">
-                    <col width="200px">
+                    <col width="10px">
+                    <col width="80px">
+                    <col width="230px">
+                    <col width="230px">
+                    <col width="230px">
                     <col width="80px">
                     <col width="80px">
                     <col width="50px">
                 </colgroup>
                 <thead>
                 <tr class="firstline2">
+                    <th></th>
                     <th scope="col">우편번호</th>
                     <th scope="col">도로명주소</th>
                     <th scope="col">지번주소</th>
@@ -40,19 +49,21 @@
 
                 </tr>
                 <tr th:each="addresses : ${addresses}">
+                    <th></th>
                     <th th:text="${addresses.postcode}"></th>
                     <th th:text="${addresses.roadAddress}"></th>
                     <th th:text="${addresses.jibunAddress}"></th>
                     <th th:text="${addresses.detailAddress}"></th>
                     <th th:text="${addresses.extraAddress}"></th>
                     <th th:text="${addresses.selectAddress}"></th>
-                    <td> <button th:onclick="'openModalBtnModify(' + ${addresses.id} + ')'">수정</button> </td>
+                    <td> <button class="round-button" th:onclick="'openModalBtnModify(' + ${addresses.id} + ')'">수정</button> </td>
                 </tr>
 
                 </thead>
             </table>
             <!-- 모달 버튼 -->
-            <button id="openModalBtn">모달 열기</button>
+            <br><br>
+            <button class="btn1" id="openModalBtn">주소지 등록</button>
 
             <!-- 모달 -->
             <div id="myModal" class="modal">
@@ -68,9 +79,9 @@
                     <span id="guide" style="color:#999;display:none"></span>
                     <input type="text" id="detailAddress" placeholder="상세주소">
                     <input type="text" id="extraAddress" placeholder="참고항목">
-                    <span>기본배송지 설정</span><input type="checkbox" id="selectAddress">
-                    <button id="regBtn" onclick="registerAddress(event)">주소 등록</button>
-                    <button id="modBtn" onclick="modifyAddress(event)" style="display: none;">수정하기</button>
+                    <span style="margin: 6px;">기본배송지 설정<input style="margin-left: 10px;" type="checkbox" id="selectAddress"></span>
+                    <button class="btn1" id="regBtn" onclick="registerAddress(event)">주소 등록</button>
+                    <button class="btn1" id="modBtn" onclick="modifyAddress(event)" style="display: none;">수정하기</button>
 
                 </div>
             </div>

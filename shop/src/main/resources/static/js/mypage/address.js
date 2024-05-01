@@ -38,6 +38,7 @@ console.log(addressData);
         success: function(response) {
             // 요청이 성공한 경우
             alert(response); // 서버에서 반환한 메시지를 알림으로 표시
+            location.reload();
         },
         error: function(xhr, status, error) {
             // 요청이 실패한 경우
@@ -143,6 +144,7 @@ event.preventDefault();
             .then(response => {
                 if (response.ok) {
                     alert("주소 수정에 성공했습니다.");
+                    location.reload();
                 } else {
                     alert("주소 수정에 실패했습니다.");
                 }
