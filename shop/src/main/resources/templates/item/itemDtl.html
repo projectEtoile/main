@@ -12,15 +12,13 @@
 
 </th:block>-->
 <th:block layout:fragment="content">
-
-
     <body>
     <section class="container">
         <div class="contents">
             <!-- 좌측상단 네비게이션 -->
             <div class="navigation">
                 <ul class="inline">
-                    <li><a href="/2pro/hyo/hyo/main.html">HOME ></a></li>
+                    <li><a href="/">HOME ></a></li>
                     <li><a href="#">OUTER ></a></li>
                     <li><a href="#">재킷</a></li>
                 </ul>
@@ -54,8 +52,8 @@
 
                     <!-- 브랜드명,제품명-->
                     <div class="right_info_prod">
-                        <a href="#" class="prod_brand">NOTIA</a>
-                        <h2 class="prod_name">OVER FIT SINGLE LEATHER JACKET - BLACK</h2>
+                        <a href="#" class="prod_brand" th:text="${item.brandNm}">브랜드</a>
+                        <h2 class="prod_name" th:text="${item.itemNm}">제품명</h2>
                     </div>
                     <!-- 평점 -->
                     <div class="grade_prod">
@@ -75,12 +73,7 @@
                             <dt>판매가</dt>
                             <dd class="sale">
 
-
-
-                                <em>208,050</em> 원 <p class="sale_per">5%</p>
-
-
-
+                                <em th:text="${item.price}">가격</em> 원 <p class="sale_per">5%</p>
                             </dd>
                         </dl>
                     </div>
@@ -113,7 +106,7 @@
                     <!-- 총상품금액 -->
                     <div class="total_price" id="total_price" style="display: none;">
                         <ul>총상품금액
-                            <li class="total" id="total2"><span>208,050</span> 원</li>
+                            <li class="total" id="total2"><span th:text="${item.price}">총상품금액</span> 원</li>
                             <!-- 상품수량조절 -->
                             <label for="quantity"></label>
                             <input type="number" id="quantity" value="1" min="1" onchange="calculateTotal()">
@@ -132,7 +125,7 @@
                             <button type="button" class="btn" onclick="order()">바로 구매</button>
                         </li>
                         <li>
-                            <button type="button" class="btn2" onclick="addCart()">장바구니 담기</button>
+                            <button type="button" class="btn2" onclick="addToCart()">장바구니 담기</button>
                         </li>
                     </ul>
                     <input name="__RequestVerificationToken" type="hidden"
@@ -144,15 +137,15 @@
                             <ul>
                                 <li class="square">
                                     <span>상품코드 :</span>
-                                    301631515
+                                    <span th:text="${item.id}">상품ID</span>
                                 </li>
                                 <li class="square">
                                     <span>소재 :</span>
-                                    VEGAN LEATHER : 100 / VISCOSE : 100
+                                    <span th:text="${item.material}">소재정보</span>
                                 </li>
                                 <li class="square">
                                     <span>제조사/원산지 :</span>
-                                    NOTIA / 대한민국
+                                    <span th:text="${item.brandNm}">제조사</span><span>/대한민국</span>
                                 </li>
                                 <li class="square">
                                     <span>배송비 :</span>
@@ -264,7 +257,7 @@
                         <tbody>
                         <tr class="info_col1">
                             <th>소재</th>
-                            <td>VEGAN LEATHER : 100 / VISCOSE : 100</td>
+                            <td th:text="${item.material}">상품 소재</td>
                         </tr>
                         <tr class="info_col2">
                             <th>색상</th>
@@ -276,7 +269,7 @@
                         </tr>
                         <tr class="info_col4">
                             <th>제조자(수입자)</th>
-                            <td>NOTIA</td>
+                            <td th:text="${item.brandNm}">제조자</td>
                         </tr>
                         </tbody>
                     </table>
