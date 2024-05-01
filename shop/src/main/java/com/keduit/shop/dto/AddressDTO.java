@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 @Setter
 @ToString
 public class AddressDTO {
+    private Long id;
 
     private String postcode;
 

@@ -54,7 +54,6 @@ console.log(addressData);
 $(document).ready(function() {
     // 모달 열기 함수
     window.openModalBtnModify = function(id) {
-        console.log(id);
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -72,15 +71,30 @@ $(document).ready(function() {
             },
             success: function(response) {
             var addressData = JSON.parse(response);
-            console.log(addressData);
-            console.log(addressData.roadAddress);
 
+ $("#id").val(addressData.id);
 
-                // 예시: $("#myModal").text(response);
+ $("#postcode").val(addressData.postcode);
+ $("#roadAddress").val(addressData.roadAddress);
+ $("#jibunAddress").val(addressData.jibunAddress);
+ $("#detailAddress").val(addressData.detailAddress);
+ $("#extraAddress").val(addressData.extraAddress);
+
+var bool = addressData.selectAddress;
+console.log(bool);
+ if(bool === true){
+$("#selectAddress").prop("checked", true);
+ }else{
+ $("#selectAddress").prop("checked", false);
+ }
+
+ $("#regBtn").hide();
+$("#modBtn").show();
+
             },
             error: function(xhr, status, error) {
                 // 요청이 실패했을 때 실행할 코드
-                console.error("REST API 요청 실패:", error);
+                alert("REST API 요청 실패:", error);
             }
         });
 
@@ -96,6 +110,49 @@ $(document).ready(function() {
     });
 });
 
+// 수정하기 비동기 통신
+
+function modifyAddress(event) {
+event.preventDefault();
+            // CSRF 토큰 가져오기
+            var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+            var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+            // API 엔드포인트
+            var apiUrl = '/mypage/modify';
+
+            // API 요청 데이터
+            var requestData = {
+                id: document.getElementById("id").value,
+                postcode: document.getElementById("postcode").value,
+                            roadAddress: document.getElementById("roadAddress").value,
+                            jibunAddress: document.getElementById("jibunAddress").value,
+                            detailAddress: document.getElementById("detailAddress").value,
+                            extraAddress: document.getElementById("extraAddress").value,
+                            selectAddress: document.getElementById("selectAddress").checked
+            };
+
+            fetch(apiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken
+                },
+                body: JSON.stringify(requestData) // 요청 데이터를 JSON 문자열로 변환하여 body에 추가
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("주소 수정에 성공했습니다.");
+                } else {
+                    alert("주소 수정에 실패했습니다.");
+                }
+            })
+            .catch(error => {
+                // 오류 처리
+                alert('Error:', error);
+            });
+        }
+
 
 
 
@@ -106,8 +163,18 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
+
+
   // 모달 열기
   $("#openModalBtn").click(function() {
+
+ $("#postcode").val('');
+    $("#roadAddress").val('');
+    $("#jibunAddress").val('');
+    $("#detailAddress").val('');
+    $("#extraAddress").val('');
+    $("#selectAddress").prop("checked", false);
+
     $("#myModal").css("display", "block");
   });
 
@@ -119,7 +186,7 @@ $(document).ready(function() {
   });
 });
 
- function sample4_execDaumPostcode() {
+ function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.

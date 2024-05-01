@@ -222,6 +222,46 @@ public class MypageMemberController {
         return new ResponseEntity(jsonValue, HttpStatus.OK);
     }
 
+    @PutMapping("/modify")
+    public ResponseEntity<String> modifyAddress(@RequestBody AddressDTO addressDTO ,BindingResult bindingResult) {
+    // 받아 온 값 저절로 DTO에 담음.
+
+        if (bindingResult.hasErrors()) {
+            StringBuilder sb = new StringBuilder();
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError fieldError : fieldErrors) {
+                sb.append(fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+        }
+        Address address = addressRepository.findById(addressDTO.getId()).orElseThrow(EntityNotFoundException::new);
+
+        address.setPostcode(addressDTO.getPostcode());
+        address.setRoadAddress(addressDTO.getRoadAddress());
+        address.setJibunAddress(addressDTO.getJibunAddress());
+        address.setDetailAddress(addressDTO.getDetailAddress());
+        address.setExtraAddress(addressDTO.getExtraAddress());
+
+        if(addressDTO.getSelectAddress().equals(true)){
+            System.out.println("트루로직");
+            List<Address> allAddresses = addressRepository.findAll();
+            for (Address address1 : allAddresses) {
+                address1.setSelectAddress(false);
+            }
+            addressRepository.saveAll(allAddresses);
+
+            address.setSelectAddress(true);
+
+        }else{
+            System.out.println("펄스로직");
+            address.setSelectAddress(false);
+        }
+
+        addressRepository.save(address);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 //    @GetMapping("/address/{addressId}")
 //    public String addressModify(Model model,@PathVariable("addressId") Long addressId){
 //
