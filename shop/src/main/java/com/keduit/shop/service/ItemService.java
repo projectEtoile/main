@@ -38,31 +38,30 @@ public class ItemService {
                 + itemFormDTO.getStockS();
 
         item.setStockNumber(total);
-        item.setDiscountRate(1); // 기본값인 할인률1
-
-        System.out.println(item+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
+        item.setDiscountRate(1); // 할인율 기본값
         itemRepository.save(item);
 
-        // 이제 Itemimg 를 세팅해야한다.
-
+        // 이미지 파일을 순회하며 설정
         for (int i = 0; i < itemImgFileList.size(); i++) {
-
-            ItemImg itemImg = new ItemImg(); // 각각 행을 추가해야하므로.
+            ItemImg itemImg = new ItemImg();
             itemImg.setItem(item);
 
-            // 추가로 if 로직을 짜서 어디에 해당하는 이미지인지 설정값들 줄 수도 있지만 생략함.
+            if (i == 0) {
+                // 첫 번째 이미지는 대표 이미지로 설정
+                itemImg.setRepimgYn("Y");
+            } else {
+                itemImg.setRepimgYn("N");
+            }
 
             // 여기선 item객체만 set하고 이제 나머지 값들을 set해야함.
             itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
-
+             
             // 위 메서드에서 나머지 필드들을 모두 채우고 테이블에 등록까지 완료했다.
         }
-        return item.getId();
+
+       return item.getId();
     }
 
-    // 검색을 위한 메서드이므로 값이 변하지 않는다는 것을 알려줌
-    // 으로서 성능을 효울적으로 사용
     @Transactional(readOnly = true)
     public Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable) {
         return itemRepository.getAdminItemPage(adminItemSearchDTO, pageable);
