@@ -63,12 +63,9 @@ public class MypageMemberController {
 
     @GetMapping("/myInfo")
     public String updateInfo(Model model, Principal principal) {
-        Member member = memberRepository.findByEmail(principal.getName());
-        MemberFormDTO memberFormDTO = new MemberFormDTO();
-        memberFormDTO.setEmail(member.getEmail());
-        memberFormDTO.setName(member.getName());
-        memberFormDTO.setAge(member.getAge());
-        memberFormDTO.setSex(member.getSex());
+
+        MemberFormDTO memberFormDTO = memberService.getMemberInfo(principal.getName());
+
         model.addAttribute("memberFormDTO", memberFormDTO);
         return "mypage/myInfo";
     }
@@ -78,7 +75,6 @@ public class MypageMemberController {
     public String myOrder() {
         return "mypage/myOrder";
     }
-
 
 
     @PatchMapping("/changePw")
@@ -109,9 +105,9 @@ public class MypageMemberController {
 
     @PutMapping("/updateInfo")
     public @ResponseBody ResponseEntity updateInfo(@RequestBody JSONObject memdata,
-                             BindingResult bindingResult,
-                              Principal principal
-            ) {
+                                                   BindingResult bindingResult,
+                                                   Principal principal
+    ) {
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -121,20 +117,12 @@ public class MypageMemberController {
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        String name = (String) memdata.get("name");
-        int age = Integer.parseInt(memdata.get("age").toString());
-        String sexValue = (String) memdata.get("sex");
-        Sex sex = Sex.valueOf(sexValue);
+        memberService.updateInfo(principal.getName(), memdata);
 
-        System.out.println(name+""+age+""+sex);
-
-            Member member = memberRepository.findByEmail(principal.getName());
-
-            member.updateMember(name,age,sex);
-
-            memberRepository.save(member);
-            return new ResponseEntity("수정 되었습니다", HttpStatus.OK);
+        return new ResponseEntity("수정 되었습니다", HttpStatus.OK);
         // 여기서는 save를 했는데 아이탬 수정에선 왜 따로 save가 없는지 차이 질문.
+        // 왜나햐면 엔티티는 영속성 컨텍스트에 의해 관리되기 때문.
+        // 그렇기 떄문에 따로 레파지토리save 를 하지 않아도 저절로 등록이 된다...
     }
 
 //    @GetMapping("/address")
@@ -143,7 +131,7 @@ public class MypageMemberController {
 //    }
 
     @PostMapping("/addAddress")
-    public @ResponseBody ResponseEntity addAddress(@RequestBody AddressDTO addressDTO,Principal principal,BindingResult bindingResult) {
+    public @ResponseBody ResponseEntity addAddress(@RequestBody AddressDTO addressDTO, Principal principal, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -155,76 +143,43 @@ public class MypageMemberController {
         }
 
         System.out.println("서버 응답 받음");
-        Address address = new Address();
-        address.setPostcode(addressDTO.getPostcode());
-        address.setRoadAddress(addressDTO.getRoadAddress());
-        address.setJibunAddress(addressDTO.getJibunAddress());
-        address.setDetailAddress(addressDTO.getDetailAddress());
-        address.setExtraAddress(addressDTO.getExtraAddress());
 
-        System.out.println(addressDTO.getSelectAddress());
+        memberService.addAddress(addressDTO, principal.getName());
 
-        if(addressDTO.getSelectAddress().equals(true)){
-            System.out.println("트루로직");
-            List<Address> allAddresses = addressRepository.findAll();
-            for (Address address1 : allAddresses) {
-                address1.setSelectAddress(false);
-            }
-            addressRepository.saveAll(allAddresses);
-
-            address.setSelectAddress(true);
-
-        }else{
-            System.out.println("펄스로직");
-            address.setSelectAddress(false);
-        }
-
-
-        Member member =  memberRepository.findByEmail(principal.getName());
-
-        address.setMember(member);
-
-        addressRepository.save(address);
-
-        // 저장된 주소 정보를 확인하는 메시지를 반환합니다.
         return new ResponseEntity("주소가 등록되었습니다", HttpStatus.OK);
     }
 
     @GetMapping("/address")
-    public String address(Model model,Principal principal){
+    public String address(Model model, Principal principal) {
 
         Member member = memberRepository.findByEmail(principal.getName());
 
         List<Address> addresses = addressRepository.findAllByMember(member);
 
-
-        model.addAttribute("addresses",addresses);
+        model.addAttribute("addresses", addresses);
 
         return "mypage/address";
     }
 
     @GetMapping("/modify")
-    public @ResponseBody ResponseEntity addressModify(@RequestParam("id") Long id,Principal principal) throws JsonProcessingException {
+    public @ResponseBody ResponseEntity addressModify(@RequestParam("id") Long id, Principal principal) throws JsonProcessingException {
 
+        // json 형식으로 바꾸는 작업이 더 필요하다면 함수처리.
         ObjectMapper objectMapper = new ObjectMapper();
-
         objectMapper.registerModule(new JavaTimeModule());
-
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         Address address = addressRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         String jsonValue;
-
-            jsonValue = objectMapper.writeValueAsString(address);
-            System.out.println(jsonValue);
+        jsonValue = objectMapper.writeValueAsString(address);
 
         return new ResponseEntity(jsonValue, HttpStatus.OK);
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<String> modifyAddress(@RequestBody AddressDTO addressDTO ,BindingResult bindingResult) {
-    // 받아 온 값 저절로 DTO에 담음.
+    public ResponseEntity<String> modifyAddress(@RequestBody AddressDTO addressDTO, BindingResult bindingResult) {
+        // 받아 온 값 저절로 DTO에 담음.
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -234,30 +189,8 @@ public class MypageMemberController {
             }
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
-        Address address = addressRepository.findById(addressDTO.getId()).orElseThrow(EntityNotFoundException::new);
 
-        address.setPostcode(addressDTO.getPostcode());
-        address.setRoadAddress(addressDTO.getRoadAddress());
-        address.setJibunAddress(addressDTO.getJibunAddress());
-        address.setDetailAddress(addressDTO.getDetailAddress());
-        address.setExtraAddress(addressDTO.getExtraAddress());
-
-        if(addressDTO.getSelectAddress().equals(true)){
-            System.out.println("트루로직");
-            List<Address> allAddresses = addressRepository.findAll();
-            for (Address address1 : allAddresses) {
-                address1.setSelectAddress(false);
-            }
-            addressRepository.saveAll(allAddresses);
-
-            address.setSelectAddress(true);
-
-        }else{
-            System.out.println("펄스로직");
-            address.setSelectAddress(false);
-        }
-
-        addressRepository.save(address);
+        memberService.modifyAddress(addressDTO);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
