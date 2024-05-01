@@ -1,21 +1,16 @@
-main {
-  display: flex;
-}
-.mainSection1{
-  flex: 1;
-}
+
 .mainSection2{
   flex: 3;
   display: flex;
-  /* justify-content: center; */
   flex-direction: column;
   margin-top: 200px;
   align-items: center;
-   /*margin-left: 35%;*/
+      justify-content: center;
 }
 
 /* 회원정보 변경 시작*/
 .pwdCheckBox{
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,6 +19,7 @@ main {
   width: 80%;
     height: 200px;
 }
+
 .pwdCheckBox p{
   font-size: 13px;
   position: relative;
@@ -31,17 +27,7 @@ main {
   font-weight: 500;
   margin-right: 100px;
 }
-.inpBox button{
-  height: 40px;
-    font-size: 14px;
-    line-height: 38px;
-    border-color: #000;
-    background-color: #000;
-    color: #fff;
-    min-width: 140px;
-    cursor: pointer;
 
-}
 .mainSection2 h3{
     color: #000;
     font-family: "ProximaNova-Regular", "Noto Sans KR";
@@ -53,13 +39,33 @@ main {
     margin-right: 550px;
     white-space: nowrap;
 }
+.inpBox{
+  display: flex;
+   justify-content: center;
+}
 .inpBox input{
   background-color: #f2f2f2;
-  border: 1px solid #f2f2f2;
+  border: 3px solid #f2f2f2;
   width: 420px;
   font-size: 13px;
   line-height: 38px;
   padding: 0 10px;
+  height : 40px;
+  margin-right: 7px;
+  }
+  .h33{
+  margin-left: 100px;
+  }
+  .inpBox button{
+    height: 40px;
+      font-size: 14px;
+      line-height: 38px;
+      border-color: #000;
+      background-color: #000;
+      color: #fff;
+      width: 30%;
+      cursor: pointer;
+
   }
 
 /* 회원정보 변경 끝 */
@@ -73,7 +79,7 @@ main {
   margin-top: 70px;
 }
 .dateContainer button,.dateContainer input {
-  margin: 0 10px;
+  margin: 3px 10px;
 }
 .button3 {
   background-color: rgb(255, 255, 255);

@@ -110,33 +110,25 @@ public class Item extends BaseTimeEntity {
         switch (size) {
             case "S":
                 if (this.stockS < stockNumber) {
-
                     throw new OutOfStockException("S 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockS -= stockNumber; // S 사이즈 감소
                 break;
             case "M":
                 if (this.stockM < stockNumber) {
-
                     throw new OutOfStockException("M 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockM -= stockNumber; // M 사이즈 감소
                 break;
             case "L":
                 if (this.stockL < stockNumber) {
-
                     throw new OutOfStockException("L 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockL -= stockNumber; // L 사이즈 감소
                 break;
             case "Free":
                 if (this.stockFree < stockNumber) {
-
                     throw new OutOfStockException("Free 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockFree -= stockNumber; // Free 사이즈 감소
                 break;
@@ -144,11 +136,15 @@ public class Item extends BaseTimeEntity {
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
 
-
         // 모든 사이즈의 재고 감소와 함께 stock_number 감소
-
         this.stockNumber -= stockNumber;
     }
+
+
+
+
+
+
 
     /*주문 취소시 재고 증가*/
     public void addStock(int stockNumber) {
