@@ -105,7 +105,7 @@ public class CartService {
         Order order = new Order();
         order.setMember(member);
         order.setOrderDate(LocalDateTime.now());
-        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderStatus(OrderItem.OrderStatus.ORDER);
 
         int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
         OrderItem orderItem = new OrderItem();
@@ -146,7 +146,7 @@ public class CartService {
             Order order = new Order();
             order.setMember(member);
             order.setOrderDate(LocalDateTime.now());
-            order.setOrderStatus(OrderStatus.ORDER);
+            order.setOrderStatus(OrderItem.OrderStatus.ORDER);
 
             int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
             OrderItem orderItem = new OrderItem();
