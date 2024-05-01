@@ -86,7 +86,7 @@ font-weight: bold;
 .search-bar input[type="text"] {
 
   height: 35px;
-  width: 150%;
+  width: 50%;
   padding: 10px;
   margin: 8px 30px;
   /* box-sizing: border-box; */

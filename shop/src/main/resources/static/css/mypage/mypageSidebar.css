@@ -1,8 +1,10 @@
+
 .sideNavBox1 {
   height: 800px;
   width: 155px;
   border-right: 1px solid rgb(229, 229, 229);
   margin-left: 220px;
+
   /* margin-left: 250px; */
 }
 
@@ -38,8 +40,10 @@
   color: black;
 }
 
-.mainSection1 {
-            float: left; /* 왼쪽으로 정렬 */
-            width: 20%; /* 적절한 너비 설정 */
-            /* 추가적인 스타일링 */
-        }
+main {
+  display: flex;
+}
+.mainSection1{
+  flex: 1;
+  width: 375px;
+}

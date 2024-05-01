@@ -2,15 +2,14 @@
 .mainSection2{
   flex: 3;
   display: flex;
+  /* justify-content: center; */
   flex-direction: column;
   margin-top: 200px;
   align-items: center;
-      justify-content: center;
 }
 
 /* 회원정보 변경 시작*/
 .pwdCheckBox{
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +18,6 @@
   width: 80%;
     height: 200px;
 }
-
 .pwdCheckBox p{
   font-size: 13px;
   position: relative;
@@ -27,7 +25,17 @@
   font-weight: 500;
   margin-right: 100px;
 }
+.inpBox button{
+  height: 40px;
+    font-size: 14px;
+    line-height: 38px;
+    border-color: #000;
+    background-color: #000;
+    color: #fff;
+    min-width: 140px;
+    cursor: pointer;
 
+}
 .mainSection2 h3{
     color: #000;
     font-family: "ProximaNova-Regular", "Noto Sans KR";
@@ -39,33 +47,13 @@
     margin-right: 550px;
     white-space: nowrap;
 }
-.inpBox{
-  display: flex;
-   justify-content: center;
-}
 .inpBox input{
   background-color: #f2f2f2;
-  border: 3px solid #f2f2f2;
+  border: 1px solid #f2f2f2;
   width: 420px;
   font-size: 13px;
   line-height: 38px;
   padding: 0 10px;
-  height : 40px;
-  margin-right: 7px;
-  }
-  .h33{
-  margin-left: 100px;
-  }
-  .inpBox button{
-    height: 40px;
-      font-size: 14px;
-      line-height: 38px;
-      border-color: #000;
-      background-color: #000;
-      color: #fff;
-      width: 30%;
-      cursor: pointer;
-
   }
 
 /* 회원정보 변경 끝 */
@@ -79,7 +67,7 @@
   margin-top: 70px;
 }
 .dateContainer button,.dateContainer input {
-  margin: 3px 10px;
+  margin: 0 10px;
 }
 .button3 {
   background-color: rgb(255, 255, 255);
@@ -145,4 +133,41 @@ ul {
 .imgBox{
   display: flex;
   justify-content: center;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 콘텐츠 스타일 */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
