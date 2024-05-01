@@ -74,7 +74,7 @@ public class OrderService {
             List<OrderItem> orderItems = order.getOrderItems(); /*주문안에들어있는 상품들 쭉 가져옴*/
             for (OrderItem orderItem : orderItems) {
                 ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn(orderItem.getItem().getId(), "Y"); /*상품 id주면 이미지중에서 대표이미지 읽어오기*/
-                OrderItemDTO orderItemDTO = new OrderItemDTO(orderItem, itemImg.getImgUrl()); /*대표이미지의 url이 필요함*/
+                OrderItemDTO orderItemDTO = new OrderItemDTO(orderItem, itemImg.getImgUrl(), orderItem.getSize()); /*대표이미지의 url이 필요함*/
                 orderHistDTO.addOrderItemDTO(orderItemDTO); /*이렇게만들어진 orderItemDTO를 orderHistDTO에 담아줌*/
             }
             orderHistDTOs.add(orderHistDTO); /*그걸 list에 담아서 던져줌 읽어온 order의 갯수만큼 이작업을 반복함*/
