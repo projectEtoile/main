@@ -7,7 +7,7 @@
     <link th:href="@{/css/admin/memberMng.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/js/admin/memberMng.js}" type="text/javascript"></script>
     <!--${items.number} 이부분은 현제 페이지를 나타낸다.? -->
-    <form th:action="@{'/members/admin/members/' + ${members.number}}"
+    <form th:action="@{'/admin/members/' + ${members.number}}"
           role="form" method="get" th:object="${members}">
         <body>
                 <div th:with="start=${(members.number/maxPage)*maxPage + 1},
