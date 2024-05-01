@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<!-- 사용자 CSS 추가 -->
+
+<div layout:fragment="content">
+    <script th:src="@{/js/admin/itemForm.js}" type="text/javascript"></script>
+    <link th:href="@{/css/admin/itemForm.css}" rel="stylesheet" type="text/css">
+    <body>
+    <!-- 상품등록 시작 -->
+
+    <div class="container">
+
+        <form th:action="@{/admin/item/modify/*{itemFormDTO.id}}" method="post" enctype="multipart/form-data"
+              th:object="${itemFormDTO}">
+            <h1> 상품 등록 </h1><br><br><br>
+            <div class="box">
+
+                <label for="id">상품코드<span style="color: red;"> *</span></label><br>
+                <input type="text" th:field="*{id}" id="id" readonly>
+
+
+                <!--                <input type="text" id="productC" name="productC" placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요">-->
+            </div>
+
+            <div class="box">
+                <label for="ProductN">상품 이름<span style="color: red;"> *</span><span
+                        id="smallLetter">필수항목</span></label><br>
+                <input type="text" id="productN" th:field="*{itemNm}" placeholder="상품 이름을 입력해 주세요">
+            </div>
+            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <label for="brand">브랜드 이름<span style="color: red;"> *</span></label><br>
+                <input type="text" id="brand" th:field="*{brandNm}" placeholder="브랜드 이름을 입력해 주세요">
+            </div>
+            <p th:if="${#fields.hasErrors('brandNm')}" th:errors="*{brandNm}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <label for="price">가격<span style="color: red;"> *</span></label><br>
+                <input type="text" id="price" th:field="*{price}" placeholder="가격을 입력해 주세요">
+            </div>
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <label>카테고리<span style="color: red;"> *</span></label><br>
+                <select th:field="*{level2}" id="categorys">
+                    <optgroup label="Top">
+                        <option value="">카테고리를 반드시 선택해주세요</option>
+                        <option value="후드/블라우스">블라우스</option>
+                        <option value="셔츠">셔츠</option>
+                        <option value="맨투맨">맨투맨/후드</option>
+                        <option value="니트/스웨터">니트/스웨터</option>
+                    </optgroup>
+                    <optgroup label="Outer">
+                        <option value="패딩">패딩</option>
+                        <option value="코트">코트</option>
+                        <option value="재킷">재킷</option>
+                        <option value="집업">집업</option>
+                    </optgroup>
+                    <optgroup label="Pants">
+                        <option value="슬랙스">슬랙스</option>
+                        <option value="청바지">청바지</option>
+                        <option value="트레이닝/레깅스">트레이닝/레깅스</option>
+                    </optgroup>
+                    <optgroup label="Skirt/Dress">
+                        <option value="미니">미니</option>
+                        <option value="미디">미디</option>
+                        <option value="롱">롱</option>
+                    </optgroup>
+                    <optgroup label="Shoes">
+                        <option value="부츠">부츠</option>
+                        <option value="힐/로퍼">힐/로퍼</option>
+                        <option value="운동화">운동화</option>
+                        <option value="슬리퍼">슬리퍼</option>
+                    </optgroup>
+                </select>
+            </div>
+            <input type="text" id="selectedGroupLabel" th:field="*{level1}" hidden="hidden">
+            <p th:if="${#fields.hasErrors('level1')}" th:errors="*{level1}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <div th:if="${not #lists.isEmpty(itemFormDTO.itemImgDTOList)}">
+                    <div th:each="itemImgDTO, status: ${itemFormDTO.itemImgDTOList}">
+
+                            <img class="user_image" th:src="${itemImgDTO.imgUrl}" alt="#">
+
+                            <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);"
+                                   type="file"
+                                   class="user_profile_img custom-file-input"/>
+
+
+                            <input type="text" name="itemImgIds" th:value="${itemImgDTO.id}">
+
+                            <!--       #strings: 문자 관련 유틸리티 객체-->
+                            <label class="custom-file-label"
+                                   th:text="${not #strings.isEmpty(itemImgDTO.oriImgName)}
+                      ? ${itemImgDTO.oriImgName} : '상품이미지' + ${status.index+1}"></label>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--            <div class="box">-->
+            <!--                <div th:if="${itemFormDTO.itemImgDTOList.size() > 0}">-->
+            <!--                    <img class="user_image" th:src="${itemFormDTO.itemImgDTOList[0].imgUrl}" alt="#">-->
+            <!--                    &lt;!&ndash; onchange event 걸어주기  &ndash;&gt;-->
+            <!--                                <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"-->
+            <!--                                       class="user_profile_img"/>-->
+            <!--                    <input type="text" name="itemFormDTO.itemImgIds[0]" th:value="${itemFormDTO.itemImgDTOList[0].id}">-->
+            <!--                </div>-->
+            <!--                <div th:if="${itemFormDTO.itemImgDTOList.size() > 1}">-->
+            <!--                    <img class="user_image" th:src="${itemFormDTO.itemImgDTOList[1].imgUrl}" alt="#">-->
+            <!--                    &lt;!&ndash; onchange event 걸어주기  &ndash;&gt;-->
+            <!--                    <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"-->
+            <!--                           class="user_profile_img"/>-->
+            <!--                    <input type="text" name="itemFormDTO.itemImgIds[1]" th:value="${itemFormDTO.itemImgDTOList[1].id}">-->
+            <!--                </div>-->
+            <!--                <div th:if="${itemFormDTO.itemImgDTOList.size() > 2}">-->
+            <!--                    <img class="user_image" th:src="${itemFormDTO.itemImgDTOList[2].imgUrl}" alt="#">-->
+            <!--                    &lt;!&ndash; onchange event 걸어주기  &ndash;&gt;-->
+            <!--                    <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"-->
+            <!--                           class="user_profile_img"/>-->
+            <!--                    <input type="text" name="itemFormDTO.itemImgIds[2]" th:value="${itemFormDTO.itemImgDTOList[2].id}">-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+
+            <div class="box">
+                <label for="productD">상품 설명</label><br>
+                <input type="text" maxlength="100" id="productD" th:field="*{itemText}">
+            </div>
+            <p th:if="${#fields.hasErrors('itemText')}" th:errors="*{itemText}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <label for="material">소재<span style="color: red;"> *</span></label><br>
+                <input type="text" id="material" th:field="*{material}">
+            </div>
+            <p th:if="${#fields.hasErrors('material')}" th:errors="*{material}"
+               class="fieldError">Incorrect data</p>
+
+            <div class="box">
+                <label>S 재고 수량</label><br>
+                <input type="number" th:field="*{stockS}" id="S"><br>
+                <label>M 재고 수량</label><br>
+                <input type="number" th:field="*{stockM}" id="M"><br>
+                <label>L 재고 수량</label><br>
+                <input type="number" th:field="*{stockL}" id="L"><br>
+                <label>FREE 재고 수량</label><br>
+                <input type="number" th:field="*{stockFree}" id="Free">
+            </div>
+
+            <p th:if="${#fields.hasErrors('stockS')}" th:errors="*{stockS}"
+               class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('stockM')}" th:errors="*{stockM}"
+               class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('stockL')}" th:errors="*{stockL}"
+               class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('stockFree')}" th:errors="*{stockFree}"
+               class="fieldError">Incorrect data</p>
+
+            <!--            <div hidden="hidden">-->
+            <!--                <select th:field="*{itemSellStatus}">-->
+            <!--                    <option value="SELL">판매중</option>-->
+            <!--                    &lt;!&ndash;                    <option value="SOLD_OUT">품절</option>&ndash;&gt;-->
+            <!--                </select>-->
+            <!--            </div>-->
+            <div class="box">
+                <select th:field="*{itemSellStatus}" class="custom-select">
+                    <option value="SELL">판매중</option>
+                    <option value="STOP_SALE">판매 중지</option>
+                </select>
+            </div>
+
+            <div class="submitBt">
+                <button style="background-color: aquamarine; width: 120px;"
+                        type="submit">
+                    판매 요청
+                </button>
+                <!--                th:formaction="@{/admin/item/new}"-->
+            </div>
+        </form>
+        <!-- form으로 바꾸기 -->
+
+    </div>
+
+    </body>
+</div>
+
+</html>
+
+
+
+
+

@@ -13,7 +13,8 @@
         <div class="container1">
             <div class="section">
                 <a href="/">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Etoile_logo_and_wordmark.svg/768px-Etoile_logo_and_wordmark.svg.png" alt="" style="width: 60px; width: 120px;">
+                    <img src="/image/logo.png"
+                         alt="logo" style="width: 60px; width: 120px;">
                 </a>
             </div>
             <div class="section2">
@@ -26,27 +27,87 @@
                 <i class="fas fa-search search-icon searchIcon123" id="searchIcon2"></i>
                 <input type="text" id="searchInput" placeholder="Search here..." style="display: none;">
             </div>
+            <nav>
+                <div class="center-align relative">
+                    <div id="search-ranking">
+                        <table>
+                            <tbody>
+                            <!-- 반복문을 통해 데이터를 테이블에 표시 -->
+
+                            </tbody>
+                        </table>
+                        <div>
+                            <span id="rank-number">1</span>
+                            <span id="rank-title">제로초</span>
+                        </div>
+
+                        <!-- 실시간 급상승 추가 -->
+                        <div id="real-time-rankings">
+                            <ul style="posiotion: absolute; top: -15px;right: 0;">
+
+                                <h1>Search Rank</h1>
+
+                                {% for row in data %}
+
+
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <th>순위</th>
+                                        <th>인기검색어</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                    <tr th:each="searchRank : ${searchRankList}">
+                                        <td th:text="${searchRank.number}"></td>
+                                        <td th:text="${searchRank.keyword}"></td>
+                                    </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </ul>
+                            <div id="z-example">
+                                <div id="z-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
             <div class="section" id="icon-box">
+                <li sec:authorize="isAuthenticated()">
+                    <a href="/members/logout">
+                        <span class="material-symbols-outlined">logout</span>
+                    </a>
+                </li>
+
+                <li sec:authorize="isAnonymous()">
+                    <a href="/members/login">
+                        <span class="material-symbols-outlined">
+                          login
+                        </span>
+                    </a>
+                </li>
+
                 <a href="/members/new">
-        <span class="material-symbols-outlined">
-          person_add
-        </span>
+                    <span class="material-symbols-outlined">
+                      person_add
+                    </span>
                 </a>
-                <a href="/members/login">
-        <span class="material-symbols-outlined">
-          login
-        </span>
-                </a>
-                <a href="/orders">
+
+                <a href="/mypage/myOrder">
         <span class="material-symbols-outlined">
           person
         </span>
                 </a>
+
                 <a href="/cart">
         <span class="material-symbols-outlined">
           shopping_bag
         </span>
                 </a>
+
+
             </div>
         </div>
         <div class="Category-container">
@@ -129,7 +190,7 @@
                     </ul>
                 </div>
 
-                <div class="dropdown" id="pcBt">
+                <div class="dropdown" id="pcBtn">
                     <button id="categoryBtn4">Skirt/Dress</button>
                     <ul class="dropdown-menu">
                         <li><a href="#">미니</a></li>

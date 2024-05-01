@@ -413,7 +413,7 @@ a.btn.full_width span,button.btn.full_width span,input.btn.full_width span,span.
   text-transform: uppercase
 }
 
-input[type=text],textarea,input[type=password],input[type=tel],input[type=number] {
+input[type=text],input[type=email],textarea,input[type=password],input[type=tel],input[type=number] {
   height: 40px;
   line-height: 38px;
   padding-left: 20px;
@@ -1110,4 +1110,9 @@ span.input_button.stroke input[type=checkbox]:disabled+label:before {
 .nonmember_order_inq .btn.gray {
   width: 280px;
   height: 50px
+}
+.Error{
+  color: red;
+  font-weight: bold;
+  font-size: 15px;
 }

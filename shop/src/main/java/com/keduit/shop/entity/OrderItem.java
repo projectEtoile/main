@@ -61,4 +61,8 @@ public class OrderItem extends BaseTimeEntity {
     public void cancel() {
         this.getItem().addStock(count);
     }
+
+    public enum OrderStatus {
+        ORDER, CANCEL
+    }
 }

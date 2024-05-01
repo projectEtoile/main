@@ -1,0 +1,144 @@
+
+.mainSection1{
+  flex: 1;
+}
+.mainSection2{
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+    width: 200%;
+
+}
+
+.dateContainer{
+  background-color:#f2f2f2;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
+}
+.dateContainer button,.dateContainer input {
+  margin: 0 10px;
+}
+.button3 {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  height: 30px;
+  /* line-height: 28px; */
+  padding: 0 16px;
+}
+.lb{
+    /* display: block; */
+    float: left;
+    padding: 0 16px;
+    height: 30px;
+    /* line-height: 28px; */
+    border: 1px solid #d9d9d9;
+    background-color: #666;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    margin-left: 5px;
+    cursor: pointer;
+}
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+
+/* button li{
+  font-size: 11px;
+    line-height: 22px;
+    position: relative;
+    padding-left: 11px;
+    color: #666666;
+    font-family: "ProximaNova-Regular","Noto Sans KR";
+} */
+.smallText{
+  font-size: 11px;
+  line-height: 22px;
+  position: relative;
+  padding-left: 11px;
+  color: #666666;
+  font-family: "ProximaNova-Regular","Noto Sans KR";
+  margin-left: 40px;
+
+}
+/* .itemTable th{
+font-size: 15px;
+} */
+
+/* 테이블 시작 */
+.itemTable{
+  margin-top: 50px;
+  margin-left: 60px;
+  border-top: 2px solid #000000;
+border-bottom: 1px solid #525252;
+}
+th{
+  /* border: 1px solid #666; */
+  height: 35px;
+  font-size: 14px;
+  color: #000;
+}
+.firstline2 > th{
+font-size: 15px;
+border: none;
+/* background-color: #d8d6d6; */
+/* border-top: 1px solid #525252;
+border-bottom: 1px solid #525252; */
+height: 43px;
+color: #525252;
+}
+/* .lastTr th{
+  border-bottom: 1px solid #525252;
+} */
+.firstline2 th{
+  border-bottom: 1px solid #525252
+
+}
+.buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.buttons button{
+  /* display: block; */
+  float: left;
+  padding: 0 16px;
+  height: 30px;
+  /* line-height: 28px; */
+  border: 1px solid #d9d9d9;
+  background-color: #81e989;
+  text-align: center;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.lastimg{
+  margin-left: 80px;
+  -webkit-user-drag: none;
+  width: 750px;
+  height: 348px;
+}
+.imgBox{
+  display: flex;
+  justify-content: center;
+}

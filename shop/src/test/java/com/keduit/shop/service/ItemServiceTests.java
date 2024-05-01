@@ -37,16 +37,16 @@ public class ItemServiceTests {
     @DisplayName("상품 100개 등록해보기")
     void saveItem() throws Exception {
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
 
 
             ItemFormDTO itemFormDTO = new ItemFormDTO();
 
             itemFormDTO.setItemNm("테스트 상품명!");
             itemFormDTO.setBrandNm("테스트 브랜드명!");
-            itemFormDTO.setPrice(55555);
-            itemFormDTO.setLevel1("Top");
-            itemFormDTO.setLevel2("블라우스");
+            itemFormDTO.setPrice(88888);
+            itemFormDTO.setLevel1("Outer");
+            itemFormDTO.setLevel2("코트");
             itemFormDTO.setItemText("테스트 상품 설명!");
             itemFormDTO.setMaterial("테스트 상품 소재!");
             itemFormDTO.setStockFree(10);
