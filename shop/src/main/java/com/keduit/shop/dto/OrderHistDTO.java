@@ -20,7 +20,7 @@ public class OrderHistDTO {
     /*필드*/
     private Long orderId;  // 주문 아이디
     private String orderDate;
-    private OrderItem.OrderStatus orderStatus;  // 주문상태
+    private OrderStatus orderStatus;  // 주문상태
 
     /*생성자*/
     public OrderHistDTO(Order order) {

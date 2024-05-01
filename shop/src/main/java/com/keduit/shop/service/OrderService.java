@@ -1,5 +1,6 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.dto.AdminOrderSearchDTO;
 import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
@@ -122,5 +123,24 @@ public class OrderService {
 
     public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pageable pageable) {
         return orderRepository.getAdminOrderPage(adminOrderSearchDTO, pageable);
+    }
+
+    @Transactional
+    public void changeStatus(String currentState,String newState){
+
+        OrderStatus newStatus1 = OrderStatus.valueOf(newState);
+        OrderStatus currentState1 = OrderStatus.valueOf(currentState);
+        // 이넘에 해당되는 문자열이 아닌경우 예외처리 하는게 좋음.
+
+        List<Order> orderList = orderRepository.findByOrderStatus(currentState1);
+
+        if(orderList == null){
+            return;
+        }
+
+        for (Order order : orderList){
+            order.setOrderStatus(newStatus1);
+        }
+        orderRepository.saveAll(orderList);
     }
 }

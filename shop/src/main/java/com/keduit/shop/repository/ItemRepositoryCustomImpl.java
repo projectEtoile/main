@@ -134,7 +134,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         searchSellStatuEq(adminItemSearchDTO.getItemSellStatus()))
                 .fetchOne(); // 하나의 결과값. 즉 몇개인지.
 
-        System.out.println(total+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"); // 검색된 리스트들의 총 갯수를 출력한다.
         // 여기서 굳이 토탈이 필요한 이유
         // PageImpl<> 함수를 호출하기 위해선 토탈값도 넣어야 하기때문에 PageImpl<>를 사용하기 위해선
         // 항상 검색값의 총 갯수인 total dsl 쿼리문도 짜야한다!!!

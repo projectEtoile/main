@@ -4,15 +4,16 @@ import com.keduit.shop.dto.AdminOrderSearchDTO;
 import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.entity.Order;
 import com.keduit.shop.service.OrderService;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -32,14 +33,6 @@ public class AdminOrderController {
 
         Page<Order> orders = orderService.getAdminOrderPage(adminOrderSearchDTO, pageable);
 
-
-        System.out.println(orders.getContent().get(0).getOrderItems().get(0).getItem().getItemNm());
-        System.out.println(orders.getContent().get(0).getOrderItems().get(0).getCount());
-            orders.getContent().get(0).getOrderStatus();
-
-//        orders.getContent().get(
-
-
         model.addAttribute("orders", orders);
         model.addAttribute("adminOrderSearchDTO", adminOrderSearchDTO);
         model.addAttribute("maxPage", 10);
@@ -50,6 +43,11 @@ public class AdminOrderController {
 
     }
 
-
-
+    @PostMapping("/changeStatus")
+    public @ResponseBody ResponseEntity changeStatus(@RequestBody JSONObject requestData){
+        String currentState = requestData.getAsString("currentState");
+        String newState = requestData.getAsString("newState");
+        orderService.changeStatus(currentState,newState);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
