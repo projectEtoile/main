@@ -52,7 +52,6 @@ public class CartService {
     }
 
 
-
     /*목록읽어오기*/
     @Transactional(readOnly = true)
     public List<CartDetailDTO> getCartList(String email) {
@@ -130,36 +129,6 @@ public class CartService {
         }
         return cart.getCartItems().size();
     }
-
-
-    @Transactional
-    public void orderAndRemoveCartItems(List<CartOrderDTO> cartOrderDTOList, String email) {
-        Member member = memberRepository.findByEmail(email);
-        if (member == null) {
-            throw new IllegalStateException("Member not found for email: " + email);
-        }
-
-        for (CartOrderDTO cartOrderDTO : cartOrderDTOList) {
-            CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId())
-                    .orElseThrow(() -> new EntityNotFoundException("Cart item not found for ID: " + cartOrderDTO.getCartItemId()));
-
-            Order order = new Order();
-            order.setMember(member);
-            order.setOrderDate(LocalDateTime.now());
-            order.setOrderStatus(OrderStatus.ORDER);
-
-            int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
-            OrderItem orderItem = new OrderItem();
-            orderItem.setItem(cartItem.getItem());
-            orderItem.setCount(cartOrderDTO.getCount());
-            orderItem.setOrderPrice(totalPrice);
-            order.addOrderItem(orderItem);
-
-            orderRepository.save(order);
-            cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
-        }
-    }
-
 
 
 }
