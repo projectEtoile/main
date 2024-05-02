@@ -31,6 +31,7 @@ public class OrderService {
     private final ItemImgRepository itemImgRepository;
 
     /*주문등록*/
+    @Transactional
     public Long order(OrderDTO orderDTO, String email) {
         // 주문할 상품 조회
         Item item = itemRepository.findById(orderDTO.getItemId())
@@ -41,17 +42,21 @@ public class OrderService {
 
         String selectedSize = orderDTO.getSize(); // 선택한 사이즈
 
-        // 주문 상품 생성 및 재고 감소
+        // 주문 상품 생성
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), selectedSize); // 사이즈 전달
         List<OrderItem> orderItemList = new ArrayList<>();
         orderItemList.add(orderItem);
 
-        // 주문 엔티티 생성 및 저장
+        // 주문 엔티티 생성
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
 
+        // 주문이 완료된 후에 재고 감소
+        item.removeStock(selectedSize, orderDTO.getCount());
+
         return order.getId();
     }
+
 
 
 

@@ -50,7 +50,7 @@ public class OrderItem extends BaseTimeEntity {
         orderItem.setSize(size);
 
         // 선택한 사이즈에 따라 재고 감소
-        item.removeStock(size, count);
+
 
         return orderItem;
     }

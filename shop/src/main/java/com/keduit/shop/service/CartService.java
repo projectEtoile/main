@@ -52,6 +52,7 @@ public class CartService {
     }
 
 
+
     /*목록읽어오기*/
     @Transactional(readOnly = true)
     public List<CartDetailDTO> getCartList(String email) {
@@ -111,13 +112,21 @@ public class CartService {
         orderItem.setItem(cartItem.getItem());
         orderItem.setCount(cartOrderDTO.getCount());
         orderItem.setOrderPrice(totalPrice);
+        orderItem.setSize(cartItem.getSize()); // 사이즈 정보 추가
+
         order.addOrderItem(orderItem);
 
         orderRepository.save(order);
         cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
 
+        // 주문이 완료된 후에 재고 감소
+        Item item = cartItem.getItem(); // CartItem에서 Item 가져오기
+        item.removeStock(cartItem.getSize(), cartOrderDTO.getCount());
+
         return order.getId();
     }
+
+
 
 
     @Transactional(readOnly = true)
@@ -129,6 +138,10 @@ public class CartService {
         }
         return cart.getCartItems().size();
     }
+
+
+
+
 
 
 }
