@@ -29,7 +29,7 @@
         <div class="member_join">
             <div class="join_cont">
                 <div class="login_wrap">
-                    <form action="/member/login" role="form"  method="post">
+                    <form action="/members/login" role="form"  method="post">
 <!--                        id="frmLogin"-->
                         <div class="inp_group">
                             <p>
@@ -50,8 +50,8 @@
                                 <input type="password" class="form-control" name="password" placeholder="비밀번호을 입력해주세요">
                             </p>
 
-                            <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"
-                                                                       value="Y"><label for="idSave">이메일 아이디 저장</label></span>
+<!--                            <span class="input_button checkbox"><input type="checkbox" name="idSave" id="idSave"-->
+<!--                                                                       value="Y"><label for="idSave">이메일 아이디 저장</label></span>-->
 
                             <p th:if="${loginErrorMsg}"
                                th:text="${loginErrorMsg}" class="Error">Incorrect data</p>
@@ -73,7 +73,9 @@
 
                             <ul class="link">
 
-                                <li><a onclick="FindPW()">비밀번호 찾기</a></li>
+                                <li>
+                                    <button><a onclick="FindPW()">비밀번호 찾기</a></button>
+                                </li>
                             </ul>
                         </div>
                     </form>
@@ -105,7 +107,7 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         function FindPW() {
-            const newWin = window.open("member/pwInquiry.html", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
+            const newWin = window.open("pw", "pop", "toolbar=no, menubar=no, resizable=no, scrollbars=no, width=600, height=900, left=400");
             if(newWin == null)
                 alert("팝업이 차단되어 있습니다. 팝업차단을 해제해 주세요.");
         }

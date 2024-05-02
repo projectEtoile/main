@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table(name = "cart_item")
-public class CartItem extends BaseTimeEntity {
+public class CartItem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +26,15 @@ public class CartItem extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
-
-    @Column(nullable = false)
     private int count; /*장바구니에 몇개들어갔는지 알기위해*/ /*상품하나가 여러 카트에들어갈수있으니까 다대일*/
+    private String size;
 
-    public static CartItem createCartItem(Cart cart, Item item, int count) {
+    public static CartItem createCartItem(Cart cart, Item item, int count, String size) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
         cartItem.setCount(count);
+        cartItem.setSize(size);
         return cartItem;
     }
 
@@ -45,5 +45,9 @@ public class CartItem extends BaseTimeEntity {
 
     public void updateCount(int count) {
         this.count = count;
+    }
+
+    public int getPrice() {
+        return this.item.getPrice(); // 여기서 item은 CartItem이 참조하는 Item 객체입니다.
     }
 }

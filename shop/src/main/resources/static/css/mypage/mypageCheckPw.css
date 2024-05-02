@@ -1,0 +1,148 @@
+
+.mainSection2{
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  margin-top: 200px;
+  align-items: center;
+      justify-content: center;
+}
+
+/* 회원정보 변경 시작*/
+.pwdCheckBox{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #dadada;
+  width: 80%;
+    height: 200px;
+}
+
+.pwdCheckBox p{
+  font-size: 13px;
+  position: relative;
+  top: -30px;
+  font-weight: 500;
+  margin-right: 100px;
+}
+
+.mainSection2 h3{
+    color: #000;
+    font-family: "ProximaNova-Regular", "Noto Sans KR";
+    font-size: 24px;
+    line-height: 36px;
+    display: inline-block;
+    font-weight: 500;
+    margin-bottom: 15px;
+    margin-right: 550px;
+    white-space: nowrap;
+}
+.inpBox{
+  display: flex;
+   justify-content: center;
+}
+.inpBox input{
+  background-color: #f2f2f2;
+  border: 3px solid #f2f2f2;
+  width: 420px;
+  font-size: 13px;
+  line-height: 38px;
+  padding: 0 10px;
+  height : 40px;
+  margin-right: 7px;
+  }
+  .h33{
+  margin-left: 100px;
+  }
+  .inpBox button{
+    height: 40px;
+      font-size: 14px;
+      line-height: 38px;
+      border-color: #000;
+      background-color: #000;
+      color: #fff;
+      width: 30%;
+      cursor: pointer;
+
+  }
+
+/* 회원정보 변경 끝 */
+.dateContainer{
+  background-color:#f2f2f2;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
+}
+.dateContainer button,.dateContainer input {
+  margin: 3px 10px;
+}
+.button3 {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  height: 30px;
+  /* line-height: 28px; */
+  padding: 0 16px;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+.smallText{
+  font-size: 11px;
+  line-height: 22px;
+  position: relative;
+  padding-left: 11px;
+  color: #666666;
+  font-family: "ProximaNova-Regular","Noto Sans KR";
+  margin-left: 40px;
+
+}
+
+.buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.buttons button{
+  /* display: block; */
+  float: left;
+  padding: 0 16px;
+  height: 30px;
+  /* line-height: 28px; */
+  border: 1px solid #d9d9d9;
+  background-color: #81e989;
+  text-align: center;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.lastimg{
+  margin-left: 80px;
+  -webkit-user-drag: none;
+  width: 750px;
+  height: 348px;
+}
+.imgBox{
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<!---->
+<div th:fragment="mypageSidebar">
+
+
+        <div class="mainSection1">
+            <div class="mainContainer">
+
+                <div class="sideNavBox1">
+                    <h1 style="padding-top: 120px;">쇼핑내역</h1>
+                    <a href="/mypage/myOrder">주문/배송 내역</a><br>
+                    <a href="myPageMainReturn.html">취소/반품/교환 내역</a><br>
+                    <h1>나의활동</h1>
+                    <a href="myPageReview.html">나의 리뷰</a><br>
+
+                    <h1>회원정보</h1>
+                    <a href="/mypage/checkPw">회원정보 변경</a><br>
+                    <a href="/mypage/address">주소지 관리</a><br>
+
+                    <br><br><br><br><br><br><br>
+
+                    <a href="#" id="bigA">FAQ</a>
+                    <br><br><br>
+                    <a href="#" id="bigB">고객센터</a>
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+</html>
+<!-- 마이페이지 컨텐츠 부분에서 main 태그 닫아야함 -->

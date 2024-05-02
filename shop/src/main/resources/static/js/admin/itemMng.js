@@ -1,3 +1,17 @@
+//$(document).ready(function() {
+//    // 페이지 로드 시 실행
+//    var scrollPosition = localStorage.getItem('scrollPosition');
+//    if (scrollPosition !== null) {
+//        $(window).scrollTop(scrollPosition);
+//    }
+//
+//    // 페이지 이동 버튼 클릭 시 실행
+//    $('.pagination-link').click(function() {
+//        // 현재 스크롤 위치를 localStorage에 저장
+//        var currentScrollPosition = $(window).scrollTop();
+//        localStorage.setItem('scrollPosition', currentScrollPosition);
+//    });
+//});
 
 
 $(document).ready(function(){
@@ -84,10 +98,12 @@ $(document).ready(function(){
             const level2 = $("#level2").val() || null;
             const searchBy = $("#searchBy").val();
             const searchQuery = $("#searchQuery").val();
+            const itemSellStatus = $("#itemSellStatus").val();  // 판매 상태
 
             location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
                 + "&level1=" + level1
                 + "&level2=" + level2
                 + "&searchBy=" + searchBy
-                + "&searchQuery=" + searchQuery;
+                + "&searchQuery=" + searchQuery
+                + "&itemSellStatus=" + itemSellStatus;
         }

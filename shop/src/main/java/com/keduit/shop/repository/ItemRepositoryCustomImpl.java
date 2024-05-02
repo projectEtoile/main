@@ -1,8 +1,12 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminItemSearchDTO;
+import com.keduit.shop.dto.MainItemDTO;
+import com.keduit.shop.dto.QMainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.QItem;
+import com.keduit.shop.entity.QItemImg;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -50,6 +54,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         if (StringUtils.equals("itemNm", searchBy)) { // 직접 url 입력시 Nm 이 NM으로 바뀌는 현상있음.
             return QItem.item.itemNm.like("%" + searchQuery + "%");
         } else if (StringUtils.equals("itemId", searchBy)) {
+
+            if(searchQuery.length() == 0 ){
+                return null;
+            }
+
             return QItem.item.id.eq(Long.parseLong(searchQuery));
         }
         // 여기서도 마찬가지. like 를 활용했다.
@@ -91,7 +100,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 //
 //        return null;
 
-
+    private BooleanExpression searchSellStatuEq(ItemSellStatus searchSellStatus){
+        System.out.println("---searchSellStatus=====> " + searchSellStatus);
+        return searchSellStatus == null? null: QItem.item.itemSellStatus.eq(searchSellStatus);
+        // 쿼리스트링 값이 널이면 널. 존재하면 입력된 설정값과 일치하는 것만 검색.
+    }
 
     @Override
     public Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable) {
@@ -104,7 +117,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(regDtsAfter(adminItemSearchDTO.getSearchDateType()), // 날짜 타입 설정.
                         searchByLikeOrEq(adminItemSearchDTO.getSearchBy(), adminItemSearchDTO.getSearchQuery()),
                         // id 혹은 상품명 검색. 해당 쿼리문자열까지.
-                        searchByLevel(adminItemSearchDTO.getLevel1(), adminItemSearchDTO.getLevel2()))
+                        searchByLevel(adminItemSearchDTO.getLevel1(), adminItemSearchDTO.getLevel2()),
+                        searchSellStatuEq(adminItemSearchDTO.getItemSellStatus()))
                 // 카테고리 설정 값. 
                 .orderBy(QItem.item.id.desc()) // 등록순.
                 .offset(pageable.getOffset()) // 데이터를 가지고 올 시작 인덱스 즉.0이게됬다
@@ -118,7 +132,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(regDtsAfter(adminItemSearchDTO.getSearchDateType()), // 날짜 타입 설정.
                         searchByLikeOrEq(adminItemSearchDTO.getSearchBy(),adminItemSearchDTO.getSearchQuery()),
                         // id 혹은 상품명 검색. 해당 쿼리문자열까지.
-                        searchByLevel(adminItemSearchDTO.getLevel1(),adminItemSearchDTO.getLevel2()))
+                        searchByLevel(adminItemSearchDTO.getLevel1(),adminItemSearchDTO.getLevel2()),
+                        searchSellStatuEq(adminItemSearchDTO.getItemSellStatus()))
                 .fetchOne(); // 하나의 결과값. 즉 몇개인지.
 
         System.out.println(total+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"); // 검색된 리스트들의 총 갯수를 출력한다.
@@ -127,5 +142,44 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         // 항상 검색값의 총 갯수인 total dsl 쿼리문도 짜야한다!!!
 
         return new PageImpl<>(result, pageable, total); // 이건 디폴트 메서드. Ctrl 클릭으로 확인해보자
+    }
+
+    @Override
+    public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        List<MainItemDTO> result = jpaQueryFactory
+                .select(
+                        new QMainItemDTO(
+                                item.id,
+                                item.itemNm,
+                                item.brandNm,
+                                item.itemText,
+                                itemImg.imgUrl,
+                                item.price,
+                                item.discountRate,
+                                item.itemSellStatus)
+                ).from(itemImg)
+                .join(itemImg.item, item)
+
+                .where(itemNmLike(searchDTO.getSearchQuery()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = jpaQueryFactory
+                .select(Wildcard.count)
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemNmLike(searchDTO.getSearchQuery()))
+                .fetchOne();
+        return new PageImpl<>(result, pageable, total);
+    }
+
+    private BooleanExpression itemNmLike(String searchQuery) {
+        return StringUtils.isEmpty(searchQuery) ? null :
+                QItem.item.itemNm.like("%" + searchQuery + "%");
     }
 }

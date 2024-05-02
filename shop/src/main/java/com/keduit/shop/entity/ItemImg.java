@@ -21,7 +21,7 @@ public class ItemImg extends BaseTimeEntity{
   private String imgName;   // 이미지 파일명
   private String oriImgName;   // 원본 이미지 파일명
   private String imgUrl;
-  private String repimgYn;     // 대표 이미지 여부
+  private String repimgYn = "N";     // 대표 이미지 여부
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="item_id")

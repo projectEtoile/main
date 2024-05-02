@@ -1,6 +1,7 @@
 package com.keduit.shop.entity;
 
 import com.keduit.shop.constant.ItemSellStatus;
+import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.exception.OutOfStockException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -72,7 +73,23 @@ public class Item extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)  /*도메인만들어줌*/
     private ItemSellStatus itemSellStatus = ItemSellStatus.SELL; // 디폴트SELL  /*상품 판매 현황*/
 
-/*    @Column(nullable = false)
+    public void updateItem(ItemFormDTO itemFormDTO) {
+        this.itemNm = itemFormDTO.getItemNm();
+        this.brandNm = itemFormDTO.getBrandNm();
+        this.level1 = itemFormDTO.getLevel1();
+        this.level2 = itemFormDTO.getLevel2();
+        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+        this.price = itemFormDTO.getPrice();
+        this.material = itemFormDTO.getMaterial();
+        this.itemText = itemFormDTO.getItemText();
+        this.stockS = itemFormDTO.getStockS();
+        this.stockM = itemFormDTO.getStockM();
+        this.stockL = itemFormDTO.getStockL();
+        this.stockFree = itemFormDTO.getStockFree();
+        this.stockNumber = itemFormDTO.getStockS()+itemFormDTO.getStockM()+itemFormDTO.getStockL()+itemFormDTO.getStockFree();
+    }
+
+    /*    @Column(nullable = false)
     private String thImgUrl; *//*상품 썸네일 사진*//*
 
     @Column(nullable = false)
@@ -93,33 +110,25 @@ public class Item extends BaseTimeEntity {
         switch (size) {
             case "S":
                 if (this.stockS < stockNumber) {
-
                     throw new OutOfStockException("S 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockS -= stockNumber; // S 사이즈 감소
                 break;
             case "M":
                 if (this.stockM < stockNumber) {
-
                     throw new OutOfStockException("M 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockM -= stockNumber; // M 사이즈 감소
                 break;
             case "L":
                 if (this.stockL < stockNumber) {
-
                     throw new OutOfStockException("L 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockL -= stockNumber; // L 사이즈 감소
                 break;
             case "Free":
                 if (this.stockFree < stockNumber) {
-
                     throw new OutOfStockException("Free 사이즈 재고가 부족합니다.");
-
                 }
                 this.stockFree -= stockNumber; // Free 사이즈 감소
                 break;
@@ -127,13 +136,9 @@ public class Item extends BaseTimeEntity {
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
 
-
         // 모든 사이즈의 재고 감소와 함께 stock_number 감소
-
         this.stockNumber -= stockNumber;
     }
-
-
 
 
 
@@ -144,11 +149,11 @@ public class Item extends BaseTimeEntity {
     /*주문 취소시 재고 증가*/
     public void addStock(int stockNumber) {
 
-
-
         this.stockNumber += stockNumber;
     }
+
 }
+
     /*@CreationTimestamp
     private LocalDateTime regDate;  *//*등록 시간*//*
 

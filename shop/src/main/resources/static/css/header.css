@@ -4,6 +4,9 @@ body, html {
   /* height: 100%; */
   font-family: "ProximaNova-Bold","NotoSansKR-Medium";
 }
+        .fieldError {
+            color: #bd2130;
+        }
 
 /* .top-area {
   width: 100%;

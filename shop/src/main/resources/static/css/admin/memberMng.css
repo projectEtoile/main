@@ -1,0 +1,235 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.tableBox{
+  margin-left: 200px;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  background-color: #ffffff;
+  /* box-sizing: border-box; */
+  box-shadow: 0 0 10px 5px rgba(184, 182, 182, 0.4);
+  border: 1px solid #c2bfbf;
+}
+
+.subBox{
+  width: 100%; /* 부모의 너비에 맞춤 */
+  height: 70px;
+  /* border-bottom: 1px solid #3d3d3d; */
+  background-color: #e6e3e3;
+  display: flex;
+  align-items: center;
+  color: #000000;
+  font-size: 25px;
+  /* padding-left: 50px; */
+  font-weight: 1000;
+}
+
+
+/* 테이블 css시작 */
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  margin-top: 50px;
+
+
+  /*이부분 4.20 잠시 수정 height: 100vh; */
+
+  /* 화면 전체 높이를 기준으로 중앙 정렬 */
+  /* margin-top: 15px;  */
+  /* body의 기본 마진 제거 */
+}
+table {
+border-collapse: collapse;
+}
+
+td {
+border: 1px solid #d9d9d9;;
+padding: 8px;
+max-height: 22px;
+height: 22px;
+width:120px;
+}
+
+tr:not(.top-row):hover {
+background-color: rgb(223, 239, 243);
+}
+.firstLine > td{
+font-weight: bold;
+}
+/* 테이블 css끝 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width : 100%;
+}
+
+/* 검색창 시작 */
+.search-bar {
+
+  background-color: white;
+  padding: 7px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+
+}
+
+.search-bar input[type="text"] {
+
+  height: 35px;
+  width: 50%;
+  padding: 10px;
+  margin: 8px 30px;
+  /* box-sizing: border-box; */
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.inp:hover:not(:disabled) {
+  border: 1px solid #333;
+}
+.material-symbols-outlined {
+  position: relative;
+  right: 100px;
+  color: #5b5c5e;
+}
+.inp {
+  display: block;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #333;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  height: 18px;
+  border-radius: 100px;
+  }
+/* 검색창 끝 */
+button {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 100px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(79, 79, 223);
+  color: white;
+    }
+.finalButton{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 120px;
+}
+
+/* 페이징, 조건 선택 버튼 css 시작 dddddddddddddddddddddddddddddddddddddddddddd*/
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+#level1, #level2 {
+    width: 200px; /* 선택 상자 너비 조정 */
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+}
+#searchBtn {
+    background-color: #4CAF50; /* 배경색 설정 */
+    color: white; /* 텍스트 색상 설정 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 패딩 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    text-decoration: none; /* 텍스트에 밑줄 제거 */
+    display: inline-block; /* 인라인 요소로 표시 */
+    font-size: 16px; /* 글꼴 크기 */
+    cursor: pointer; /* 마우스 커서 모양 변경 */
+    border-radius: 5px; /* 테두리 모서리 둥글게 설정 */
+}
+
+#searchBtn:hover {
+    background-color: #45a049; /* 호버시 배경색 변경 */
+}
+
+.pagination-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-item {
+    margin: 0 2px;
+}
+
+.pagination-link {
+    color: #333;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s;
+}
+
+.pagination-link:hover {
+    background-color: #f4f4f4;
+}
+
+.pagination-link.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-control {
+    display: block;
+    width: 9%; /* 원하는 너비로 조절하세요 */
+    height: 40px; /* 원하는 높이로 조절하세요 */
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+.search-select,
+.search-input {
+     /* 셀렉트 옵션의 추가적인 스타일링을 적용할 수 있습니다. */
+        padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+}
+
+.search-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
+

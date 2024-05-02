@@ -30,4 +30,6 @@ public class AdminItemSearchDTO {
 
     private String searchQuery = "";
     // 조회할 검색어 저장 변수.
+
+    private ItemSellStatus itemSellStatus;
 }
