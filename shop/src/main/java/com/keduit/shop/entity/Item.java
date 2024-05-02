@@ -118,9 +118,12 @@ public class Item extends BaseTimeEntity{
             default:
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
-
-        // stockNumber를 변경하지 않음
+        this.stockNumber -= stockNumber; // 전체 재고 감소
+        if (this.stockNumber < 0) {
+            throw new RuntimeException("Total stock cannot be negative");
+        }
     }
+
 
 
 

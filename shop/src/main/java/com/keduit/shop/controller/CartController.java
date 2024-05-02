@@ -103,14 +103,18 @@ public class CartController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("주문 권한이 없습니다.");
             }
 
-            // 주문 처리 및 재고 감소를 각각 다른 메서드로 호출
+            // 주문 처리만 하고 재고는 여기서 감소시키도록 수정
             Long orderId = cartService.orderCartItem(cartOrder, principal.getName());
-            cartService.decreaseItemStock(cartOrder.getCartItemId(), principal.getName());
             orderIds.add(orderId);
+
+            // 주문 처리 후에 각 상품에 대해 재고를 감소시킴
+            cartService.decreaseItemStock(cartOrder.getCartItemId(), principal.getName());
         }
 
         return ResponseEntity.ok(orderIds);
     }
+
+
 
 
 
