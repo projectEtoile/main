@@ -1,5 +1,6 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.dto.AdminOrderSearchDTO;
 import com.keduit.shop.entity.Order;
 import org.springframework.data.domain.Page;
@@ -21,5 +22,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>,OrderReposit
     @Query("select count(o) from Order o where o.member.email = :email")
     Long countOrder(@Param("email") String email);
 
+    List<Order> findByOrderStatus(OrderStatus orderStatus);
 
 }
