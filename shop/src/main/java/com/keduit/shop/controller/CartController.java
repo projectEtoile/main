@@ -103,13 +103,15 @@ public class CartController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("주문 권한이 없습니다.");
             }
 
-            // 각 CartOrderDTO를 개별 주문으로 생성
+            // 주문 처리 및 재고 감소를 각각 다른 메서드로 호출
             Long orderId = cartService.orderCartItem(cartOrder, principal.getName());
+            cartService.decreaseItemStock(cartOrder.getCartItemId(), principal.getName());
             orderIds.add(orderId);
         }
 
         return ResponseEntity.ok(orderIds);
     }
+
 
 
     @GetMapping("/cart/totalItemCount")

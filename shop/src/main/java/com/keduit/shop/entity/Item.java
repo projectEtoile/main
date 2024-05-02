@@ -119,9 +119,9 @@ public class Item extends BaseTimeEntity{
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
 
-        // 모든 사이즈의 재고 감소와 함께 stock_number 감소
-        this.stockNumber -= stockNumber;
+        // stockNumber를 변경하지 않음
     }
+
 
 
 

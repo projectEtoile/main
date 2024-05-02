@@ -9,6 +9,7 @@ import com.keduit.shop.entity.*;
 import com.keduit.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
@@ -25,7 +26,6 @@ public class CartService {
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-    private final OrderService orderService;
     private final OrderRepository orderRepository;
 
     /*장바구니 추가하기*/
@@ -115,16 +115,35 @@ public class CartService {
         orderItem.setSize(cartItem.getSize()); // 사이즈 정보 추가
 
         order.addOrderItem(orderItem);
-
         orderRepository.save(order);
-        cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
-
-        // 주문이 완료된 후에 재고 감소
-        Item item = cartItem.getItem(); // CartItem에서 Item 가져오기
-        item.removeStock(cartItem.getSize(), cartOrderDTO.getCount());
 
         return order.getId();
     }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void decreaseItemStock(Long cartItemId, String email) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
+            throw new IllegalStateException("Member not found for email: " + email);
+        }
+
+        // 각 상품의 사이즈와 수량을 가져와서 재고를 감소시킴
+        Item item = cartItem.getItem();
+        String size = cartItem.getSize();
+        int count = cartItem.getCount();
+
+        // 해당 사이즈에 맞는 재고를 감소시킴
+        item.removeStock(size, count);
+        itemRepository.save(item); // 재고를 수정한 후에는 반드시 저장해야 함
+
+        // 주문 후 장바구니 항목 삭제
+        cartItemRepository.delete(cartItem);
+    }
+
+
+
+
 
 
 
