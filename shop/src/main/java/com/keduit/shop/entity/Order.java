@@ -31,6 +31,8 @@ public class Order extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus; /*주문상태*/
 
+
+
     /*order입장에서 orderitem이 일대 다임*/
     /*order와 orderItem은 일대 다의 연관 관계를 가진다.*/
     /*외래키가 orderItem에 있으므로 연관관계의 주인은 orderItem이됨 -> order는 주인이 아니므로 mappedBy 걸어줘야함*/
@@ -53,7 +55,7 @@ public class Order extends BaseTimeEntity {
         for (OrderItem orderItem : orderItemList) {
             order.addOrderItem(orderItem);
         }
-        order.setOrderStatus(OrderStatus.CANCEL);
+        order.setOrderStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;
     }

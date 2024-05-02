@@ -29,7 +29,6 @@ public class MemberServiceTests {
         memberFormDTO.setPassword("12345678");
         memberFormDTO.setAge(i);
         memberFormDTO.setSex(Sex.FEMALE);
-
         return Member.createMember(memberFormDTO, passwordEncoder);
     }
 

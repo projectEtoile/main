@@ -13,7 +13,6 @@
 //    });
 //});
 
-
 $(document).ready(function(){
     // 페이지 로딩 후에도 실행될 함수
     function handleLevel1Change() {

@@ -23,4 +23,5 @@ public interface OrderRepository extends JpaRepository<Order, Long>,OrderReposit
     Long countOrder(@Param("email") String email);
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
+
 }

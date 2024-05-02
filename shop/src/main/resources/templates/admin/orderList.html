@@ -11,8 +11,8 @@
 </head>
 
 <div layout:fragment="content">
-    <link th:href="@{/css/admin/orderList.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/admin/itemMng.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/admin/orderList.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/js/admin/orderList.js}" type="text/javascript"></script>
 
     <form th:action="@{'/admin/orders/' + ${orders.number}}"
@@ -59,11 +59,11 @@
                     </button>
                 </div>
             </div>
-            <button onclick="changeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING</button>
-            <button onclick="changeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED</button>
-            <button onclick="changeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED</button>
+            <button onclick="allChangeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING</button>
+            <button onclick="allChangeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED</button>
+            <button onclick="allChangeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED
+            </button>
         </div>
-
 
 
         <div class="tableBox">
@@ -72,36 +72,56 @@
             </div>
             <div class="tableContainer">
                 <table>
+                    <colgroup>
+                        <col width="50">
+                        <col width="100">
+                        <col width="200">
+                        <col width="100">
+                        <col width="250">
+                        <col width="50">
+                        <col width="100">
+                        <col width="100">
+                        <col width="120">
+                        <col width="100">
+                        <col width="150">
+                        <col width="50">
+                    </colgroup>
+                    <thead>
                     <tr class="firstLine">
-                        <td>주문 번호</td>
-                        <td>주문자 이메일</td>
-                        <td>주문 상품id</td>
-                        <td>상품명</td>
-                        <td>사이즈</td>
-                        <td>주문수량</td>
-                        <td>상품 가격</td>
-                        <td>총 주문 금액</td>
-                        <td>주문(배송) 상태</td>
-                        <td>주문시각</td>
+                        <th scope="col">개별</th>
+                        <th scope="col">주문id</th>
+                        <th scope="col">emial</th>
+                        <th scope="col">상품id</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">사이즈</th>
+                        <th scope="col">주문수량</th>
+                        <th scope="col">단가</th>
+                        <th scope="col">총 주문가</th>
+                        <th scope="col">주문 상태</th>
+                        <th scope="col">주문시각</th>
+                        <th scope="col">주소</th>
                     </tr>
                     <tr th:each="orders, status: ${orders.getContent()}">
-                        <td th:text="${orders.id}"></td>
-                        <td th:text="${orders.member.email}"></td>
-                        <td th:text="${orders.orderItems.get(0).item.id}"></td>
-                        <td th:text="${orders.orderItems.get(0).item.itemNm}"></td>
-                        <td th:text="${orders.orderItems.get(0).size}"></td>
-                        <td th:text="${orders.orderItems.get(0).count}"></td>
-                        <td th:text="${orders.orderItems.get(0).item.price}"></td>
-                        <td th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></td>
-                        <td th:text="${orders.orderStatus}"></td>
-                        <td th:text="${orders.orderDate}"></td>
+                        <th> <input class="orderCheckBox" type="checkbox" th:value="${orders.id}"></th>
+                        <th th:text="${orders.id}"></th>
+                        <th th:text="${orders.member.email}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.id}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.itemNm}"></th>
+                        <th th:text="${orders.orderItems.get(0).size}"></th>
+                        <th th:text="${orders.orderItems.get(0).count}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.price}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></th>
+                        <th th:text="${orders.orderStatus}"></th>
+                        <th th:text="${orders.orderDate}"></th>
+                        <th></th>
                     </tr>
+                    </thead>
                 </table>
             </div>
             <div class="finalButton">
-                <form action="">
-                    <button>수정하기</button>
-                </form>
+                    <button onclick="changeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING 개별처리</button>
+                    <button onclick="changeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED 개별처리</button>
+                    <button onclick="changeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED 개별처리</button>
             </div>
         </div>
         <div th:with="start=${(orders.number/maxPage)*maxPage + 1},
