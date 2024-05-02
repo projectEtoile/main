@@ -1,5 +1,6 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
@@ -26,8 +27,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> ,MemberRep
     @Query("update Member m set m.password = :password where m.email = :email")
     void updatePassword(@Param("password")String password, @Param("email")String email);
 
-
-
+    @Query("SELECT COUNT(m) FROM Member m WHERE m.sex = :sex")
+    Long countMembersBySex(@Param("sex")Sex sex);
 }
 
 

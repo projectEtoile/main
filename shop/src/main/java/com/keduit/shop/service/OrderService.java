@@ -1,5 +1,6 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.dto.AdminOrderSearchDTO;
 import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
 import com.keduit.shop.dto.OrderItemDTO;
@@ -32,25 +33,21 @@ public class OrderService {
 
     /*주문등록*/
     public Long order(OrderDTO orderDTO, String email) {
+        // 주문할 상품 조회
         Item item = itemRepository.findById(orderDTO.getItemId())
-                .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
+                .orElseThrow(EntityNotFoundException::new);
 
+        // 현재 로그인한 회원의 정보 조회
         Member member = memberRepository.findByEmail(email);
-        if (member == null) {
-            throw new EntityNotFoundException("회원 정보를 찾을 수 없습니다.");
-        }
 
-        // 사이즈 값 유효성 검사
-        String selectedSize = orderDTO.getSize(); // 이 부분
-        if (selectedSize == null || selectedSize.isEmpty()) {
-            throw new IllegalArgumentException("유효하지 않은 사이즈입니다."); // 유효하지 않은 사이즈 처리
-        }
+        String selectedSize = orderDTO.getSize(); // 선택한 사이즈
 
-        // 주문 엔티티 생성
-        OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), selectedSize); // 이 부분 수정
+        // 주문 상품 생성 및 재고 감소
+        OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), selectedSize); // 사이즈 전달
         List<OrderItem> orderItemList = new ArrayList<>();
         orderItemList.add(orderItem);
 
+        // 주문 엔티티 생성 및 저장
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
 
@@ -77,7 +74,7 @@ public class OrderService {
             OrderHistDTO orderHistDTO = new OrderHistDTO(order);
             List<OrderItem> orderItems = order.getOrderItems(); /*주문안에들어있는 상품들 쭉 가져옴*/
             for (OrderItem orderItem : orderItems) {
-                ItemImg itemImg = itemImgRepository.findByItemId(orderItem.getItem().getId()); /*상품 id주면 이미지중에서 대표이미지 읽어오기*/
+                ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn(orderItem.getItem().getId(), "Y"); /*상품 id주면 이미지중에서 대표이미지 읽어오기*/
                 OrderItemDTO orderItemDTO = new OrderItemDTO(orderItem, itemImg.getImgUrl()); /*대표이미지의 url이 필요함*/
                 orderHistDTO.addOrderItemDTO(orderItemDTO); /*이렇게만들어진 orderItemDTO를 orderHistDTO에 담아줌*/
             }
@@ -123,4 +120,7 @@ public class OrderService {
     }
 
 
+    public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pageable pageable) {
+        return orderRepository.getAdminOrderPage(adminOrderSearchDTO, pageable);
+    }
 }

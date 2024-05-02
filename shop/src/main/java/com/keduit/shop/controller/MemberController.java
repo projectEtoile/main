@@ -84,11 +84,13 @@ public class MemberController {
         return "member/login";//페이지 리턴
     }
 
-
     @GetMapping("/login/error")
     public String loginError(Model model){
 
-
+        /* "아이디 혹은 비밀번호를 확인해주세요"라는 메시지를
+        "loginErrorMsg"라는 이름으로 모델에 추가합니다.
+        이렇게 추가된 정보는 뷰 템플릿에서 사용될 수 있습니다.
+         */
         System.out.println("로그인 실패@@@@@@@@@@@@@@@@@@@@@@");
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
         return "member/login";

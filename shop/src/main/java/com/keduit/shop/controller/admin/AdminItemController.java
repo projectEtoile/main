@@ -46,7 +46,7 @@ public class AdminItemController {
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생했습니다.");
             return "admin/itemForm";
         }
-        return "redirect:/";
+        return "redirect:/admin/items";
     }
 
 
@@ -110,6 +110,7 @@ public class AdminItemController {
                              BindingResult bindingResult,
                              @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
                              Model model) {
+
         if (bindingResult.hasErrors()) {
             System.out.println(" post 수정 유효성 검사 실패@@@@@@@@@@@@@@@@@@@");
             System.out.println(itemFormDTO.getItemImgIds());
@@ -123,11 +124,11 @@ public class AdminItemController {
             model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다.");
             System.out.println(itemFormDTO.getItemImgIds());
             System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            return "redirect:/admin/item/modify/1";
+            return "redirect:/admin/main";
         }
         System.out.println(itemFormDTO.getItemImgIds());
         System.out.println("포스트수정 응답받음@@@@@@@@@@@@@@@@@");
-        return "redirect:/admin/item/new";
+        return "redirect:/admin/item/modify/"+itemFormDTO.getId();
     }
 
 }

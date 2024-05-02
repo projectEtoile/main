@@ -487,9 +487,36 @@
                 </div>
 
             </div>
+            <!-- 제품 목록 -->
+            <div id="product-list">
         </div>
     </main>
+    <!-- jQuery 라이브러리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- 제품 데이터를 동적으로 생성하여 추가하는 스크립트 -->
+    <script>
+        $(document).ready(function () {
+            // 파이썬 코드로부터 받은 데이터를 사용하여 동적으로 HTML 요소를 생성하여 삽입할 수 있습니다.
+            var products = [
+                {name: "크롭 더블 버튼 자켓", price: "208,050", url: "https://www.lfmall.co.kr/app/product/EFMWXX00175?has_init=Y"},
+                // 파이썬 코드에서 읽어온 데이터에 따라 적절한 형식으로 객체를 생성해야 합니다.
+            ];
+
+            // 제품 목록을 반복하면서 각 제품을 동적으로 생성하여 삽입
+            $.each(products, function (index, product) {
+                var productHtml = '<div class="product">';
+                productHtml += '<a class="ProductName_product  txtLine1" href="' + product.url + '">' + product.name + '</a>';
+                productHtml += '<div class="ProductPrice">';
+                productHtml += '<span class="ProductPrice_lastprice">' + product.price + '</span>';
+                productHtml += '</div>';
+                productHtml += '</div>';
+
+                $('#product-list').append(productHtml);
+            });
+        });
+    </script>
     </body>
+
 </th:block>
 </html>

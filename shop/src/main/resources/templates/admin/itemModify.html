@@ -15,7 +15,7 @@
 
         <form th:action="@{/admin/item/modify/*{itemFormDTO.id}}" method="post" enctype="multipart/form-data"
               th:object="${itemFormDTO}">
-            <h1> 상품 등록 </h1><br><br><br>
+            <h1> 상품 수정 </h1><br><br><br>
             <div class="box">
 
                 <label for="id">상품코드<span style="color: red;"> *</span></label><br>
@@ -182,7 +182,7 @@
             <div class="submitBt">
                 <button style="background-color: aquamarine; width: 120px;"
                         type="submit">
-                    판매 요청
+                    수정 완료
                 </button>
                 <!--                th:formaction="@{/admin/item/new}"-->
             </div>

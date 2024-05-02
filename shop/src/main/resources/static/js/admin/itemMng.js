@@ -1,3 +1,17 @@
+//$(document).ready(function() {
+//    // 페이지 로드 시 실행
+//    var scrollPosition = localStorage.getItem('scrollPosition');
+//    if (scrollPosition !== null) {
+//        $(window).scrollTop(scrollPosition);
+//    }
+//
+//    // 페이지 이동 버튼 클릭 시 실행
+//    $('.pagination-link').click(function() {
+//        // 현재 스크롤 위치를 localStorage에 저장
+//        var currentScrollPosition = $(window).scrollTop();
+//        localStorage.setItem('scrollPosition', currentScrollPosition);
+//    });
+//});
 
 
 $(document).ready(function(){

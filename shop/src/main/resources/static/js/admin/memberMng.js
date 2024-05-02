@@ -1,4 +1,24 @@
-//
+$(document).ready(function() {
+    // 페이지 로드 시 실행
+    var scrollPosition = localStorage.getItem('scrollPosition');
+    if (scrollPosition !== null) {
+        $(window).scrollTop(scrollPosition);
+    }
+
+    // 페이지 이동 버튼 클릭 시 실행
+    $('.pagination-link').click(function() {
+        // 현재 스크롤 위치를 localStorage에 저장
+        var currentScrollPosition = $(window).scrollTop();
+        localStorage.setItem('scrollPosition', currentScrollPosition);
+    });
+
+    // 페이지가 새로고침 될 때 실행
+    $(window).on('beforeunload', function() {
+        // 현재 스크롤 위치를 localStorage에 저장
+        var currentScrollPosition = $(window).scrollTop();
+        localStorage.setItem('scrollPosition', currentScrollPosition);
+    });
+});
 //
 //$(document).ready(function(){
 //    // 페이지 로딩 후에도 실행될 함수

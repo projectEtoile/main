@@ -6,13 +6,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor /*디폴트생성자*/
-public class Cart extends BaseTimeEntity{
+public class Cart extends BaseEntity{
     @Id
     @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,8 @@ public class Cart extends BaseTimeEntity{
     @JoinColumn(name = "member_id") /*외래키(FK)지정,name = "member_id" : 외래키의 이름 */
     private Member member;
 
-    private Long aa;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public static Cart createCart(Member member){
         Cart cart = new Cart();

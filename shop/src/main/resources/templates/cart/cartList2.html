@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout2}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body>
+<div layout:fragment="content" class="content-mg">
+    <h2 class="mb-4">장바구니 목록</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="checkAll" onclick="checkAll()">&nbsp;&nbsp;전체선택
+            </th>
+            <th>상품정보</th>
+            <th>상품금액</th>
+            <th>사이즈</th> <!-- 추가된 열 -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartItem : ${cartItems}">
+            <td class="text-center align-middle">
+                <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
+            </td>
+            <td class="d-flex">
+                <div class="repImgDiv align-self-center">
+                    <img th:src="${cartItem.imgUrl}" th:alt="${cartItem.itemNm}" class="rounded repImg">
+                </div>
+                <div class="align-self-center">
+                    <span class="fs24 font-weight-bold" th:text="${cartItem.itemNm}"></span>
+                    <div class="fs18 font-weight-light">
+                        <span class="input-group mt-2">
+                            <span class="align-self-center mr-2" th:id="'price_' + ${cartItem.cartItemId}"
+                                  th:data-price="${cartItem.price}"
+                                  th:text="${cartItem.price} + '원'"></span>
+                            <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
+                                   th:value="${cartItem.count}" min="1" onchange="changeCount(this)"
+                                   class="form-control mr-2">
+                            <button class="close" type="button" aria-label="Close">
+                                <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center align-middle">
+                <span th:id="'totalPrice_' + ${cartItem.cartItemId}" name="totalPrice"
+                      th:text="${cartItem.price * cartItem.count} + '원'"></span>
+            </td>
+            <td class="text-center align-middle">
+                <span th:text="${cartItem.size}"></span> <!-- 상품 사이즈 출력 -->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 class="text-center">
+        총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
+    </h2>
+    <div class="text-center mt-3">
+        <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+    </div>
+</div>
+</body>
+</html>
