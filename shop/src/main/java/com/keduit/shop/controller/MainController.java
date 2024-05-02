@@ -50,12 +50,6 @@ public class MainController {
 
     System.out.println(items.get(0));
     System.out.println(itemImgs.get(0).getImgUrl());
-    public String main(Model model){
-        List<Item> items = itemRepository.findAll();
-
-        List<ItemImg> itemImgs = itemImgRepository.findAll();
-//        System.out.println(items.get(0));
-//        System.out.println(itemImgs.get(0).getImgUrl());
 
     model.addAttribute("items", items);
     model.addAttribute("itemImgs", itemImgs.get(0).getImgUrl());

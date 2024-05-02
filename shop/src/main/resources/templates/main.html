@@ -148,10 +148,9 @@
   <div class="cardTitle">
     <p>이달의 신상품</p>
   </div>
-  <div class="card3">
 
+  <div class="card3">
     <div class="alll">
-      <!--        <th:block th:each="item, status: ${itemList.getContent()}"-->
       <th:block th:each="item :${itemList}"
                 th:if="${item.itemSellStatus == T(com.keduit.shop.constant.ItemSellStatus).SELL}">
         <div class="saleProduct1">
@@ -168,10 +167,6 @@
                     <a th:href="'/item/' +${item.id}" th:each="itemImgDTO:${item.itemImgDTOList}">
                       <img th:src="${itemImgDTO.imgUrl}" alt="#">
                     </a>
-
-                    <!--<a th:href="'/item/' +${item.id}">
-                      <img th:src="${itemImgs.imgUrl}" >
-                    </a>-->
                   </div>
                   <!--                      </div>-->
                   <div>

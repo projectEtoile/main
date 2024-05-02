@@ -106,7 +106,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         // 쿼리스트링 값이 널이면 널. 존재하면 입력된 설정값과 일치하는 것만 검색.
     }
 
-
     @Override
     public Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable) {
 

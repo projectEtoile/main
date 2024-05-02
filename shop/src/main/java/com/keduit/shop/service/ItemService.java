@@ -131,7 +131,6 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
         return itemRepository.getMainItemPage(searchDTO, pageable);
-
     }
 
 }

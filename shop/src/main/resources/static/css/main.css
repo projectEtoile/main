@@ -383,12 +383,14 @@ element.style{
     width: 295px;
     margin-right: 20px;
 }
+
 .alll{
   display: flex;
   /*justify-content: center;*/
   width: 1500px;
   flex-wrap: wrap;
 }
+
 .card3 {
   display: flex;
   justify-content: center;

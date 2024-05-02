@@ -20,7 +20,6 @@ public class MainItemDTO {
   private ItemSellStatus itemSellStatus;  /*상품 판매 현황*/
 
   @QueryProjection
-
   public MainItemDTO(Long id, String itemNm, String brandNm, String itemDetail, String imgUrl, Integer price, int discountRate, ItemSellStatus itemSellStatus) {
     this.id = id;
     this.itemNm = itemNm;
