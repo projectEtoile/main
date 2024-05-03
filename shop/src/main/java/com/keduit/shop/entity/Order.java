@@ -32,11 +32,6 @@ public class Order extends BaseTimeEntity {
     private OrderStatus orderStatus; /*주문상태*/
 
 
-    private String onDelivery; /*배송중*/
-
-    private String deliveryOver; /*배송완료*/
-
-    private String shipment; /*배송준비중*/
 
     /*order입장에서 orderitem이 일대 다임*/
     /*order와 orderItem은 일대 다의 연관 관계를 가진다.*/

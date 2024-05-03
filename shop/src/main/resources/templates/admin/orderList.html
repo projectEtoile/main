@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<div layout:fragment="content">
+    <link th:href="@{/css/admin/itemMng.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/admin/orderList.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/admin/orderList.js}" type="text/javascript"></script>
+
+    <form th:action="@{'/admin/orders/' + ${orders.number}}"
+          role="form" method="get" th:object="${orders}">
+        <body>
+
+        <div class="search-container" th:object="${adminOrderSearchDTO}">
+            <select th:field="*{searchDateType}" class="form-control search-select">
+                <option value="all">전체기간</option>
+                <option value="1d">1일</option>
+                <option value="1w">1주</option>
+                <option value="1m">1개월</option>
+                <option value="6m">6개월</option>
+            </select>
+
+
+            <select th:field="*{searchBy}" class="form-control search-select">
+                <option value="email">고객 이메일</option>
+                <option value="itemId">상품코드</option>
+            </select>
+
+            <select th:field="*{orderStatus}" class="form-control search-select">
+                <option value="">판매상태(전체)</option>
+                <option value="ORDER">주문요청</option>
+                <option value="CANCEL">주문취소</option>
+                <option value="RETURN_REQUEST">반품 요청</option>
+                <option value="RETURN_COMPLETED">반품 처리 완료</option>
+                <option value="DELIVERING">배송중</option>
+                <option value="DELIVERED">배송완료</option>
+            </select>
+            <br>
+
+
+            <!-- 상품등록 시작 -->
+            <div>
+                <div class="search-bar">
+                    <input th:field="*{searchQuery}" type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력">
+                    <!--                <input  type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력해주세요">-->
+                    <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
+                    <button id="searchBtn" type="submit" class="search-btn">검색
+                        <!--                        <span class="material-symbols-outlined">-->
+                        <!--        search-->
+                        <!--      </span>-->
+                    </button>
+                </div>
+            </div>
+            <button onclick="allChangeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING</button>
+            <button onclick="allChangeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED</button>
+            <button onclick="allChangeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED
+            </button>
+        </div>
+
+
+        <div class="tableBox">
+            <div class="subBox">&emsp;&emsp;&emsp;&emsp; 주문 목록 검색 갯수 :&emsp; <p
+                    th:text="${orders.totalElements}"></p>
+            </div>
+            <div class="tableContainer">
+                <table>
+                    <colgroup>
+                        <col width="50">
+                        <col width="100">
+                        <col width="200">
+                        <col width="100">
+                        <col width="250">
+                        <col width="50">
+                        <col width="100">
+                        <col width="100">
+                        <col width="120">
+                        <col width="100">
+                        <col width="150">
+                        <col width="50">
+                    </colgroup>
+                    <thead>
+                    <tr class="firstLine">
+                        <th scope="col">개별</th>
+                        <th scope="col">주문id</th>
+                        <th scope="col">emial</th>
+                        <th scope="col">상품id</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">사이즈</th>
+                        <th scope="col">주문수량</th>
+                        <th scope="col">단가</th>
+                        <th scope="col">총 주문가</th>
+                        <th scope="col">주문 상태</th>
+                        <th scope="col">주문시각</th>
+                        <th scope="col">주소</th>
+                    </tr>
+                    <tr th:each="orders, status: ${orders.getContent()}">
+                        <th> <input class="orderCheckBox" type="checkbox" th:value="${orders.id}"></th>
+                        <th th:text="${orders.id}"></th>
+                        <th th:text="${orders.member.email}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.id}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.itemNm}"></th>
+                        <th th:text="${orders.orderItems.get(0).size}"></th>
+                        <th th:text="${orders.orderItems.get(0).count}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.price}"></th>
+                        <th th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></th>
+                        <th th:text="${orders.orderStatus}"></th>
+                        <th th:text="${orders.orderDate}"></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="finalButton">
+                    <button onclick="changeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING 개별처리</button>
+                    <button onclick="changeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED 개별처리</button>
+                    <button onclick="changeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED 개별처리</button>
+            </div>
+        </div>
+        <div th:with="start=${(orders.number/maxPage)*maxPage + 1},
+                      end=(${(orders.totalPages == 0) ? 1 :
+                      (start + (maxPage - 1) < orders.totalPages ? start + (maxPage - 1) :
+                      orders.totalPages)})" class="pagination-container">
+
+            <ul class="pagination-list">
+                <li th:classappend="${orders.first} ? 'disabled' : ''"
+                    class="pagination-item pagination-item-previous">
+                    <!-- 페이지가 0인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${orders.number != 0}" th:onclick="'javascript: page(' + (${orders.number - 1}) + ')'"
+                       aria-label='Previous' class="pagination-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                    <a th:unless="${orders.number != 0}" aria-label='Previous' class="pagination-link disabled">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                    th:classappend="${orders.number eq page - 1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+                       class="page-link pagination-link">
+                        [[${page}]]
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${orders.last} ? 'disabled' : ''">
+                    <!-- 페이지가 마지막 페이지인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${!orders.last}" th:onclick="'javascript:page(' + (${orders.number + 1}) + ')'"
+                       aria-label='Next' class="page-link pagination-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                    <a th:if="${orders.last}" aria-label='Next' class="page-link pagination-link disabled">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </body>
+    </form>
+</div>
+
+</html>
+
+
+
+
+

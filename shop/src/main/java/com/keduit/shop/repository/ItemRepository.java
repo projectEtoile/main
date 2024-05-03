@@ -8,13 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
+
 import java.util.List;
 
-/*<Item, Long> = <entity이름, primary key의 데이터 타입>*/
-/*QuerydslPredicateExecutor : QueryDsl사용 시 조건에 맞는 조회를 위해 추가*/
 public interface ItemRepository extends JpaRepository<Item, Long>,
-        QuerydslPredicateExecutor<Item>
-        {
+    ItemRepositoryCustom{
 
     List<Item> findByItemNm(String itemNm);
 
@@ -24,7 +22,12 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);/*금액큰거부터 나오게하기*/
 
+
     Page<Item> findPageBy(Pageable page);
+
+
+
+
 
 
     /*위에랑 다르게 JPQL사용하기*/
@@ -36,4 +39,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
     @Query(value = "select * from item i where i.item_text like " +
             " %:itemText% order by i.price desc", nativeQuery = true)
     List<Item> findByItemTextByNative(@Param("itemText") String itemText);
+
 }

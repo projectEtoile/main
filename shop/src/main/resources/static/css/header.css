@@ -4,6 +4,9 @@ body, html {
   /* height: 100%; */
   font-family: "ProximaNova-Bold","NotoSansKR-Medium";
 }
+        .fieldError {
+            color: #bd2130;
+        }
 
 /* .top-area {
   width: 100%;
@@ -418,4 +421,48 @@ border-radius: 100px;
   position: absolute;
   z-index: 100;
   left: 150px;
+}
+/*실시간 검색어*/
+#search-ranking{
+  position: absolute;
+  top: 14px;
+  right: 0;
+  width: 198px;
+  height: 20px;
+}
+#search-ranking:hover ul{
+  display: inline-block;
+}
+
+#search-ranking ul{
+  display: none;
+  list-style: none;
+  padding: 17px;
+  margin: 0;
+  width: 332px;
+  height: 334px;
+  border: 1px solid #aaa;
+  background: white;
+  position: absolute;
+  top: -15px;
+  right: 0;
+  z-index: 100;
+}
+
+#z-example{
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+}
+#rank-number{
+  margin-top: -9px;
+  color: #00ab33;
+  font-size: 16px;
+}
+
+#rank-title{
+  letter-spacing: -1px;
+  font-size: 14px;
 }

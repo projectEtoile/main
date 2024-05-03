@@ -1,5 +1,7 @@
 package com.keduit.shop.service;
 
+import com.keduit.shop.constant.OrderStatus;
+import com.keduit.shop.dto.AdminOrderSearchDTO;
 import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
 import com.keduit.shop.dto.OrderItemDTO;
@@ -19,6 +21,7 @@ import org.thymeleaf.util.StringUtils;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -124,5 +127,51 @@ public class OrderService {
         return order.getId();
     }
 
+
+    public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pageable pageable) {
+        return orderRepository.getAdminOrderPage(adminOrderSearchDTO, pageable);
+    }
+
+    @Transactional
+    public void allChangeStatus(String currentState,String newState){
+
+        OrderStatus newStatus1 = OrderStatus.valueOf(newState);
+        OrderStatus currentState1 = OrderStatus.valueOf(currentState);
+        // 이넘에 해당되는 문자열이 아닌경우 예외처리 하는게 좋음.
+
+        List<Order> orderList = orderRepository.findByOrderStatus(currentState1);
+
+        if(orderList == null){
+            return;
+        }
+
+        for (Order order : orderList){
+            order.setOrderStatus(newStatus1);
+        }
+        orderRepository.saveAll(orderList);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public String changeStatus(String currentState, String newState, List<Long> checkedOrderIds) {
+
+        OrderStatus currentState1 = OrderStatus.valueOf(currentState);
+        OrderStatus newStatus1 = OrderStatus.valueOf(newState);
+
+
+        for (Long orderId : checkedOrderIds) {
+            Optional<Order> optionalOrder = orderRepository.findById(orderId);
+            if(optionalOrder.isEmpty()){
+                throw new IllegalArgumentException("해당 orderId의 order를 찾을 수 없습니다");
+            }
+
+            if(!optionalOrder.get().getOrderStatus().equals(currentState1)){
+                throw new IllegalStateException(currentState + " 상태가 아닌 order가 존재합니다");
+            }
+            optionalOrder.get().setOrderStatus(newStatus1);
+            orderRepository.save(optionalOrder.get());
+            // 옵셔널에서 get을 하면 원래 상태인것인가?? 그렇다
+        }
+            return "성공!";
+    }
 
 }

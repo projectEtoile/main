@@ -2,6 +2,7 @@ package com.keduit.shop.dto;
 
 import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.entity.Order;
+import com.keduit.shop.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

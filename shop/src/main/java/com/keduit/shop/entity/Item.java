@@ -1,6 +1,7 @@
 package com.keduit.shop.entity;
 
 import com.keduit.shop.constant.ItemSellStatus;
+import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.exception.OutOfStockException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item extends BaseTimeEntity{
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +42,10 @@ public class Item extends BaseTimeEntity{
     private int stockS;
 
     @Column(nullable = false)
-    private int stockM;  
+    private int stockM;
 
     @Column(nullable = false)
-    private int stockL;  
+    private int stockL;
 
     @Column(nullable = false)
     private int stockFree;
@@ -72,7 +73,23 @@ public class Item extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)  /*도메인만들어줌*/
     private ItemSellStatus itemSellStatus = ItemSellStatus.SELL; // 디폴트SELL  /*상품 판매 현황*/
 
-/*    @Column(nullable = false)
+    public void updateItem(ItemFormDTO itemFormDTO) {
+        this.itemNm = itemFormDTO.getItemNm();
+        this.brandNm = itemFormDTO.getBrandNm();
+        this.level1 = itemFormDTO.getLevel1();
+        this.level2 = itemFormDTO.getLevel2();
+        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+        this.price = itemFormDTO.getPrice();
+        this.material = itemFormDTO.getMaterial();
+        this.itemText = itemFormDTO.getItemText();
+        this.stockS = itemFormDTO.getStockS();
+        this.stockM = itemFormDTO.getStockM();
+        this.stockL = itemFormDTO.getStockL();
+        this.stockFree = itemFormDTO.getStockFree();
+        this.stockNumber = itemFormDTO.getStockS()+itemFormDTO.getStockM()+itemFormDTO.getStockL()+itemFormDTO.getStockFree();
+    }
+
+    /*    @Column(nullable = false)
     private String thImgUrl; *//*상품 썸네일 사진*//*
 
     @Column(nullable = false)
