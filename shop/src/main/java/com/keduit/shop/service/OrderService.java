@@ -6,10 +6,7 @@ import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
 import com.keduit.shop.dto.OrderItemDTO;
 import com.keduit.shop.entity.*;
-import com.keduit.shop.repository.ItemImgRepository;
-import com.keduit.shop.repository.ItemRepository;
-import com.keduit.shop.repository.MemberRepository;
-import com.keduit.shop.repository.OrderRepository;
+import com.keduit.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,32 +29,44 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
+    private final AddressRepository addressRepository;
 
     /*주문등록*/
     @Transactional
     public Long order(OrderDTO orderDTO, String email) {
-        // 주문할 상품 조회
         Item item = itemRepository.findById(orderDTO.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
 
-        // 현재 로그인한 회원의 정보 조회
         Member member = memberRepository.findByEmail(email);
 
-        String selectedSize = orderDTO.getSize(); // 선택한 사이즈
-
-        // 주문 상품 생성
-        OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), selectedSize); // 사이즈 전달
+        OrderItem orderItem = OrderItem.createOrderItem(item, orderDTO.getCount(), orderDTO.getSize());
         List<OrderItem> orderItemList = new ArrayList<>();
         orderItemList.add(orderItem);
 
-        // 주문 엔티티 생성
+        // 여기서 기본 주소를 가져옵니다.
+        Address defaultAddress = addressRepository.findByMemberAndSelectAddressTrue(member)
+                .orElseThrow(() -> new IllegalStateException("기본 주소 설정이 필요합니다."));
+
         Order order = Order.createOrder(member, orderItemList);
+        order.setDeliveryAddress(defaultAddress);
         orderRepository.save(order);
 
-        // 주문이 완료된 후에 재고 감소
-        item.removeStock(selectedSize, orderDTO.getCount());
-
+        item.removeStock(orderDTO.getSize(), orderDTO.getCount());
         return order.getId();
+    }
+
+    /*주소수정시 이거사용*/
+    public void updateOrderAddresses(Member member) {
+        List<Order> orders = orderRepository.findByMemberAndOrderStatus(member, OrderStatus.ORDER);
+
+        // 여기서도 기본 주소를 확인합니다.
+        Address defaultAddress = addressRepository.findByMemberAndSelectAddressTrue(member)
+                .orElseThrow(() -> new IllegalStateException("기본 주소 설정이 필요합니다."));
+
+        for (Order order : orders) {
+            order.setDeliveryAddress(defaultAddress);
+        }
+        orderRepository.saveAll(orders);
     }
 
 
@@ -90,6 +99,7 @@ public class OrderService {
         return new PageImpl<>(orderHistDTOs, pageable, totalCount);
     }
 
+
     /*주문 취소 전 이메일로 사용자(로그인한,주문했던) 일치여부 확인*/
     @Transactional(readOnly = true)
     public boolean validateOrder(Long orderId, String email) {
@@ -102,11 +112,54 @@ public class OrderService {
         return true;
     }
 
+
+    @Transactional
     public void cancelOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
-        order.cancelOrder();
-        orderRepository.save(order);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("주문을 찾을 수 없습니다."));
+
+        // 주문 상태를 취소로 변경
+        order.setOrderStatus(OrderStatus.CANCEL); // 이 부분은 Order 엔티티에 적절한 setter가 구현되어 있어야 합니다.
+
+        // 각 주문 항목의 재고를 증가시키지만 주문 항목을 삭제하지 않습니다.
+        for (OrderItem orderItem : order.getOrderItems()) {
+            increaseItemStock(orderItem);  // 재고 증가 로직
+        }
+
+        orderRepository.save(order);  // 변경 사항을 저장
     }
+
+    private void increaseItemStock(OrderItem orderItem) {
+        Item item = orderItem.getItem();
+        int addedCount = orderItem.getCount();  // 취소된 주문 수량
+
+        // 사이즈별 재고 증가
+        switch (orderItem.getSize()) {
+            case "S":
+                item.setStockS(item.getStockS() + addedCount);
+                break;
+            case "M":
+                item.setStockM(item.getStockM() + addedCount);
+                break;
+            case "L":
+                item.setStockL(item.getStockL() + addedCount);
+                break;
+            case "Free":
+                item.setStockFree(item.getStockFree() + addedCount);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid size");
+        }
+
+        // 총 재고 업데이트
+        item.setStockNumber(item.getStockNumber() + addedCount);
+
+        itemRepository.save(item);
+    }
+
+
+
+
 
     public Long orders(List<OrderDTO> orderDTOList, String email) {
         Member member = memberRepository.findByEmail(email);
@@ -126,9 +179,11 @@ public class OrderService {
 
         return order.getId();
     }
+    
 
 
-    public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pageable pageable) {
+
+public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pageable pageable) {
         return orderRepository.getAdminOrderPage(adminOrderSearchDTO, pageable);
     }
 

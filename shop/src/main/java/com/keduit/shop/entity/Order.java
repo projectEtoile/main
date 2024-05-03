@@ -31,6 +31,9 @@ public class Order extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus; /*주문상태*/
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address deliveryAddress; // 배송지 주소
 
 
     /*order입장에서 orderitem이 일대 다임*/
