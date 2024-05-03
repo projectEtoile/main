@@ -9,6 +9,7 @@ import com.keduit.shop.entity.*;
 import com.keduit.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
@@ -25,7 +26,6 @@ public class CartService {
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-    private final OrderService orderService;
     private final OrderRepository orderRepository;
 
     /*장바구니 추가하기*/
@@ -102,6 +102,11 @@ public class CartService {
             throw new IllegalStateException("Member not found for email: " + email);
         }
 
+        // 재고 확인
+        if (!checkStock(cartItem)) {
+            throw new RuntimeException("상품의 재고가 부족합니다.");
+        }
+
         Order order = new Order();
         order.setMember(member);
         order.setOrderDate(LocalDateTime.now());
@@ -112,13 +117,76 @@ public class CartService {
         orderItem.setItem(cartItem.getItem());
         orderItem.setCount(cartOrderDTO.getCount());
         orderItem.setOrderPrice(totalPrice);
-        order.addOrderItem(orderItem);
+        orderItem.setSize(cartItem.getSize()); // 사이즈 정보 추가
 
+        order.addOrderItem(orderItem);
         orderRepository.save(order);
-        cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
 
         return order.getId();
     }
+
+
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void decreaseItemStock(Long cartItemId, String email) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+
+        Item item = cartItem.getItem();
+        String size = cartItem.getSize();
+        int count = cartItem.getCount();
+
+        item.removeStock(size, count);
+        itemRepository.save(item); // 재고를 수정한 후에는 반드시 저장해야 함
+
+        cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
+    }
+    private boolean checkStock(CartItem cartItem) {
+        Item item = cartItem.getItem();
+        String size = cartItem.getSize();
+        int count = cartItem.getCount();
+
+        // 상품의 재고량 확인
+        switch (size) {
+            case "S":
+                if (item.getStockS() < count) {
+                    return false;
+                }
+                break;
+            case "M":
+                if (item.getStockM() < count) {
+                    return false;
+                }
+                break;
+            case "L":
+                if (item.getStockL() < count) {
+                    return false;
+                }
+                break;
+            case "Free":
+                if (item.getStockFree() < count) {
+                    return false;
+                }
+                break;
+            default:
+                return false;
+        }
+
+        // 전체 재고량 확인
+        if (item.getStockNumber() < count) {
+            return false;
+        }
+
+        return true; // 재고가 충분하면 true 반환
+    }
+
+
+
+
+
+
+
+
+
 
 
     @Transactional(readOnly = true)
@@ -132,33 +200,7 @@ public class CartService {
     }
 
 
-    @Transactional
-    public void orderAndRemoveCartItems(List<CartOrderDTO> cartOrderDTOList, String email) {
-        Member member = memberRepository.findByEmail(email);
-        if (member == null) {
-            throw new IllegalStateException("Member not found for email: " + email);
-        }
 
-        for (CartOrderDTO cartOrderDTO : cartOrderDTOList) {
-            CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId())
-                    .orElseThrow(() -> new EntityNotFoundException("Cart item not found for ID: " + cartOrderDTO.getCartItemId()));
-
-            Order order = new Order();
-            order.setMember(member);
-            order.setOrderDate(LocalDateTime.now());
-            order.setOrderStatus(OrderStatus.ORDER);
-
-            int totalPrice = cartItem.getPrice() * cartOrderDTO.getCount();
-            OrderItem orderItem = new OrderItem();
-            orderItem.setItem(cartItem.getItem());
-            orderItem.setCount(cartOrderDTO.getCount());
-            orderItem.setOrderPrice(totalPrice);
-            order.addOrderItem(orderItem);
-
-            orderRepository.save(order);
-            cartItemRepository.delete(cartItem); // 주문 후 장바구니 항목 삭제
-        }
-    }
 
 
 
