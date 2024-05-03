@@ -34,14 +34,14 @@
                 <option value="itemId">상품코드</option>
             </select>
 
-            <select th:field="*{orderStatus}" class="form-control search-select">
+            <select th:field="*{orderStatus}" class="form-control search-select" style="width: 300px;">
                 <option value="">판매상태(전체)</option>
-                <option value="ORDER">주문요청</option>
-                <option value="CANCEL">주문취소</option>
-                <option value="RETURN_REQUEST">반품 요청</option>
-                <option value="RETURN_COMPLETED">반품 처리 완료</option>
-                <option value="DELIVERING">배송중</option>
-                <option value="DELIVERED">배송완료</option>
+                <option value="ORDER">ORDER(주문요청)</option>
+                <option value="CANCEL">CANCEL(주문취소)</option>
+                <option value="RETURN_REQUEST">RETURN_REQUEST(반품 요청)</option>
+                <option value="RETURN_COMPLETED">RETURN_COMPLETED(반품처리 완료)</option>
+                <option value="DELIVERING">DELIVERING(배송중)</option>
+                <option value="DELIVERED">DELIVERED(배송완료)</option>
             </select>
             <br>
             <!-- 상품등록 시작 -->
@@ -78,7 +78,7 @@
                     <colgroup>
                         <col width="50">
                         <col width="100">
-                        <col width="200">
+                        <col width="50">
                         <col width="100">
                         <col width="250">
                         <col width="50">
@@ -93,7 +93,7 @@
                     <tr class="firstLine">
                         <th scope="col">개별</th>
                         <th scope="col">주문id</th>
-                        <th scope="col">emial</th>
+                        <th scope="col">고객id</th>
                         <th scope="col">상품id</th>
                         <th scope="col">상품명</th>
                         <th scope="col">사이즈</th>
@@ -107,7 +107,7 @@
                     <tr th:each="orders, status: ${orders.getContent()}">
                         <th><input class="orderCheckBox" type="checkbox" th:value="${orders.id}"></th>
                         <th th:text="${orders.id}"></th>
-                        <th th:text="${orders.member.email}"></th>
+                        <th th:text="${orders.member.id}"></th>
                         <th th:text="${orders.orderItems.get(0).item.id}"></th>
                         <th th:text="${orders.orderItems.get(0).item.itemNm}"></th>
                         <th th:text="${orders.orderItems.get(0).size}"></th>

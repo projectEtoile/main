@@ -141,7 +141,7 @@ public class ItemService {
         List<Item> itemList = itemRepository.findByLevel1(categorySelect);
 
         if(itemList.isEmpty()){
-            return new ResponseEntity<>("카테고리에 해당하는 상품 없음",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("카테고리에 해당하는 상품이 없습니다.",HttpStatus.BAD_REQUEST);
         }
 
         for (Item item : itemList){
