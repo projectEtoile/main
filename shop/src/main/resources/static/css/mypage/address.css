@@ -51,14 +51,22 @@
   text-decoration: none;
   cursor: pointer;
 }
+h5{
+    font-size: 35px;
+     position: relative;
 
+        bottom: -20px;
+}
+.cont1{
+margin-bottom: -30px;
+}
 
 .mainSection2{
   flex: 3;
   display: flex;
   /* justify-content: center; */
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: -100px;
   align-items: center;
 }
 

@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -188,7 +190,7 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
     }
 
     @Transactional
-    public void allChangeStatus(String currentState,String newState){
+    public ResponseEntity allChangeStatus(String currentState, String newState){
 
         OrderStatus newStatus1 = OrderStatus.valueOf(newState);
         OrderStatus currentState1 = OrderStatus.valueOf(currentState);
@@ -196,14 +198,17 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
 
         List<Order> orderList = orderRepository.findByOrderStatus(currentState1);
 
-        if(orderList == null){
-            return;
+        if(orderList.isEmpty()){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@4444@@@");
+            return new ResponseEntity<>(currentState+" 의 상태인 주문이 없습니다.",HttpStatus.BAD_REQUEST);
         }
 
         for (Order order : orderList){
             order.setOrderStatus(newStatus1);
         }
         orderRepository.saveAll(orderList);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = Exception.class)

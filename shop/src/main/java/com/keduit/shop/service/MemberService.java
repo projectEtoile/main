@@ -123,8 +123,13 @@ public class MemberService implements UserDetailsService {
         }
 
 
+
+
         Member member =  memberRepository.findByEmail(email);
 
+        if(addressRepository.findAllByMember(member).isEmpty()){
+            address.setSelectAddress(true);
+        }
         address.setMember(member);
 
         addressRepository.save(address);

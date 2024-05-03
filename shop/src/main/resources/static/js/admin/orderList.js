@@ -76,7 +76,9 @@ event.preventDefault();
                     alert("상태 변경 되었습니다");
                     location.reload();
                 } else {
-                    alert("상태 변경이 실패했습니다");
+                    response.text().then(errorMessage => {
+                                                      alert(errorMessage);
+                                                  });
                 }
             })
             .catch(error => {

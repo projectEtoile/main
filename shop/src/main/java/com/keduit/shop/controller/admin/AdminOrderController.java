@@ -51,8 +51,8 @@ public class AdminOrderController {
     public @ResponseBody ResponseEntity allChangeStatus(@RequestBody JSONObject requestData){
         String currentState = requestData.getAsString("currentState");
         String newState = requestData.getAsString("newState");
-        orderService.allChangeStatus(currentState,newState);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return orderService.allChangeStatus(currentState,newState);
     }
 
     @PostMapping("/changeStatus")
