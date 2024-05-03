@@ -29,31 +29,58 @@ public class MainController {
   private final ItemService itemService;
 
   @GetMapping("/")
-
   public String main(Model model, AdminItemSearchDTO searchDTO, Optional<Integer> page) {
-    List<Item> items = itemRepository.findAll();
-    List<ItemImg> itemImgs = itemImgRepository.findAll();
 
-    List<ItemFormDTO> itemFormDTOSList = new ArrayList<>();
+    List<Item> discountRateItems = itemRepository.findBydiscountRateNot(1f);
 
-    System.out.println("============items.size()============" + items.size());
+    List<ItemFormDTO> itemFormDTOS = new ArrayList<>();
 
-    for (int i = items.size(); i > items.size() - 20; i--) {
-      if (items.size() - 20 < 0) {
-        for (int j = items.size(); j > 0; j--) {
-          itemFormDTOSList.add(itemService.getItemDtl((long) j));
-        }
-      } else {
-        itemFormDTOSList.add(itemService.getItemDtl((long) i));
+    if(!discountRateItems.isEmpty()){
+      for (Item discountRateItem : discountRateItems){
+          itemFormDTOS.add(itemService.getItemDtl(discountRateItem.getId()));
       }
+      model.addAttribute("message","SALE 중입니다 : "+itemFormDTOS.get(0).getLevel1());
+      model.addAttribute("items", discountRateItems);
+      model.addAttribute("itemList", itemFormDTOS);
+
+      return "main";
     }
 
-    System.out.println(items.get(0));
-    System.out.println(itemImgs.get(0).getImgUrl());
+    List<Item> newItems = itemRepository.findFirst20ByOrderByIdDesc();
+    for (Item newItem : newItems){
+      itemFormDTOS.add(itemService.getItemDtl(newItem.getId()));
+    }
+    model.addAttribute("message","이달의 신상품");
+    model.addAttribute("items", newItems);
+    model.addAttribute("itemList", itemFormDTOS);
 
-    model.addAttribute("items", items);
-    model.addAttribute("itemImgs", itemImgs.get(0).getImgUrl());
-    model.addAttribute("itemList", itemFormDTOSList);
+
+
+
+// ------------------
+
+//    List<Item> items = itemRepository.findAll();
+//    List<ItemImg> itemImgs = itemImgRepository.findAll();
+//    List<ItemFormDTO> itemFormDTOSList = new ArrayList<>();
+//
+//    System.out.println("============items.size()============" + items.size());
+//
+//    for (int i = items.size(); i > items.size() - 20; i--) {
+//      if (items.size() - 20 < 0) {
+//        for (int j = items.size(); j > 0; j--) {
+//          itemFormDTOSList.add(itemService.getItemDtl((long) j));
+//        }
+//      } else {
+//        itemFormDTOSList.add(itemService.getItemDtl((long) i));
+//      }
+//    }
+//
+//    System.out.println(items.get(0));
+//    System.out.println(itemImgs.get(0).getImgUrl());
+//
+//    model.addAttribute("items", items);
+//    model.addAttribute("itemImgs", itemImgs.get(0).getImgUrl());
+//    model.addAttribute("itemList", itemFormDTOSList);
 
         /*Pageable pageable = PageRequest.of(page.isPresent() ? page.get(): 0,  20);
         Page<MainItemDTO> mainItems = itemService.getMainItemPage(searchDTO, pageable);

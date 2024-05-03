@@ -12,6 +12,8 @@ import com.keduit.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -131,6 +133,23 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
         return itemRepository.getMainItemPage(searchDTO, pageable);
+    }
+
+    @Transactional
+    public ResponseEntity categoryDiscountRate(String categorySelect, float discountRate) {
+
+        List<Item> itemList = itemRepository.findByLevel1(categorySelect);
+
+        if(itemList.isEmpty()){
+            return new ResponseEntity<>("카테고리에 해당하는 상품 없음",HttpStatus.BAD_REQUEST);
+        }
+
+        for (Item item : itemList){
+            item.setDiscountRate(discountRate);
+        }
+        itemRepository.saveAll(itemList);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }

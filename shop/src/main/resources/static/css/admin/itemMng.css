@@ -3,7 +3,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
-
+.allBtnCont{
+    display: flex;
+    justify-content: center;
+}
 .tableBox{
   margin-left: 200px;
   margin-right: 20px;
