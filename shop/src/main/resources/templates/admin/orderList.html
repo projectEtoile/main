@@ -44,8 +44,6 @@
                 <option value="DELIVERED">배송완료</option>
             </select>
             <br>
-
-
             <!-- 상품등록 시작 -->
             <div>
                 <div class="search-bar">
@@ -59,13 +57,18 @@
                     </button>
                 </div>
             </div>
-            <button onclick="allChangeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING</button>
-            <button onclick="allChangeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED</button>
-            <button onclick="allChangeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED
+
+
+        </div>
+        <div class="allBtnCont">
+
+            <button class="allSt" onclick="allChangeStatus('ORDER','DELIVERING',event)">ORDER -> DELIVERING</button>
+            <button class="allSt" onclick="allChangeStatus('DELIVERING','DELIVERED',event)">DELIVERING -> DELIVERED
+            </button>
+            <button style="width: 220px;" class="allSt" onclick="allChangeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">
+                RETURN_REQUEST -> RETURN_COMPLETED
             </button>
         </div>
-
-
         <div class="tableBox">
             <div class="subBox">&emsp;&emsp;&emsp;&emsp; 주문 목록 검색 갯수 :&emsp; <p
                     th:text="${orders.totalElements}"></p>
@@ -102,7 +105,7 @@
                         <th scope="col">주소</th>
                     </tr>
                     <tr th:each="orders, status: ${orders.getContent()}">
-                        <th> <input class="orderCheckBox" type="checkbox" th:value="${orders.id}"></th>
+                        <th><input class="orderCheckBox" type="checkbox" th:value="${orders.id}"></th>
                         <th th:text="${orders.id}"></th>
                         <th th:text="${orders.member.email}"></th>
                         <th th:text="${orders.orderItems.get(0).item.id}"></th>
@@ -112,16 +115,18 @@
                         <th th:text="${orders.orderItems.get(0).item.price}"></th>
                         <th th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></th>
                         <th th:text="${orders.orderStatus}"></th>
-                        <th th:text="${orders.orderDate}"></th>
+                        <td th:text="${#temporals.format(orders.regTime, 'yyyy-MM-dd HH:mm')}"></td>
                         <th></th>
                     </tr>
                     </thead>
                 </table>
             </div>
             <div class="finalButton">
-                    <button onclick="changeStatus('ORDER','DELIVERING',event)">ORDER->DELIVERING 개별처리</button>
-                    <button onclick="changeStatus('DELIVERING','DELIVERED',event)">DELIVERING->DELIVERED 개별처리</button>
-                    <button onclick="changeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">RETURN_REQUEST->RETURN_COMPLETED 개별처리</button>
+                <button class="st" onclick="changeStatus('ORDER','DELIVERING',event)">ORDER -> DELIVERING 개별처리</button>
+                <button class="st" onclick="changeStatus('DELIVERING','DELIVERED',event)">DELIVERING -> DELIVERED 개별처리</button>
+                <button class="st" onclick="changeStatus('RETURN_REQUEST','RETURN_COMPLETED',event)">
+                    RETURN_REQUEST -> RETURN_COMPLETED 개별처리
+                </button>
             </div>
         </div>
         <div th:with="start=${(orders.number/maxPage)*maxPage + 1},

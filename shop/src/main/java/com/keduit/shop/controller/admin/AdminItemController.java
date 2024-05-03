@@ -5,10 +5,13 @@ import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.repository.ItemRepository;
 import com.keduit.shop.service.ItemService;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,7 +132,16 @@ public class AdminItemController {
         }
         System.out.println(itemFormDTO.getItemImgIds());
         System.out.println("포스트수정 응답받음@@@@@@@@@@@@@@@@@");
-        return "redirect:/admin/item/modify/"+itemFormDTO.getId();
+        return "redirect:/admin/item/modify/" + itemFormDTO.getId();
+    }
+
+    @PostMapping("/discount")
+    public @ResponseBody ResponseEntity discount(@RequestBody JSONObject requestData) {
+
+        String categorySelect = requestData.getAsString("categorySelect");
+        float discountRate = Float.parseFloat(requestData.getAsString("discountRate"));
+
+        return itemService.categoryDiscountRate(categorySelect, discountRate);
     }
 
 }
