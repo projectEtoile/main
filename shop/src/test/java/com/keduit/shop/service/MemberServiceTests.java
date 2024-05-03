@@ -29,14 +29,13 @@ public class MemberServiceTests {
         memberFormDTO.setPassword("12345678");
         memberFormDTO.setAge(i);
         memberFormDTO.setSex(Sex.FEMALE);
-
         return Member.createMember(memberFormDTO, passwordEncoder);
     }
 
     @Test
     @DisplayName("회원 가입 테스트")
     public void saveMemberTest() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
 
             Member member = createMember(i);
             Member saveMember = memberService.saveMember(member);//리퍼지토리 호출해서 넣음

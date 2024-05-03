@@ -1,17 +1,73 @@
-//$(document).ready(function() {
-//    // 페이지 로드 시 실행
-//    var scrollPosition = localStorage.getItem('scrollPosition');
-//    if (scrollPosition !== null) {
-//        $(window).scrollTop(scrollPosition);
-//    }
-//
-//    // 페이지 이동 버튼 클릭 시 실행
-//    $('.pagination-link').click(function() {
-//        // 현재 스크롤 위치를 localStorage에 저장
-//        var currentScrollPosition = $(window).scrollTop();
-//        localStorage.setItem('scrollPosition', currentScrollPosition);
-//    });
-//});
+  $(document).ready(function() {
+      // 페이지 로드 시 실행
+      var scrollPosition = localStorage.getItem('scrollPosition');
+      if (scrollPosition !== null) {
+          $(window).scrollTop(scrollPosition);
+      }
+
+      // 페이지 이동 버튼 클릭 시 실행
+      $('.pagination-link').click(function() {
+          // 현재 스크롤 위치를 localStorage에 저장
+          var currentScrollPosition = $(window).scrollTop();
+          localStorage.setItem('scrollPosition', currentScrollPosition);
+      });
+
+      // 페이지가 새로고침 될 때 실행
+      $(window).on('beforeunload', function() {
+          // 현재 스크롤 위치를 localStorage에 저장
+          var currentScrollPosition = $(window).scrollTop();
+          localStorage.setItem('scrollPosition', currentScrollPosition);
+      });
+  });
+
+
+
+function discount(event) {
+event.preventDefault();
+
+var discountRate = event.target.value;
+var categorySelect1 = document.getElementById('categorySelect');
+var categorySelect = categorySelect1.value;
+
+            // CSRF 토큰 가져오기
+            var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+            var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+            // API 엔드포인트
+            var apiUrl = '/admin/discount';
+
+            // API 요청 데이터
+            var requestData = {
+                discountRate : discountRate,
+                categorySelect : categorySelect
+             };
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken
+                },
+                body: JSON.stringify(requestData) // 요청 데이터를 JSON 문자열로 변환하여 body에 추가
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("할인율이 적용되었습니다");
+                    location.reload();
+                } else {
+                    response.text().then(errorMessage => {
+                                                      alert(errorMessage);
+                                                  });
+                }
+            })
+            .catch(error => {
+                // 오류 처리
+                alert('Error:', error);
+            });
+        }
+
+
+
 
 
 $(document).ready(function(){

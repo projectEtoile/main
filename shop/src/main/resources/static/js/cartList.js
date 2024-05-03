@@ -161,39 +161,38 @@ function removeSelectedItems() {
 function orders() {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
-    let requests = []; // AJAX 요청들을 저장할 배열
-    const url = "/cart/orders"; // 이곳에 정의된 URL을 사용하여 서버에 요청을 보냅니다.
+    let cartOrders = [];
 
-    // 체크된 장바구니 항목들을 반복하면서 각각에 대한 주문 요청을 준비합니다.
     $("input[name=cartChkBox]:checked").each(function() {
         const cartItemId = $(this).val();
-        const count = $("#count_" + cartItemId).val(); // 수량 정보를 가져옵니다.
-        const paramData = JSON.stringify({ cartOrderDTOList: [{ cartItemId: cartItemId, count: count }] });
-
-        // AJAX 요청을 배열에 저장합니다.
-        requests.push(
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json",
-                data: paramData,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                }
-            })
-        );
+        const count = $("#count_" + cartItemId).val();
+        cartOrders.push({ cartItemId: cartItemId, count: parseInt(count) });
     });
 
-    // 모든 AJAX 요청이 완료된 후 처리
-    $.when.apply($, requests).then(
-        function() {
-            alert("모든 주문이 성공적으로 처리되었습니다.");
-            location.reload(); // 성공 후 페이지를 새로고침하여 변경된 내용을 반영
+    if (cartOrders.length === 0) {
+        alert("주문할 상품을 선택해주세요.");
+        return;
+    }
+
+    const paramData = JSON.stringify({ cartOrderDTOList: cartOrders });
+
+    $.ajax({
+        url: "/cart/orders",
+        type: "POST",
+        contentType: "application/json",
+        data: paramData,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
         },
-        function() {
+        success: function(response) {
+            alert("모든 주문이 성공적으로 처리되었습니다.");
+            location.reload();
+        },
+        error: function() {
             alert("주문 처리 중 오류가 발생했습니다.");
         }
-    );
+    });
 }
+
 
 

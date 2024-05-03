@@ -1,9 +1,19 @@
 package com.keduit.shop.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class AdminMemberSearchDTO {
-    private String searchAge;
 
-    private String searchGender;
+    private String searchDateType;
 
-    
+    private String searchBy;
+    // name
+    // id
+    // email
+    private String searchQuery = "";
 }
