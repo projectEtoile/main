@@ -116,6 +116,7 @@
                         <th th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></th>
                         <th th:text="${orders.orderStatus}"></th>
                         <td th:text="${#temporals.format(orders.regTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${orders.deliveryAddress.roadAddress + ', ' + orders.deliveryAddress.detailAddress}"></td>
                         <th></th>
                     </tr>
                     </thead>
