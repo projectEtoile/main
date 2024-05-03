@@ -60,7 +60,7 @@ public class Item extends BaseTimeEntity {
     private String level2; /*상품하위카테고리*/
 
     @Column(nullable = false)
-    private float discountRate; // 기본 값 1. N * 상품 가격 으로 할인 예. 10프로 할인 일시 0.9로 등록
+    private Float discountRate; // 기본 값 1. N * 상품 가격 으로 할인 예. 10프로 할인 일시 0.9로 등록
 
     @Lob
     @Column(nullable = false)
