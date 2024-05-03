@@ -55,6 +55,7 @@ public class OrderService {
         return order.getId();
     }
 
+    /*주소수정시 이거사용*/
     public void updateOrderAddresses(Member member) {
         List<Order> orders = orderRepository.findByMemberAndOrderStatus(member, OrderStatus.ORDER);
 
