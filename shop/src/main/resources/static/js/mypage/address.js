@@ -12,6 +12,12 @@ if (document.getElementById("selectAddress").checked) {
 }
 console.log(selectAddress);
 
+    if (document.getElementById("postcode").value.length === 0 || document.getElementById("detailAddress").value.length === 0) {
+        alert("우편번호와 상세주소는 필수 입력입니다");
+        return;
+    }
+
+
     // 주소 정보를 입력 받아서 객체로 만듭니다.
     var addressData = {
         postcode: document.getElementById("postcode").value,
@@ -119,6 +125,11 @@ event.preventDefault();
             var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
             var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
+                if (document.getElementById("postcode").value.length === 0 || document.getElementById("detailAddress").value.length === 0) {
+                    alert("우편번호와 상세주소는 필수 입력입니다");
+                    return;
+                }
+
             // API 엔드포인트
             var apiUrl = '/mypage/modify';
 
@@ -146,7 +157,9 @@ event.preventDefault();
                     alert("주소 수정에 성공했습니다.");
                     location.reload();
                 } else {
-                    alert("주소 수정에 실패했습니다.");
+                    response.text().then(errorMessage => {
+                                                                          alert(errorMessage);
+                                                                      });
                 }
             })
             .catch(error => {

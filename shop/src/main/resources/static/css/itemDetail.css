@@ -1,3 +1,4 @@
+
 * {
   list-style: none;
   text-decoration: none;
@@ -781,4 +782,14 @@ tbody>tr>td>p {
 
 .review_right {
   width: 1120px;
+}
+
+/*모달 css 시작*/
+.popWrap {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

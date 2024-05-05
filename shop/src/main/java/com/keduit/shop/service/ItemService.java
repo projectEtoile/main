@@ -41,7 +41,7 @@ public class ItemService {
                 + itemFormDTO.getStockS();
 
         item.setStockNumber(total);
-        item.setDiscountRate(1); // 할인율 기본값
+        item.setDiscountRate(1f); // 할인율 기본값
         itemRepository.save(item);
 
         // 이미지 파일을 순회하며 설정

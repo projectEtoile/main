@@ -110,7 +110,7 @@ public class MemberService implements UserDetailsService {
         System.out.println(addressDTO.getSelectAddress());
 
         if(addressDTO.getSelectAddress().equals(true)){
-            List<Address> allAddresses = addressRepository.findAll();
+            List<Address> allAddresses = addressRepository.findAllByMember(address.getMember());
             for (Address address1 : allAddresses) {
                 address1.setSelectAddress(false);
             }
@@ -135,7 +135,7 @@ public class MemberService implements UserDetailsService {
         addressRepository.save(address);
     }
 
-    public void modifyAddress(AddressDTO addressDTO) {
+    public boolean modifyAddress(AddressDTO addressDTO) {
 
         Address address = addressRepository.findById(addressDTO.getId()).orElseThrow(EntityNotFoundException::new);
 
@@ -145,22 +145,23 @@ public class MemberService implements UserDetailsService {
         address.setDetailAddress(addressDTO.getDetailAddress());
         address.setExtraAddress(addressDTO.getExtraAddress());
 
+        List<Address> allAddresses = addressRepository.findAllByMember(address.getMember());
+
         if (addressDTO.getSelectAddress().equals(true)) {
             System.out.println("트루로직");
-            List<Address> allAddresses = addressRepository.findAll();
+
             for (Address address1 : allAddresses) {
+
                 address1.setSelectAddress(false);
             }
-            addressRepository.saveAll(allAddresses);
-
             address.setSelectAddress(true);
 
         } else {
-            System.out.println("펄스로직");
-            address.setSelectAddress(false);
+            return false;
         }
 
         addressRepository.save(address);
+        return true;
     }
 }
 

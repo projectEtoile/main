@@ -37,6 +37,8 @@ public class AdminOrderController {
 
         Page<Order> orders = orderService.getAdminOrderPage(adminOrderSearchDTO, pageable);
 
+//        orders.getContent().get(0).getDeliveryAddress().getDetailAddress();
+//        orders.getContent().get(0).getDeliveryAddress().getPostcode();
 
         model.addAttribute("orders", orders);
         model.addAttribute("adminOrderSearchDTO", adminOrderSearchDTO);

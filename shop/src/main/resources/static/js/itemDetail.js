@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
                  dataType: "json",
                  success: function(result) {
                      alert("주문이 완료되었습니다.");
-//                     location.href = '/'; // 주문 성공 후 리디렉션
+                     location.href = '/'; // 주문 성공 후 리디렉션
                  },
                  error: function(jqXHR) {
                      if (jqXHR.status === 401) { // 인증 오류
@@ -298,3 +298,96 @@ document.addEventListener("DOMContentLoaded", function () {
                            // 장바구니에 상품을 담는 로직
                            addCart();
                        }
+
+/* 결제 모달 불러오기 시작 */
+$(document).ready(function() {
+  // 모달 열기 버튼 클릭 시 모달 열기
+$("#openModalButton").click(function() {
+event.preventDefault();
+
+var productName = document.querySelector(".prod_name").textContent;
+
+// 사이즈
+var selectElement = document.querySelector("select[name='size']");
+var selectedIndex = selectElement.selectedIndex;
+var selectedValue = selectElement.options[selectedIndex].value;
+    if (selectedValue.length === 0) {
+        alert("선택된 사이즈가 없습니다.");
+        return;
+    }
+
+// 갯수
+    var quantityInput = document.getElementById("quantity");
+
+var price = document.getElementById("realPrice").textContent;
+console.log(price);
+
+document.querySelector(".goods_span").textContent = productName;
+document.getElementById("mountt").textContent = quantityInput.value;
+document.getElementById("realPriceM").textContent = price;
+document.getElementById("totalPriceM").textContent = price*quantityInput.value;
+
+
+    var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+                var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+                // API 엔드포인트
+                var apiUrl = '/payment';
+
+               fetch(apiUrl, {
+                   method: 'GET',
+                   headers: {
+                       'Content-Type': 'application/json',
+                       [csrfHeader]: csrfToken
+                   }
+               })
+           .then(response => {
+               if (!response.ok) {
+                   return;
+               }
+               return response.json();
+           })
+
+               .then(data => {
+               console.log(data.message)
+                    if(data.message === 'notFound'){
+                          alert('기본 주소지를 설정해주세요.');
+                          return;
+                    }
+
+                   // 받은 데이터에서 member와 address 추출
+                   const member = data.member;
+                   const address = data.address;
+
+                   // 여기서부터 데이터를 활용하여 필요한 작업을 수행
+
+                   document.getElementById("nameM").innerText  = member.name;
+                   document.getElementById("emailM").innerText  = member.email;
+                   document.getElementById("postM").innerText  = address.postcode;
+                   document.getElementById("jiM").innerText  = address.jibunAddress;
+                   document.getElementById("detM").innerText  = address.detailAddress;
+
+
+ $("#myModal").css("display", "block");
+                   // 예를 들어, HTML에 표시하거나 다른 작업을 수행할 수 있습니다.
+               })
+               .catch(error => {
+                   alert('로그인 후 사용 가능합니다.');
+                    return;
+               });
+});
+
+  // 모달 닫기 버튼 클릭 시 모달 닫기
+  $("#btnCancel").click(function() {
+    $("#myModal").hide();
+  });
+
+  // 모달 외부 클릭 시 모달 닫기
+  $(document).mouseup(function(e) {
+    var modal = $("#myModal");
+    if (!modal.is(e.target) && modal.has(e.target).length === 0) {
+      modal.css("display", "none");
+    }
+  });
+});
+/* 결제 모달 불러오기 끝 */
