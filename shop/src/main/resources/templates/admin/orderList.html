@@ -77,17 +77,18 @@
                 <table>
                     <colgroup>
                         <col width="50">
-                        <col width="100">
-                        <col width="50">
-                        <col width="100">
+                        <col width="80">
+                        <col width="80">
+                        <col width="80">
                         <col width="250">
-                        <col width="50">
-                        <col width="100">
+                        <col width="80">
+                        <col width="80">
                         <col width="100">
                         <col width="120">
                         <col width="100">
                         <col width="150">
-                        <col width="50">
+                        <col width="300">
+                        <col width="300">
                     </colgroup>
                     <thead>
                     <tr class="firstLine">
@@ -102,7 +103,8 @@
                         <th scope="col">총 주문가</th>
                         <th scope="col">주문 상태</th>
                         <th scope="col">주문시각</th>
-                        <th scope="col">주소</th>
+                        <th scope="col">우편번호</th>
+                        <th scope="col">상세주소</th>
                     </tr>
                     <tr th:each="orders, status: ${orders.getContent()}">
                         <th><input class="orderCheckBox" type="checkbox" th:value="${orders.id}"></th>
@@ -116,6 +118,10 @@
                         <th th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></th>
                         <th th:text="${orders.orderStatus}"></th>
                         <td th:text="${#temporals.format(orders.regTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <th th:if="${orders.deliveryAddress != null}" th:text="${orders.deliveryAddress.postcode}"></th>
+                        <th th:unless="${orders.deliveryAddress != null}">N/A</th>
+                        <th th:if="${orders.deliveryAddress != null}" th:text="${orders.deliveryAddress.detailAddress}"></th>
+                        <th th:unless="${orders.deliveryAddress != null}">N/A</th>
                         <th></th>
                     </tr>
                     </thead>

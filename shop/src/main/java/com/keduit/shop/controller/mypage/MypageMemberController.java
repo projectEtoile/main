@@ -190,9 +190,14 @@ public class MypageMemberController {
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        memberService.modifyAddress(addressDTO);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        boolean result = memberService.modifyAddress(addressDTO);
+        if (result){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else
+
+        return new ResponseEntity<>("최소 하나의 주소는 기본 배송지여야 합니다. 다른 주소를 기본배송지로 선택해주세요",HttpStatus.BAD_REQUEST);
     }
 
 //    @GetMapping("/address/{addressId}")

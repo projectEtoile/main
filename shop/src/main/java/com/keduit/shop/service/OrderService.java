@@ -234,4 +234,15 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
             return "성공!";
     }
 
+    public Long totalPrice(List<Order> orderList){
+
+        Long AllOrderPrice = 0l;
+        for (Order order : orderList){
+            int orderPrice = order.getOrderItems().get(0).getCount() *
+                    order.getOrderItems().get(0).getItem().getPrice();
+            AllOrderPrice += orderPrice;
+        }
+        return AllOrderPrice;
+    }
+
 }

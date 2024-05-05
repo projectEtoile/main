@@ -58,24 +58,39 @@ $(document).ready(function() {
         }
     });
 
+   var OP = parseInt($('#OP').text());
+   var DngP = parseInt($('#DngP').text());
+
+   var sum =OP+DngP;
+
+   $('#TTP').text(sum);
+
 
 
     var context2 = $('#myChart2')[0].getContext('2d');
+
     var maleValue = document.getElementById('male').textContent;
     var femaleValue = document.getElementById('female').textContent;
+
+    var ttp1 = document.getElementById('ttp1').textContent;
+    var otp = document.getElementById('otp').textContent;
+    var ptp = document.getElementById('ptp').textContent;
+    var sdtp = document.getElementById('sdtp').textContent;
+    var stp = document.getElementById('stp').textContent;
+
     var myChart2 = new Chart(context2, {
         type: 'pie', // 차트의 형태
         data: { // 차트에 들어갈 데이터
             labels: [
                 //x 축
-                'Top','Outer'
+                'Top','Outer','Pants','Skirt/Dress','Shoes'
             ],
             datasets: [
                 { //데이터
                     label: '매출', //차트 제목
                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                     data: [
-                        maleValue,femaleValue //x축 label에 대응되는 데이터 값
+                        ttp1,otp,ptp,sdtp,stp
                     ],
                     backgroundColor: [
                         //색상

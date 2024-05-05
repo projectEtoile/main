@@ -1,0 +1,785 @@
+
+/* @import url("plugin.css"); */
+/* @import url("buttons.css"); */
+@import url("//fonts.googleapis.com/earlyaccess/nanumgothic.css");
+@font-face {
+    font-family: 'NanumGothic';
+    src: url('https://stdux.inicis.com/stdpay/font/NanumGothic.eot');
+    src: url('https://stdux.inicis.com/stdpay/font/NanumGothic.eot?#iefix') format('embedded-opentype'),
+         url('https://stdux.inicis.com/stdpay/font/NanumGothic.woff') format('woff'),
+         url('https://stdux.inicis.com/stdpay/font/NanumGothic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{padding:0; margin:0;}
+.popWrap {
+            /* popWrap 내용의 스타일 */
+            padding: 0;
+            margin: 0;
+            line-height: 16px;
+            font-family: dotum;
+            color: #666;
+            font-size: 12px;
+        }
+/* caption {visibility:hidden; overflow:hidden; width:0; height:0; font-size:0; line-height:0}  *//* 201605 추가 */
+.popWrap caption {overflow:hidden; width:0; height:0; font-size:0; line-height:0}
+.popWrap img {border:0; vertical-align:middle;}
+.popWrap a {text-decoration:none;}
+/*a:focus {outline:1px dashed #999;}*/
+.popWrap a, .popWrap a:hover, .popWrap a:focus, .popWrap a:active {color: inherit;}
+.popWrap li{list-style: none;padding:0;margin:0}
+/* form */
+.popWrap input {font-family:dotum; color:#666;}
+.check,
+.radio {display:inline-block; padding:0; margin:0 5px 0 0; height:16px; line-height:16px; vertical-align:middle; border: 0; *vertical-align:1px;}
+.select {display:inline-block; height:20px; line-height:14px; padding:1px; border:1px solid #b7b7b7; *margin-right: 5px;}
+.select select {height:20px; line-height:14px; padding:0 0 0 5px; border:0; font-size:12px; color:#666; vertical-align:middle; *height: 24px;}
+
+.inputText {display:inline-block; height:20px; line-height:20px; padding:0 5px; margin:0; color:#555; border:1px solid #b7b7b7;vertical-align:middle;}
+.inputText2 {display:inline-block; height:20px; line-height:20px; padding:0 5px; margin:0; color:#555; font-weight:bold; border:1px solid #b7b7b7;vertical-align:middle; background:#efefef;}
+.inputText3 {display:inline-block; height:20px; line-height:20px; padding:0 5px; margin:0; color:#555; border:1px solid #b7b7b7;vertical-align:middle;}
+.inputText4 {display:inline-block; height:20px; line-height:20px; padding:0 5px; margin:0; color:#555; font-weight:bold; border:1px solid #b7b7b7;vertical-align:middle; background:#efefef;}
+
+.inputPw {display:inline-block; height:22px; line-height:22px; padding: 0 5px; margin:0; border:1px solid #b7b7b7;vertical-align:middle; background:url("https://stdux.inicis.com/stdpay/img/icoLock_new.gif") no-repeat right center;}
+.inputPw_noBg {display:inline-block; height:22px; line-height:22px; padding: 0 10px; margin:0; border:1px solid #b7b7b7;vertical-align:middle; background: none;} /* 20160615 추가 */
+.inputPw_disabled {display:inline-block; height:22px; line-height:22px; padding: 0 5px; margin:0; border:1px solid #b7b7b7;vertical-align:middle; background: #eee url("https://stdux.inicis.com/stdpay/img/icoLock.gif") no-repeat right center;} /* 20160620 추가 */
+
+.mL5 {margin-left:5px !important;}
+.mL9 {margin-left:9px !important;}
+.mL11 {margin-left:11px !important;}
+.mL15 {margin-left:15px !important;}
+
+.mT0 {margin-top:0 !important;}
+.mT5 {margin-top:5px !important;}
+.mT10 {margin-top:10px !important;}
+.mT15 {margin-top:15px !important;}
+.mT20 {margin-top:20px !important;}
+.mB5 {margin-bottom: 5px !important;}
+.m20 {margin:20px !important;}
+
+.pT0 {padding-top:0 !important;}
+.p10 {padding:10px !important;}
+.pT10 {padding-top:10px !important;}
+.pB10 {padding-bottom:10px !important;}
+.pR0 {padding-right:0 !important;}
+
+.fL {float:left !important;}
+.blind {overflow:hidden; position:absolute; top:0; left:0; width:1px; height:1px; font-size:1px; line-height:100px; white-space:nowrap} /* 20160520 접근성을 위한 마크업에 넣는 css */
+.hidden{font-size: 0;line-height: 0;position: absolute;text-indent: 10000px;top:-10000px}
+.cBoth {clear:both;}
+.hand{cursor: pointer;}
+.hide{display:none;}
+
+.bdLine {border:1px solid #ddd;}
+.bdTop {border-top:1px solid #ddd;}
+.bdBtm {border-bottom:1px solid #ddd;}
+
+.copy {margin-left:5px;}
+.autoScroll{overflow-y:auto; height:210px;}
+
+.txtC {text-align:center !important;}
+/*.txtC a {display:inline-block; margin:0 3px;}*/
+
+/* color */
+.color01 {color:#cc1915 !important;}
+.color02 {color:#555 !important;}
+.color03 {color:#f2310b;}
+a.color01 {text-decoration:underline;}
+a.color03 {text-decoration:underline;}
+
+.bold {font-weight:bold !important;}
+.boldNo {font-weight:normal !important;}
+
+.allAgree {text-align:right; padding:0 5px; border:0; margin:0; color:#666;}
+
+*:first-child + html .check {vertical-align:2px;} /* IE7 */
+*:first-child + html .radio {vertical-align:2px;} /* IE7 */
+
+/* form */
+/* 무통장입금 주민번호/사업자번호 체크박스 조정 */
+.checkFildBusiness {position: relative; left: 0.5px; top: 2px;}
+#checkFildBusiness {position: relative; left: 0.5px; top: 2px;}
+.checkFildJumin {position: relative; left: 0.5px; top: 2px;}
+#checkFildJumin {position: relative; left: 0.5px; top: 2px;}
+
+/* 무통장입금 현금영수증 라벨 조정 */
+/* .font_black {position: relative; left: -4px;} */
+/* #vpSodk {position: relative; left:-5px;} */
+/* #vpJichul {position: relative; left:-5px;} */
+
+/* 무통장입금 입금기한 부분 조정 */
+/* #vpYear {position: relative; left:2px;} */
+/* #vpMonth {position: relative; left: 2px;} */
+/* #vpDay {position: relative; left: 2px;} */
+/* #vpHour {position: relative; left: 2px;} */
+/* #vpMin {position: relative; left: 2px;} */
+/* #vbankBankCode2 {position: relative; left: 0px;} */
+
+.kgLayer {position:fixed; top:50%; left:50%; width:820px;height:600px;margin:-300px 0 0 -410px; font-size:12px; line-height:140%;font-family: 'NanumGothic','sans-serif'}
+
+.popWrap {position:relative;width:490px; height:600px;background:#fff;padding:0 210px 0 120px;/*border:1px solid #eee*/ display: none;}
+/*에크스로로 인하여 추가  */
+.kgLayer02 {position:fixed; top:50%; left:50%; width:467px;height:496px; margin:-248px 0 0 -234px; font-size:12px; line-height:140%; font-family: 'NanumGothic','sans-serif'}
+
+
+/* header */
+.kgHeader {position:relative; overflow:hidden; height:35px;padding:15px 0 0; margin:0 20px ; border-bottom:2px solid #c9c9c9;}
+.kgHeader h1 {float:left; padding:7px 0 0 10px; margin:0; font-size:0; line-height:0;}
+.kgHeader .fR {overflow:hidden; float:right; padding:10px 0 0; margin:0;}
+.kgHeader .fR .copy {float:left; padding:0; margin:-2px 1px 0; font-size:11px; color:#666; vertical-align:top;font-family: 'NanumGothic','sans-serif';}
+.kgHeader .fR .step {overflow:hidden; float:left; padding:0; margin:0; list-style:none;}
+.kgHeader .fR .step li {float:left; overflow:hidden; width:10px; height:10px; margin-left:6px;text-indent:-9999px; background:#c3c3c3;}
+.kgHeader .fR .step li span {visibility:hidden;}
+.kgHeader .fR .step li.on {background:#cc1915;}
+
+/* 좌측 메뉴 */
+.kgMenuList {position:absolute; top:0; left:0; width:112px; height:525px;padding:55px 4px 20px 4px; background:url("https://stdux.inicis.com/stdpay/img/newly/bg_shdw01.png") repeat-y right 0 #c1272c;}
+.kgMenuList ul.menu {padding:0; margin:0; list-style:none;}
+.kgMenuList ul.menu li { padding:0; margin:0; text-align:center;display:block}
+.kgMenuList ul.menu li a {display:block;line-height:1.1;padding:11px 0; text-decoration:none; color:#e0e0e0;font-size:15px;font-family: 'NanumGothic';font-weight: normal;}
+.kgMenuList ul.menu li a:hover{color:#fff}
+.kgMenuList ul.menu li.on a,.kgMenuList ul.menu li.on a span {font-weight:bold; color:#fff;}
+
+.langList {overflow:hidden; position:absolute; bottom:0; left:0; padding:10px 13px; list-style:none}
+.langList li {float:left; margin:2px;}
+
+/* 좌측 iframeBanner */
+.kgMenuList .bnr {text-align: center;position: absolute;bottom:100px;right:10px;width:100px;height:65px}
+
+/* 좌측 배너(인터파크) */
+.kgBanner {position:absolute; top:29px; left:-192px; width:100px; height:432px; border-right:0; vertical-align:middle; overflow: hidden;}
+.kgBanner .logo {display:block; width:138px;height:50px;}
+.kgBanner .bnr {display:block; width:100px;height:432px;}
+
+/* 좌측 추가배너(범용창) */
+.kgBanner_left {position:absolute; top:0px; left:-120px; width:110px; height:600px; border-right:0; vertical-align:middle; overflow: hidden;}
+.kgBanner_left .bnr {display:block; width:110px;height:600px;}
+
+/* 우측 추가배너(범용창) */
+.kgBanner_right {position:absolute; top:0px; left:830px; width:110px; height:600px; border-right:0; vertical-align:middle; overflow: hidden;}
+.kgBanner_right .bnr {display:block; width:110px;height:600px;}
+
+/* 우측 결제영역 */
+.kgPayments {position:absolute; top:0; right:0; width:170px; height:600px; padding:0 20px;background:url("https://stdux.inicis.com/stdpay/img/newly/bg_shdw02.png") repeat-y 0 0 #c1272c;}
+.kgPayments .logo {display:block;padding:30px 3px 15px 0;border-bottom: 1px solid #fff;margin-bottom:3px}
+/* *:first-child+html .kgPayments .logo {filter: alpha(opacity=50);} IE7 */
+/* .kgPayments .logo {-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";} IE8 */
+
+/* .kgPayments .bottomline {height:1px; margin-top:10px; background-color:white; opacity:0.4;} */
+/* .kgPayments .topline 	{height:1px; margin-bottom:11px; background-color:white; opacity:0.4;} */
+.kgPayments .bottomline {height:1px; margin-top:12px; background-color: #fff; opacity:0.4; filter:alpha(opacity:"40"); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; filter: alpha(opacity=40);}	/*filter - ie7 ie8*/
+.kgPayments .topline 	{height:1px; margin-bottom:11px; background-color: #fff; opacity:0.4; filter:alpha(opacity:"40"); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; filter: alpha(opacity=40);}/*filter - ie7 ie8*/
+
+.kgPayments dl.hist {overflow:hidden; min-height:16px; padding:7px 0; margin:0;}
+.kgPayments dl.hist dt {float:left; padding:0; margin:0; color:#fff;font-size:11px;font-family: 'NanumGothic'}
+.kgPayments dl.hist dd {float:right;padding:0; margin:0; color:#fff; width:auto; text-align:right; text-overflow:ellipsis;overflow: hidden;font-weight:bold}
+.kgPayments dl.hist dd span{font-weight:bold;font-size:12px;font-weight:bold}
+.kgPayments dl.hist dd .btnType03 span{font-size:11px}
+.kgPayments dl.hist_new {overflow:hidden; height:34px; padding:7px 0; margin:0;}
+.kgPayments dl.hist_new dt {float:left; width:40px;height:30px; padding:0; margin:0; color:#fff; opacity:0.7; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; filter: alpha(opacity=70);}
+.kgPayments dl.hist_new dd {float:right; width:100px;height:30px; padding:0; margin :0; color:#fff; text-align:right; overflow: hidden;}
+
+.hist_new {width:100%;}
+.hist_new td.titl {width:50px;height:18px;margin:0; vertical-align:top; color:#fff; opacity:0.7; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; filter: alpha(opacity=70);}
+.hist_new td.txtl {height:18px; padding:0; margin :0; color:#fff; text-align:left;}
+
+.hist_new2 {width:100%;}
+.hist_new2 td.titl {width:50px;height:18px;margin:0; vertical-align:top; color:#fff; }
+.hist_new2 td.txtl {height:18px; padding:0; margin :0; color:#fff; text-align:right;}
+
+.kgPayments dl.hist_ex {overflow:hidden; height:25px; padding:7px 0; margin:0;}
+.kgPayments dl.hist_ex dt {float:left; padding:0; margin:0; color:#fff; }
+.kgPayments dl.hist_ex dd {float:center;padding:0; margin:0; color:#fff; width:155px; text-align:center; text-overflow:ellipsis; white-space: nowrap; overflow: hidden;}
+
+.kgPayments dl.total {overflow:hidden; padding:15px 0;border-top:1px solid #fff;margin-top:7px}
+.kgPayments dl.total dt {float:left; padding:0; margin:0; color:#fff;font-size: 11px}
+.kgPayments dl.total dd {float:right;padding:0; margin:0; color:#fff;font-size: 15px}
+.kgPayments dl.total dd strong {font-size:16px; line-height:16px;}
+
+.btnArea {position:absolute; width:210px; bottom:20px; right:0; text-align:center;}
+.btnArea a {display:inline-block; margin:0 4px;}
+.btnArea a:focus {outline: 2px solid #000;color:#c1272c}
+.kgPayments .bnr {text-align: center;position: absolute;bottom:81px;right:22px;width:165px;height:65px} /* 201605 수정 */
+.kgPayments .bnr a{display: block}
+/*에크스로 버튼  */
+.kgContents .btnArea {position:absolute; width:100%; bottom:19px; left:0; text-align:center;}
+.kgContents .btnArea a {display:inline-block; margin:0 4px;}
+.kgContents .btnArea a:focus {outline: 1px dashed #999;}
+.kgContents .bnr {text-align: center;width:165px;height:80px} /* 201605 수정 */
+.kgContents .bnr img{width:165px;height:80px;margin:0 auto}
+
+/* contents */
+.kgContents {width:450px; padding:15px 20px 0 20px;height:533px;position: relative;overflow: hidden}
+*:first-child+html .kgContents {position:relative; width:429px; padding:14px 19px; border:0;} /* IE7 */
+
+/* text */
+.copy01 {padding:0 4px; margin:0 0 5px; font-size:12px; color:#222;}
+.copy02 {padding:0; margin:0 0 10px; font-size:16px; color:#555;}
+.copy03 {padding:0; margin:15px 0; font-size:13px; color:#777; letter-spacing:-0.1px;}
+.sTxt {padding:0; margin-top:2px; font-size:11px; color:#555;}
+
+ h1.copy02 {margin-bottom:5px;}
+ h2.copy01 {margin-top:3px;}
+
+/* dlType */
+.dlType01 {position:relative; padding:7px 0 0; margin:0;}
+.dlType01 dt {height:18px; padding:0 6px; margin:0 0 3px; color:#555; font-weight:bold;}
+*:first-child + html .dlType01 dt {height:20px;} /* IE7 */
+.dlType01 dd {padding:0; margin:0 0 10px; color:#666;}
+.dlType01 dd .scrollBox {overflow-y:scroll;height:37px; padding:6px 10px; line-height:15px; color:#555;border:1px solid #dddddd; background:none; text-align:justify}
+.dlType01 dd.detail {position:absolute; top:6px; right:0; height:15px; padding:2px 0 0; margin:0; line-height:17px;}
+.dlType01 dd.detail .check input {vertical-align:top;}
+.dlType01 dd.detail a {margin-top:-2px;font-size:11px;padding-bottom:2px}
+.dlType01 dd.detail a:focus {outline: 1px dashed #999;}
+.dlType01.pT0 dd.detail {top:0;}
+.dlType01 dd.detail a.btnType05{padding:2px 6px}
+.dlType01 dd.detail a.btnType05 span{font-size:11px}
+
+.dlType02 {border:1px solid #dbdbdb; padding:8px 15px 4px; margin:0;}
+.dlType02 dt {font-weight:bold; margin-bottom:5px;}
+.dlType02 dt img {display:inline-block; margin-top:-2px; vertical-align:middle;}
+.dlType02 dd {padding:0; margin:0; line-height:17px;}
+
+.dlType03 {border:1px solid #dbdbdb; border-width:1px 0; padding:8px 15px 4px; margin:10px 0 15px; color:#555;}
+.dlType03 dt {font-weight:bold; margin-bottom:5px;}
+.dlType03 dd {padding:0 0 0 8px; text-indent:-8px; margin:0; line-height:17px;}
+.dlType03 dd img {vertical-align:middle;}
+
+.dlType04 {padding:0; margin:20px 0; color:#555;}
+.dlType04 dt {font-weight:bold; margin-bottom:5px; letter-spacing:1px;}
+.dlType04 dd {padding:0; margin:0 0 10px; line-height:17px; color:#777; letter-spacing:0px;}
+.dlType04 dd img {vertical-align:middle;}
+
+/* list */
+.radioList {overflow:hidden; padding:2px 0 0 0; margin:0; list-style:none;}
+*:first-child + html .radioList {border: 0;}
+.radioList li{float:left; padding:0; margin-right:15px; height:24px; line-height:24px;}
+.radioList li{border: 0;}
+
+.radioList.type02 {padding-top:5px;}
+.radioList.type02 li {margin-right:10px;}
+
+.radioList01 {overflow:hidden; height:34px; padding:0; margin:0; list-style:none;}
+.radioList01 li {position:relative; float:left; padding:7px 0 9px 8px; margin:0 8px 0 0; width:127px; height:16px; font-weight:bold; background:#f3f3f3; color:#666; border:1px solid #c8c8c8;}
+.radioList01 li img {display:inline-block; margin-right:2px;}
+.radioList01 li.last {margin-right:0; width:128px;}
+.radioList01 li .btnQ {position:absolute; top:9px; right:7px; font-size:0; line-height:0;}
+.radioList01 li .btnQ img {margin-right:0;}
+.radioList01 li .icoList {display:inline-block; font-size: 0; margin-left: -3px;}
+.radioList01 li .icoList img {margin-right:1px;margin-bottom: 9px}
+
+.radioList01 li label {height:14px; line-height:14px;margin-top:-1px}
+.radioList01 li label img {display:none; width:40px; height:16px; margin-top:-2px;}
+.radioList01 li label span {display:inline-block;}
+.radioList01 li label.a:hover span{display:none;}
+.radioList01 li label.a:hover img {display:inline-block;}
+
+.radioList01.no02 li{width:200px;}
+.radioList01.no01 li{width:418px; margin-right:0;}
+
+.radioList02 {overflow:hidden; padding:8px 0 10px; margin:0; list-style:none;}
+.radioList02 li {float:left; padding:0 0 0 8px; margin:0 8px 0 0; width:129px; height:27px; line-height:27px;}
+.radioList02 li.nth3 {margin-right:0;}
+.radioList02 li .icoList {display:inline-block; font-size: 0; margin-left: -3px;}
+.radioList02 li .icoList img {margin-right:1px; margin-bottom: 9px}
+
+.radioList02 li label {height:16px; line-height:16px;}
+.radioList02 li label img {display:none; width:40px; height:16px; margin-top:-2px;}
+.radioList02 li label span {display:inline-block;}
+.radioList02 li label.a:hover span{display:none;}
+.radioList02 li label.a:hover img {display:inline-block;}
+
+.radioList03 {overflow:hidden; padding:10px 0; margin:0; list-style:none;}
+.radioList03 li {float:left; padding:0 0 0 8px; height:27px; line-height:27px; vertical-align: baseline;}
+
+.radioList04 {overflow:hidden; padding:10px 0; margin:0 0 10px; list-style:none; border-top:1px solid #ddd; border-bottom:1px solid #ddd;}
+.radioList04 li {padding:2px 0 0 8px; height:27px; line-height:27px; line-height:27px; vertical-align: baseline;}
+
+.radioList05 {overflow:hidden; padding:8px 0 10px; margin:0; list-style:none;}
+.radioList05 li {float:left; padding:0 0 0 8px; margin:0 8px 0 0; width:129px; height:27px; line-height:27px;}
+.radioList05 li.nth3 {margin-right:0;}
+.radioList05 li .icoList {display:inline-block; font-size: 0; margin-left: -3px;}
+.radioList05 li .icoList img {margin-right:1px; margin-bottom: 9px}
+
+.radioList05 li label {height:16px; line-height:16px;}
+.radioList05 li label img {display:none; width:40px; height:16px; margin-top:-2px;}
+.radioList05 li label span {display:inline-block;}
+.radioList05 li label.a:hover span{display:none;}
+.radioList05 li label.a:hover img {display:inline-block;}
+
+.checkList01 {overflow:hidden; padding:6px 8px; width:348px; margin:0; list-style:none;}
+.checkList01 li {float:left; padding:2px 0; width:165px; white-space:nowrap;}
+
+.checkList02 {overflow:hidden; padding:6px 5px; width:450px; margin:0; list-style:none;}
+.checkList02 li {float:left; padding:2px 0; width:214px; white-space:nowrap;}
+
+.checkList03 {position: relative; overflow:hidden; list-style:none; margin: 15px 0 10px 0;}
+.checkList03 li {position: relative; float:left; width: 214px; height: 22px; line-height: 22px; letter-spacing: -1px;}
+*:first-child+html .checkList03 li {letter-spacing: -1.5px;}
+.checkList03 li .allAgreement {font-weight: bold;}
+.checkList03 li .btnAgree {position: absolute; top: -1.5px; right: 5px;}
+
+/* 추가 */
+.checkList04 {position: relative; overflow:hidden; list-style:none; margin: 15px 0 10px 0;}
+.checkList04 li {position: relative; float:left; width:50%;letter-spacing: -1px;overflow:hidden;padding:2px 0;line-height:22px; vertical-align:middle}
+*:first-child+html .checkList04 li {letter-spacing: -1.5px;}
+.checkList04 li .agreeTxt{line-height:1.2;display:inline-block;padding:0 40px 0 15px;width:165px}
+.checkList04 li .allAgreement {font-weight: bold;}
+.checkList04 li .btnAgree {position: absolute; top: 2px; right: 5px;}
+.checkList04 li .check{position: absolute; top:8px; left: 0;}
+.checkList04 .allAgreement{width:100%};
+
+.icoList {margin-bottom:10px; text-align:right; font-size: 0px;}
+.icoList img {margin-left:1px;}
+
+.btnList {text-align:right; padding-right:5px; margin-bottom:8px; font-size:0; line-height:0;}
+.btnList a {margin-left:2px;}
+
+/* table */
+.tblType01 {width:100%; margin:0 0 10px; border-collapse:collapse; border-top:1px solid #dbdbdb;}
+.tblType01 td {padding:5px 15px 3px 15px; height:24px; line-height:24px; vertical-align:middle; background:#f9f9f9; border-bottom:1px solid #dbdbdb;}
+.tblType01 td.tit {padding:5px 10px 3px 19px; background:#efefef;}
+.tblType01 th.tit {padding: 5px 10px 3px 19px; background: #efefef; border-bottom: 1px solid #dbdbdb; font-weight: 300; text-align: left;}
+
+.tblType02 {width:100%; border-collapse:collapse;}
+.tblType02 td {padding:4px 15px; height:24px; line-height:24px; vertical-align:middle; border:1px solid #dadada;}
+.tblType02 td.tit {text-align:center;}
+.tblType02 .odd td {background:#f3f3f3;}
+
+.tblType03 {width:100%; margin:0 0 10px; border-collapse:collapse; border-top:1px solid #dbdbdb;}
+*:first-child + html .tblType03 {border-right: 0;border-bottom: 0;border-left: 0;}
+.tblType03 td, .tblType03 th {padding:2px 10px;height:22px;background:#fff; color:#555; font-weight:400; border-bottom:1px solid #dbdbdb;}
+.tblType03 td.tit {padding:5px 0 5px 0; text-align:center; color:#666; background:#f5f5f5; vertical-align: middle;}
+.tblType03 td.titL, .tblType03 th.titL {padding:5px 5px 3px 10px; text-align:left; color:#666;background:#f5f5f5; vertical-align: middle; width: 94px;}
+.tblType03 td.txtL {/*line-height: 30px;*/}
+.tblType03 td.btn {padding:5px 10px;}
+.tblType03 td.txtR {text-align:right; padding-right:10px;}
+.tblType03 td.txtC {padding:5px 0;}
+.tblType03 td a img {vertical-align:middle;}
+
+/* 무통장입금 다국어 작업 */
+/*.tblType03 td{vertical-align:middle}
+.tblType03 td .dateWrap {position: relative;padding-top:1px }
+.tblType03 td .dateWrap span{display:inline-block;}
+.tblType03 td .dateWrap #yearspan {position: absolute; left: 0; top: 2px;}
+.tblType03 td .dateWrap #monspan {position: absolute; left: 75px; top: 2px;}
+.tblType03 td .dateWrap #dayspan {position: absolute; left: 135px; top: 2px;}*/
+
+/* 20160519 수정 */
+.tblType04 {width:100%; *width: 405px; border-collapse:collapse; margin:20px 0 0; border:1px solid #dadada; font-size: 12px;}
+.tblType04 td {padding: 6px 10px 1px; border-bottom: 1px solid #dadada;}
+.tblType04 td.tit {text-align: center;  border-right: 1px solid #dadada; font-weight: bold; background:#f3f3f3;}
+.tblType04 td.txtL {line-height: 12px;}/* 20160525 속성삭제 */
+.tblType04 td .icon {display: block; padding: 0 0 4px 10px; background: url(https://stdux.inicis.com/stdpay/img2/icon02.gif) no-repeat 0 2px;}
+.tblType04 .odd td {}
+
+.tblType05 {width:100%; margin:0 0 10px; border-collapse:collapse; border-top:1px solid #dbdbdb;}
+*:first-child + html .tblType03 {border-right: 0;border-bottom: 0;border-left: 0;}
+.tblType05 td {padding:4px 10px; height:24px; line-height:24px; vertical-align:top; background:#fff; color:#555; border-bottom:1px solid #dbdbdb;}
+.tblType05 td.tit {padding: 5px 0 5px 0; text-align:center; color:#666; background:#f5f5f5; vertical-align: middle;}
+.tblType05 td.titL {padding: 5px 0 3px 10px; text-align: left; color:#666;background:#f5f5f5; vertical-align: middle; width: 94px;}
+.tblType05 td.btn {padding:5px 10px;}
+.tblType05 td.txtR {text-align:right; padding-right:10px;}
+.tblType05 td.txtC {padding:5px 0;}
+.tblType05 td a img {vertical-align:middle;}
+
+.btmBnr {position:absolute; bottom:30px; left:0; width:490px; height:50px; background:#eee;z-index:5}
+*:first-child + html .btmBnr{top:380px;}/* IE7 */
+
+.listType01 {padding:0; margin:10px 0 5px; list-style:none;}
+.listType01 li {padding:0 0 0 15px; margin:3px 0; background:url("https://stdux.inicis.com/stdpay/img/icoSq.gif") no-repeat 5px 5px;}
+.listType01 li span.textStrong {color: #000;}
+
+.deem {position:absolute; top:0; left:0; width:100%; height:100%; background:#000; z-index:999; opacity:0.15; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=15)"; filter: alpha(opacity=15);}
+
+.btnType01 {overflow:hidden; display:inline-block; height:13px; line-height:12px; font-size:11px; padding:3px 8px; color:#fff; background:#acacac; vertical-align:middle; text-indent:0;}
+*:first-child+html .btnType01 {border: 0;}
+.btnType01 span {display:inline-block;}
+*:first-child+html .btnType01 span{border: 0;}
+.btnType01:hover {background:#919191; color:#dfdfdf;}
+
+.btnType02 {overflow:hidden; display:inline-block; height:16px; line-height:16px; font-size:12px; padding:3px 6px; color:#fff; background:#555; vertical-align:middle; text-indent:0;}
+.btnType02 span {display:inline-block;}
+.btnType02:hover {background:#555; color:#dfdfdf;}
+.btnType02:focus {color:#fff;}
+
+.btnType03 {overflow:hidden; display:inline-block;font-size:11px; padding:2px 4px ;line-height:15px;color:#fff; background:#f9870d; vertical-align:middle; text-indent:0;}
+.btnType03 span {display:inline-block;}
+
+.btnType04 {overflow:hidden; display:inline-block; line-height:15px; font-size:11px; padding:3px 6px;color:#fff; background:#f2310b; vertical-align:middle;text-indent:0;}
+.btnType04 span {display:inline-block;}
+
+.btnType05 {overflow:hidden; display:inline-block;font-size:11px;height:14px;line-height:14px; padding:1px 6px 2px 6px; color:#fff; background:#555; vertical-align:middle;text-indent:0;}
+.btnType05 span {display:inline-block;}
+.btnType05:hover {background:#919191; color:#dfdfdf;}
+
+.btnType06 {overflow:hidden; display:inline-block; text-align:center; width:72px; height:34px; line-height:34px; font-weight:bold; color:#fff; background:#a1a1a1; vertical-align:middle;}
+.btnType06:hover {color:#d4d4d4; background:#888;}
+
+.btnType07 {overflow:hidden; display:inline-block; text-align:center; width:72px; height:34px; line-height:34px; font-weight:bold; color:#fff; background:#f2310b; vertical-align:middle;}
+
+
+.btnType08 {overflow:hidden; display:inline-block; text-align:center; width:72px; height:34px; line-height:34px; font-weight:bold; color:#cc1915; background:#fff; vertical-align:middle;}
+.btnType08:hover {color:#a1120f; background:#e5e5e5;}
+.btnType08:active {color:#cc1915; background:#fff;} /* 20160517 추가 */
+
+.btnWrapC {padding:0; margin:30px 0; text-align:center;}
+.btnWrapC a {display:inline-block; margin:0 5px;}
+
+/* 자세히보기 버튼 */
+.btn01 {overflow:hidden; position:absolute; top:10px; right:0; padding-left:5px; padding-right:5px;}
+.btn01:hover {background:#919191; color:#dfdfdf;}
+
+/* 자세히보기 버튼 */
+.btn02 {overflow:hidden; display:inline-block; width:69px; height:17px; margin-left:3px; background:url("https://stdux.inicis.com/stdpay/img/btnDetail.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+.btn02:hover {background:url("https://stdux.inicis.com/stdpay/img/btnDetailOn.gif") no-repeat 0 0;}
+
+/* 취소 버튼 */
+.btn03 {overflow:hidden; display:inline-block; width:72px; height:34px; background:url("https://stdux.inicis.com/stdpay/img/btnCancel.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+.btn03:hover {background:url("https://stdux.inicis.com/stdpay/img/btnCancelOn.gif") no-repeat 0 0;}
+
+/* 다음 버튼 */
+.btn04 {overflow:hidden; display:inline-block; width:72px; height:34px; background:url("https://stdux.inicis.com/stdpay/img/btnNext.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+.btn04:hover {background:url("https://stdux.inicis.com/stdpay/img/btnNextOn.gif") no-repeat 0 0;}
+
+/* 결제 버튼 */
+.btn05 {overflow:hidden; display:inline-block; width:72px; height:34px; background:url("https://stdux.inicis.com/stdpay/img/btnPay.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+.btn05:hover {background:url("https://stdux.inicis.com/stdpay/img/btnPayOn.gif") no-repeat 0 0;}
+
+/* 확인 버튼 */
+.btn06 {overflow:hidden; display:inline-block; width:72px; height:34px; background:url("https://stdux.inicis.com/stdpay/img/btnConfirm02.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+.btn06:hover {background:url("https://stdux.inicis.com/stdpay/img/btnConfirm02On.gif") no-repeat 0 0;}
+
+.btnQ {display:inline-block; line-height:15px;}
+.btnQ img {vertical-align:top; margin-top:-1px;}
+
+.popLayer {position:fixed; top:50%; left:50%; padding:30px 24px; background:#fff; border:1px solid #acacac; z-index:9999;}
+.popLayer_scul {/* position:absolute; top:50%; left:50%; */ margin: 30px 20px; background:#fff; z-index:9999;} /* 20160519 수정 */
+.popLayer .btnAbsolC {position:absolute; bottom:30px; left:0; width:100%; text-align:center; padding:0; margin:0;}
+.popLayer .tblType03 td {padding-top:3px; padding-bottom:3px;}
+.popLayer .btnType06:hover {overflow:hidden; display:inline-block; text-align:center; width:72px; height:34px; line-height:34px; font-weight:bold; color:#fff; background:#a1a1a1; vertical-align:middle;}
+
+/* 현대카드 유이자혜택 사용여부 레이어창 */
+.eventLayer {position:fixed; top:50%; left:50%; padding:20px 14px; background:#fff; border:1px solid #acacac; z-index:9999;}
+.eventLayer .txtC {text-align:left !important;}
+.eventLayer .btnWrapC {padding:0; margin:30px 0; text-align:center; margin-top:10px;}
+
+.btnType11 {overflow:hidden; display:inline-block; text-align:center; width:72px; height:34px; line-height:34px; font-weight:bold; color:#fff; background:#539bed; vertical-align:middle;}
+.btnType12 {overflow:hidden; display:inline-block; text-align:center; width:72px; height:34px; line-height:34px; font-weight:bold; color:#fff; background:#a1a1a1; vertical-align:middle;}
+
+/* 할부개월 언제든 수정 가능 */
+.quotaloc {overflow:hidden; padding:15px 0; margin:0px 0px 0px 30px; list-style:none; float: right;}
+.quotalocZero {overflow:hidden; padding:15px 0; margin:0px 0px 0px 0px; list-style:none; float: right;}
+
+.btnDisable{text-decoration:line-through;color:#eeeeee;}
+#overlay_wapper_bg{position: absolute;display:none;width:100%;height: 100%;background-color: #fff;opacity: 0;filter: alpha(opacity=1);z-index: 100;left: 0px;}
+#overlay_wapper{position: absolute;display:none;z-index: 101;width:100%;height:100%;left: 0px;}
+
+/* the overlayed element */
+#overlay_subWapper {vertical-align: middle;background-color: #fff;width:400px;height:400px;margin:40px auto;padding:3px;border: 1px #D9DADB solid;background-color: white;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+#overlay_subWapper .overlayFrame {background-color:#fff;border: none #ffff00 0px;display:block; left:0; top:0px;border: 1px #d9dadb solid;width:200px;height:150px;}
+.overlay_close:hover {color: black;text-decoration: none;cursor: pointer;opacity: 0.4;filter: alpha(opacity=40);}
+.overlay_close {float: right;font-size: 18px;font-weight: bold;line-height: 20px;color: black;text-shadow: 0 1px 0 white;opacity: 0.2;filter: alpha(opacity=20);padding: 0;cursor: pointer;background: transparent;border: 0;-webkit-appearance: none;}
+
+.popup_close:hover {color: black;text-decoration: none;cursor: pointer;opacity: 0.4;filter: alpha(opacity=40);}
+.popup_close {float: right;font-size: 20px;font-weight: bold;line-height: 20px;color: black;text-shadow: 0 1px 0 white;opacity: 0.2;filter: alpha(opacity=20);padding: 8px 8px 0 0;cursor: pointer;background: transparent;border: 0;-webkit-appearance: none;}
+
+.overlay-header .close {margin-top: 5px;}
+.overlay-header h4 {margin: 0;line-height: 20px;clear:none;font-size: 13px;font-weight: bold;color: inherit;text-rendering: optimizelegibility;}
+.overlay-footer {margin: 0;line-height: 15px;clear:none;font-size: 13px;color: inherit;text-rendering: optimizelegibility;}
+
+#overlay_popup_bg {position: absolute;display:none;width:100%;height: 100%;background-color: #fff;opacity: 0;filter: alpha(opacity=1);z-index: 100;left: 0px;}
+#overlay_popup {position: absolute;display:none;z-index: 101;}
+
+#overlay_subPopup {margin:40px auto;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+#overlay_subPopup .overlayFrame2 {background-color:#fff; left:0; top:0px; border: 1px #5592C4 solid;}/* border color 변경 */
+
+#overlay_popup_bg2{position: absolute;display:none;width:100%;height: 100%;background-color: #fff;opacity: 0;filter: alpha(opacity=1);z-index: 100;left: 0px;}
+#overlay_popup2{position: absolute;display:none;z-index: 101;width: 100%;left : 0px;}
+
+#overlay_subPopup2 {vertical-align: middle;background-color: #fff;width:400px;height:400px;margin:40px auto;border: 1px #D9DADB solid;background-color: white;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+#overlay_subPopup2 .overlayFrame3 {background-color:#fff;border: none #ffff00 0px;display:block; left:0; top:0px;border: 1px #d9dadb solid;width:430px;height:440px;}
+
+#overlay_popup_bg3{position: absolute;display:none;width:100%;height: 100%;background-color: #fff;opacity: 0;filter: alpha(opacity=1);z-index: 100;left: 0px;}
+#overlay_popup3{position: absolute;display:none;z-index: 101;width: 100%; height:100%; left : 0px;}
+
+#overlay_subPopup3 {vertical-align: middle;background-color: transparent; width:100%; height:100%; }
+#overlay_subPopup3 .overlayFrame4 {background-color:#fff; border: 1px #d9dadb solid; display:block; width:400px; height:200px; border-radius : 5px; margin : 88px auto;}
+/*#overlay_subPopup3 .overlayFrame4 {background-color:#fff; border: 1px #d9dadb solid; display:block; width:480px; height:420px; border-radius : 5px; margin : 88px auto;}*/
+
+/*input text 테두리 없애기*/
+.giftTextBox {width: 135px; border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;}
+
+/* 상품권 회원가입 */
+.joinbtn {overflow:hidden; display:inline-block; width:63px; height:17px; background:url("https://stdux.inicis.com/stdpay/img/btnJoin.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+
+/* 상품권 ID/PW 찾기 */
+.idpwschbtn {overflow:hidden; display:inline-block; width:77px; height:17px; background:url("https://stdux.inicis.com/stdpay/img/btnIdPwSch.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+
+/* 일반상품권 인증번호 생성/찾기 */
+.culturebtn03 {overflow:hidden; display:inline-block; width:110px; height:17px; background:url("https://stdux.inicis.com/stdpay/img/btnCertNum.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+
+/* 일반상품권 여러장 충전하기 */
+.culturebtn04 {display:inline-block; width:102px; height:25px; background:url("https://stdux.inicis.com/stdpay/img/btnCharChap.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+
+/* 옐로페이 자세히보기 */
+.ypaybtn01 {overflow:hidden; display:inline-block; width:69px; height:17px; margin-left:3px; background:url("https://stdux.inicis.com/stdpay/img/btnDetail.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+
+/* 옐로페이 회원가입 */
+.ypaybtn02 {overflow:hidden; display:inline-block; width:73px; height:17px; background:url("https://stdux.inicis.com/stdpay/img/btnJoin03.gif") no-repeat 0 0; text-indent:-999px; vertical-align:middle;}
+
+/* 스마트문상 */
+.scultureColor01 {color:#cc1915 !important;	font-weight:bold; width:auto;}
+
+/* 20160523 임시 공고 링크 */
+.kgContents .stopInfo {position: absolute; bottom: 20px; left: 19px; display: block; width: 405px; line-height: 30px; color: #F44336; padding: 0 10px; border: 1px solid #F44336; text-align: center;}
+
+/*인터파크 가운데 배너 추가 */
+.btmIpBnr {position:absolute; bottom:14px; left:19px; width:427px; height:70px; background:none;}
+*:first-child + html .btmIpBnr{top:350px;}/* IE7 */
+
+/* GS point */
+.btnGspoint {text-align: center; line-height: 30px;}
+button{border:0;cursor: pointer}
+/*2017 added */
+.noti_bar{background: #777;position: absolute;bottom:0;width:490px;height:30px;left:0;padding:0 7px;color:#fff;font-size: 15px; line-height: 20px;z-index:5}
+.noti_bar #linkButton{background-color:cornflowerblue;border-radius:3px;font-size:15px;}
+.noti_bar #btnmq.pause{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_ply.png) no-repeat;}
+.noti_bar #btnmq{position: absolute;bottom:3px;right:17px;width:15px;height:15px;background: url(https://stdux.inicis.com/stdpay/img/newly/btn_stop.png) no-repeat}
+.h3_tit{overflow: hidden;padding-bottom:7px;border-bottom:1px solid #ccc;margin-bottom:8px}
+.h3_tit h3{font-size: 13px;color:#323232;display: inline-block;float:left;margin-left:5px}
+.agr_all{float:right;display: inline-block;color:#4c4c4c;font-weight: 500;padding-right: 12px}
+.agr_all input[type='checkbox']{vertical-align: middle;width:15px;height:15px}
+.agrmt_1st{padding:0 5px 10px 5px; overflow: hidden;min-height:40px}
+.agrmt_1st h4{font-size: 12px;padding-bottom:3px}
+.agrmt_1st dl{width:50%;float:left;overflow: hidden;font-size: 11px;}
+.agrmt_1st dt,.agrmt_1st dd{float:left}
+.agrmt_1st dt{width:167px}
+.agrmt_1st dd input{vertical-align: middle;}
+.agr_utilzr{position: relative;border-bottom:1px solid #c1272d;margin-bottom:18px;}
+.agr_utilzr_dis{position: relative;border-bottom:1px solid #ccc;margin-bottom:18px;}
+.agr_utilzr_dis *{color:#aaa}
+.agr_utilzr_dis h3{color:#aaa}
+.agr_utilzr_dis .btnAgrmt_detail_dis{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_agrmtMore_ko.png) no-repeat;position: absolute;bottom:-9px;left:50%;margin-left:-55px;width:110px;height:18px;border:0;display: inline-block;border-radius:9px;background-color:#aaa;background-repeat:no-repeat;background-position:center center}
+.btnAgrmt_detail{position: absolute;bottom:-9px;left:50%;margin-left:-55px;width:110px;height:18px;border:0;display: inline-block;border-radius:9px;background-color:#c1272c;background-repeat:no-repeat;background-position:center center}
+.btnAgrmt_detail{background-image: url(https://stdux.inicis.com/stdpay/img/newly/btn_agrmtMore_ko.png) ;}
+.btnAgrmt_detail.minus{background-image: url(https://stdux.inicis.com/stdpay/img/newly/btn_agrmMinus_ko.png);}
+.dt_agrmt{font-size: 11px;padding:10px 5px 4px 5px;position: relative;font-weight:bold;color:#555}
+.agrmt_2nd .dl_agrmt:first-child .dt_agrmt{padding:0 5px 4px 5px;}
+.agrWrap{position: absolute;right:0}
+.agrWrap input{vertical-align: middle}
+.dd_agrmt{font-size: 11px;font-family: 'NanumGothic','sans-serif';padding:5px; line-height: 1.5;border-top:1px solid #d8d8d8;;border-bottom:1px solid #d8d8d8;min-height:40px}
+.btn_detail{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_detail.png) no-repeat;width:16px;height:16px; display: inline-block;margin-left:13px; vertical-align:middle}
+.agrmt_2nd{height:402px;background: #fff;display: none}
+.ico_qes{background: url(https://stdux.inicis.com/stdpay/img/newly/ico_qus.png) no-repeat;height:17px;width:17px; display: inline-block; vertical-align: middle}
+.ban_ini{overflow: hidden;padding:0 5px;margin-bottom:10px}
+.ban_ini.dis_ini *{color:#aaa !important}
+.ban_ini.dis_ini .ico_qes{background: url(https://stdux.inicis.com/stdpay/img/newly/ico_qus_dis.png) no-repeat;}
+.link_pr{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_useUti.png) no-repeat;width:40px;height:16px;display: inline-block}
+.ban_ini.dis_ini .link_pr{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_useUti_dis.png) no-repeat}
+.ban_left{float:left;}
+.ban_left a{vertical-align:middle}
+.ban_slg{color:#c1272c;font-weight:bold;font-size: 13px}
+.ban_slg em{font-style: normal;color:#4c4c4c;font-size: 11px}
+.ban_right{float: right;font-size: 11px}
+.ban_right input{ vertical-align: middle}
+.btnPaymnt{display:block;line-height: 35px; height:35px; border:1px solid #e4e4e4; text-align: center;color:#656565; position: relative;}
+.btnPaymnt_2{height:30px;line-height:30px}
+.btnPaymnt_3{height:28px;line-height:28px;overflow:hidden}
+
+.btnPaysub{height:28px;line-height:28px;overflow: hidden;}
+.btnPaymnt:hover{background: #e6e6e6}
+.btnPaymnt img:focus {outline:none}
+.btnPaymnt.selected{border:2px solid #c3272b; background:#fff; height: 33px; line-height: 33px}
+.btnPaymnt.selected .img_pay{left: 29px}
+.btnPaymnt.selected:hover .img_crd{padding-top: 5px;}
+.btnPaymnt .img_crd{display: none;}
+.btnPaymnt .img_crdnaver{display: none;}
+.btnPaymnt .img_crd_1{display: none;}
+.btnPaymnt:hover .img_crd{display: block; vertical-align: middle; text-align: center;margin:0 auto;padding-top:6px}
+.btnPaymnt:hover .img_crdnaver{display: block; vertical-align: middle; text-align: center;margin:0 auto;padding-top:0px}
+.btnPaymnt:hover .img_crd_1{display: block; vertical-align: middle; text-align: center;margin:0 auto}
+.btnPaymnt:hover span{display: none}
+.btnPaymnt.kpay{color:#92278f;font-weight: bold;display: block; padding-left:130px}
+.btnPaymnt.samsungpay{color:#0032a0;font-weight: bold ;display: block; padding-left:130px}
+.btnPaymnt.payco{color:red;font-weight: bold;display: block; padding-left:100px}
+.btnPaymnt.lpay{color:#0093c0;font-weight: bold;display: block; padding-left:100px}
+.btnPaymnt.kakaopay{color:#1E1E1E;font-weight: bold;display: block; padding-left:100px}
+.btnPaymnt.ssgpay{color:#E24F39;font-weight: bold;display: block; padding-left:100px}
+.btnPaymnt.tosspay{color:#0050FF;font-weight: bold;display: block; padding-left:100px}
+.btnPaymnt.naverpay{color:#1E1E1E;font-weight: bold;display: block; padding-left:100px}
+.btnPaymnt.chaipay{color:#1E1E1E;font-weight: bold;display: block; padding-left:100px}
+
+.btnPaymnt_2.kpay{height:30px;line-height:30px}
+.btnPaymnt_2.samsungpay{height:30px;line-height:30px}
+.btnPaymnt_2.payco{height:30px;line-height:30px}
+.btnPaymnt_2.lpay{height:30px;line-height:30px}
+.btnPaymnt_2.kakaopay{height:30px;line-height:30px}
+.btnPaymnt_2.ssgpay{height:30px;line-height:30px}
+.btnPaymnt_2.tosspay{height:30px;line-height:30px}
+.btnPaymnt_2.naverpay{height:30px;line-height:30px}
+.btnPaymnt_2.chaipay{height:30px;line-height:30px}
+
+.btnPaymnt .img_pay{position:absolute;height:36px;top:0;left:30px}
+.btnPaymnt .img_pay img{vertical-align:middle}
+.btnPaymnt.kpay:hover span,.btnPaymnt.samsungpay:hover span,.btnPaymnt.payco:hover span, .btnPaymnt.lpay:hover span, .btnPaymnt.kakaopay:hover span, .btnPaymnt.ssgpay:hover span, .btnPaymnt.tosspay:hover span, .btnPaymnt.naverpay:hover span, .btnPaymnt.chaipay:hover span {display: block}
+.payWrap .li_sp{margin:0 0 3px 0;padding:0; overflow: hidden;position:relative}
+.btn_short{width:108px}
+.btn_middle{width:146px;height:28px;overflow:hidden;line-height:29px}
+.btn_Pay{width:108px;height:35px;line-height:35px}
+.btn_Pay_2{width:108px;height:30px;line-height:30px}
+.li_pay.last .btn_short{width:109px}
+.li_pay.last .btn_short.selected{ width:107px; }
+.li_pay{float:left;margin:0 3px 3px 0}
+.li_pay.mgt3{margin:3px 3px 0 0}
+.li_pay.last{margin-right:0;}
+.li_pay .btnPaymnt.selected{ width: 106px; }
+.li_gift{width:150px;display:block;height:38px;float:left; text-align:center}
+.btnGift{display:block;height:36px;border:1px solid #e4e4e4; text-align: center;color:#656565;background:#fff;width:148px;padding-bottom:1px}
+.btnGift.selected{border-color:#c3272b;}
+.btnGift span{font-size:12px;font-family:NanumGothic}
+.giftWrap{overflow:hidden;}
+.selectBox{display: inline-block;line-height: 35px;height:35px;border:1px solid #e4e4e4; text-align: center;color:#656565}
+.crdWrap{margin-top:5px;clear:both}
+.li_02{width:223px;display: block;float:left}
+.li_03{height:27px}
+.li_02_1{width:450px;}
+.li_02 .btnPaymnt{color:#4c4c4c;font-weight: bold; position: relative;font-family: 'NanumGothic',,'sans-serif'}
+.btnPaymntwarp{position: relative;}
+.li_02 .btnPaymntwarp .ico_qes{position: absolute;right:27px;top:50%;margin-top:-9px}
+.li_pay .btnPaymntwarp .ico_qes{position: absolute;right:18px;top:50%;margin-top:-9px}
+.li_sp .ico_qes{position: absolute;right:27px;top:50%;margin-top:-9px}
+.pay_icoWrap{position: absolute;right:1px;top:1px;width:13px;}
+.pay_ico{width:13px;height:12px;text-align: center;color:#fff;font-size: 10px;display:inline-block; line-height: 12px;font-family:sans-serif,NanumGothic}
+.pay_ico_new{width:13px;height:9.3px;text-align: center;color:#fff;font-size: 10px;display:inline-block; line-height: 8.5px;font-family:sans-serif,NanumGothic;display:block}
+.pay_icoWrap .pay_ico{display:block}
+.ico_c{background: #c0bb9b}
+.ico_free{background: #c55d92}
+.ico_p{background: #6cc4ec}
+.li_02.mrg_r3{margin-right:3px}
+.li_02.mrg_r4{margin-right:4px}
+.crdWrap ul{overflow: hidden;margin-bottom:3px}
+
+.etcSelectBox {position: relative;line-height: 15px;height:37px;border:1px solid #e4e4e4;color:#656565;padding:10px ;font-size: 12px;-webkit-appearance: none; /* 네이티브 외형 감추기 */
+-moz-appearance: none;appearance: none;background: url(https://stdux.inicis.com/stdpay/img/newly/etc_pay.png) right bottom no-repeat;}
+select > option{text-align: center}
+/* IE 10, 11의 네이티브 화살표 숨기기 */
+select.etcSelectBox::-ms-expand {
+  display: none;
+}
+.li_pay .etcSelectBox{width:111px;}
+.nmlSlet{border:1px solid #e4e4e4;font-size: 11px;color:#656565;height:26px; text-align: center;width:110px;padding-left:10px}
+.etcWrap{margin-top:1px;margin-bottom:5px; text-align: right;font-size: 12px;height:30px;position:relative}
+.etcWrap_1{margin-top:40px; margin-bottom:5px; text-align: right;font-size: 12px;height:30px;position:relative}
+.li_itm{display: inline-block;margin-left:6px;line-height: 26px}
+.li_itm input{vertical-align: middle;}
+.li_itm a{text-decoration: underline;}
+.ul_item{display: inline-block;font-size:11.4px}
+.etcWrap .nmlSlet{float:left}
+.lanWrap{position: absolute;bottom:20px;left:4px}
+.lanWrap button{width:37px;height:21px;border:0;float:left;margin-right:1px}
+.lang_kor{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_kor.png) no-repeat}
+.lang_eng{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_eng.png) no-repeat}
+.lang_cha{background: url(https://stdux.inicis.com/stdpay/img/newly/btn_cha.png) no-repeat}
+.btn_close{width:32px;height:32px;background: url(https://stdux.inicis.com/stdpay/img/newly/btn_close.png) no-repeat;border:0;position: absolute;top:5px;right:5px}
+.btnType09 {font-size:15px;overflow:hidden; display:inline-block; text-align:center; width:165px; height:40px; line-height:40px; font-weight:bold; color:#c1272c; background:#fff; vertical-align:middle;box-shadow:2px 2px 2px rgba(0,0,0,0.4)}
+.btnType09:hover {color:#a1120f; background:#e5e5e5;}
+.btnType09:active {color:#c1272c; background:#fff;}
+.btnDis,.btnDis:hover,.btnDis:active,.btnDis:visited{color:#ccc;background:#fff !important;}
+.sec_pay{background: #fff; position:relative;height:355px}
+.img_border{border:1px solid #666}
+.payPrice{font-weight:bold}
+/* ie7이하*/
+body.oldie .kgLayer *{font-family:dotum !important; letter-spacing:-1px}
+body.oldie .ban_slg{letter-spacing:-2px}
+body.oldie .kgLayer .pay_ico{font-size:10px}
+body.oldie .kgLayer .payPrice{font-weight:bold}
+body.oldie .kgLayer .ban_ini{margin-bottom:5px}
+.msie7 body.oldie .kgLayer .etcWrap{margin-top:-20px}
+body.oldie .kgLayer .dd_agrmt,body.oldie .kgLayer .dt_agrmt{font-size:12px}
+.scrollView{overflow-y:auto;height:144px}
+.uni_txt{font-size:11px; color:#c1272c; padding-left:5px;margin-top:-5px}
+.opt_mu{background:url(https://stdux.inicis.com/stdpay/img/icoF.gif) right center no-repeat}
+
+.extraCardTotal{height:40px;position:relative}
+.extraCardText {float:right;margin-top:4px;font-size:10.4px;text-align:right}
+.mgt0 {margin-top:0px}
+
+.dropdownQ{position:absolute;text-align:left;top:0;left:0;z-index:4}
+.dropdownQ dd, .dropdownQ dt, .dropdownQ ul { margin:0px; padding:0px; }
+.dropdownQ dd { position:relative;display:block; }
+.dropdownQ a, .dropdownQ a:visited { color:#666; text-decoration:none; display: block}
+.dropdownQ a:hover { color:#5d4617;}
+.dropdownQ dt{width:110px;position:absolute;top:0;left:0;height:28px}
+.dropdownQ dt a:hover { color:#5d4617; border: 1px solid #ddd;}
+.dropdownQ dt a {background:#fff url(https://stdux.inicis.com/stdpay/img/arrow.png) no-repeat right center; display:block; padding-right:5px;
+                border:1px solid #ddd; }
+.dropdownQ dt a span {cursor:pointer; display:block; padding:5px;width:110px}
+.dropdownQ dd{position:relative;width:127px;margin-top:28px}
+.dropdownQ dd .innerBox{display:none;border:1px solid #ddd;}
+.dropdownQ dd ul { background:#fff none repeat scroll 0 0;  color:#C5C0B0;
+                  padding:5px 0px;width:inherit;list-style:none;overflow-y:auto;height:75px;}
+.dropdownQ span.value { display:none;}
+.dropdownQ dd ul li{display:block;}
+/* .dropdown dd ul li a { padding:5px; display:block;overflow:hidden} */
+.dropdownQ dd ul li a { padding:5px; display:block;overflow:hidden; outline-offset: -2px;}
+
+.dropdownQ dd ul li a:hover { background-color:#f1f1f1;}
+
+.dropdownQ img.flag { border:none; vertical-align:middle;margin-top:-1px }
+
+
+
+
+#cardQuotaView .dropdownQ img.flag{margin-left:3px}
+.flagvisibility { display:inline-block;}
+.extraCard{height:40px;position:relative;float:left}
+.extraPay{height:40px;position:relative}
+/* .extraCard dl{float:left;} */
+.extraCard .dropdownQ dt a {background:#fff url(https://stdux.inicis.com/stdpay/img/arr2.png) no-repeat right bottom;
+                border:1px solid #ddd;height:35px;text-align:center}
+                .extraCard .dropdownQ dt a img{margin-top:10px}
+.extraCard > .dropdownQ dt{height:37px}
+.extraCard > .dropdownQ dt a.selected{border:2px solid #C12731;}
+/* .extraCard > .dropdown dt a{padding-left:5px} */
+.extraCard > .dropdownQ dt a{padding-left:0px}
+.extraCard > .dropdownQ dt a span{padding:9px 0;}
+.extraCard > .dropdownQ dd{margin-top:35px}
+.extraCard > .dropdownQ .ellipsis{width:65px;float:left}
+.extraCard > .dropdownQ dt a .ellipsis{width:65px;}
+
+
+.extraCardTotal2{height:28px;position:absolute;right:150px;}
+.dropdownQ_1 dt{width:150px}
+.dropdownQ_1 dt a span {width:142px}
+.dropdownQ_1 dd ul { width:147px}
+.dropdownQ_1 dd{width:149px}
+.extraCard .dropdownQ_1 dt a {height:28px;margin-left:2px}
+.extraCard > .dropdownQ_1 dd{margin-top:28px}
+.extraCard > .dropdownQ_1 dt a span{padding:9.5px 0;}
+
+
+
+.ellipsis{text-overflow:ellipsis; white-space: nowrap;overflow:hidden;display:block}
+.zindexUp{z-index:10 !important}
+h4.label2 span{font-weight:normal;}
+.agrmt_1st span{color:#4b4b4b}
+.dis_inline{display:inline-block}
+
+.radiusBorder{border:1px solid #ccc;border-radius: 20px;width:17px;height: 17px;box-sizing: border-box;display: inline-block;text-align: center;font-size: 14px;line-height: 14px;position:absolute;font-weight:bold;}
+
+
+
+.naver_popLayer {border:1px solid #acacac; background:#fff;}
+.naverType2Wrap ul{margin:10px 0; display: table; width: 100%; overflow: hidden;}
+.naverType2Wrap .li_02{width:50%; box-sizing: border-box; display: table-cell; float: none;}
+
+.naverType2Wrap .li_02.pr{padding-right: 3px}
+.naverType2Wrap .li_02.pl{padding-left: 3px}
+
+.btn_border{display: inline-block;border: 1px solid #e4e4e4;width: 100%;padding:10px 0;text-align: center;box-sizing: border-box}
+.selected{border-color: #c3272b;background: #fff;}
+
+
+
