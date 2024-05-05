@@ -7,7 +7,9 @@
 
   /* margin-left: 250px; */
 }
-
+li {
+    list-style-type: none; /* 마커를 없앰 */
+}
 .sideNavBox1 a {
   text-decoration: none;
   color: #757575;
