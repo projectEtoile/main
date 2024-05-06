@@ -2,8 +2,53 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
       layout:decorate='~{layouts/mypageLayout}'>
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function cancelOrder(orderId){
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+
+            const url="/order/" + orderId + "/cancel";
+            const paramData = {orderId : orderId}
+            const param = JSON.stringify(paramData);
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json",
+                data: param,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: "json",
+                cache: false,
+                success: function(result, status){
+                    alert("주문이 취소되었습니다");
+                    location.href="/orders/" + [[${page}]];
+                },
+                error: function(jqXHR, status, error){
+                    if(jqXHR.status == '401'){
+                        alert("로그인 후 이용해주세요.")
+                        location.href="/member/login";
+                } else {
+                    alert(jqXHR.responseText)
+                }
+            }
+        })
+     }
+
+    </script>
+</th:block>
+
 <div layout:fragment="content">
     <link th:href="@{/css/mypage/myOrder.css}" rel="stylesheet" type="text/css">
+
 
     <div class="mainSection2">
         <div class="myPageContainer">
