@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
-      layout:decorate='~{layouts/mypageLayout}'>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypageLayout}">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -10,38 +10,57 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        function cancelOrder(orderId){
-            const token = $("meta[name='_csrf']").attr("content");
-            const header = $("meta[name='_csrf_header']").attr("content");
+        function toggleAllOrders() {
+            const isChecked = document.getElementById("checkAllOrders").checked;
+            const orderCheckboxes = document.getElementsByName("orderChkBox");
+            orderCheckboxes.forEach(checkbox => checkbox.checked = isChecked);
+        }
 
-            const url="/order/" + orderId + "/cancel";
-            const paramData = {orderId : orderId}
-            const param = JSON.stringify(paramData);
+   function cancelOrder() {
+    const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).map(checkbox => checkbox.value);
 
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json",
-                data: param,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                dataType: "json",
-                cache: false,
-                success: function(result, status){
-                    alert("주문이 취소되었습니다");
-                    location.href="/orders/" + [[${page}]];
-                },
-                error: function(jqXHR, status, error){
-                    if(jqXHR.status == '401'){
-                        alert("로그인 후 이용해주세요.")
-                        location.href="/member/login";
+    if (selectedOrderIds.length === 0) {
+        alert('주문 상태가 "ORDER"인 상품을 선택하세요.');
+        return;
+    }
+
+    if (!confirm("선택한 주문을 취소하시겠습니까?")) {
+        return;
+    }
+
+    const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+
+    // AJAX 요청들을 배열로 저장합니다.
+    const ajaxRequests = selectedOrderIds.map(orderId => {
+        const url = `/order/${orderId}/cancel`;
+        return $.ajax({
+            url: url,
+            type: "POST",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function() {
+                console.log(`Order ${orderId} canceled.`);
+            },
+            error: function(jqXHR) {
+                if (jqXHR.status === 401) {
+                    alert("로그인 후 이용해주세요.");
+                    location.href = "/member/login";
                 } else {
-                    alert(jqXHR.responseText)
+                    alert(jqXHR.responseText);
                 }
             }
-        })
-     }
+        });
+    });
+
+    // 모든 AJAX 요청이 끝날 때까지 기다렸다가 페이지를 새로고침합니다.
+    $.when.apply($, ajaxRequests).then(function() {
+        alert("주문을 취소하였습니다.");  // 모든 요청이 끝난 후 알림 표시
+        location.reload();  // 알림 이후 페이지 새로고침
+    });
+}
+
 
     </script>
 </th:block>
@@ -49,10 +68,8 @@
 <div layout:fragment="content">
     <link th:href="@{/css/mypage/myOrder.css}" rel="stylesheet" type="text/css">
 
-
     <div class="mainSection2">
         <div class="myPageContainer">
-
             <div class="dateContainer">
                 <button class="lb">최근 1개월</button>
                 <button class="button3">01월</button>
@@ -65,8 +82,8 @@
         </div>
 
         <ul class="smallText">
-            <li class="smallText">한번에 조회 가능한 기간은 최대 6개월이며 2008년 1월 1일 이후의 주문에 대해서만 조회하실 수 있습니다.</li>
-            <li class="smallText">옵션 및 배송지 변경은 주문접수 또는 결제완료 상태일 경우 주문상세조회에서 하실 수 있습니다.</li>
+            <li class="smallText">한 번에 조회 가능한 기간은 최대 6개월이며, 2008년 1월 1일 이후의 주문만 조회하실 수 있습니다.</li>
+            <li class="smallText">옵션 및 배송지 변경은 '주문접수' 또는 '결제완료' 상태일 때만 주문 상세 조회에서 할 수 있습니다.</li>
         </ul>
 
         <table class="itemTable">
@@ -80,7 +97,7 @@
             </colgroup>
             <thead>
             <tr class="firstline2">
-                <th scope="col"><input type="checkbox"></th>
+                <th scope="col"><input type="checkbox" id="checkAllOrders" onclick="toggleAllOrders()"></th>
                 <th scope="col">일자/주문번호</th>
                 <th scope="col">주문상품정보</th>
                 <th scope="col">결제금액</th>
@@ -89,78 +106,71 @@
             </tr>
             </thead>
             <tbody>
-            <div th:each="order : ${orders.getContent()}">
-                <tr>
-                    <th><input type="checkbox"></th>
-                    <td><span th:text="${order.orderDate}"></span></td>
-                    <td>
-                        <div th:each="orderItem : ${order.orderItemDTOList}">
+            <tr th:each="order : ${orders.getContent()}" data-order-status="${order.orderStatus}">
+                <th><input type="checkbox" name="orderChkBox" th:value="${order.orderId}"></th>
+                <td><span th:text="${order.orderDate}"></span></td>
+                <td>
+                    <div th:each="orderItem : ${order.orderItemDTOList}">
+                        <div>
+                            <img th:src="${orderItem.imgUrl}" class="rounded repImg">
+                            <span th:text="${orderItem.itemNm}"></span>
                             <div>
-                                <img th:src="${orderItem.imgUrl}" class="rounded repImg">
-                                <span th:text="${orderItem.itemNm}"></span>
-                                <div>
-                                    <span th:text="${orderItem.count} + '개'"></span>
-                                    <span th:text="${orderItem.size}"></span>
-                                </div>
+                                <span th:text="${orderItem.count} + '개'"></span>
+                                <span th:text="${orderItem.size}"></span>
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        <div th:each="orderItem : ${order.orderItemDTOList}">
-                            <div>
-                                <span th:text="${orderItem.orderPrice} + '원'"></span>
-                            </div>
+                    </div>
+                </td>
+                <td>
+                    <div th:each="orderItem : ${order.orderItemDTOList}">
+                        <div>
+                            <span th:text="${orderItem.orderPrice} + '원'"></span>
                         </div>
-                    </td> <!-- 이 위치에 결제금액에 해당하는 데이터를 출력해야 합니다. -->
-                    <td>
-                        <div th:each="orderItem : ${order.orderItemDTOList}">
-                                <div>
-                                    <span th:text="${orderItem.size} + '사이즈'"></span>
-                                    <span th:text="${orderItem.count} + '개'"></span>
-                                </div>
+                    </div>
+                </td>
+                <td>
+                    <div th:each="orderItem : ${order.orderItemDTOList}">
+                        <div>
+                            <span th:text="${orderItem.size} + '사이즈'"></span>
+                            <span th:text="${orderItem.count} + '개'"></span>
                         </div>
-                    </td>
-                    <td>
-                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).ORDER}">
-                            <span>order</span>
-                        </th:block>
-                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).CANCEL}">
-                            <span>cancel</span>
-                        </th:block>
-                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_REQUEST}">
-                            <span>return request</span>
-                        </th:block>
-                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_COMPLETED}">
-                            <span>return completed</span>
-                        </th:block>
-                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).DELIVERING}">
-                            <span>delivering</span>
-                        </th:block>
-                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).DELIVERED}">
-                            <span>delivered</span>
-                        </th:block>
-                    </td>
-
-
-
-                </tr>
-            </div>
+                    </div>
+                </td>
+                <td>
+                    <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).ORDER}">
+                        <span>order</span>
+                    </th:block>
+                    <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).CANCEL}">
+                        <span>cancel</span>
+                    </th:block>
+                    <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_REQUEST}">
+                        <span>return request</span>
+                    </th:block>
+                    <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_COMPLETED}">
+                        <span>return completed</span>
+                    </th:block>
+                    <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).DELIVERING}">
+                        <span>delivering</span>
+                    </th:block>
+                    <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).DELIVERED}">
+                        <span>delivered</span>
+                    </th:block>
+                </td>
+            </tr>
             </tbody>
         </table>
         <div class="buttons">
             <button>배송조회</button>
             <button>교환, 반품 신청</button>
             <button>리뷰 작성</button>
-
+            <button onclick="cancelOrder()">주문 취소</button>
         </div>
+
         <div class="imgBox">
             <img src="/image/deliveryInform.png" alt="deliveryInform" class="lastimg">
         </div>
     </div>
 
-
     <div class="mainSection1"></div>
-
-
 </div>
 </html>
