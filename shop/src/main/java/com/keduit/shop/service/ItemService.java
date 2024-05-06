@@ -152,4 +152,9 @@ public class ItemService {
 
     }
 
+    public Item getItemById(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
+    }
+
 }
