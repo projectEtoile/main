@@ -101,7 +101,7 @@
             <thead>
             <tr class="firstline2">
                 <th scope="col"><input type="checkbox" id="checkAllOrders" onclick="toggleAllOrders()"></th>
-                <th scope="col">일자/주문번호</th>
+                <th scope="col">주문일자</th>
                 <th scope="col">주문상품정보</th>
                 <th scope="col">결제금액</th>
                 <th scope="col">옵션</th>
@@ -117,10 +117,7 @@
                         <div>
                             <img th:src="${orderItem.imgUrl}" class="rounded repImg">
                             <span th:text="${orderItem.itemNm}"></span>
-                            <div>
-                                <span th:text="${orderItem.count} + '개'"></span>
-                                <span th:text="${orderItem.size}"></span>
-                            </div>
+
                         </div>
                     </div>
                 </td>
