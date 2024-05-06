@@ -61,32 +61,27 @@
                 <nav>
                     <div class="center-align relative">
                         <div id="search-ranking">
-
                             <div>
                                 <span id="rank-number">1</span>
                                 <span id="rank-title">제로초</span>
                             </div>
-
-
                             <!-- 실시간 급상승 추가 -->
                             <div id="real-time-rankings">
-                                <ul style="posiotion: absolute; top: -15px;right: 0;">
+                                <ul style="position: absolute; top: -15px; right: 0;">
                                     <h1>Search Rank</h1>
                                     <table border="1">
                                         <thead>
+
                                         <tr>
                                             <th>순위</th>
                                             <th>인기검색어</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!-- 데이터를 반복하여 표시 -->
-                                        <th:block th:each="searchRank : ${searchRankList}">
-                                        <tr>
-                                            <td th:text="${searchRank.getNumber()}"></td> <!-- 순위 -->
-                                            <td th:text="${searchRank.getKeyword()}"></td> <!-- 인기검색어 -->
+                                        <tr th:each="searchRank : ${searchRankList}">
+                                            <td th:text="${searchRank.number}"></td> <!-- 순위 -->
+                                            <td th:text="${searchRank.keyword}"></td> <!-- 인기검색어 -->
                                         </tr>
-                                        </th:block>
                                         </tbody>
                                     </table>
                                     <div id="z-example">
@@ -94,7 +89,6 @@
                                     </div>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </nav>

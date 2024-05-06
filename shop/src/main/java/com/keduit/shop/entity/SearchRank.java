@@ -15,5 +15,13 @@ public class SearchRank {
 
     private String keyword;
 
-    // 생성자, 게터 및 세터
+    // 생성자
+    public SearchRank() {
+    }
+
+    // 생성자 오버로딩
+    public SearchRank(int number, String keyword) {
+        this.number = number;
+        this.keyword = keyword;
+    }
 }
