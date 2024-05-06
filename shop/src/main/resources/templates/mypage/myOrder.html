@@ -65,8 +65,24 @@
         }
 
         function openModal() {
-            document.getElementById('exchangeReturnModal').style.display = 'block';
-        }
+    const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).map(checkbox => checkbox.value);
+
+    if (selectedOrderIds.length === 0) {
+        alert("주문을 선택하세요.");
+        return;
+    }
+
+    const orderStatuses = selectedOrderIds.map(orderId => {
+        const orderRow = document.querySelector(`input[name="orderChkBox"][value="${orderId}"]`).closest('tr');
+        return orderRow.getAttribute('data-order-status');
+    });
+
+    if (orderStatuses.every(status => status === 'DELIVERED')) {
+        document.getElementById('exchangeReturnModal').style.display = 'block';
+    } else {
+        alert('선택한 주문 중 일부 또는 모든 주문의 상태가 "DELIVERED"가 아닙니다. 교환/반품 신청할 수 없습니다.');
+    }
+}
 
         function closeModal() {
             document.getElementById('exchangeReturnModal').style.display = 'none';
