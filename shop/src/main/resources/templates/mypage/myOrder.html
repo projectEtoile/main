@@ -71,12 +71,12 @@
 
         <table class="itemTable">
             <colgroup>
-                <col width="30px">
-                <col width="108px">
-                <col width="326px">
-                <col width="90px">
-                <col width="100px">
-                <col width="90px">
+                <col style="width:30px;">
+                <col style="width:108px;">
+                <col style="width:326px;">
+                <col style="width:90px;">
+                <col style="width:100px;">
+                <col style="width:90px;">
             </colgroup>
             <thead>
             <tr class="firstline2">
@@ -84,66 +84,68 @@
                 <th scope="col">일자/주문번호</th>
                 <th scope="col">주문상품정보</th>
                 <th scope="col">결제금액</th>
+                <th scope="col">옵션</th>
                 <th scope="col">진행상태</th>
-                <th scope="col">비고</th>
-            </tr>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th>02.10/123</th>
-                <th>ZEROSTREET</th>
-                <th>12,000</th>
-                <th>배송중</th>
-                <th></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th>02.11/124</th>
-                <th>Amour moier</th>
-                <th>35,000</th>
-                <th>배송준비중</th>
-                <th></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th>02.12/125</th>
-                <th>Ssecondo</th>
-                <th>75,000</th>
-                <th>배송완료</th>
-                <th></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr class="lastTr">
-                <th><input type="checkbox"></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>
             </thead>
+            <tbody>
+            <div th:each="order : ${orders.getContent()}">
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <td><span th:text="${order.orderDate}"></span></td>
+                    <td>
+                        <div th:each="orderItem : ${order.orderItemDTOList}">
+                            <div>
+                                <img th:src="${orderItem.imgUrl}" class="rounded repImg">
+                                <span th:text="${orderItem.itemNm}"></span>
+                                <div>
+                                    <span th:text="${orderItem.count} + '개'"></span>
+                                    <span th:text="${orderItem.size}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:each="orderItem : ${order.orderItemDTOList}">
+                            <div>
+                                <span th:text="${orderItem.orderPrice} + '원'"></span>
+                            </div>
+                        </div>
+                    </td> <!-- 이 위치에 결제금액에 해당하는 데이터를 출력해야 합니다. -->
+                    <td>
+                        <div th:each="orderItem : ${order.orderItemDTOList}">
+                                <div>
+                                    <span th:text="${orderItem.size} + '사이즈'"></span>
+                                    <span th:text="${orderItem.count} + '개'"></span>
+                                </div>
+                        </div>
+                    </td>
+                    <td>
+                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).ORDER}">
+                            <span>order</span>
+                        </th:block>
+                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).CANCEL}">
+                            <span>cancel</span>
+                        </th:block>
+                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_REQUEST}">
+                            <span>return request</span>
+                        </th:block>
+                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_COMPLETED}">
+                            <span>return completed</span>
+                        </th:block>
+                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).DELIVERING}">
+                            <span>delivering</span>
+                        </th:block>
+                        <th:block th:if="${order.orderStatus == T(com.keduit.shop.constant.OrderStatus).DELIVERED}">
+                            <span>delivered</span>
+                        </th:block>
+                    </td>
+
+
+
+                </tr>
+            </div>
+            </tbody>
         </table>
         <div class="buttons">
             <button>배송조회</button>
