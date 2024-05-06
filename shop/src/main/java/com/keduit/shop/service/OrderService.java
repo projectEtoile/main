@@ -115,21 +115,34 @@ public class OrderService {
     }
 
 
-    @Transactional
-    public void cancelOrder(Long orderId) {
+    public OrderStatus getOrderStatus(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("주문을 찾을 수 없습니다."));
+        return order.getOrderStatus();
+    }
+
+    public boolean cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("주문을 찾을 수 없습니다."));
 
-        // 주문 상태를 취소로 변경
-        order.setOrderStatus(OrderStatus.CANCEL); // 이 부분은 Order 엔티티에 적절한 setter가 구현되어 있어야 합니다.
-
-        // 각 주문 항목의 재고를 증가시키지만 주문 항목을 삭제하지 않습니다.
-        for (OrderItem orderItem : order.getOrderItems()) {
-            increaseItemStock(orderItem);  // 재고 증가 로직
+        // 주문 상태를 확인하여 취소할 수 있는지 검사
+        if (order.getOrderStatus() != OrderStatus.ORDER) {
+            return false;
         }
 
-        orderRepository.save(order);  // 변경 사항을 저장
+        // 주문을 취소로 변경
+        order.setOrderStatus(OrderStatus.CANCEL);
+
+        // 각 주문 항목의 재고를 증가시킴
+
+        for (OrderItem orderItem : order.getOrderItems()) {
+            increaseItemStock(orderItem);
+        }
+
+        orderRepository.save(order);
+        return true;
     }
+
 
     private void increaseItemStock(OrderItem orderItem) {
         Item item = orderItem.getItem();

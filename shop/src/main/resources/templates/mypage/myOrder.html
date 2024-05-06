@@ -16,8 +16,11 @@
             orderCheckboxes.forEach(checkbox => checkbox.checked = isChecked);
         }
 
-   function cancelOrder() {
-    const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).map(checkbox => checkbox.value);
+ function cancelOrder() {
+  const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).filter(checkbox => {
+    const orderRow = checkbox.closest('tr');
+    return orderRow.getAttribute('data-order-status') === 'ORDER'; // 'ORDER' 상태인 것만 선택
+}).map(checkbox => checkbox.value);
 
     if (selectedOrderIds.length === 0) {
         alert('주문 상태가 "ORDER"인 상품을 선택하세요.');
@@ -106,7 +109,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${orders.getContent()}" data-order-status="${order.orderStatus}">
+            <tr th:each="order : ${orders.getContent()}" th:data-order-status="${order.orderStatus}">
                 <th><input type="checkbox" name="orderChkBox" th:value="${order.orderId}"></th>
                 <td><span th:text="${order.orderDate}"></span></td>
                 <td>
