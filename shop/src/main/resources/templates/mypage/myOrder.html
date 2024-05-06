@@ -16,55 +16,99 @@
             orderCheckboxes.forEach(checkbox => checkbox.checked = isChecked);
         }
 
- function cancelOrder() {
-  const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).filter(checkbox => {
-    const orderRow = checkbox.closest('tr');
-    return orderRow.getAttribute('data-order-status') === 'ORDER'; // 'ORDER' 상태인 것만 선택
-}).map(checkbox => checkbox.value);
+        function cancelOrder() {
+            const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).filter(checkbox => {
+                const orderRow = checkbox.closest('tr');
+                return orderRow.getAttribute('data-order-status') === 'ORDER'; // 'ORDER' 상태인 것만 선택
+            }).map(checkbox => checkbox.value);
 
-    if (selectedOrderIds.length === 0) {
-        alert('주문 상태가 "ORDER"인 상품을 선택하세요.');
-        return;
-    }
+            if (selectedOrderIds.length === 0) {
+                alert('주문 상태가 "ORDER"인 상품을 선택하세요.');
+                return;
+            }
 
-    if (!confirm("선택한 주문을 취소하시겠습니까?")) {
-        return;
-    }
+            if (!confirm("선택한 주문을 취소하시겠습니까?")) {
+                return;
+            }
 
-    const token = $("meta[name='_csrf']").attr("content");
-    const header = $("meta[name='_csrf_header']").attr("content");
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
 
-    // AJAX 요청들을 배열로 저장합니다.
-    const ajaxRequests = selectedOrderIds.map(orderId => {
-        const url = `/order/${orderId}/cancel`;
-        return $.ajax({
-            url: url,
-            type: "POST",
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            success: function() {
-                console.log(`Order ${orderId} canceled.`);
-            },
-            error: function(jqXHR) {
-                if (jqXHR.status === 401) {
-                    alert("로그인 후 이용해주세요.");
-                    location.href = "/member/login";
-                } else {
+            // AJAX 요청들을 배열로 저장합니다.
+            const ajaxRequests = selectedOrderIds.map(orderId => {
+                const url = `/order/${orderId}/cancel`;
+                return $.ajax({
+                    url: url,
+                    type: "POST",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function() {
+                        console.log(`Order ${orderId} canceled.`);
+                    },
+                    error: function(jqXHR) {
+                        if (jqXHR.status === 401) {
+                            alert("로그인 후 이용해주세요.");
+                            location.href = "/member/login";
+                        } else {
+                            alert(jqXHR.responseText);
+                        }
+                    }
+                });
+            });
+
+            // 모든 AJAX 요청이 끝날 때까지 기다렸다가 페이지를 새로고침합니다.
+            $.when.apply($, ajaxRequests).then(function() {
+                alert("주문을 취소하였습니다.");  // 모든 요청이 끝난 후 알림 표시
+                location.reload();  // 알림 이후 페이지 새로고침
+            });
+        }
+
+        function openModal() {
+            document.getElementById('exchangeReturnModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('exchangeReturnModal').style.display = 'none';
+        }
+
+        function submitExchangeReturnRequest() {
+            const requestType = document.getElementById('requestType').value;
+            const reason = document.getElementById('reason').value;
+            const selectedOrderIds = Array.from(document.querySelectorAll('input[name="orderChkBox"]:checked')).map(checkbox => checkbox.value);
+
+            if (selectedOrderIds.length === 0) {
+                alert("주문을 선택하세요.");
+                return;
+            }
+
+            if (reason === '') {
+                alert("사유를 입력하세요.");
+                return;
+            }
+
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: '/exchange-return-request',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({orderIds: selectedOrderIds, requestType, reason}),
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function() {
+                    alert("요청이 저장되었습니다.");
+                    location.reload();
+                },
+                error: function(jqXHR) {
                     alert(jqXHR.responseText);
                 }
-            }
-        });
-    });
+            });
 
-    // 모든 AJAX 요청이 끝날 때까지 기다렸다가 페이지를 새로고침합니다.
-    $.when.apply($, ajaxRequests).then(function() {
-        alert("주문을 취소하였습니다.");  // 모든 요청이 끝난 후 알림 표시
-        location.reload();  // 알림 이후 페이지 새로고침
-    });
-}
-
-
+            closeModal();
+        }
     </script>
 </th:block>
 
@@ -117,7 +161,6 @@
                         <div>
                             <img th:src="${orderItem.imgUrl}" class="rounded repImg">
                             <span th:text="${orderItem.itemNm}"></span>
-
                         </div>
                     </div>
                 </td>
@@ -159,9 +202,26 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- 교환/반품 신청 모달창 -->
+        <div id="exchangeReturnModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:20px; border:1px solid #ccc;">
+            <h3>교환/반품 신청</h3>
+            <label for="requestType">신청 유형:</label>
+            <select id="requestType">
+                <option value="exchange">교환</option>
+                <option value="return">반품</option>
+            </select>
+            <br><br>
+            <label for="reason">사유:</label>
+            <textarea id="reason" rows="4" cols="50" placeholder="사유를 입력하세요."></textarea>
+            <br><br>
+            <button onclick="submitExchangeReturnRequest()">저장</button>
+            <button onclick="closeModal()">닫기</button>
+        </div>
+
         <div class="buttons">
             <button>배송조회</button>
-            <button>교환, 반품 신청</button>
+            <button onclick="openModal()">교환/반품 신청</button>
             <button>리뷰 작성</button>
             <button onclick="cancelOrder()">주문 취소</button>
         </div>
@@ -173,4 +233,5 @@
 
     <div class="mainSection1"></div>
 </div>
+
 </html>
