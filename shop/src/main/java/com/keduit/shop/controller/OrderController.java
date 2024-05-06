@@ -2,8 +2,13 @@ package com.keduit.shop.controller;
 
 import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
+import com.keduit.shop.entity.Address;
+import com.keduit.shop.entity.Member;
+import com.keduit.shop.repository.AddressRepository;
+import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import netscape.javascript.JSObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +20,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +33,8 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
+    private final MemberRepository memberRepository;
+    private final AddressRepository addressRepository;
 
     @PostMapping("/order")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDTO orderDTO,
@@ -77,5 +87,22 @@ public class OrderController {
         }
         orderService.cancelOrder(orderId);/*주문취소*/
         return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+    }
+
+    @GetMapping("/payment")
+    public @ResponseBody ResponseEntity order(Principal principal) {
+
+        Member member =  memberRepository.findByEmail(principal.getName());
+        if(addressRepository.findByMemberAndSelectAddressTrue(member).isEmpty()){
+            String notFound = "notFound";
+            return new ResponseEntity("{\"message\": \"notFound\"}",HttpStatus.OK);
+        }
+        Address address = addressRepository.findByMemberAndSelectAddressTrue(member).orElseThrow(EntityNotFoundException::new);
+
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("member", member);
+        responseData.put("address", address);
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 }

@@ -41,7 +41,7 @@ public class ItemService {
                 + itemFormDTO.getStockS();
 
         item.setStockNumber(total);
-        item.setDiscountRate(1); // 할인율 기본값
+        item.setDiscountRate(1f); // 할인율 기본값
         itemRepository.save(item);
 
         // 이미지 파일을 순회하며 설정
@@ -141,7 +141,7 @@ public class ItemService {
         List<Item> itemList = itemRepository.findByLevel1(categorySelect);
 
         if(itemList.isEmpty()){
-            return new ResponseEntity<>("카테고리에 해당하는 상품 없음",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("카테고리에 해당하는 상품이 없습니다.",HttpStatus.BAD_REQUEST);
         }
 
         for (Item item : itemList){
