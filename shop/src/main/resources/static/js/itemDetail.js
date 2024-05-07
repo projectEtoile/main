@@ -525,6 +525,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (response.ok) {
                 var questions = await response.json();
                 questions.forEach(question => {
+                var questionStatus = question.answer !== "" ? "답변완료" : "답변대기";
                     appendQuestionToTable(question.title, question.content, question.userEmail, question.date);
                 });
             } else {
