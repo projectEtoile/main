@@ -182,3 +182,11 @@ color: #525252;
     color: #000;
 }
 
+  .detail-toggle {
+            cursor: pointer;
+            font-size: 12px; /* Adjust the size to match your design */
+            padding: 3px;
+            border: none;
+            background: none;
+            color: black; /* Adjust color to match your design */
+        }
