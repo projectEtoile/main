@@ -241,6 +241,7 @@ $(document).ready(function() {
 
 
 
+/*
 #ifdef GL_ES
   precision mediump float;
   #endif
@@ -354,3 +355,4 @@ $(document).ready(function() {
       gl_FragColor = mix(color, color1, progress0 );
     }
 
+*/

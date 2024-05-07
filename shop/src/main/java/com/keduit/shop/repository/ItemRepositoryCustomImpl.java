@@ -185,13 +185,41 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         return StringUtils.isEmpty(searchQuery) ? null :
                 QItem.item.itemNm.like("%" + searchQuery + "%");
     }
+/////////////////////////////////
 
+    private BooleanExpression categorySelect(String category){
+
+        if(category == null){
+            return null;
+        }
+
+        if (level1.contains(category)) {
+            return QItem.item.level1.eq(category);
+        } else {
+            return QItem.item.level2.eq(category);
+        }
+    }
+
+    private BooleanExpression itemSellStatus(){
+        return QItem.item.itemSellStatus.ne(ItemSellStatus.STOP_SALE);
+    }
+    private BooleanExpression searchBylike(String searchBy, String searchQuery) {
+        if (searchQuery == null || searchQuery.isEmpty()) {
+            return null;
+        }
+
+        if(StringUtils.equals("itemNm",searchBy)){
+            return QItem.item.itemNm.like("%" + searchQuery + "%");
+        }
+        return null;
+    }
 
     @Override
     public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
 
         List<Item> result = jpaQueryFactory
-                .select(QItem.item)
+                .selectFrom(QItem.item)
+                //.from(QItem.item)
                 .where(categorySelect(category),
                         itemSellStatus(),
                         searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
@@ -210,26 +238,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
         return new PageImpl<>(result, pageable, total);
     }
-    private BooleanExpression categorySelect(String category){
 
-        if(level1.contains(category)){
-            return QItem.item.level1.eq(category);
-        }
-        return category == null? null : QItem.item.level2.eq(category);
-    }
-
-    private BooleanExpression itemSellStatus(){
-        return QItem.item.itemSellStatus.ne(ItemSellStatus.STOP_SALE);
-    }
-    private BooleanExpression searchBylike(String searchBy, String searchQuery) {
-
-        if(searchQuery.length()==0){
-            return null;
-        }
-        if(StringUtils.equals("itemNm",searchBy)){
-            return QItem.item.itemNm.like("%" + searchQuery + "%");
-        }
-        return null;
-    }
 
 }

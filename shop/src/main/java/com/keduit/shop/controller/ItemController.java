@@ -37,15 +37,11 @@ public class ItemController {
     private final MemberService memberService;
     private final QandAService qandAService;
 
-    @GetMapping("/categoryPadding")
+    @GetMapping("/category")
     public String main() {
-        return "category/categoryPadding";
+      return "category/categoryPage";
     }
 
-    @GetMapping("/categoryPage")
-    public String categoryPage() {
-        return "category/categoryPage";
-    }
 
     @GetMapping("/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
@@ -96,30 +92,50 @@ public class ItemController {
         }
     }
 
-
-    @GetMapping("/items/{category}/{page}")
-    public String itemsCategoryListPage(Model model,
-                                        @PathVariable("page") Optional<Integer> page,
-                                        @PathVariable("category") String category,
-                                        ItemSearchDTO itemSearchDTO){
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
-
-        List<ItemFormDTO> itemFormDTOList = new ArrayList<>();
-        Page<Item> items = itemService.getItemPage(itemSearchDTO, category, pageable);
-
-        for (Item item : items.getContent()){
-            ItemFormDTO itemFormDTO = itemService.getItemDtl(item.getId());
-            itemFormDTOList.add(itemFormDTO);
-        }
-
-        Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
-
-        model.addAttribute("itemFormDTOs",itemFormDTOs);
-        model.addAttribute("itemSearchDTO",itemSearchDTO);
-        model.addAttribute("maxPAge",10);
-
-        return "item/category";
-    }
+//  @GetMapping("/items/{category}/{page}")
+//  public String itemsCategoryListPage(Model model,
+//                                      @PathVariable("page") Optional<Integer> page,
+//                                      @PathVariable("category") String category,
+//                                      ItemSearchDTO itemSearchDTO){
+//    Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+//
+//    List<ItemFormDTO> itemFormDTOList = new ArrayList<>();
+//    Page<Item> items = itemService.getItemPage(itemSearchDTO, category, pageable);
+//    System.out.println("==================items================== " + items.getContent());
+//    for (Item item : items.getContent()){
+//      ItemFormDTO itemFormDTO = itemService.getItemDtl(item.getId());
+//      itemFormDTOList.add(itemFormDTO);
+//    }
+//
+//    Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
+//    System.out.println("==================itemFormDTOs================== " + itemFormDTOs.getContent());
+//
+//    model.addAttribute("itemFormDTOs",itemFormDTOs);
+//    model.addAttribute("itemSearchDTO",itemSearchDTO);
+//    model.addAttribute("maxPAge",10);
+//
+//    return "category/categoryPage";
+//  }
+//
+//    @GetMapping("/category/{level2}")
+//    public String categoryPadding(Model model , @PathVariable("level2") String level2){
+//        System.out.println("================level2=============" + level2);
+//        List<Item> itemList = new ArrayList<>();
+//        List<ItemFormDTO> itemFormDTOs = new ArrayList<>();
+//
+//        itemList = itemRepository.findItemByLevel2OrderByIdDesc(level2);
+//
+//        for(Item item : itemList) {
+//            itemFormDTOs.add(itemService.getItemDtl(item.getId()));
+//        }
+//
+//        model.addAttribute("items", itemList);
+//        model.addAttribute("itemImg", itemFormDTOs);
+//        System.out.println("===========itemList=============" + itemList);
+//        System.out.println("===========itemFormDTOs=========" + itemFormDTOs);
+//
+//        return "category/categoryPage";
+//    }
 
 }
 

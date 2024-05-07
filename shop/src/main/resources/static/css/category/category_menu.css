@@ -1,13 +1,3 @@
-    html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%
-}
-    #categoryBtn1_1 {
-      color: rgb(239, 98, 122);
-    }
-
-/* category_menu.css 시작*/
 html,
 body {
   min-height: 100%;
@@ -67,7 +57,7 @@ element.style {
 }
 
 .cardTitle {
- /* width: 100% auto; */
+  /* width: 100% auto; */
 
   margin: 0;
   max-width: 1240px;
@@ -75,7 +65,7 @@ element.style {
   text-align: center;
 
 }
-.cardTitle>p {
+.cardTitle p {
   margin: auto;
   padding-top: 70px;
   color: #000;
@@ -88,64 +78,7 @@ element.style {
   margin-bottom: 75px;
 }
 
-/* ì°œí•˜ê¸° */
+/* 찜하기 */
 .heart-clickable {
   cursor: pointer;
-}
-
-/* category_menu.css 끝*/
-
-html,
-body {
-  min-height: 100%;
-}
-
-body {
-  font-family: sans-serif;
-  overflow-x: hidden;
-  margin: 0;
-}
-
-.slides {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  width: 1020px;
-  max-width: 100%;
-  margin: auto;
-  overflow: hidden;
-}
-
-.slide {
-  position: relative;
-  width: 32%;
-}
-@media (max-width: 780px) {
-  .slide {
-    width: 48%;
-  }
-}
-@media (max-width: 450px) {
-  .slide {
-    width: 100%;
-  }
-}
-
-.canvas {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.plane {
-  padding-top: calc(64000% / 382);
-}
-.plane img {
-  display: none;
 }
