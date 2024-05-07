@@ -443,7 +443,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (response.ok) {
                 alert('질문이 성공적으로 등록되었습니다.');
                 // 질문 목록에 새 질문 추가
-                appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate);
+                 loadQuestions();
             } else {
                 alert('질문을 등록하는 데 실패했습니다.');
             }
