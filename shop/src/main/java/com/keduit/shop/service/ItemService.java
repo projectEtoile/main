@@ -3,6 +3,7 @@ package com.keduit.shop.service;
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.dto.ItemImgDTO;
+import com.keduit.shop.dto.MainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
 import com.keduit.shop.entity.QItemImg;
@@ -11,6 +12,8 @@ import com.keduit.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,7 +41,7 @@ public class ItemService {
                 + itemFormDTO.getStockS();
 
         item.setStockNumber(total);
-        item.setDiscountRate(1); // 할인율 기본값
+        item.setDiscountRate(1f); // 할인율 기본값
         itemRepository.save(item);
 
         // 이미지 파일을 순회하며 설정
@@ -126,4 +129,32 @@ public class ItemService {
         }
         return item.getId();
     }
+
+    @Transactional(readOnly = true)
+    public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
+        return itemRepository.getMainItemPage(searchDTO, pageable);
+    }
+
+    @Transactional
+    public ResponseEntity categoryDiscountRate(String categorySelect, float discountRate) {
+
+        List<Item> itemList = itemRepository.findByLevel1(categorySelect);
+
+        if(itemList.isEmpty()){
+            return new ResponseEntity<>("카테고리에 해당하는 상품이 없습니다.",HttpStatus.BAD_REQUEST);
+        }
+
+        for (Item item : itemList){
+            item.setDiscountRate(discountRate);
+        }
+        itemRepository.saveAll(itemList);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    public Item getItemById(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
+    }
+
 }

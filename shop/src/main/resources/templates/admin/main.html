@@ -13,9 +13,9 @@
     <!-- 상품등록 시작 -->
     <div style="disply='none;">
 
-     <span id="male" th:text="${male}"></span>
-    <span id="female" th:text="${female}"></span>
-</div>
+        <span id="male" th:text="${male}"></span>
+        <span id="female" th:text="${female}"></span>
+    </div>
 
     <div id="container">
 
@@ -25,24 +25,34 @@
                 <div class="tableContainer">
                     <table>
                         <tr class="firstLine">
-                            <td>상태</td><td>건수</td><td>금액</td>
+                            <td>주문 상태</td>
+                            <td>건수</td>
+                            <td>금액</td>
                         </tr>
                         <tr>
-                            <td>결제 완료</td><td>15</td><td>850,000</td>
+                            <td>주문 신청</td>
+                            <td id="OS" th:text="${data.orderSize}"></td>
+                            <td id="OP" th:text="${data.orderTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>배송 준비 중</td><td>9</td><td>550,000</td>
+                            <td>배송 중</td>
+                            <td id="DngS" th:text="${data.deliveringSize}"></td>
+                            <td id="DngP" th:text="${data.deliveringTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>환불 요청</td><td>2</td><td>22,000</td>
+                            <td>반품 신청</td>
+                            <td id="RRS" th:text="${data.return_requestSize}"></td>
+                            <td id="RRP" th:text="${data.return_requestTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>교환 요청</td><td>2</td><td>0</td>
+                            <td>문의 내역</td>
+                            <td>10</td>
+                            <td>-</td>
                         </tr>
 
                     </table>
                 </div>
-                <p>총 금액 | <span class="numbox">678,000</span><span> 원</span></p>
+                <p>총 금액 | <span id="TTP" class="numbox"></span><span> 원</span></p>
             </div>
             <div class="bottom">
                 <h1>카테고리 별 매출 비중 현황</h1>
@@ -53,26 +63,44 @@
             </div>
         </div>
 
+        <div style="display: none;">
+            <p id="ttp1" th:text="${data.ttp}"></p>
+            <p id="otp" th:text="${data.otp}"></p>
+            <p id="ptp" th:text="${data.ptp}"></p>
+            <p id="sdtp" th:text="${data.sdtp}"></p>
+            <p id="stp" th:text="${data.stp}"></p>
+        </div>
+
         <div class="rights">
             <div class="top">
-                <h1>금일 처리된 목록</h1>
+                <h1>처리된 목록</h1>
                 <div class="tableContainer">
                     <table>
                         <tr class="firstLine">
-                            <td>상태</td><td>건수</td><td>금액</td>
+                            <td>주문 상태</td>
+                            <td>건수</td>
+                            <td>금액</td>
                         </tr>
                         <tr>
-                            <td style="width: 145px;">배송 준비 중 처리</td><td>3</td><td>150,000</td>
+                            <td style="width: 145px;">배송 완료</td>
+                            <td th:text="${data.deliveredSize}"></td>
+                            <td th:text="${data.deliveredTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>배송 중 처리</td><td>5</td><td>350,000</td>
+                            <td>반품 완료</td>
+                            <td th:text="${data.return_completedSize}"></td>
+                            <td th:text="${data.return_completedTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>환불 요청 처리</td><td>3</td><td>30,000</td>
+                            <td>문의 완료</td>
+                            <td>3</td>
+                            <td>-</td>
                         </tr>
-                        <tr>
-                            <td>교환 요청 처리</td><td>2</td><td>0</td>
-                        </tr>
+               <!--         <tr>
+                            <td>교환 요청 처리</td>
+                            <td>2</td>
+                            <td>0</td>
+                        </tr>-->
 
                     </table>
                 </div>

@@ -60,7 +60,7 @@ public class Item extends BaseTimeEntity {
     private String level2; /*상품하위카테고리*/
 
     @Column(nullable = false)
-    private int discountRate; // 기본 값 1. N * 상품 가격 으로 할인 예. 10프로 할인 일시 0.9로 등록
+    private Float discountRate; // 기본 값 1. N * 상품 가격 으로 할인 예. 10프로 할인 일시 0.9로 등록
 
     @Lob
     @Column(nullable = false)
@@ -135,10 +135,13 @@ public class Item extends BaseTimeEntity {
             default:
                 throw new IllegalArgumentException("유효하지 않은 사이즈입니다.");
         }
-
-        // 모든 사이즈의 재고 감소와 함께 stock_number 감소
-        this.stockNumber -= stockNumber;
+        this.stockNumber -= stockNumber; // 전체 재고 감소
+        if (this.stockNumber < 0) {
+            throw new RuntimeException("Total stock cannot be negative");
+        }
     }
+
+
 
 
 

@@ -5,6 +5,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -12,7 +13,2453 @@
 
 </th:block>-->
 <th:block layout:fragment="content">
+    <link th:href="@{/css/payMent.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/itemDetail.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/payMent.js}" type="text/javascript"></script>
+
     <body>
+
+
+    <div class="popWrap" id="myModal" style="display: none;">
+        <!-- header -->
+        <div class="kgHeader">
+            <!-- wcchoi focus 추가, 포커스가 안보이도록 설정. -->
+            <span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+				<input type="text" id="inputLogo" maxlength="0" title="지불수단 상세화면 진입">
+			</span>
+
+            <h1><img src="https://stdux.inicis.com/stdpay/img/logo.gif" alt="KG Inicis"></h1>
+            <!--<a href="#" class="btnType01 btn01"><span>도움말</span></a>-->
+
+            <!-- span class="btnType01 btn01 hand btn_help " langTag="button.help" src="https://plugin.inicis.com/help60/plugin/help.html">도움말</span -->
+            <div class="fR">
+                <!-- <p class="copy" tabindex="241"> -->
+                <p class="copy">
+                    <span langtag="page.title">안전하고 편리한 이니시스결제입니다.</span>
+                </p>
+            </div>
+        </div>
+        <!-- //header -->
+
+        <!-- left 메뉴 -->
+        <!-- 결제수단 메뉴 -->
+        <div class="kgMenuList" style="background-color:;">
+            <ul class="menu" id="payMethodViewDiv">
+
+
+                <li class="payMethodSelecBtn goAssentChkBtn hide" id="flgUseProvision" value="1"></li>
+                <!-- 약관동의 -->
+
+
+                <li class="payMethodSelecBtn goCardBtn changeLang ko on" id="Card" value="1" tabindex="204">
+                    <a href="javascript:;" class="h2_tit">
+									<span langtag="button.nav2">
+										신용카드
+									</span>
+                    </a>
+                </li>
+                <!-- 신용카드 -->
+
+
+                <li class="payMethodSelecBtn goBPDirectBankBtn changeLang ko" id="BPDirectBank" value="1"
+                    tabindex="206">
+
+                    <a class="h2_tit">
+									<span langtag="button.nav4">
+										계좌이체
+									</span>
+                    </a>
+                </li>
+                <!-- 계좌이체 -->
+
+
+                <li class="payMethodSelecBtn goVbankBtn changeLang ko" id="VBank" value="1" tabindex="207">
+                    <a href="javascript:;" class="h2_tit">
+									<span langtag="button.nav5">
+										무통장입금
+									</span>
+                    </a>
+                </li>
+                <!-- 무통장입금 -->
+
+
+                <li class="payMethodSelecBtn goHppBtn changeLang ko" id="HPP" value="1" tabindex="208">
+                    <a href="javascript:;" class="h2_tit">
+									<span langtag="button.nav3">
+										휴대폰결제
+									</span>
+                    </a>
+                </li>
+                <!-- 휴대폰결제 -->
+
+
+                <li class="payMethodSelecBtn goPOINTBtn changeLang ko" id="POINT" value="1" tabindex="210">
+                    <a href="javascript:;" class="h2_tit">
+									<span langtag="button.nav8">
+										포인트결제
+									</span>
+                    </a>
+                </li>
+                <!-- 포인트결제(기능없음) -->
+
+
+                <li class="payMethodSelecBtn goGiftCardBtn changeLang ko" id="GiftCard" value="1" tabindex="214">
+                    <a href="javascript:;" class="h2_tit">
+									<span langtag="button.nav6">
+										상품권
+									</span>
+                    </a>
+                </li>
+                <!-- 상품권(문화상품권/해피머니상품권) -->
+
+
+            </ul>
+
+            <!-- 좌측 iframeBanner 추가 -->
+            <div class="bnr" id="leftBnr">
+                <iframe src="https://stdux.inicis.com/stdpay/banner/ad_90x100.html" id="iframeBanner" title="금융사 이벤트 배너"
+                        width="90" height="100" marginheight="0" marginwidth="0" scrolling="no" frameborder="0"
+                        tabindex="221"></iframe>
+            </div>
+
+            <!-- 다국어 지원_2017.03.07 -->
+            <div class="lanWrap">
+                <h2 class="blind">다국어 언어 선택</h2>
+                <button type="button" id="setKo" name="button" class="lang_kor" title="한국어" tabindex="221"></button>
+                <button type="button" id="setEn" name="button" class="lang_eng" title="영어" tabindex="222"></button>
+                <button type="button" id="setCh" name="button" class="lang_cha" title="중국어" tabindex="223"></button>
+                <!-- <button type="button" id="setJp" name="button" class="lang_jap"></button> -->
+            </div>
+        </div>
+        <!-- 광고 영역추가(좌측배너, 우측배너) -->
+
+        <!-- 				<div class="kgBanner_left" id="bnrViewDiv" > -->
+
+        <!-- 				</div> -->
+        <!-- 				<div class="kgBanner_right" id="bnrViewDiv" > -->
+
+        <!-- 				</div> -->
+
+        <!-- //결제수단 메뉴 -->
+        <!-- 결제화면 -->
+        <h2 class="blind">결제수단 상세</h2>
+        <article id="body_wapper">
+            <section id="main_area">
+                <form id="payForm" name="payForm" method="post">
+                    <div class="payStepDiv" id="payStartViewDiv" style="display: block;">
+
+
+                        <div class="main_area_top" id="testLoad">
+                            <div id="topTitleSection">
+
+
+                                <!-- WCCHOI js 추가 -->
+                                <script type="text/javascript" src="/js/common.js"></script>
+                                <!-- 결제 상세 화면 -->
+                                <div class="kgPayments">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocus" maxlength="0" tabindex="99" title="결제화면 진입">
+	</span>
+
+                                    <!-- 230605 중앙교육 웹접근성으로 인하여 tabindex 주석처리 -->
+                                    <div class="logo" id="spanLogo" tabindex="100"><img
+                                            src="https://stdux.inicis.com/stdpay/img/logo04.png" alt="KG Inicis"></div>
+
+
+                                    <!-- <dl class="hist_new"> -->
+
+
+                                    <!-- </dl> -->
+                                    <!-- 상품명 -->
+                                    <dl class="hist">
+                                        <dt class="titl"><span langtag="common.label1.sub2">상품명</span></dt>
+                                        <dd class="txtl"><span class="goods_span"></span></dd>
+                                    </dl>
+                                    <dl class="hist">
+                                        <dt class="titl"><span langtag="common.label1.sub2">선택 갯수</span></dt>
+                                        <dd class="txtl"><span class="goods_span" id="mountt"></span></dd>
+                                    </dl>
+                                    <!-- 상품가격(상품가격, 상품금액) -->
+                                    <dl class="hist">
+
+                                        <dt><span langtag="common.label1.sub3">상품가격</span></dt><!-- 상품가격 -->
+
+
+                                        <dd>
+			<span class="jRightGoodsPrice" id="realPriceM">
+
+
+
+
+			</span>
+                                            <span langtag="common.label1.sub4.WON" class="jRightGoodsCurrency"
+                                                  bfcurrency="원">원</span>
+                                        </dd>
+                                    </dl>
+
+
+                                    <div id="lpointDisplay"></div>
+                                    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+                                    <!-- lpoint 적용된 상태 -->
+
+
+                                    <dl class="hist hide lpoint_exp" style="padding:7px 0 0;">
+                                        <dt>
+                                            <span langtag="payMethodCode.Card">신용카드</span>
+                                        </dt><!-- 신용카드 -->
+                                        <dd>
+                                            <span class="lpoint_exp_credit"></span>
+                                            <span langtag="common.label1.sub4.WON">원</span>
+                                        </dd>
+                                    </dl>
+                                    <dl class="hist hide lpoint_exp" style="padding:0 0 7px;">
+                                        <dt>
+                                            <span langtag="payMethodCode.Point">+ 포인트</span><!-- + 포인트 -->
+                                        </dt>
+                                        <dd>
+                                            <span class="lpoint_exp_point"></span>
+                                            <span>P&nbsp;</span>
+                                        </dd>
+                                    </dl>
+
+                                    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+                                    <!-- 이니포인트 사용시 -->
+                                    <dl class="hist hide payPoint">
+                                        <dt><span langtag="common.label.sub12">포인트k</span></dt>
+                                        <dd>
+                                            <span class="infoPoint"></span>
+                                            <span langtag="common.label1.sub4.WON">원</span>
+                                        </dd>
+                                    </dl>
+                                    <!-- 신용카드금액 -->
+                                    <dl class="hist hide payCard">
+                                        <dt><span langtag="button.nav2">신용카드</span></dt>
+                                        <dd>
+                                            <span class="infoCard"></span>
+                                            <span langtag="common.label1.sub4.WON">원</span>
+                                        </dd>
+                                    </dl>
+                                    <!-- 이니포인트 정보확인 -->
+
+                                    <!-- OCB결제시 정보확인 -->
+
+                                    <!-- OCB 포인트 사용할경우 -->
+
+                                    <!-- GS&Point 정보확인 -->
+
+                                    <!-- GS&Point 포인트 사용할경우 -->
+
+                                    <!-- UPoint 정보확인때 보여주기 -->
+
+                                    <!-- UPoint 포인트 사용할경우 -->
+
+                                    <!-- 포인트 카드 선택시 보여주기 -->
+
+
+                                    <!-- 쿠폰 적용된 상태 -->
+
+                                    <!-- 쿠폰 미적용 상태-->
+
+                                    <dl class="hist hide coupon">
+                                        <dt><span langtag="common.label.sub11" tabindex="157">쿠폰금액</span></dt>
+                                        <dd>
+                                            <span class="couponPrice" tabindex="158"> 0 </span>
+                                            <span langtag="common.label1.sub4.WON" tabindex="159">원</span>
+                                        </dd>
+                                    </dl>
+
+
+                                    <!-- *******************************************************************-->
+                                    <!-- 이니안심 done -->
+
+                                    <!-- 이니안심 card -->
+
+                                    <dl class="hist hide kcare">
+                                        <dt><span langtag="common.label.sub13">이니안심금액(+)</span></dt>
+                                        <dd>
+                                            <span class="kcarePrice" tabindex="164"> 0 </span>
+                                            <span langtag="common.label1.sub4.WON" tabindex="165">원</span>
+                                        </dd>
+                                    </dl>
+
+                                    <!-- *******************************************************************-->
+
+                                    <!-- YES24 신한 제휴 할인 여부  -->
+
+
+                                    <!-- 제공기간 -->
+
+
+                                    <!-- 쿠폰정보 있을경우 -->
+
+
+                                    <!-- 쿠폰사용시 -->
+
+
+                                    <!-- 쿠폰미사용시 -->
+
+                                    <dl class="total">
+
+
+                                        <dt><span langtag="common.label1.sub5">결제금액</span></dt>
+
+
+                                        <dd>
+
+
+                                            <!-- 일반결제일경우 -->
+
+                                            <span class="payPrice jRightPayPrice" id="totalPriceM">
+
+
+						</span>
+
+
+                                            <!--포인트 결제시 -->
+
+
+                                            <!--포인트 단독결제 정보확인창 -->
+
+
+                                            <!--포인트 복합결제 정보확인창 -->
+
+
+                                            <span langtag="common.label1.sub4.WON" class="jRightPayCurrency">원</span>
+                                        </dd>
+                                    </dl>
+
+
+                                    <div class="bnr" id="rigntBnr">
+                                        <iframe src="https://stdux.inicis.com/stdpay/banner/left_banner.html"
+                                                id="iframeBanner_Card" title="금융사 이벤트 배너" width="128" height="65"
+                                                marginheight="0" marginwidth="0" scrolling="no" frameborder="0"
+                                                tabindex="400"></iframe>
+                                    </div>
+
+
+                                    <div class="btnArea" style="cursor: pointer;">
+                                        <!-- 다음버튼 -->
+
+                                        <a id="CardBtn" class="btnType09 btnDis bottomBtn"
+                                           tabindex="401" onclick="order()">바로 구매
+
+                                        </a>
+
+
+                                        <!-- 현금영수증 발행버튼 2015-09-11 -->
+
+                                        <!-- kpayNext 버튼 201704.28 -->
+
+                                    </div>
+
+                                    <!-- close button-->
+                                    <button type="button" name="button" class="btn_close cancelBtn" id="btnCancel"
+                                            tabindex="406" title="닫기"></button>
+                                    <!-- //close button-->
+                                </div>
+                                <!-- //결제 상세 화면 -->
+                                <div class="hide checkCoupon">
+
+
+                                    <div id="counponPopup">
+                                        <div class="popLayer"
+                                             style="width:330px; height:272px; margin:-163px 0 0 -180px;">
+                                            <!-- padding:30px 24px; -->
+                                            <h1 class="copy02 bold"><span langtag="common.label1.sub13">할인쿠폰 이벤트</span>
+                                            </h1>
+
+                                            <div class="autoScroll">
+
+                                                <table class="tblType03">
+                                                    <caption>할인쿠폰 이벤트</caption>
+                                                    <colgroup>
+                                                        <col style="width:20%;">
+                                                        <col>
+                                                        <col>
+                                                        <col style="width:20%;">
+                                                    </colgroup>
+
+                                                </table>
+
+
+                                                <table class="tblType03">
+                                                    <caption>할인쿠폰 이벤트</caption>
+                                                    <colgroup>
+                                                        <col style="width:20%;">
+                                                        <col>
+                                                        <col>
+                                                        <col style="width:20%;">
+                                                    </colgroup>
+
+                                                </table>
+
+
+                                                <table class="tblType03">
+                                                    <caption>할인쿠폰 이벤트</caption>
+                                                    <colgroup>
+                                                        <col style="width:20%;">
+                                                        <col>
+                                                        <col>
+                                                        <col style="width:20%;">
+                                                    </colgroup>
+                                                    <!-- 우리카드 앱카드 쿠폰 추가로 인하여 분기처리 로직 추가 23.05.04 -->
+
+                                                </table>
+
+
+                                            </div>
+
+                                            <div class="btnWrapC" style="margin-top:17px">
+                                                <a href="javascript:;" id="closeCpnBtn" class="btnType06"><span
+                                                        class="boldNo" langtag="button.close">닫기</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="escrowFullData" id="escrowFullData" value="">
+                                <input type="hidden" id="curPage" value="Card">
+
+                            </div>
+                            <div class="kgContents">
+                                <!-- 이용약관 동의 -->
+                                <div id="termsSection">
+
+
+                                    <!-- 이용약관 -->
+                                    <div class="agr_utilzr">
+                                        <div class="h3_tit">
+                                            <h3><span langtag="clause.label">이용약관</span></h3>
+                                            <div class="agr_all">
+                                                <input type="checkbox" name="all" id="inputAll" tabindex="250">
+                                                <label for="inputAll"><span
+                                                        langtag="clause.label1.sub1">전체동의</span></label>
+                                            </div>
+                                        </div>
+                                        <!--  전체동의 간략 -->
+                                        <div class="agrmt_1st">
+                                            <!-- 전자금융거래 이용약관 -->
+                                            <h4 class="label2" style="overflow:hidden;">
+                                                <dl>
+                                                    <dt><span langtag="clause.label2.normal">전자금융거래 이용약관</span></dt>
+                                                    <dd>
+                                                        <input type="checkbox" name="check" class="inputChk7"
+                                                               id="inputChk7" checked="checked" tabindex="253">
+                                                        <label for="inputChk7"><span
+                                                                langtag="clause.label3">동의</span></label>
+                                                    </dd>
+                                                </dl>
+                                            </h4>
+                                            <!-- 고유식별정보 수입 및 이용안내 -->
+                                            <dl class="label4 hide">
+                                                <dt><span langtag="clause.label4.normal">고유식별정보 수집 및 이용안내</span></dt>
+                                                <dd>
+                                                    <input type="checkbox" name="check" class="inputChk2" id="inputChk2"
+                                                           checked="checked" tabindex="257">
+                                                    <label for="inputChk2"><span
+                                                            langtag="clause.label3">동의</span></label>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 개인정보의 수집 및 이용안내 -->
+                                            <dl class="label5">
+                                                <dt><span langtag="clause.label5.normal">개인정보의 수집 및 이용안내</span></dt>
+                                                <dd>
+                                                    <input type="checkbox" name="check" class="inputChk3" id="inputChk3"
+                                                           checked="checked" tabindex="261">
+                                                    <label for="inputChk3"><span
+                                                            langtag="clause.label3">동의</span></label>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 개인정보 제공 및 위탁안내 -->
+                                            <dl class="label6">
+                                                <dt><span langtag="clause.label6.normal">개인정보 제공 및 위탁안내</span></dt>
+                                                <dd>
+                                                    <input type="checkbox" name="check" class="inputChk4" id="inputChk4"
+                                                           checked="checked" tabindex="265">
+                                                    <label for="inputChk4"><span
+                                                            langtag="clause.label3">동의</span></label>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 통신과금서비스 이용약관 -->
+                                            <dl class="label7 hide">
+                                                <dt><span langtag="clause.label7.normal">통신과금서비스 이용약관</span></dt>
+                                                <dd>
+                                                    <input type="checkbox" name="check" class="inputChk5" id="inputChk5"
+                                                           checked="checked" tabindex="269">
+                                                    <label for="inputChk5"><span
+                                                            langtag="clause.label3">동의</span></label>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <!--  //전체동의 간략 -->
+
+                                        <!--  전체동의 더보기 -->
+                                        <div class="agrmt_2nd">
+                                            <!-- 전자금융거래 이용약관 -->
+                                            <dl class="dl_agrmt label2">
+                                                <dt class="dt_agrmt">
+                                                    <!-- <span langTag="clause.label2.normal" tabindex="251"> -->
+                                                    <span langtag="clause.label2.normal">전자금융거래 이용약관</span>
+                                                    <a href="javascript:;" class="btn_detail goDetailView1"
+                                                       id="aDetailView1" title="새창열림" tabindex="254">
+                                                        <span class="hidden">자세히보기</span>
+                                                    </a>
+                                                    <span class="agrWrap">
+					<input type="checkbox" name="check" class="inputChk7" id="inputChkDetail7" tabindex="253">
+					<label for="inputChkDetail7"><span langtag="clause.label3"></span>동의</label></span>
+
+                                                </dt>
+                                                <dd class="dd_agrmt">
+
+                                                    <span langtag="clause.label2.sub1">주식회사 케이지이니시스가 제공하는 전자지급결제대행서비스, 결제대금 예치서비스를 이용자가 이용할때 있어 회사와 이용자간 전자금융거래의 법률관계 및 기본적인 사항을 정함으로써 서비스의 안정성과 신뢰성을 확보합니다.</span>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 고유식별정보 수입 및 이용안내 -->
+                                            <dl class="dl_agrmt label4 hide">
+                                                <dt class="dt_agrmt">
+                                                    <!-- <span langTag="clause.label4.normal" tabindex="255"> -->
+                                                    <span langtag="clause.label4.normal">고유식별정보 수집 및 이용안내</span>
+                                                    <a href="javascript:;" class="btn_detail goDetailView2"
+                                                       id="aDetailView2" title="새창열림" tabindex="258">
+                                                        <span class="hidden">자세히보기</span>
+                                                    </a>
+                                                    <span class="agrWrap">
+					<input type="checkbox" name="check" class="inputChk2" id="inputChkDetail2" tabindex="257">
+					<label for="inputChkDetail2"><span langtag="clause.label3"></span>동의</label></span>
+
+                                                </dt>
+                                                <dd class="dd_agrmt">
+                                                    <!-- <span langTag="clause.label4.sub1" tabindex="256"> -->
+                                                    <span langtag="clause.label4.sub1">서비스 제공계약의 성립, 유지, 종료 및 제공과정 중의 본인식별, 인증실명확인을 위하여 고유식별정보를 수집하며 결제, 환불, 배송, 동의, 철회 등의 전자상거래 관련 서비스 제공을 위하여 이용합니다.</span>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 개인정보의 수집 및 이용안내 -->
+                                            <dl class="dl_agrmt label5">
+                                                <dt class="dt_agrmt">
+                                                    <!-- <span langTag="clause.label5.normal" tabindex="259"> -->
+                                                    <span langtag="clause.label5.normal">개인정보의 수집 및 이용안내</span>
+                                                    <a href="javascript:;" class="btn_detail goDetailView3"
+                                                       id="aDetailView3" title="새창열림" tabindex="262">
+                                                        <span class="hidden">자세히보기</span>
+                                                    </a>
+                                                    <span class="agrWrap">
+					<input type="checkbox" name="check" class="inputChk3" id="inputChkDetail3" tabindex="261">
+					<label for="inputChkDetail3"><span langtag="clause.label3">동의</span></label>
+				</span>
+                                                </dt>
+                                                <dd class="dd_agrmt">
+                                                    <!-- <span langTag="clause.label5.sub1" tabindex="260"> -->
+                                                    <span langtag="clause.label5.sub1">이용자가 구매하는 재화나 용역의 대금결제 및 결제진행 과정 중 본인식별, 인증, 실명확인과 이용자의 결제내역 요청에 대한 응대, 확인 및 부정이용 방지를 위하여 개인정보를 수집 이용합니다.</span>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 개인정보 제공 및 위탁안내 -->
+                                            <dl class="dl_agrmt label6">
+                                                <dt class="dt_agrmt">
+                                                    <!-- <span langTag="clause.label6.normal" tabindex="263"> -->
+                                                    <span langtag="clause.label6.normal">개인정보 제공 및 위탁안내</span>
+                                                    <a href="javascript:;" class="btn_detail goDetailView4"
+                                                       id="aDetailView4" title="새창열림" tabindex="266">
+                                                        <span class="hidden">자세히보기</span>
+                                                    </a>
+                                                    <span class="agrWrap">
+					<input type="checkbox" name="check" class="inputChk4" id="inputChkDetail4" tabindex="265">
+					<label for="inputChkDetail4"><span langtag="clause.label3">동의</span></label>
+				</span>
+                                                </dt>
+                                                <dd class="dd_agrmt">
+                                                    <!-- <span langTag="clause.label6.sub1" tabindex="264"> -->
+                                                    <span langtag="clause.label6.sub1">이용자의 주문처리시 인증, 정산, 취소, 환불 및 거래확인 요청에 대한 응대와 확인 등 거래이행을 위하여 신용카드사, 은행 등 결제수단별 금융기관과 전자상거래 관련 결제기관에 개인정보가 제공됩니다.</span>
+                                                </dd>
+                                            </dl>
+
+                                            <!-- 통신과금서비스 이용약관 -->
+                                            <dl class="dl_agrmt label7 hide">
+                                                <dt class="dt_agrmt">
+                                                    <!-- <span langTag="clause.label7.normal" tabindex="267"> -->
+                                                    <span langtag="clause.label7.normal">통신과금서비스 이용약관</span>
+                                                    <a href="javascript:;" class="btn_detail goDetailView5"
+                                                       id="aDetailView5" title="새창열림" tabindex="270">
+                                                        <span class="hidden">자세히보기</span>
+                                                    </a>
+                                                    <span class="agrWrap">
+					<input type="checkbox" name="check" class="inputChk5" id="inputChkDetail5" tabindex="269">
+					<label for="inputChkDetail5"><span langtag="clause.label3">동의</span></label>
+				</span>
+                                                </dt>
+                                                <dd class="dd_agrmt">
+
+                                                    <span langtag="clause.label7.sub1">주식회사 케이지이니시스가 제공하는 통신과금 서비스를 이용자가 이용할 때 있어 회사와 이용자간 통신과금 서비스에 관한 기본적인 사항을 정함으로써 통신과금 서비스의 안정성과 신뢰성을 확보합니다.</span>
+                                                </dd>
+                                            </dl>
+
+
+                                        </div>
+
+                                        <p style="font-size: 12px; margin-bottom:6px;">고객명 : <span
+                                                style="font-weight: bold; font-size: 14px; color: black;"
+                                                id="nameM">dd</span></p>
+                                        <p style="font-size: 12px; margin-bottom:6px;">이메일 : <span
+                                                style="font-weight: bold; font-size: 14px; color: black;"
+                                                id="emailM"></span></p>
+                                        <p style="font-size: 12px; margin-bottom:6px;">우편번호 : <span
+                                                style="font-weight: bold; font-size: 14px; color: black;"
+                                                id="postM"></span></p>
+                                        <p style="font-size: 12px; margin-bottom:6px;">지번 : <span
+                                                style="font-weight: bold; font-size: 14px; color: black;"
+                                                id="jiM"></span></p>
+                                        <p style="font-size: 12px; margin-bottom:9px;">상세주소 : <span
+                                                style="font-weight: bold; font-size: 14px; color: black;"
+                                                id="detM"></span></p>
+
+                                        <!--  //전체동의 더보기 -->
+                                        <!-- 웹접근성으로 인하여 button 태그 -> input 태그로 변경 22.09.06
+                                        <button class="btnAgrmt_detail_dis" type="button" tabindex="271"><span class="hidden">이용약관 상세보기</span></button>  -->
+                                        <input type="button" class="btnAgrmt_detail" tabindex="271" alt="약관 상세보기"
+                                               title="약관보기 열기"
+                                               style="background-image: url(&quot;https://stdux.inicis.com/stdpay/img/newly/btn_agrmtMore_ko.png&quot;);"><span
+                                            class="hidden">이용약관 상세보기</span>
+                                    </div>
+                                    <!-- //이용약관 -->
+
+                                    <!-- 이니안심 사용여부 체크 -->
+
+
+                                </div>
+
+                                <!-- 페이,카드,할부 -->
+                                <div class="sec_pay">
+                                    <div class="curtain"></div>
+
+                                    <div class="payWrap">
+                                        <div>
+                                            <!-- 포커스 -->
+
+
+                                            <div class="li_sp">
+                                                <a class="btnPaymnt kakaopay" href="javascript:;" id="payCode10"
+                                                   title="KakaoPay " tabindex="309">
+
+
+                                                    <span langtag="payCode.focus.msg.kakaopay" args="3,000">온 국민이 다 쓰는 카카오페이</span>
+
+
+                                                    <span class="img_pay"><img
+                                                            src="https://stdux.inicis.com/stdpay/img/newly/kakaopay.png"
+                                                            alt="kakaopay"></span>
+                                                    <input type="radio" id="kakaopay" name="cardCode" class="hide"
+                                                           value="kakaopay" cardtype="kakaopay">
+                                                </a>
+
+
+                                            </div>
+
+
+                                            <div class="li_sp">
+                                                <a class="btnPaymnt naverpay" href="javascript:;" id="payCode11"
+                                                   title="네이버페이 " tabindex="312">
+
+
+                                                    <span langtag="payCode.focus.msg.naverpay" args="3,000">머니/포인트 결제 시 0.3% 적립</span>
+
+
+                                                    <span class="img_pay"><img
+                                                            src="https://stdux.inicis.com/stdpay/img/newly/naverpay.png"
+                                                            alt="naverpay"></span>
+                                                    <input type="radio" id="naverpay" name="cardCode" class="hide"
+                                                           value="naverpay" cardtype="naverpay">
+                                                </a>
+
+
+                                            </div>
+
+                                            <input type="hidden" id="payCode1Count" value="1">
+
+
+                                            <!-- //포커스 -->
+                                        </div>
+                                    </div>
+
+                                    <!-- 카드-->
+                                    <div class="crdWrap">
+                                        <!-- 포커스 -->
+                                        <ul>
+
+
+                                            <li class="li_02 mrg_r3">
+
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt" href="javascript:;" id="cardCode10"
+                                                       title="현대카드 " tabindex="313">
+                                                        <input type="radio" id="04" name="cardCode" class="hide"
+                                                               value="04" cardtype="visa3d">
+                                                        <span class="card_name2"
+                                                              langtag="card.label2.card1.04">현대카드</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_04_new.png"
+                                                             class="img_crd" alt="">
+                                                    </a>
+
+                                                    <span class="ico_qes" id="hyundaiDesc0" alt="설명" title=""
+                                                          tabindex="315"><span class="hidden">자세히보기</span></span>
+
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <li class="li_02 ">
+
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt" href="javascript:;" id="cardCode11"
+                                                       title="삼성카드 " tabindex="317">
+                                                        <input type="radio" id="12" name="cardCode" class="hide"
+                                                               value="12" cardtype="visa3d">
+                                                        <span class="card_name2"
+                                                              langtag="card.label2.card1.12">삼성카드</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_12_new.png"
+                                                             class="img_crd" alt="">
+                                                    </a>
+
+                                                    <span class="ico_qes" id="samsungDesc1" alt="설명" title=""
+                                                          tabindex="318"><span class="hidden">자세히보기</span></span>
+
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <input type="hidden" id="cardCode1Count" value="1">
+
+
+                                        </ul>
+
+                                        <!-- 일반 카드 -->
+
+                                        <ul>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay  ">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode20"
+                                                       title="KB국민 " tabindex="319">
+                                                        <input type="radio" id="06" name="cardCode" class="hide"
+                                                               value="06" cardtype="isp">
+                                                        <span class="card_name" langtag="card.label2.card1.06"
+                                                              aria-hidden="true">KB국민</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_06_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay  ">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode21"
+                                                       title="비씨(페이북) " tabindex="320">
+                                                        <input type="radio" id="11" name="cardCode" class="hide"
+                                                               value="11" cardtype="isp">
+                                                        <span class="card_name" langtag="card.label2.card1.11"
+                                                              aria-hidden="true">비씨(페이북)</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_11_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay nth3 ">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode22"
+                                                       title="신한(SOL페이) " tabindex="321">
+                                                        <input type="radio" id="14" name="cardCode" class="hide"
+                                                               value="14" cardtype="visa3d">
+                                                        <span class="card_name" langtag="card.label2.card1.14"
+                                                              aria-hidden="true">신한(SOL페이)</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_14_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay  last">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode23"
+                                                       title="롯데카드 " tabindex="322">
+                                                        <input type="radio" id="03" name="cardCode" class="hide"
+                                                               value="03" cardtype="visa3d">
+                                                        <span class="card_name" langtag="card.label2.card1.03"
+                                                              aria-hidden="true">롯데카드</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_03_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay  ">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode24"
+                                                       title="하나Pay(하나) " tabindex="323">
+                                                        <input type="radio" id="34" name="cardCode" class="hide"
+                                                               value="34" cardtype="visa3d">
+                                                        <span class="card_name" langtag="card.label2.card1.34"
+                                                              aria-hidden="true">하나Pay(하나)</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_34_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay nth3 ">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode25"
+                                                       title="농협(NH페이) " tabindex="324">
+                                                        <input type="radio" id="41" name="cardCode" class="hide"
+                                                               value="41" cardtype="visa3d">
+                                                        <span class="card_name" langtag="card.label2.card1.41"
+                                                              aria-hidden="true">농협(NH페이)</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_41_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay  ">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode26"
+                                                       title="씨티카드 " tabindex="325">
+                                                        <input type="radio" id="43" name="cardCode" class="hide"
+                                                               value="43" cardtype="visa3d">
+                                                        <span class="card_name" langtag="card.label2.card1.43"
+                                                              aria-hidden="true">씨티카드</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_43_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <!--
+                                            2016.05.25 WCCHOI
+                                            DESC: test 기존에 3번째것만 class 적용 -->
+
+
+                                            <li class="li_pay  last">
+                                                <div class="btnPaymntwarp">
+                                                    <a class="btnPaymnt btn_short" href="javascript:;" id="cardCode27"
+                                                       title="하나Pay(외환) " tabindex="326">
+                                                        <input type="radio" id="01" name="cardCode" class="hide"
+                                                               value="01" cardtype="visa3d">
+                                                        <span class="card_name" langtag="card.label2.card1.01"
+                                                              aria-hidden="true">하나Pay(외환)</span>
+                                                        <img src="https://stdux.inicis.com/stdpay/img/cardIcon/card_01_new.png"
+                                                             class="img_crd" alt="" aria-hidden="true">
+                                                    </a>
+                                                    <div class="pay_icoWrap">
+
+
+                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <input type="hidden" id="cardCode2Count" value="7">
+
+
+                                        </ul>
+
+                                        <div class="extraCardTotal">
+                                            <!-- 그외카드 -->
+
+                                            <div class="extraCard" id="spanSelectCardCode">
+                                                <dl class="dropdownQ" id="cardCodeEctSelect" name="cardCodeEctSelect">
+                                                    <dt title="그외카드"><a href="#" class=""><span class="value"
+                                                                                                tabindex="327"></span><span
+                                                            langtag="card.label2.select1" tabindex="327">그외카드</span></a>
+                                                    </dt>
+                                                    <dd>
+                                                        <div class="innerBox" style="display: none;">
+                                                            <ul>
+                                                                <li><a href="#" class=""><span class="value"
+                                                                                               tabindex="327"></span><span
+                                                                        langtag="card.label2.select1" tabindex="327">그외카드</span></a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="26" title="UnionPay"
+                                                                       cardtype="union" langtag="card.label2.card.26= ">
+                                                                        <span class="value" tabindex="327">26</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.26"
+                                                                              tabindex="327">UnionPay</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="02" title="우리카드"
+                                                                       cardtype="visa3d"
+                                                                       langtag="card.label2.card.02= ">
+                                                                        <span class="value" tabindex="327">02</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.02"
+                                                                              tabindex="327">우리카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="55" title="케이뱅크" cardtype="isp"
+                                                                       langtag="card.label2.card.55= ">
+                                                                        <span class="value" tabindex="327">55</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.55"
+                                                                              tabindex="327">케이뱅크</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="95" title="저축은행" cardtype="isp"
+                                                                       langtag="card.label2.card.95= ">
+                                                                        <span class="value" tabindex="327">95</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.95"
+                                                                              tabindex="327">저축은행</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="32" title="광주카드" cardtype="isp"
+                                                                       langtag="card.label2.card.32= ">
+                                                                        <span class="value" tabindex="327">32</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.32"
+                                                                              tabindex="327">광주카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="33" title="전북카드" cardtype="isp"
+                                                                       langtag="card.label2.card.33= ">
+                                                                        <span class="value" tabindex="327">33</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.33"
+                                                                              tabindex="327">전북카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="51" title="수협카드" cardtype="isp"
+                                                                       langtag="card.label2.card.51= ">
+                                                                        <span class="value" tabindex="327">51</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.51"
+                                                                              tabindex="327">수협카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="35" title="KDB산업카드"
+                                                                       cardtype="isp" langtag="card.label2.card.35= ">
+                                                                        <span class="value" tabindex="327">35</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.35"
+                                                                              tabindex="327">KDB산업카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="52" title="제주카드" cardtype="isp"
+                                                                       langtag="card.label2.card.52= ">
+                                                                        <span class="value" tabindex="327">52</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.52"
+                                                                              tabindex="327">제주카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="48" title="신협카드" cardtype="isp"
+                                                                       langtag="card.label2.card.48= ">
+                                                                        <span class="value" tabindex="327">48</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.48"
+                                                                              tabindex="327">신협카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="71" title="우체국비씨" cardtype="isp"
+                                                                       langtag="card.label2.card.71= ">
+                                                                        <span class="value" tabindex="327">71</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.71"
+                                                                              tabindex="327">우체국비씨</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="81" title="하나비씨카드" cardtype="isp"
+                                                                       langtag="card.label2.card.81= ">
+                                                                        <span class="value" tabindex="327">81</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.81"
+                                                                              tabindex="327">하나비씨카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="46" title="NH비씨카드" cardtype="isp"
+                                                                       langtag="card.label2.card.46= ">
+                                                                        <span class="value" tabindex="327">46</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.46"
+                                                                              tabindex="327">NH비씨카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="47" title="기업비씨카드" cardtype="isp"
+                                                                       langtag="card.label2.card.47= ">
+                                                                        <span class="value" tabindex="327">47</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.47"
+                                                                              tabindex="327">기업비씨카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="21" title="해외비자"
+                                                                       cardtype="visa3d"
+                                                                       langtag="card.label2.card.21= ">
+                                                                        <span class="value" tabindex="327">21</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.21"
+                                                                              tabindex="327">해외비자</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="22" title="해외마스터"
+                                                                       cardtype="visa3d"
+                                                                       langtag="card.label2.card.22= ">
+                                                                        <span class="value" tabindex="327">22</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.22"
+                                                                              tabindex="327">해외마스터</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="23" title="해외JCB"
+                                                                       cardtype="visa3d"
+                                                                       langtag="card.label2.card.23= ">
+                                                                        <span class="value" tabindex="327">23</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.23"
+                                                                              tabindex="327">해외JCB</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="24" title="해외아멕스"
+                                                                       cardtype="visa3d"
+                                                                       langtag="card.label2.card.24= ">
+                                                                        <span class="value" tabindex="327">24</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.24"
+                                                                              tabindex="327">해외아멕스</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="54" title="새마을비씨" cardtype="isp"
+                                                                       langtag="card.label2.card.54= ">
+                                                                        <span class="value" tabindex="327">54</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.54"
+                                                                              tabindex="327">새마을비씨</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="25" title="해외DINERS"
+                                                                       cardtype="normal"
+                                                                       langtag="card.label2.card.25= ">
+                                                                        <span class="value" tabindex="327">25</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.25"
+                                                                              tabindex="327">해외DINERS</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="56" title="카카오뱅크" cardtype="isp"
+                                                                       langtag="card.label2.card.56= ">
+                                                                        <span class="value" tabindex="327">56</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.56"
+                                                                              tabindex="327">카카오뱅크</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="38" title="우리BC"
+                                                                       cardtype="visa3d"
+                                                                       langtag="card.label2.card.38= ">
+                                                                        <span class="value" tabindex="327">38</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.38"
+                                                                              tabindex="327">우리BC</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="62" title="KB증권(현대)"
+                                                                       cardtype="isp" langtag="card.label2.card.62= ">
+                                                                        <span class="value" tabindex="327">62</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.62"
+                                                                              tabindex="327">KB증권(현대)</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="#" class="44" title="평화카드" cardtype="isp"
+                                                                       langtag="card.label2.card.44= ">
+                                                                        <span class="value" tabindex="327">44</span>
+                                                                        <span class="ellipsis"
+                                                                              langtag="card.label2.card1.44"
+                                                                              tabindex="327">평화카드</span>
+
+
+                                                                        <!-- 현대카드 1만원 무이자 여부  -->
+
+
+                                                                    </a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+
+
+                                            <!-- 현대카드 1만원 무이자 여부  -->
+
+                                            <input type="radio" id="cardCodeEct" name="cardCode" value="" class="hide"
+                                                   isp="false" title="">
+                                        </div>
+                                    </div>
+
+                                    <input type="radio" name="cardCode" id="oneClick" class="hide" value="easyPay">
+                                    <!-- //페이,카드,할부 -->
+
+                                    <!-- 할부선택 및 아이콘설명-->
+                                    <div class="etcWrap">
+                                        <!-- 할부선택 -->
+                                        <div class="hide" id="cardQuotaView">
+                                            <dl class="dropdownQ" id="cardQuota">
+                                                <dt title="할부기간선택" tabindex="328"></dt>
+                                                <dd>
+                                                    <div class="innerBox" style="display: none;">
+                                                        <ul>
+                                                        </ul>
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                            <input type="text" name="cardQuota" class="hide" value="00">
+                                        </div>
+                                        <!-- //할부선택 -->
+
+                                        <ul class="ul_item">
+
+                                            <!-- Lpoint 추가 2017-12-07 -->
+
+                                            <!-- Lpoint 추가 2017-12-07 -->
+
+                                            <li class="li_itm" style="display:none;">
+                                                <input type="checkbox" name="shinhanApp" id="shinhanApp" tabindex="329">
+                                                <label for="shinhanApp"><span
+                                                        langtag="card.label2.sub9">앱카드</span></label>
+                                            </li>
+
+
+                                        </ul>
+
+                                        <ul class="ul_item">
+
+
+                                            <!-- 현대카드 1만원 무이자 여부  -->
+
+                                        </ul>
+                                    </div>
+                                    <!--  할부선택 및 아이콘설명 -->
+
+                                    <!-- 페이-->
+                                    <div class="payWrap">
+                                        <div>
+                                            <div>
+                                                <ul>
+                                                    <!-- 일반 페이 -->
+
+
+                                                    <!-- 간편결제 순서 변경으로 인하여 수정 23.02.16 -->
+
+
+                                                    <li class="li_pay ">
+
+
+                                                        <a class="btnPaymnt btn_Pay" href="javascript:;" id="payCode20"
+                                                           title="PAYCO " tabindex="335">
+
+                                                            <span langtag="payCode.label.payco"
+                                                                  aria-hidden="true">PAYCO</span>
+
+
+                                                            <img src="https://stdux.inicis.com/stdpay/img/cardIcon/paycoEvt.png"
+                                                                 class="img_crd" alt="PAYCO" aria-hidden="true">
+
+
+                                                            <input type="radio" id="payco" name="cardCode" class="hide"
+                                                                   value="payco" cardtype="payco">
+                                                        </a>
+                                                    </li>
+
+
+                                                    <!-- 간편결제 순서 변경으로 인하여 수정 23.02.16 -->
+
+
+                                                    <li class="li_pay ">
+
+
+                                                        <a class="btnPaymnt btn_Pay" href="javascript:;" id="payCode21"
+                                                           title="L.pay " tabindex="336">
+
+                                                            <span langtag="payCode.label.lpay"
+                                                                  aria-hidden="true">L.pay</span>
+
+
+                                                            <img src="https://stdux.inicis.com/stdpay/img/cardIcon/lpay.png"
+                                                                 class="img_crd" alt="L.pay" aria-hidden="true">
+
+
+                                                            <input type="radio" id="Lpay" name="cardCode" class="hide"
+                                                                   value="Lpay" cardtype="lpay">
+                                                        </a>
+                                                    </li>
+
+
+                                                    <!-- 간편결제 순서 변경으로 인하여 수정 23.02.16 -->
+
+
+                                                    <li class="li_pay ">
+
+
+                                                        <a class="btnPaymnt btn_Pay" href="javascript:;" id="payCode22"
+                                                           title="SSGPAY " tabindex="337">
+
+                                                            <span langtag="payCode.label.ssgpay" aria-hidden="true">SSGPAY</span>
+
+
+                                                            <img src="https://stdux.inicis.com/stdpay/img/cardIcon/ssgpay.png"
+                                                                 class="img_crd" alt="SSGPAY" aria-hidden="true">
+
+
+                                                            <input type="radio" id="ssgpay" name="cardCode" class="hide"
+                                                                   value="ssgpay" cardtype="ssgpay">
+                                                        </a>
+                                                    </li>
+
+                                                    <input type="hidden" id="payCode2Count" value="2">
+
+
+                                                    <!-- //일반 페이 -->
+
+                                                    <!-- 기타 페이 -->
+
+                                                    <!-- 간편결제 수단 변경에 따라 추가된 로직 -->
+
+
+                                                    <li class="li_pay last" id="spanSelectPayCode">
+
+
+                                                        <div class="extraCard extraPay">
+                                                            <dl class="dropdownQ" id="payCodeEctSelect"
+                                                                name="payCodeEctSelect">
+                                                                <dt title="그외결제" tabindex="338"><a href="#"
+                                                                                                   class=""><span
+                                                                        class="value"></span><span
+                                                                        langtag="card.label2.select4">그외결제</span></a>
+                                                                </dt>
+                                                                <dd>
+                                                                    <div class="innerBox" style="display: none;">
+                                                                        <ul>
+                                                                            <li><a href="#" class=""><span
+                                                                                    class="value"></span><span
+                                                                                    langtag="card.label2.select4">그외결제</span></a>
+                                                                            </li>
+
+                                                                            <li>
+                                                                                <a href="#" class="tosspay">
+                                                                                    <span class="value">tosspay</span>
+                                                                                    <span langtag="payCode.label.tosspay">toss pay</span>
+                                                                                </a>
+                                                                            </li>
+
+                                                                            <li>
+                                                                                <a href="#" class="Ssp">
+                                                                                    <span class="value">Ssp</span>
+                                                                                    <span langtag="payCode.label.samsungpay">Samsung Pay</span>
+                                                                                </a>
+                                                                            </li>
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </dd>
+                                                            </dl>
+                                                        </div>
+                                                    </li>
+
+                                                    <!-- //기타 페이 -->
+                                                </ul>
+                                                <input type="radio" id="payCodeEct" name="cardCode" value=""
+                                                       class="hide" isp="false" title="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- //페이-->
+
+                                </div>
+                                <!-- //페이,카드,할부 -->
+
+                                <!-- 하단배너-->
+                                <div id="bannerBottomSection">
+
+
+                                    <!-- 배너-->
+                                    <div class="btmBnr" id="divAdPopup">
+                                        <iframe src="https://stdux.inicis.com/stdpay/banner/bnr.html" tabindex="397"
+                                                width="490" height="50" marginheight="0" marginwidth="0" scrolling="no"
+                                                frameborder="0" title="금융사 이벤트 배너"></iframe>
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        var bnrView = $("#bnrView").val();
+                                        if(bnrView === 'false'){
+                                            $(".btmBnr").addClass('hide');
+                                        }
+                                    </script>
+                                    <!-- //배너-->
+                                </div>
+
+                                <!-- 공지사항 -->
+                                <div id="noticeSection">
+
+
+                                    <!-- notice-->
+                                    <div class="noti_bar">
+                                        <marquee id="mqButton" width="475" height="30" behavior="scroll"
+                                                 direction="left" scrollamount="6" style="margin-top: 4px;">
+
+                                            <!-- 신규 가맹점 홍보노출 -->
+
+
+                                            <!-- notice -->
+
+                                        </marquee>
+                                    </div>
+                                    <!-- //notice-->
+
+                                    <script defer="" type="text/javascript">
+                                        $(function(){
+                                            // 공지사항 속도 설정
+                                            $('marquee').attr("scrollamount", "6");
+
+                                            // 신규 가맹점 바로가기 버튼
+                                            jQuery(document).on("click","#linkButton", function(){
+                                                window.open(jQuery(this).attr("src"),"stdOpen","");
+                                            });
+
+                                            var count = 0;
+                                            $(document).on("click","#mqButton", function(e){
+                                                count++;
+                                                var isEven = function(someNumber) {
+                                                    return (someNumber % 2 === 0) ? true : false;
+                                                };
+                                                if (isEven(count) === false) {
+                                                    $('marquee').trigger('stop');
+                                                    $(this).child
+                                                } else if (isEven(count) === true) {
+                                                    $('marquee').trigger('start');
+                                                }
+                                                $(this).toggleClass("pause");
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hide pointOk">
+
+
+                            <div id="point_popup2">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusPointPopup2" maxlength="0" tabindex="600">
+	</span>
+                                <div class="popLayer" style="width:310px; height:129px; margin:-95px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <p class="copy02 txtC bold"><span langtag="popup.label3.sub1" tabindex="601">카드 포인트를 사용하시겠습니까?</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span langtag="popup.label1.sub2" tabindex="602">포인트 결제 시 가용한 포인트가 차감되고,<br>부족한 금액은 신용카드로 결제 됩니다.</span>
+                                    </p>
+                                    <div class="btnWrapC">
+                                        <a href="#none" id="useCp" class="btnType07" tabindex="603"><span class="boldNo"
+                                                                                                          langtag="popup.label4.sub1">사용</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide pointYes">
+
+
+                            <div id="point_popup3">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusPointPopup3" maxlength="0" tabindex="600">
+	</span>
+                                <div class="popLayer" style="width:310px; height:129px; margin:-95px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <p class="copy02 txtC bold"><span langtag="popup.label3.sub1" tabindex="601">카드 포인트를 사용하시겠습니까?</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span langtag="popup.label1.sub2" tabindex="602">포인트 결제 시 가용한 포인트가 차감되고,<br>부족한 금액은 신용카드로 결제 됩니다.</span>
+                                    </p>
+                                    <div class="btnWrapC">
+                                        <a href="#none" id="notCp" class="btnType06" tabindex="604"><span class="boldNo"
+                                                                                                          langtag="popup.label4.sub2">사용안함</span></a>
+                                        <a href="#none" id="useCp" class="btnType07" tabindex="603"><span class="boldNo"
+                                                                                                          langtag="popup.label4.sub1">사용</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide pointOk2">
+
+
+                            <div id="point_popup12">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusPointPopup12" maxlength="0" tabindex="600">
+	</span>
+                                <div class="popLayer" style="width:310px; height:300px; margin:-185px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <p class="copy02 txtC bold"><span langtag="popup.label3.sub1" tabindex="601">카드 포인트를 사용하시겠습니까?</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span langtag="popup.label1.sub2" tabindex="602">포인트 결제 시 가용한 포인트가 차감되고,<br>부족한 금액은 신용카드로 결제 됩니다.</span>
+                                    </p>
+                                    <table class="tblType02">
+                                        <caption>포인트 안내</caption>
+                                        <colgroup>
+                                            <col style="width:65px;">
+                                            <col>
+                                        </colgroup>
+
+
+                                    </table>
+                                    <div class="btnWrapC">
+                                        <a href="#none" id="useCp" class="btnType07" tabindex="603"><span class="boldNo"
+                                                                                                          langtag="popup.label4.sub1">사용</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide pointYes2">
+
+
+                            <div id="point_popup11">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusPointPopup11" maxlength="0" tabindex="600">
+	</span>
+                                <div class="popLayer" style="width:310px; height:300px; margin:-185px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <p class="copy02 txtC bold"><span langtag="popup.label3.sub1" tabindex="601">카드 포인트를 사용하시겠습니까?</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span langtag="popup.label1.sub2" tabindex="602">포인트 결제 시 가용한 포인트가 차감되고,<br>부족한 금액은 신용카드로 결제 됩니다.</span>
+                                    </p>
+                                    <table class="tblType02">
+                                        <caption>포인트 안내</caption>
+                                        <colgroup>
+                                            <col style="width:65px;">
+                                            <col>
+                                        </colgroup>
+
+
+                                    </table>
+                                    <div class="btnWrapC">
+                                        <a href="#none" id="notCp" class="btnType06" tabindex="604"><span class="boldNo"
+                                                                                                          langtag="popup.label4.sub2">사용안함</span></a>
+                                        <a href="#none" id="useCp" class="btnType07" tabindex="603"><span class="boldNo"
+                                                                                                          langtag="popup.label4.sub1">사용</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide pointMinPrice">
+
+
+                            <div id="point_popup4">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusPointPopup4" maxlength="0" tabindex="600">
+	</span>
+                                <div class="popLayer" style="width:310px; height:129px; margin:-95px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <p class="copy02 txtC bold"><span langtag="popup.label6.sub1" tabindex="601">카드 포인트 결제 불가</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span langtag="popup.label6.sub2" tabindex="602">카드 포인트는 결제금액이 <span
+                                            id="pntMinPrice" class="bold"></span>원 이상인 경우에 사용 가능합니다.<br><br><span
+                                            class="bold">확인</span> 버튼을 누르면 일반결제로 진행됩니다. </span></p>
+                                    <div class="btnWrapC" style="margin-top: 10px;">
+                                        <a href="#none" id="notCp" class="btnType06" tabindex="603"><span class="boldNo"
+                                                                                                          langtag="popup.label7.sub1">확인</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="OCBPopup hide">
+
+
+                            <div id="OCBSavePoint">
+                                <div class="popLayer" style="width:310px; height:147px; margin:-105px 0 0 -230px;">
+                                    <!--padding:30px 24px; -->
+
+                                    <p class="copy02 txtC bold"><span langtag="ocb.save.popup.title">OK캐쉬백 포인트적립</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span
+                                            langtag="ocb.save.card.text">OK 캐쉬백 카드번호를 입력하여 주십시오.</span></p>
+                                    <table class="tblType03">
+                                        <colgroup>
+                                            <col style="width:60px;">
+                                            <col>
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <td class="tit"><span langtag="ocb.card.label">카드번호</span></td>
+                                            <td class="txtC">
+                                                <input type="text" name="Ocbcard1" class="inputText onlynum" value=""
+                                                       style="width:25px" maxlength="4" tabindex="1"
+                                                       autonexttab="Ocbcard2"> -
+                                                <input type="text" name="Ocbcard2" class="inputText onlynum" value=""
+                                                       style="width:25px" maxlength="4" tabindex="2"
+                                                       autonexttab="Ocbcard3"> -
+                                                <input type="text" name="Ocbcard3" class="inputText onlynum" value=""
+                                                       style="width:25px" maxlength="4" tabindex="3"
+                                                       autonexttab="Ocbcard4"> -
+                                                <input type="password" name="Ocbcard4" class="inputPw onlynum" value=""
+                                                       style="width:45px" maxlength="4" tabindex="4">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="btnWrapC m20">
+                                        <a href="#" id="OcbcloseBtn" class="btnType06"><span
+                                                langtag="button.cancel">취소</span></a>
+                                        <a href="#" id="oCBSavePointbtn" class="btnType07"><span
+                                                langtag="button.success">확인</span></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide" id="lpointPopup">
+
+
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+                            <title>L POINT 팝업</title>
+
+                            <link rel="stylesheet" href="../css/lpointPopup.css" type="text/css">
+
+
+                            <div class="lpointPopLayer popLayer">
+
+                                <section class="lpoint_con">
+                                    <h2>L.POINT 사용</h2>
+                                    <ul class="lpoint_type">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="plan" class="radio" id="lpointType1"
+                                                       value="lpointType1">
+                                                <span class="radio_wrap">
+		              				<span class="radio_txt">포인트번호<br>정보 확인</span>
+		            			</span>
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="plan" class="radio" id="lpointType2"
+                                                       value="lpointType2" checked="">
+                                                <span class="radio_wrap" aria-hidden="true">
+			              			<span class="radio_txt">포인트번호<br>직접 입력</span>
+			            		</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </section>
+
+                                <div class="topLayer">
+                                    <table id="tableLayer">
+                                        <tbody>
+                                        <tr class="hide">
+                                            <td>
+                                                <input type="checkbox" name="chkLpointUse" id="chkLpointUse"
+                                                       checked="checked" tabindex="1"
+                                                       style="padding:0;margin:0px 0 0 3px;vertical-align:middle;">
+                                            </td>
+                                        </tr>
+
+                                        <tr id="lpCardSelect">
+                                            <!-- 카드번호 -->
+                                            <td class="lPtxtL">
+                                                <label for="lCardNo1">카드번호</label>
+                                            </td>
+
+                                            <td class="lPtxtB">
+                                                <input type="text" class="inputText onlynum" name="lCardNo1"
+                                                       id="lCardNo1" maxlength="4" tabindex="2" autonexttab="lCardNo2"
+                                                       value="">
+                                                <span class="hyphen">-</span>
+                                                <input type="text" class="inputText onlynum" name="lCardNo2"
+                                                       id="lCardNo2" maxlength="4" tabindex="3" autonexttab="lCardNo3"
+                                                       value="">
+                                                <span class="hyphen">-</span>
+                                                <input type="password" class="inputText onlynum" name="lCardNo3"
+                                                       id="lCardNo3" maxlength="4" tabindex="4" autonexttab="lCardNo4"
+                                                       value="">
+                                                <span class="hyphen">-</span>
+                                                <input type="text" class="inputText onlynum" name="lCardNo4"
+                                                       id="lCardNo4" maxlength="4" tabindex="5" value=""
+                                                       autonexttab="lCardPw">
+                                            </td>
+                                        </tr>
+
+                                        <tr id="lpPlSelectSect">
+                                            <!-- 비밀번호 -->
+                                            <td class="lPtxtL">
+                                                <label for="lCardPw">비밀번호</label>
+                                            </td>
+
+                                            <td class="lPtxtB">
+                                                <input type="password" name="lCardPw" id="lCardPw" value="">
+                                                <a href="#" name="chkPointBtn" id="chkPointBtn">
+			              			<span class="lCardPwSpan" tabindex="6">
+			                			<span langtag="button.search">조회</span>
+			                		</span>
+                                                </a>
+
+                                                <!-- 비밀번호 설정 / 재설정  -->
+                                                <div id="lpPlLinkSect">
+                                                    <a href="https://www.lpoint.com/app/point/HPPG100200.do"
+                                                       target="_blank">
+                                                        <strong>
+                                                            <span>비밀번호 설정/재설정</span>
+                                                        </strong>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- 가용금액/사용금액  -->
+                                <div id="lpPlPointSect">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <!-- 가용금액 -->
+                                            <td class="lPtxtL">
+                                                <label>가용금액</label>
+                                            </td>
+
+                                            <td class="lPtxtB">
+                                                <span id="possLPoint"></span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <!-- 사용금액 -->
+                                            <td class="lPtxtL">
+                                                <label for="usePoint">포인트사용</label>
+                                            </td>
+
+                                            <td class="lPtxtB">
+                                                <input type="text" class="inputText onlynum" name="usePoint"
+                                                       id="usePoint" maxlength="10" tabindex="7" value="">
+                                                <input type="checkbox" name="chkLPointAll" id="chkLPointAll">
+
+                                                <label for="chkLPointAll"
+                                                       style="vertical-align:middle;padding:0;">전체</label>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- 닫기 확인 버튼 -->
+                                <div class="btnWrapC">
+                                    <a href="#" id="lpointCloseBtn" class="btnType06">
+                                        <span langtag="button.close">닫기</span>
+                                    </a>
+
+                                    <a href="#" id="lpointConfirmbtn" class="btnType07">
+                                        <span langtag="button.success">확인</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="hide interestEventCheck">
+
+
+                            <div id="interestEvent_popup">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusInterestEventPopup" maxlength="0" tabindex="600">
+	</span>
+                                <div class="eventLayer" style="width:270px; height:350px; margin:-209px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <span class="img_pay"><img
+                                            src="https://stdux.inicis.com/stdpay/img/hyundaicard_event_popup.png"
+                                            usemap="#Map"
+                                            alt="현대카드 유이자 할부 결제시 더블리워드 혜택. 20만원 이상 유이자 할부 결제 시 2배 적립 할인 혜택 제공 할부 수수로율 4.2% ~ 21.7%  *자세한 사항은 현대카드 이벤트 페이지 참고. 유이자 할부로 이용하시겠습니까? 유이자할부 이용 시, 최소 유이자 할부 개월수로 변경됨"></span>
+                                    <map name="Map">
+                                        <area shape="rect" coords="82,254,191,224"
+                                              href="https://www.hyundaicard.com/cpb/ev/CPBEV0101_02.hc?cmssCntnId=208425&amp;searchWord=유이자할부"
+                                              target="_blank" alt="자세히보기 클릭시 새창 이동">
+                                    </map>
+                                    <div class="btnWrapC">
+                                        <a href="#none" id="useInterestEventBtn" class="btnType11" tabindex="603"><span
+                                                class="boldNo" langtag="popup.label5.sub1">이용</span></a>
+                                        <a href="#none" id="notInterestEventBtn" class="btnType12" tabindex="604"><span
+                                                class="boldNo" langtag="popup.label5.sub2">이용안함</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide" id="UniMilePointPopup">
+
+
+                            <div id="unimile_point_popup">
+	<span style="opacity:0;position:absolute;top:-9999px;filter: alpha(opacity=0);-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);-moz-opacity:0;-khtml-opacity:0">
+		<input type="text" id="inputFocusUniMilePointPopup" maxlength="0" tabindex="600">
+	</span>
+                                <div class="popLayer" style="width:344px; height:auto; margin:-95px 0 0 -180px;">
+                                    <!--padding:30px 24px; -->
+                                    <p class="copy02 txtC bold"><span langtag="popup.label3.sub6" tabindex="601">유니마일 포인트 안내</span>
+                                    </p>
+                                    <p class="copy03 txtC"><span langtag="popup.label1.sub3" tabindex="602">유니마일 카드 발급받은 사용자에 한하여 포인트 통합 사용되며,<br>유니마일 카드가 아닐 경우 승인이 거절 될 수 있습니다.<br>자세한 사항은 카드사에 문의 바랍니다.</span>
+                                    </p>
+                                    <div class="btnWrapC" style="margin:30px 0 0;">
+                                        <a href="#none" id="uniMileOk" class="btnType07" tabindex="603"><span
+                                                class="boldNo" langtag="popup.label7.sub1">확인</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="cardCodesNormal" value="21,22,23,24,25">
+
+                        <input type="hidden" name="cardCodesVisa3dDacom" value="12,14,41,32,53,48,04">
+
+                        <input type="hidden" name="mallPointList" value="">
+
+                        <input type="hidden" name="cardCodesIsp" value="11,06,51,44,62,95,33,99">
+
+                        <input type="hidden" name="popupFlag" value="1">
+
+                        <input type="hidden" name="cardSelectVisa3d" value="01:02:03:04:12:14:21:22:23:24:34:41:43">
+
+                        <input type="hidden" name="cardSelectNormal" value="25">
+
+                        <input type="hidden" name="nointwithprice"
+                               value="01-50000-0-2:3:^02-50000-0-2:3:4:^03-50000-0-2:3:4:5:^04-50000-0-2:3:^06-50000-0-2:3:^11-50000-0-2:3:4:^12-50000-0-2:3:4:5:^14-50000-0-2:3:^32-50000-0-2:3:4:5:6:7:^33-50000-0-2:3:^34-50000-0-2:3:^41-50000-0-2:3:4:^51-50000-0-2:3:4:^">
+
+                        <input type="hidden" name="slimNoInterestList" value="">
+
+                        <input type="hidden" name="naverpayPaymethod" value="3">
+
+                        <input type="hidden" name="cardSelectUnion" value="26">
+
+                        <input type="hidden" name="cardMaxQuotaList"
+                               value="01=36:36&amp;03=60:60&amp;04=36:36&amp;06=60:60&amp;11=12:12&amp;12=36:36&amp;14=24:36&amp;34=36:36&amp;41=12:12&amp;02=24:24">
+
+                        <input type="hidden" name="selectPopup" value="1">
+
+                        <input type="hidden" name="cardNoInterestEvent" value="">
+
+                        <input type="hidden" name="cardCodesVisa3dIlk" value="11,06,51,44,95,33">
+
+                        <input type="hidden" name="naverCashReceiptView" value="true">
+
+                        <input type="hidden" name="cardSelectIsp" value="06:11:32:33:44:51:56:55:62">
+
+                        <input type="hidden" name="cardNoInterestEventNew"
+                               value="01-5-2:3:^02-5-2:3:4:^03-5-2:3:4:5:^04-5-2:3:^06-5-2:3:^11-5-2:3:4:^12-5-2:3:4:5:^14-5-2:3:^32-5-2:3:4:5:6:7:^33-5-2:3:^34-5-2:3:^41-5-2:3:4:^51-5-2:3:4:^">
+
+                        <input type="hidden" name="bcIssuerList" value="[11, 35, 38, 46, 47, 48, 52, 54, 71, 81, 95]">
+
+
+                        <input type="hidden" name="CARD_Point" value="0">
+                        <input type="hidden" name="visa3dRequest">
+                        <input type="hidden" name="visa3dResponse">
+                        <input type="hidden" name="ocbRequestdata">
+                        <input type="hidden" name="ocbSave_flg" value="">
+                        <input type="hidden" name="kbAppRequest">
+                        <input type="hidden" name="kbAppResponse">
+                        <input type="hidden" name="KBAPP" value="KBAPP">
+                        <input type="hidden" name="couponInfo" value="">
+                        <input type="hidden" name="couponGroup" value="">
+                        <input type="hidden" name="checkNoInt">
+                        <input type="hidden" name="escrowCardData">
+                        <input type="hidden" name="payPopup" value="0">
+                        <input type="hidden" name="NoInterestQuotaList" value="[]">
+                        <input type="hidden" name="EventNoInterestQuotaList" value="[]">
+                        <input type="hidden" name="installmentPrice" value="50000">
+                        <input type="hidden" name="cardPointList" value="">
+                        <input type="hidden" name="cardPointDetailList" value="">
+
+                        <!-- q5 카드포인트 추가 관련 필드 추가 -->
+                        <input type="hidden" name="q5CardPointList" value="">
+                        <input type="hidden" name="diffCardPointList" value="">
+
+                        <input type="hidden" id="fcsCardList"
+                               value="[{fcsCard=04, focus_MSG=}, {fcsCard=12, focus_MSG=}]">
+                        <input type="hidden" id="fcsCardStrList" value="">
+
+                        <input type="hidden" name="sspRequest">
+                        <input type="hidden" name="sspResponse">
+                        <input type="hidden" name="paycoResponse">
+                        <input type="hidden" name="SSG_PAY_REQ" id="SSG_PAY_REQ" value="">
+                        <input type="hidden" name="SSG_PAY_RES" id="SSG_PAY_RES" value="">
+                        <input type="hidden" name="lpTotalPrice" id="lpTotalPrice" value="">
+                        <input type="hidden" name="lpCardPrice" id="lpCardPrice" value="">
+                        <input type="hidden" name="lpoint" id="lpoint" value="">
+                        <input type="hidden" name="lpointAll" id="lpointAll" value="">
+                        <input type="hidden" name="lpointCdcd" id="lpointCdcd" value="">
+                        <input type="hidden" name="cryptLpInfo" id="cryptLpInfo" value="">
+                        <input type="hidden" name="lpUse" id="lpUse" value="">
+                        <input type="hidden" name="umpUse" id="umpUse" value="">
+                        <input type="hidden" name="card_customized_msg" value="">
+                        <!-- 현대카드 유이자혜택 관련 필드 값 -->
+                        <input type="hidden" name="interest_min_quota" id="interest_min_quota" value="">
+                        <input type="hidden" name="interestEventChk" id="interestEventChk" value="1">
+                        <!-- 이니안심 관련 필드 값 -->
+                        <input type="hidden" name="USE_KCARE" id="USE_KCARE" value="">
+                        <input type="hidden" name="PR_KCARE" id="PR_KCARE" value="">
+                        <input type="hidden" name="CNF_KCARE" id="CNF_KCARE" value="0">
+                        <input type="hidden" name="payCount" id="payCount" value="3">
+
+
+                        <!-- 페이지 로드시 처리해야되는 부분때문에 스크립트 사용 -->
+
+                        <script src="/js/inicis_ga.js"></script>
+                    </div>
+                    <div class="payStepDiv" id="payNextViewDiv" style="display: none;"></div>
+                    <div class="payStepDiv" id="payEndViewDiv" style="display: none;"></div>
+                    <div class="payStepDiv" id="payDoneViewDiv" style="display: none;"></div>
+                    <!-- <br /> -->
+
+                    <input type="hidden" name="oriGoodsname" value="사과">
+
+                    <input type="hidden" name="escrowTid" value="">
+
+                    <input type="hidden" name="fds_ukey" value="57bb4bfc-cc68-477f-b428-23d1396c6c87">
+
+                    <input type="hidden" name="billRegNo" value="">
+
+                    <input type="hidden" name="logo_url" value="">
+
+                    <input type="hidden" name="logo_2nd" value="https://stdux.inicis.com/stdpay/img/logo04.png">
+
+                    <input type="hidden" name="quotaNointYn" value="">
+
+                    <input type="hidden" name="cardnumreturn" value="">
+
+                    <input type="hidden" name="returnFlag" value="">
+
+                    <input type="hidden" name="NAVR_SP_ORDER_USER_ID" value="">
+
+                    <input type="hidden" name="price" value="1004">
+
+                    <input type="hidden" name="gopaymethod" value="">
+
+                    <input type="hidden" name="p_subcnt" value="">
+
+                    <input type="hidden" name="verificationYN" value="N">
+
+                    <input type="hidden" name="payViewType" value="overlay">
+
+                    <input type="hidden" name="ini_PAYSHOT_KEY" value="">
+
+                    <input type="hidden" name="quotabase" value="2:3:4:5:6:7:8:9:10:11:12">
+
+                    <input type="hidden" name="ini_SSGPAY_PRODUCTCNT" value="1">
+
+                    <input type="hidden" name="buyertel" value="010-1234-5678">
+
+                    <input type="hidden" name="boolView" value="">
+
+                    <input type="hidden" name="fds_wdata"
+                           value="Y7eSYUIS+U1dL1ups9xg9sedgfpjnplWB88Oq4itvE3Gs1MJAr3IdPhyfpsxi4ndojltUSNM00C+/PJlhL/1NPT+66jda8hQ6O453OXY9mIeMgBS6/ZjkhYUgPWDvWcuinha0RfD8dsweTOPgYoVdkAmqyfyIxf+d2PRphv73FGCopiWvzUw3MSCwbSoEYs7uACf0GGs2u7/7oXuWObku7+zMqIPk1aPamR6VdP96flZJ8jlPTnwYeqa+UUaozF48uXhntdD9KN9/T0iQ39nZnCHsfSOJVok/6hdTtXja5PcaQN6dOmGISdDgTrk0+GpRs2OJcFO+06WpGZZ22VJ1Fbp7NL+euNxRebmy+0xje36oJM7AbMh0a/S44q+v2187S5hPY+YOpBhS+Kd6KXjMMf0W4Vg1rl1D/n0g27DVJuCJg5ifGek46lpUdmUauIO+VF/06mdNWLHAaX7Ch1d/1SyBiKmepKx47XLs0BmML3DR+OpF0BAOhLgFRUE0WnK0TbTetZ5/j5OVSc5wxXhvK/77J1Eih3Fr7T4o4exwyR7mR28cCUJ8bCZ2zFMN0XpPOkklXH546Vfc5c5XiEoJsDbH3faUT6UvG594NbluUyT4i6ohqgZkxgkVApK1GzI/wxiZN506kBAibGBUt6ZuMyqA97mb2CDORcQKREJJ3mLPD2iIYQHsG9T6DbL9QihUENKuoK/o6q1JDaDMyKvNNos23rYgNVUKUdZNeIuu7ahslQaxALYXDTsnAyklPlCg85ojbK2Hyyb6umANsFYQskHr2ttJfJx6V+f4FERZS0HiEeah5ehMm+mPdLktT3ZhQSeDgkrL4TqjZbkofP76MEHqk13pRnOwPTgHGX5xZfdXB7/Npd9gZD2RyZCjUhWgXp37cnazzzW0BruuAVp/BjCdAyCIuuLrv6uRzOG/bBV85tPWYaUPgRXh13lDL2bu8Pfqdeo+VDqmZ41ZwEpxEy0qfMf32rGuI5a0wT+iouupPsYPd6OcTJU3xiz5Nc1I4lO7HAMoBmMz4mGjATdQyNJV90p/0nA0InrghMW1SP5WRUij+J74IYKwBsEbTMOxvB/XT1XUjNNUhLzXNxkYmdGACSYido/3/kqTqKEweWwlvpVkMSmheU2py9/MAs7H1e1YVJABj3n4Gd4pmJ01TtcUdNy8YNnScXG2OXA9jt8tPz1jafOIcg5NAP3RmBLKgTgVbRXJdBWb+O8Uq0VehCI6tUSGAZa9ZLXmFUOlZLBsoj//LKqRkZVYphrSRcB1ch5WjOSrL+C0MP3yXXHFiaxLvuM0p0CdmGV2SAEE3sIl8Rw3s4Nsw==">
+
+                    <input type="hidden" name="voucherGokrCnt" value="">
+
+                    <input type="hidden" name="acceptmethod"
+                           value="CARDPOINT:HPP(2):va_receipt:below1000:SKIN():KWPY_TYPE(0):KWPY_VAT(0):">
+
+                    <input type="hidden" name="ini_fullbanner_url" value="">
+
+                    <input type="hidden" name="merchantDeadLine" value="">
+
+                    <input type="hidden" name="taxfree" value="">
+
+                    <input type="hidden" name="ini_fullbanner_url3" value="">
+
+                    <input type="hidden" name="ini_fullbanner_url2" value="">
+
+                    <input type="hidden" name="rentalCompPhone" value="">
+
+                    <input type="hidden" name="subCompanyAddr" value="">
+
+                    <input type="hidden" name="site_id" value="">
+
+                    <input type="hidden" name="uway_logo_url" value="">
+
+                    <input type="hidden" name="goodsoid" value="">
+
+                    <input type="hidden" name="buyeremail" value="test@inicis.com">
+
+                    <input type="hidden" name="aid" value="INIpayTest20240504154503435_NQndI3pf1899">
+
+                    <input type="hidden" name="charset" value="UTF-8">
+
+                    <input type="hidden" name="ini_safetykey_reg" value="">
+
+                    <input type="hidden" name="useragent"
+                           value="AndroidBasic_Androidnull [ mozilla/5.0 (linux; android 6.0; nexus 5 build/mra58n) applewebkit/537.36 (khtml, like gecko) chrome/124.0.0.0 mobile safari/537.36 edg/124.0.0.0 ]">
+
+                    <input type="hidden" name="mid" value="INIpayTest">
+
+                    <input type="hidden" name="pgIp" value="">
+
+                    <input type="hidden" name="fds_sno" value="031611">
+
+                    <input type="hidden" name="languageView" value="ko">
+
+                    <input type="hidden" name="limitTimeAlertTime" value="10">
+
+                    <input type="hidden" name="basicInfo" value="UaTqX9k8kZm4TPKeQzM8ADlfNhNHE+kg6J4FYnbLUgFqFwRb/QKoS8AnRrwgw6Uk
+wyXmetK4X7QBWXxSYIv6KhxcID7y32X1u+tXePv0ck8PrT3JnsA722+xCP1OauLb
+rGvtRKSi7oXw/0g8iLYHtiUiM0w0DAwtBsBsAevqdTO++rWApm8KME22BRF7lxa8
++1bdPrhUkKZ+e1jD0IOOgpMBYTvjQies6Rpf6UZNpwP/wLBNdUK9FfyZIJ1Sm1g2
+BOsysAQH1QxKCn1srXnPVMxm890E9XszmJspX4gC8bwqp2krlRhZs1bSBp8uyalv
+tStRbEQqDjHcGEF7PTGWU7S7Mj4cPJZgA8MmNRgDVT7i5EybD6KfcR1x/M85yePt
+CWpvZvsa/YE3+MjNEpXTZtHes65ULS/3M1TBzjuN7VgEkvEWm8duNxJ7JjbAr4FC
+L/UIkAFcblSirC9vKbKvVS1LVup5Nhp2aBsVrFu4QI1c2R+FOQAMW2GA8AwQhDz5
+nYVVwze7KV5voQuMvKJRCL6cQnX8G5oA/bADiAOYAPebLJNrh+xCpqARFY0iwu8s
+ybZCwNPXhVBhrGXKto/mQEwPuG08YrdmNYM+o/+XFt/79vWOdIFp0bLLaRd80cao
+ZOsadHhITobcvPb3ZAeL9mI2+lTKRINT2YlqRweXcQ1x304n5MzeT+W7N7HdZUY7
+kZ0eTtq++P5KZu40U5ZmMnADao9+9sbV7DFJbpEcLxdWrkrnT05gkKnmw62OU/VD
+eB7PJy4+OXOy6dqw3SwWeUbR6zzETYAGW2+bCXowtgkNN/kelm+Zio12UZujJF5f
+WdCc3GPJamDDLg2C9EYn5eBZ4NJHTkCMop7/63Icg2pVxMdZ68vU+msl6cEi/P6q
+STVBQT94Mmsc9rwLBXqzC+Jq0kied63xflpnQmNtH82Yof8c6OWyCO7n2VzPPQIY
+cIjmYfw21eD+46MB0+gqIonkD6IX7pOllO5Tzmf6ETSZXjg5LpL14x92rbimjUj+
+jaC3O/h7IIpIpDEwS0tL2l7y4vERL8+xu9YAiuxFqU+OdJ7c0vHj0S8GEQHEmJdf
+ZPpnWmtA0Y1pggDihJdBVE2tNykC7wzzAvkq1yWxE/UoouBydacPlwqt6HOzc6az
+7swiOgycmqztWl4TaOXnGv9uCr1r1vLnT1mVEjcmlvYippmlf/y88AIbHqBx3okR
+DHUiFSRqMe81KWWymmLqkcFJ4qsXA+aRQxsAzfA5PwAz3rQmbt+U91Psv8Jtdmuw
+40Vn3aPbED3JIZ5Rmyv4bBqRGj+5Vv5XBX1b923RVLXYAhMFJxII4FgTtJIMW1/R
+xKsMl4Xn7HvsNvWFfuM00Jb3rJLFTOHd9l2y3/I9Zug2Wt+WBrlnOYlvespSyeAa
+65uIdXkXtCCCq9vA1gOfm7+KfG1MMhocRkE6o7EHrqU+A4jmZWq57bBlZtKdDDog
+okOa/Mab+eGQglJJxplq6GJ0mbNx9IlTBKo50O2mL+p9A4gfrsHu4B9UwD0I/1vc
++M20TmL3qhY+eZ50Md4+9gfrS1i8PQv5xEZ9ju3HEPllK/nfs6Ktjzje3CcAm7bP
+ogNnLyHJPkRjtdRqR5cYcztnz8w7D73UOgsT1zK/+CTKnI6JE3zxLTr/50yRmEqy
+a1QLFKx+W4+e1JgtoNGX3eb8EptrU9xSFsSDGz1KkSXHn1StEHlTOtTqpaU4vRBm
+PxJkwqyZkd1pRZl3hdQ9M1jW5aGewVeyDN5cBbqjOTvFu2126I2jzpevsXF176zj
+zkKkZ8/Heupq/iQkGTngrYIsXm9INo/SxErUSSQFai8MoL/j/FWGnL08qX+BXQaS
+2F95t95GqGGH8G3uVQXCBxRhOKdhlZ1819eS/s2iOxTO4pLQweJ4aLyLmwXi27SB
+z4NHqRlkmOp7vFxqyLaWj5yaEexppmwfc6cvMf7FcX+kZqGNEiYEB5HJP16Otb/D
+7GRF8A07fvqXikKEJtkE02TkuoK9gAW5L0AYnB26byeD24tBGJgt6cWfs4thzmjq
+mXJo3qK7KZVVpjYweq9CQi6+JLkAYWrqE33OHErYJs8VeOizEiSefyuCPfufXxZ8
+LpPXiggHNdFR8oSDepEcRgRXCVaPmT4znx5aPdBhqtdLTUspVqEnK33dhW1Nc18d
+4DIdL1YUtmaXKE4nBYuJIdvOlZuXmxgXMC1NvOFP+evOpV5brB9YNxbMb28Ne8wC
+Ii925blsMAxi0noz70wSK8D/teDDotGnpmlA2PFe+rcwV0/34s83RZl/si3aZ8/U
+98pdaRCaaZRowUDodwFaHSrp0Jagz71ycJzUAUl04VQRchFf14JgHmPeoNisxxIS
+lbeXzxV04qnU80WmfQ7LZNPKc3Vws1xqBMRLosU14qdaOt9zy0ST0OfCMR2b3CEV
+4oVibZ4tInX+F02GVxkmIav9j61Eb2cbeYD8Ues/7b4J8fqTqCrib4F39DMcMz+5
+jLOpQ/MugU3wojv6fN8z9auQxtLludPJAbS8TVUmT7wdcxAiuA0OO4tlmR/gGRbp
++ai48UIkkTXILFO1BH9OcCKe5mgiMeB3mkHFCXbyUx5iN97znasnHkOUCnzwedL8
+uqRlFBYr3U4hbp4uue6jbFF0Df63TbyZHKWiQJXFTnZ38lmuAstt3UELQCgBG23H
+d7P05Z7SDH6RHSw5eLoSbH/u2qw+vw2fNeBLGy7Tm/NE9XgC3mugp8JA91C/u54/
+RwKfuGd/4xOc+Dj9vqJnQS6mB6t8ONypzaHoaATDFBr0e7+3fKpBE9/kXmZkjqbP
+PjIWuo3hUoUOEkcTLTqLJFT87dTG8hyD8k7+Nl3Rkv/BBJezByFjEgzMGL5FXg6n
++XbXD1pPAjA6jWuwv4WY9PBqNK1Q/OLSNzCnNXooMhl8S4+FkS2tYvMzB13AzBVY
+DwihWSPIIOXWcXhp241bUR1kKADgVWdOsgnAGY5DuWvXuArurPPOuDHR93x7TWk5
+qD2wkUqGumpjLo4m2T9287Ks87TgO1AkH12LUgiQG0+N16RHd8fQhYyzPEC2jinq
+kpAYGlhs9A2b1QwJSudH30ySF4Yy0a6yikai22+MdO6xLHELIwQEypDqshGijGTk
+tPvVFZxRgIdBETDW6VPdqoHVIlcO2jV22WUX+3OpR5tkWV4xHQLmdSoJXX1sxqS7
+AeV57uOo23mV+2l1tWbm7Yr0FFqcyrps4+aZA4QiCUAvKMXVrQqTFi9VxcbhK2v4
+8B+umt0aZGF18LZjIUNH5qcN0Bbx7aYk/RU2REu+dkJJmbIuGtYYu8BSUbbQlqZ8
+ItKi5lk9eFjGFxvAxv6YyWL29Qgd0x0ZzMNeVnX7fC7mgCISv1ohOvs4Z7VlkxB9
+Wew/Mq/54LJwje+BPbNTE011iaomzKTg3jYz7EluPAaGO6ZnnDWZcWWpKX7Lh7HE
+Uvqi+9QWv7bIp/I/aU9BzkFP3zII8vorOoMDSiZ1zJXjOXOt8EEkIMS9mSdik/jH
+spR4MPJ2sEV92uzCyCpDzTuiaBquHc3xPjcyG32c72Zeq90HCgWoLz+gM93Dh8LO
+zvGJTlyM80Trs3pvxy22zVdW+5XLudJh3T9Ook1DZHh+6K+9//xBJZX3+USb0JWG
+2XyrWWx9d3R3Lf3JdaHZqnR536Ku/wKS5wfqHWZddwfbMLawmjzjCxaLIBUm9fbW
+b3ZH0uj4DEj7ArjnxrNT08LmzvbQBFRv/FoXoGKtOOZUlUNa7brL9lJcuaUH93q6
+HKy52MibgG4Y6FIVjqCPBk+ukv1vwXUs7hxhQpRkaTlf3u6oiS0dkEdWeMy7ftzJ
+NfoI/yLw192T6Xm565XtKb3Dab1Ak0sf815HNxFHTSwRQ1f4GXkct0sHb/U6H2Oz
+9EN4FHmf6Oz/0/73A6XEyIBqqfI3xdEpho03Xv7vj4Y1Kltxly9y0ylr03Vk85Vt
+jOTotAE92XVWBbEUj4BtCSBYq39LHQwVqX0NM7PswUZ3TJrWbnGYrOmRgJaTUJCj
+hmc1E7dupDvCPPKsDG8OPaACTf89ng9IUgRgrgwxjRA0NwMmILZqpIPn62OSRUCG
+Bsdv/CC489j4C0OxsrNAvdx3tlWawYtaK4ssp3GhTnlyzMXv+sODoXsoPqa9138J
+8L9YYfWT11D8Xuh6nPqPip5aU9K3M1mHCTrxvIdxpeYX5DM8yuAI2WSeQz5xwKx2
+mcQrTbybsy5otwqZsrDXC38MuMkHixRXkWQnFworygSbNnojTXRljBLlnmS8HEAM
+YfQKnlMVT9rMr5QbaGJKBrjiMjVKiQf0tJq5ZVyJOpALKYf1m5MswJoniRGD9nbP
+LYjRJ6lDbc6qUYxZt8NH1fSza1mWoLW8d9qIhQiaqAcqqs7cM180mzpGt8lZzh44
+88z4BzpRmA+VzE+edh6iNDhUvMofIF/+spbeZYlZi2dXQcwW1iztOrYc39cNUeT5
+h20WjUB7i2BReFgOOs+Q1cIZMFa+YUnAYlXZ33j1pNQt/4v98MrPCyB8NWdcEq/R
+iJo6eKxp8gnR2ie+e3DhJ6nOT5oUkkMOF1Yt9Mn5MCRgitDyoK+Tz98zhxq1pU0m
+l/Z4YcMbHmw0fqRZ+vH8bpbgaa6aUTX3yGDJC00Vf0Y3pLhU3ccmx8ntyiup4dc0
+dhye1Sqf5Pwiiiw0hUL6fp+DV4AyNrloIlJyOY1iDhdsgrOraeug68yyM1LM+vzE
+RK3UMhb53PWKtxW1r3oVePpNwlTmEdgwvLlF7444wIJvdXCPFn5NS2VLdL6fb1dr
+lQQIEkXPSGMqu8aE6jclRWXURBtmBmivQvTN6XZnD2NbJMa6Xa0S8iW2OzaHCgZc
+Mj6SDbcJDT3gUB2PjIg1szYbqCVT2+/E668Jy71is2b9dknH7L2gz7VwLZPCw5cm
+hCfAWK9REpzBss7g+Ybl3MIqjjL0DcEdWvM74DnI9gRu557RqEv7qOj48k5zhWqm
+mGbWAeFgtm+aGoCSHbx3Aoc3BIvQIn9VKLtr+D1zGZxYqhm5XR/QJ9clD+Pp4BHN
+YbCx0eLt+9yBphDqd2RDHbcvnef4ZPJ3und16+x0oYAQ5omwlVvUTMP03yLrMkKH
+QsLaDESz8Juhq1foDN/EwkXEzoZ34Qgr61lU2F9KqX0TlIrqS1GlI2Zy/xWN5WOM
+6/XAPlkxU1GQI4UV6ig6G4YEmgfpUQCr0uyexd3YJl9JppHycLgPh7ePjJtIZqLe
+vf52wQOO5HfUpmZFM/DL7RKlEQA8jvGbkgS/rCc4Cq94OgqQwdxs19AEpuKGYnLh
+WLPE0OEkN038LptIXAk714e0OAVQVMFWbLwZopkvQXNtlWse0ZI0F+fNXVW6S3L/
+pojdnn8ZxrzD1w2h+sgCQdVeh/okMQbqYB/4lXN+sTbphYSTZeIwlmfZ026iMvh/
+PTWzeZ+uWhwvvaye/PB7CIYTzU+YyID7Lm8wJPYcN0/UUBeO3S2G5QulawdTNvJV
+aE490wNA9zPQY22nQsBRLvQnx1R9Pjp/pjK4MvN/wTBrPzmBcYnLK6Y8oB63ZTNN
+P7AKxBgkCrg02YqfsLXK30WK8ySZIT0pAo+vfdeziTbOy5uTFSuharEERVXqXmoK
+DZwCeD2jcJXui9GfKzl99ykyvrnlI+uuYmql+UxCFTmJq9eSmLBXZW3NWWZrh2li
+o7xdL+1ljcs3ui2yUzkkLpJcALq81GKNb/YGGmjdVDqoIpEtKWe69thBIU/BeyIu
+ojnKOBENYgCgJ54xiFSwOPwZ6PhUtm8ssef/9yBCjMw=">
+
+                    <input type="hidden" name="browserType" value="AndroidBasic">
+
+                    <input type="hidden" name="txversion" value="5.0">
+
+                    <input type="hidden" name="osVersion" value="">
+
+                    <input type="hidden" name="requestUrl" value="https://www.inicis.com/">
+
+                    <input type="hidden" name="currency" value="WON">
+
+                    <input type="hidden" name="subCompanyTel" value="">
+
+                    <input type="hidden" name="timestamp" value="1714804815225">
+
+                    <input type="hidden" name="ansim_quota" value="">
+
+                    <input type="hidden" name="address" value="">
+
+                    <input type="hidden" name="requestTimestamp" value="1714805103435">
+
+                    <input type="hidden" name="targetTop" value="true">
+
+                    <input type="hidden" name="postNum" value="">
+
+                    <input type="hidden" name="mobileType" value="true">
+
+                    <input type="hidden" name="offerPeriod" value="2016010120160331">
+
+                    <input type="hidden" name="cartResultString" value="">
+
+                    <input type="hidden" name="pgAuthIp" value="">
+
+                    <input type="hidden" name="INIregno" value="">
+
+                    <input type="hidden" name="no_moid2" value="">
+
+                    <input type="hidden" name="closeUrl"
+                           value="https://www.inicis.com/Support_new/stdpay/INIStdPaySample/close.php">
+
+                    <input type="hidden" name="cartString" value="">
+
+                    <input type="hidden" name="clientIp" value="222.120.234.235">
+
+                    <input type="hidden" name="ip_event" value="">
+
+                    <input type="hidden" name="isAbleCheck" value="">
+
+                    <input type="hidden" name="billPrint_msg" value="">
+
+                    <input type="hidden" name="buyername" value="홍길동">
+
+                    <input type="hidden" name="mKey"
+                           value="3a9503069192f207491d4b19bd743fc249a761ed94246c8c42fed06c3cd15a33">
+
+                    <input type="hidden" name="rentalCompNo" value="">
+
+                    <input type="hidden" name="rentalCompNm" value="">
+
+                    <input type="hidden" name="ini_cardcodebanner_url" value="">
+
+                    <input type="hidden" name="cupDeposit" value="">
+
+                    <input type="hidden" name="dboption" value="">
+
+                    <input type="hidden" name="selMpi" value="">
+
+                    <input type="hidden" name="memberUniqueId" value="">
+
+                    <input type="hidden" name="browserVersion" value="">
+
+                    <input type="hidden" name="NAVR_SP_CHAIN_CODE" value="">
+
+                    <input type="hidden" name="additionalData" value="">
+
+                    <input type="hidden" name="rentalRecipientPhone" value="">
+
+                    <input type="hidden" name="addressDtl" value="">
+
+                    <input type="hidden" name="goodscnts" value="">
+
+                    <input type="hidden" name="rentalPeriod" value="">
+
+                    <input type="hidden" name="custemail" value="">
+
+                    <input type="hidden" name="tax" value="">
+
+                    <input type="hidden" name="requestByJs" value="true">
+
+                    <input type="hidden" name="privateCss" value="">
+
+                    <input type="hidden" name="rentalRecipientNm" value="">
+
+                    <input type="hidden" name="subCompanyBoss" value="">
+
+                    <input type="hidden" name="ini_SSGPAY_MDN" value="">
+
+                    <input type="hidden" name="ini_SSGPAY_PRODUCTCODE" value="10000000001">
+
+                    <input type="hidden" name="languageResult" value="">
+
+                    <input type="hidden" name="smid" value="">
+
+                    <input type="hidden" name="fds_result" value="">
+
+                    <input type="hidden" name="goodsname" value="사과">
+
+                    <input type="hidden" name="oid" value="INIpayTest_1714804815226">
+
+                    <input type="hidden" name="ini_CI" value="">
+
+                    <input type="hidden" name="subCompanyNum" value="">
+
+                    <input type="hidden" name="sid" value="">
+
+                    <input type="hidden" name="limitTime" value="30">
+
+                    <input type="hidden" name="nointerest" value="">
+
+                    <input type="hidden" name="goodsprice" value="">
+
+                    <input type="hidden" name="selectPayMethod" value="Card">
+
+                    <input type="hidden" name="subCompanyName" value="">
+
+                    <input type="hidden" name="ini_cardcode" value="">
+
+                    <input type="hidden" name="osType" value="Android">
+
+                    <input type="hidden" name="messageVersion" value="">
+
+                    <input type="hidden" name="returnUrl"
+                           value="https://www.inicis.com/Support_new/stdpay/INIStdPaySample/INIStdPayReturn.php">
+
+                    <input type="hidden" name="goodscnt" value="">
+
+                    <input type="hidden" name="rentalPrice" value="">
+
+                    <input type="hidden" name="use_chkfake" value="">
+
+                    <input type="hidden" name="customized_msg" value="">
+
+                    <input type="hidden" name="p_noti" value="">
+
+                    <input type="hidden" name="uway_comp_nm" value="">
+
+                    <input type="hidden" name="ini_SSGPAY_PRODUCTINFO" value="">
+
+                    <input type="hidden" name="goodsnames" value="">
+
+                    <input type="hidden" name="fakeSign"
+                           value="9708d8a9dba208793fb94df25f478b2b073583a32fbe560d10d4ec2b1b5c2489">
+
+                    <input type="hidden" name="noteUrl" value="">
+
+                    <input type="hidden" name="voucherGokr" value="">
+
+                    <input type="hidden" name="ini_onlycardcode" value="">
+
+                    <input type="hidden" name="encrypted">
+                    <input type="hidden" name="escrowData" id="escrowData" value="">
+                    <input type="hidden" name="merchantData" id="merchantData" value="">
+                    <input type="hidden" name="inputAllCheck"><input type="hidden" name="inputChk7Check"><input
+                        type="hidden" name="inputChk3Check"><input type="hidden" name="inputChk4Check"></form>
+                <input type="hidden" name="colorView" id="colorView" value="">
+
+                <input type="hidden" name="mobilians" id="mobilians" value="false">
+                <input type="hidden" name="bnrView" id="bnrView" value="true">
+                <input type="hidden" name="autoCouponFlag" id="autoCouponFlag" value="N">
+                <input type="hidden" name="viewCheck" id="viewCheck" value="true">
+                <input type="hidden" name="disruptionNotice" id="disruptionNotice" value="">
+            </section>
+        </article>
+        <!-- //결제화면 -->
+    </div>
+
+
     <section class="container">
         <div class="contents">
             <!-- 좌측상단 네비게이션 -->
@@ -73,7 +2520,7 @@
                             <dt>판매가</dt>
                             <dd class="sale">
 
-                                <em th:text="${item.price}">가격</em> 원 <p class="sale_per">5%</p>
+                                <em th:text="${item.price}" id="realPrice">가격</em> 원 <p class="sale_per">5%</p>
                             </dd>
                         </dl>
                     </div>
@@ -122,7 +2569,7 @@
                         <input type="hidden" id="itemId" th:value="${item.id}" name="itemId"/>
                         <input type="hidden" id="count" value="1" name="count"/>
                         <li>
-                            <button type="button" class="btn" onclick="order()">바로 구매</button>
+                            <button class="btn" id="openModalButton">바로 구매</button>
                         </li>
                         <li>
                             <button type="button" class="btn2" onclick="addToCart()">장바구니 담기</button>
@@ -163,6 +2610,11 @@
 
             </div>
 
+
+            <!--            결제 창 모달 시작  -->
+
+
+            <!--            결제창 모달 끝-->
             <!-- 하단 상품정보 -->
             <!-- 상품추천 사진 -->
             <div class="bot_info_prod">
@@ -441,129 +2893,65 @@
                 <!-- Q&A -->
                 <div class="QandA" id="qna_prod">
                     <div class="qalist">
+                        <!-- 질문 작성하기 버튼 -->
+                        <button id="openQuestionModal">질문 작성하기</button>
+                        <!-- 모달 창 -->
+                        <!-- 질문 작성하기 폼 -->
+                        <div id="questionModal" style="display: none;">
+                            <h3>질문 작성하기</h3>
+                            <form id="questionForm">
+                                <label for="questionTitle">질문 제목:</label>
+                                <input type="text" id="questionTitle" name="questionTitle" placeholder="질문 제목을 입력하세요.">
+                                <br><br>
+                                <label for="questionContent">질문 내용:</label>
+                                <textarea id="questionContent" name="questionContent" rows="4" cols="50"
+                                          placeholder="질문 내용을 입력하세요."></textarea>
+                                <br><br>
+                                <button type="submit">제출</button>
+                                <button type="button" id="closeQuestionModal">닫기</button>
+                                <!-- 아이템 ID를 hidden으로 전달 -->
+                                <input type="hidden" id="itemId" name="itemId" value="{{item.id}}">
+                            </form>
+                        </div>
+
+                        <!-- 질문 목록 테이블 -->
                         <table class="myqna">
                             <colgroup style="width: 400px">
                                 <col style="width: 20%;">
                                 <col style="width: 60%;">
                                 <col style="width: 20%;">
                             </colgroup>
-                            <tbody>
-                            <tr class="qnaline1">
-                                <td class="qna_iconp">
-                                    <em class="qna_icon">답변완료</em>
-                                </td>
+                            <tbody id="qnaList">
+                            <!-- 서버에서 로드된 Q&A 목록이 여기서 렌더링됩니다 -->
+                            {% for qna in qandaList %}
+                            <tr class="qnaline">
+                                <td class="qna_iconp"><em class="qna_icon">{{ qna.status }}</em></td>
                                 <td class="question">
-                                    <p class="questionp"><a href="#">모델착용바지</a></p>
-                                    <span class="emailname">************@gmail.com</span>
+                                    <p class="questionp"><a href="#">{{ qna.title }}</a></p>
+                                    <span class="emailname">{{ qna.email }}</span>
                                 </td>
-                                <td class="qnadate">
-                                    2024.02.23
-                                </td>
+                                <td class="qnadate">{{ qna.regTime | date:"Y.m.d" }}</td>
                             </tr>
-                            <tr class="question_detail">
+                            <tr class="question_detail" style="display: none;">
                                 <td colspan="3">
                                     <div class="cont">
                                         <div class="ask">
                                             <strong class="tit_sub">질문</strong>
-                                            <p class="qna_txt">모델 착용한 흑청바지 뭔가요</p>
+                                            <p class="qna_txt">{{ qna.question }}</p>
                                         </div>
                                         <div class="answer">
                                             <strong class="tit_sub">답변</strong>
-                                            <p class="qna_txt">
-                                                <span class="qnadate2">2024.02.26 09:57</span>
-                                                <br>
-                                                안녕하세요, 고객님! 저희 제품에 관심 가져주셔서 감사드립니다.
-                                                <br>
-                                                <br>
-                                                안녕하세요 고객님, 노티아입니다.
-                                                <br>
-                                                <br>
-                                                해당 제품은 STRAIGHT BLACK DENIM 입니다.
-                                                <br>
-                                                <br>
-                                                SMALL 사이즈를 착용하였고 모델 촬영을 위해 기장만 5CM 늘린 샘플을 제작하여 촬영을 했습니다.
-                                                <br>
-                                                <br>
-                                                구매 결정에 도움이 되셨길 바랍니다.
-                                                <br>
-                                                <br>
-                                                감사합니다.
-                                                <br>
-                                                궁금하신 사항은 언제든지 문의 부탁드립니다.
-                                            </p>
+                                            <p class="qna_txt">{% if qna.answer %}{{ qna.answer }}{% else %}답변 대기 중입니다.{% endif %}</p>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="qnaline">
-                                <td class="qna_iconp">
-                                    <em class="qna_icon">답변완료</em>
-                                </td>
-                                <td class="question">
-                                    <p class="questionp"><a href="#">모델착용바지</a></p>
-                                    <span class="emailname">************@gmail.com</span>
-                                </td>
-                                <td class="qnadate">
-                                    2024.02.23
-                                </td>
-                            </tr>
-                            <tr></tr>
-                            <tr class="qnaline">
-                                <td class="qna_iconp">
-                                    <em class="qna_icon">답변완료</em>
-                                </td>
-                                <td class="question">
-                                    <p class="questionp"><a href="#">모델착용바지</a></p>
-                                    <span class="emailname">************@gmail.com</span>
-                                </td>
-                                <td class="qnadate">
-                                    2024.02.23
-                                </td>
-                            </tr>
-                            <tr></tr>
-                            <tr class="qnaline">
-                                <td class="qna_iconp">
-                                    <em class="qna_icon">답변완료</em>
-                                </td>
-                                <td class="question">
-                                    <p class="questionp"><a href="#">모델착용바지</a></p>
-                                    <span class="emailname">************@gmail.com</span>
-                                </td>
-                                <td class="qnadate">
-                                    2024.02.23
-                                </td>
-                            </tr>
-                            <tr></tr>
-                            <tr class="qnaline">
-                                <td class="qna_iconp">
-                                    <em class="qna_icon">답변완료</em>
-                                </td>
-                                <td class="question">
-                                    <p class="questionp"><a href="#">모델착용바지</a></p>
-                                    <span class="emailname">************@gmail.com</span>
-                                </td>
-                                <td class="qnadate">
-                                    2024.02.23
-                                </td>
-                            </tr>
-                            <tr></tr>
-                            <tr class="qnaline6">
-                                <td class="qna_iconp">
-                                    <em class="qna_icon">답변완료</em>
-                                </td>
-                                <td class="question">
-                                    <p class="questionp"><a href="#">모델착용바지</a></p>
-                                    <span class="emailname">************@gmail.com</span>
-                                </td>
-                                <td class="qnadate">
-                                    2024.02.23
-                                </td>
-                            </tr>
-                            <tr></tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
+
                 <!-- 하단탭4 -->
                 <ul id="detail" class="bot_tap4">
                     <li class="bot4_1"><a href="#bot_prod">DETAIL</a></li>
@@ -663,7 +3051,6 @@
             </div>
         </div>
     </section>
-
     </main>
     </body>
 </th:block>

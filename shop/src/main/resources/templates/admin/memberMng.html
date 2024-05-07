@@ -10,101 +10,37 @@
     <form th:action="@{'/admin/members/' + ${members.number}}"
           role="form" method="get" th:object="${members}">
         <body>
-                <div th:with="start=${(members.number/maxPage)*maxPage + 1},
-                      end=(${(members.totalPages == 0) ? 1 :
-                      (start + (maxPage - 1) < members.totalPages ? start + (maxPage - 1) :
-                      members.totalPages)})" class="pagination-container">
 
-                    <ul class="pagination-list">
-                        <li th:classappend="${members.first} ? 'disabled' : ''" class="pagination-item pagination-item-previous">
-                            <!-- 페이지가 0인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
-                            <a th:if="${members.number != 0}" th:onclick="'javascript: page(' + (${members.number - 1}) + ')'"
-                               aria-label='Previous' class="pagination-link">
-                                <span aria-hidden='true'>Previous</span>
-                            </a>
-                            <a th:unless="${members.number != 0}" aria-label='Previous' class="pagination-link disabled">
-                                <span aria-hidden='true'>Previous</span>
-                            </a>
-                        </li>
+        <div class="search-container" th:object="${adminMemberSearchDTO}">
+            <select th:field="*{searchDateType}" class="form-control search-select">
+                <option value="all">전체기간</option>
+                <option value="1d">1일</option>
+                <option value="1w">1주</option>
+                <option value="1m">1개월</option>
+                <option value="6m">6개월</option>
+            </select>
 
-                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
-                            th:classappend="${members.number eq page - 1}?'active':''">
-                            <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
-                               class="page-link pagination-link">
-                                [[${page}]]
-                            </a>
-                        </li>
 
-                        <li class="page-item" th:classappend="${members.last} ? 'disabled' : ''">
-                            <!-- 페이지가 마지막 페이지인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
-                            <a th:if="${!members.last}" th:onclick="'javascript:page(' + (${members.number + 1}) + ')'"
-                               aria-label='Next' class="page-link pagination-link">
-                                <span aria-hidden='true'>Next</span>
-                            </a>
-                            <a th:if="${members.last}" aria-label='Next' class="page-link pagination-link disabled">
-                                <span aria-hidden='true'>Next</span>
-                            </a>
-                        </li>
-                    </ul>
+            <select th:field="*{searchBy}" class="form-control search-select">
+                <option value="memberId">고객 ID</option>
+                <option value="email">고객 이메일</option>
+                <option value="name">고객 명</option>
+            </select>
+
+            <br>
+
+            <div>
+                <div class="search-bar">
+                    <input th:field="*{searchQuery}" type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력">
+                    <button id="searchBtn" type="submit" class="search-btn">검색
+                    </button>
                 </div>
-
-
-
-        <!--        <div class="search-container" th:object="${adminItemSearchDTO}">-->
-        <!--            <select th:field="*{searchDateType}" class="form-control search-select">-->
-        <!--                <option value="all">전체기간</option>-->
-        <!--                <option value="1d">1일</option>-->
-        <!--                <option value="1w">1주</option>-->
-        <!--                <option value="1m">1개월</option>-->
-        <!--                <option value="6m">6개월</option>-->
-        <!--            </select>-->
-
-        <!--            <select th:field="*{level1}" id="level1" class="form-control search-select">-->
-        <!--                <option value="null">상위카테고리 선택</option>-->
-        <!--                <option value="Top">Top</option>-->
-        <!--                <option value="Outer">Outer</option>-->
-        <!--                <option value="Pants">Pants</option>-->
-        <!--                <option value="Skirt/Dress">Skirt/Dress</option>-->
-        <!--                <option value="Shoes">Shoes</option>-->
-        <!--            </select>-->
-
-        <!--            <select th:field="*{level2}" id="level2" style="display:none;" class="form-control search-select">-->
-        <!--                &lt;!&ndash; 각 상위 카테고리에 따른 하위 카테고리들은 JavaScript에서 동적으로 추가됩니다. &ndash;&gt;-->
-        <!--            </select>-->
-
-        <!--            <select th:field="*{searchBy}" class="form-control search-select">-->
-        <!--                <option value="itemNm">상품명</option>-->
-        <!--                <option value="itemId">상품코드</option>-->
-        <!--            </select>-->
-
-        <!--            <select th:field="*{itemSellStatus}" class="form-control search-select">-->
-        <!--                <option value="">판매상태(전체)</option>-->
-        <!--                <option value="SELL">판매</option>-->
-        <!--                <option value="SOLD_OUT">품절</option>-->
-        <!--                <option value="STOP_SALE">판매중지</option>-->
-        <!--            </select>-->
-
-        <!--            <input th:field="*{searchQuery}" type="text" class="search-input" placeholder="상품명 혹은 상품코드를 입력해주세요">-->
-        <!--            <button id="searchBtn" type="submit" class="search-btn">검색</button>-->
-
-        <!--            <div th:text="*{level2}" id="level2value" hidden="hidden"></div>-->
-        <!--        </div>-->
-
-
-        <!-- 상품등록 시작 -->
-        <div>
-            <div class="search-bar">
-                <input type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력하시오">
-                <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
-                <span class="material-symbols-outlined">
-        search
-      </span>
             </div>
         </div>
 
         <div class="tableBox">
-            <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p
-                    th:text="${members.totalElements}"></p>
+            <div class="subBox">&emsp;&emsp;&emsp;&emsp;검색된 고객 :&emsp; <p
+                    th:text="${members.totalElements}+'명'"></p>
             </div>
             <div class="tableContainer">
                 <table>
@@ -115,7 +51,7 @@
                         <td>성별</td>
                         <td>나이</td>
                         <td>회원 등록일</td>
-                        <th>소셜 로그인 유무</th>
+                        <td>소셜 로그인 유무</td>
                     </tr>
                     <tr th:each="members, status: ${members.getContent()}">
                         <!--status: ${items.getContent()} 이부분은 page 처리를 하기위해?-->
@@ -124,7 +60,7 @@
                         <td th:text="${members.email}"></td>
                         <td th:text="${members.sex}"></td>
                         <td th:text="${members.age}"></td>
-                        <td th:text="${members.regTime}"></td>
+                        <td th:text="${#temporals.format(members.regTime, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${members.social}"></td>
 
                     </tr>
@@ -135,6 +71,44 @@
                     <button>수정하기</button>
                 </form>
             </div>
+        </div>
+
+        <div th:with="start=${(members.number/maxPage)*maxPage + 1},
+                      end=(${(members.totalPages == 0) ? 1 :
+                      (start + (maxPage - 1) < members.totalPages ? start + (maxPage - 1) :
+                      members.totalPages)})" class="pagination-container">
+
+            <ul class="pagination-list">
+                <li th:classappend="${members.first} ? 'disabled' : ''" class="pagination-item pagination-item-previous">
+                    <!-- 페이지가 0인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${members.number != 0}" th:onclick="'javascript: page(' + (${members.number - 1}) + ')'"
+                       aria-label='Previous' class="pagination-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                    <a th:unless="${members.number != 0}" aria-label='Previous' class="pagination-link disabled">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                    th:classappend="${members.number eq page - 1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+                       class="page-link pagination-link">
+                        [[${page}]]
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${members.last} ? 'disabled' : ''">
+                    <!-- 페이지가 마지막 페이지인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${!members.last}" th:onclick="'javascript:page(' + (${members.number + 1}) + ')'"
+                       aria-label='Next' class="page-link pagination-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                    <a th:if="${members.last}" aria-label='Next' class="page-link pagination-link disabled">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         </body>

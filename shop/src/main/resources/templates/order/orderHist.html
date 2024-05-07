@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
-      layout:decorate='~{layouts/layout1}'>
+      layout:decorate='~{layouts/layout1}' xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -108,6 +108,7 @@
                     <div class="fs18 font-weight-light">
                         <span th:text="${orderItem.orderPrice} + '원'"></span>
                         <span th:text="${orderItem.count} + '개'"></span>
+                        <span th:text="${orderItem.size}"></span>
                     </div>
                 </div>
             </div>

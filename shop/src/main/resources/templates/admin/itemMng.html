@@ -3,6 +3,13 @@
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
       layout:decorate='~{layouts/adminLayout}'>
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
 <div layout:fragment="content">
     <link th:href="@{/css/admin/itemMng.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/js/admin/itemMng.js}" type="text/javascript"></script>
@@ -127,10 +134,10 @@
             <!-- 상품등록 시작 -->
             <div>
                 <div class="search-bar">
-                    <input th:field="*{searchQuery}" type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력">
+                    <input th:field="*{searchQuery}" type="text" class="inp" placeholder="상품명 혹 상품코드 입력">
                     <!--                <input  type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력해주세요">-->
                     <!-- <button type="submit" class="btn icon search"><span>검색</span></button> -->
-                    <button id="searchBtn" type="submit" class="search-btn">검색
+                    <button  id="searchBtn" type="submit" class="search-btn" style="width:150px">검색
 <!--                        <span class="material-symbols-outlined">-->
 <!--        search-->
 <!--      </span>-->
@@ -138,6 +145,21 @@
                 </div>
             </div>
         </div>
+
+        <div class="allBtnCont">
+            <select id="categorySelect" class="form-control search-select">
+                <option value="Top">Top</option>
+                <option value="Outer">Outer</option>
+                <option value="Pants">Pants</option>
+                <option value="Skirt/Dress">Skirt/Dress</option>
+                <option value="Shoes">Shoes</option>
+            </select>
+            <button class="disBtn" value="1" onclick="discount(event)">정가</button>
+            <button class="disBtn" value="0.9" onclick="discount(event)">10프로 할인</button>
+            <button class="disBtn" value="0.8" onclick="discount(event)">20프로 할인</button>
+            <button class="disBtn" value="0.7" onclick="discount(event)">30프로 할인</button>
+        </div>
+
         <div class="tableBox">
             <div class="subBox">&emsp;&emsp;&emsp;&emsp;등록된 상품목록 검색 갯수 :&emsp; <p th:text="${items.totalElements}"></p>
             </div>
@@ -153,6 +175,7 @@
                         <td>소재</td>
                         <td>총 재고 수량</td>
                         <td>판매 상태</td>
+                        <td>할인율</td>
                         <td>상품 등록일</td>
                         <td>상품 수정일</td>
                     </tr>
@@ -169,8 +192,9 @@
                         <td th:text="${items.material}"></td>
                         <td th:text="${items.stockNumber}"></td>
                         <td th:text="${items.itemSellStatus}"></td>
-                        <td th:text="${items.regTime}"></td>
-                        <td th:text="${items.updateTime}"></td>
+                        <td th:text="${items.discountRate}"></td>
+                        <td th:text="${#temporals.format(items.regTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${#temporals.format(items.updateTime, 'yyyy-MM-dd HH:mm')}"></td>
                     </tr>
                 </table>
             </div>

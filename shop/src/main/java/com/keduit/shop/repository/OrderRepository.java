@@ -1,6 +1,8 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.dto.AdminOrderSearchDTO;
+import com.keduit.shop.entity.Member;
 import com.keduit.shop.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long>,OrderRepositoryCustom {
 
@@ -21,5 +25,19 @@ public interface OrderRepository extends JpaRepository<Order, Long>,OrderReposit
     @Query("select count(o) from Order o where o.member.email = :email")
     Long countOrder(@Param("email") String email);
 
+    List<Order> findByOrderStatus(OrderStatus orderStatus);
+
+    List<Order> findByMemberAndOrderStatus(Member member, OrderStatus orderStatus);
+
+    @Query(value = "SELECT oi.item_id as itemId, SUM(oi.count) as totalCount FROM order_item oi GROUP BY oi.item_id ORDER BY totalCount DESC", nativeQuery = true)
+    List<Map<String, Object>> findItemsOrderedByCount();
+
+    @Query("SELECT SUM(oi.count * i.price) " +
+            "FROM Order o " +
+            "JOIN o.orderItems oi " +
+            "JOIN oi.item i " +
+            "WHERE o.orderStatus = 'DELIVERED' " +
+            "AND i.level1 = :level1")
+    Optional<Integer> getTotalPriceByLevel1(@Param("level1") String level1);
 
 }

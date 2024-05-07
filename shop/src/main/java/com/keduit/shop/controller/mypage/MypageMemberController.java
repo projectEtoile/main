@@ -7,13 +7,18 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.AddressDTO;
 import com.keduit.shop.dto.MemberFormDTO;
+import com.keduit.shop.dto.OrderHistDTO;
 import com.keduit.shop.entity.Address;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.repository.AddressRepository;
 import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.service.MemberService;
+import com.keduit.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +32,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/mypage")
@@ -37,6 +43,7 @@ public class MypageMemberController {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
+    private final OrderService orderService;
 
 
     @GetMapping("/checkPw")
@@ -71,8 +78,14 @@ public class MypageMemberController {
     }
 
 
-    @GetMapping("/myOrder")
-    public String myOrder() {
+
+    @GetMapping({"/myOrder", "/myOrder/{page}"})
+    public String myOrder(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4); /*있으면 페이지가져오고 없으면0 한페이지에 4개만*/
+        Page<OrderHistDTO> orderHistDTOList = orderService.getOrderList(principal.getName(), pageable);
+        model.addAttribute("orders", orderHistDTOList);
+        model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("maxPage", 5); /*5개페이지를 한화면에 보여줄거야*/
         return "mypage/myOrder";
     }
 
@@ -190,9 +203,14 @@ public class MypageMemberController {
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        memberService.modifyAddress(addressDTO);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        boolean result = memberService.modifyAddress(addressDTO);
+        if (result){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else
+
+        return new ResponseEntity<>("최소 하나의 주소는 기본 배송지여야 합니다. 다른 주소를 기본배송지로 선택해주세요",HttpStatus.BAD_REQUEST);
     }
 
 //    @GetMapping("/address/{addressId}")

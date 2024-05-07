@@ -3,6 +3,9 @@ package com.keduit.shop.controller;
 import com.keduit.shop.dto.CartDetailDTO;
 import com.keduit.shop.dto.CartItemDTO;
 import com.keduit.shop.dto.CartOrderDTO;
+import com.keduit.shop.entity.Address;
+import com.keduit.shop.repository.AddressRepository;
+import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
+    private final AddressRepository addressRepository;
+    private final MemberRepository memberRepository;
+
 
     /*ResponseBody한다는건 데이터를넘겨주겠다는것*/
     @PostMapping("/cart")
@@ -93,6 +99,10 @@ public class CartController {
     public ResponseEntity<?> orderCartItem(@RequestBody CartOrderDTO cartOrderDTO, Principal principal) {
         List<CartOrderDTO> cartOrderDTOList = cartOrderDTO.getCartOrderDTOList();
 
+        if(addressRepository.findAllByMember(memberRepository.findByEmail(principal.getName())).isEmpty()){
+            return ResponseEntity.badRequest().body("기본 주소지를 설정해주세요.");
+        }
+
         if (cartOrderDTOList == null || cartOrderDTOList.isEmpty()) {
             return ResponseEntity.badRequest().body("주문할 상품을 선택해주세요.");
         }
@@ -103,13 +113,18 @@ public class CartController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("주문 권한이 없습니다.");
             }
 
-            // 각 CartOrderDTO를 개별 주문으로 생성
+            // 주문 처리만 하고 재고는 여기서 감소시키도록 수정
             Long orderId = cartService.orderCartItem(cartOrder, principal.getName());
             orderIds.add(orderId);
-        }
 
+            // 주문 처리 후에 각 상품에 대해 재고를 감소시킴
+            cartService.decreaseItemStock(cartOrder.getCartItemId(), principal.getName());
+        }
         return ResponseEntity.ok(orderIds);
     }
+
+
+
 
 
     @GetMapping("/cart/totalItemCount")
