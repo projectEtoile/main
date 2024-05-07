@@ -3,6 +3,17 @@ function navigateTo(url) {
   window.location.href = url; // 새로운 페이지로 이동
 }
 
+//랭킹순위 header호출할때마다  html활성화
+document.addEventListener('DOMContentLoaded', function() {
+  const realTimeRankings = document.getElementById('real-time-rankings');
+
+  function showRealTimeRankings() {
+    realTimeRankings.style.display = 'block'; // HTML 요소를 활성화합니다.
+  }
+
+  // 이벤트를 호출할 때마다 실시간 검색 순위를 표시하는 함수를 실행합니다.
+  showRealTimeRankings();
+});
 document.addEventListener('DOMContentLoaded', function() {
   var categoryBtns = document.querySelectorAll('.dropdown button'); // 일반 드롭다운
 

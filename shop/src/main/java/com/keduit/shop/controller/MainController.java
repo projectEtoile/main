@@ -2,8 +2,10 @@ package com.keduit.shop.controller;
 
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
+import com.keduit.shop.entity.SearchRank;
 import com.keduit.shop.repository.ItemImgRepository;
 import com.keduit.shop.repository.ItemRepository;
+import com.keduit.shop.repository.SearchRankRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +23,10 @@ public class MainController {
 
     private final ItemRepository itemRepository;
     private final ItemImgRepository itemImgRepository;
+    private final SearchRankRepository searchRankRepository;
+
 
     @GetMapping("/")
-
     public String main(Model model){
         List<Item> items = itemRepository.findAll();
 
@@ -33,6 +36,11 @@ public class MainController {
 
         model.addAttribute("items",items);
         model.addAttribute("itemImgs",itemImgs.get(0).getImgUrl());
+
+        List<SearchRank> searchRankList = searchRankRepository.findTop10ByOrderById();
+
+//        model.addAttribute("searchRankList", searchRankList);
+        System.out.println("=====================searchRankList.get(3)==================" + searchRankList);
 
 
         return "main";

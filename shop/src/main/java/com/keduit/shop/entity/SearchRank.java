@@ -1,17 +1,21 @@
 package com.keduit.shop.entity;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "etoile.search_rank")
+@Table(name = "search_rank")
 @Getter
 @Setter
+@ToString
 public class SearchRank {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int number;
+    @Column(name = "SearchRank_id")
+    private Long id;
 
     private String keyword;
 
@@ -20,8 +24,8 @@ public class SearchRank {
     }
 
     // 생성자 오버로딩
-    public SearchRank(int number, String keyword) {
-        this.number = number;
+    public SearchRank(Long id, String keyword) {
+        this.id = id;
         this.keyword = keyword;
     }
 }

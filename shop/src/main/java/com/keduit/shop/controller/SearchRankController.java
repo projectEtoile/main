@@ -17,11 +17,13 @@ public class SearchRankController {
     private final SearchRankRepository searchrankRepository;
     private final SearchRankService searchRankService; // 서비스 주입
 
-    @GetMapping("/rank")
+    @GetMapping("/asd")
     public String searchRank(Model model) {
-        List<SearchRank> searchRankList = searchRankService.getAllSearchRank();
+
+        List<SearchRank> searchRankList = searchrankRepository.findTop10ByOrderById();
+
         model.addAttribute("searchRankList", searchRankList);
-        System.out.println("=====================searchRankList.get(3)==================" + searchRankList.get(3));
-        return "fragments/header";
+        System.out.println("=====================searchRankList.get(3)==================" + searchRankList);
+        return null;
     }
 }
