@@ -187,9 +187,9 @@ function rankSearch() {
 
 
   // CSRF 토큰 가져오기
- /* var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-  var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
- */
+  /* var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+   var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+  */
   // API 엔드포인트
   var apiUrl = '/rankSearch';
   fetch(apiUrl, {
