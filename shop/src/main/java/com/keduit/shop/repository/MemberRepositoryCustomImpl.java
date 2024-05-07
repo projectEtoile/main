@@ -1,9 +1,7 @@
 package com.keduit.shop.repository;
 
-import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminMemberSearchDTO;
 import com.keduit.shop.entity.Member;
-import com.keduit.shop.entity.QItem;
 import com.keduit.shop.entity.QMember;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
@@ -38,7 +36,7 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
         } else if (StringUtils.equals("6m", searchDateType)) {
             dateTime = dateTime.minusMonths(6);
         }
-        return QItem.item.regTime.after(dateTime);
+        return QMember.member.regTime.after(dateTime);
     }
 
     private BooleanExpression searchByEq(String searchBy, String searchQuery) {
@@ -66,7 +64,6 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
     @Override
     public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
 
-        System.out.println("adminMemberSearchDTO-----> " + adminMemberSearchDTO);
 
         List<Member> result = jpaQueryFactory
                 .selectFrom(QMember.member)

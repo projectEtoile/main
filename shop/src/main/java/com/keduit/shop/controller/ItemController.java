@@ -2,6 +2,7 @@ package com.keduit.shop.controller;
 
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.ItemFormDTO;
+import com.keduit.shop.dto.ItemSearchDTO;
 import com.keduit.shop.dto.QandADTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +42,10 @@ public class ItemController {
         return "category/categoryPadding";
     }
 
+    @GetMapping("/categoryPage")
+    public String categoryPage() {
+        return "category/categoryPage";
+    }
 
     @GetMapping("/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
@@ -88,6 +94,31 @@ public class ItemController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body("해당 아이템을 찾을 수 없습니다.");
         }
+    }
+
+
+    @GetMapping("/items/{category}/{page}")
+    public String itemsCategoryListPage(Model model,
+                                        @PathVariable("page") Optional<Integer> page,
+                                        @PathVariable("category") String category,
+                                        ItemSearchDTO itemSearchDTO){
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+
+        List<ItemFormDTO> itemFormDTOList = new ArrayList<>();
+        Page<Item> items = itemService.getItemPage(itemSearchDTO, category, pageable);
+
+        for (Item item : items.getContent()){
+            ItemFormDTO itemFormDTO = itemService.getItemDtl(item.getId());
+            itemFormDTOList.add(itemFormDTO);
+        }
+
+        Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
+
+        model.addAttribute("itemFormDTOs",itemFormDTOs);
+        model.addAttribute("itemSearchDTO",itemSearchDTO);
+        model.addAttribute("maxPAge",10);
+
+        return "item/category";
     }
 
 }

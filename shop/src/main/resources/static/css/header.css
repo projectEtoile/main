@@ -34,7 +34,7 @@ body, html {
 .top-area {
   width: 100%;
   height: 50px;
-  
+
   background-color: pink;
 }
 .top-areaInner {
@@ -244,13 +244,13 @@ align-items: center;
   justify-content: center;
 }
 
-.search-bar input[type="text"] {
+.search-bar input.inp[type="text"] {
   flex: 2;
   height: 35px;
   /* width: 50%; */
   padding: 10px;
   margin: 8px 50px;
-  /* box-sizing: border-box; */
+   box-sizing: border-box;
   padding-left: 25px;
   padding-right: 25px;
 }
@@ -292,7 +292,7 @@ border-radius: 100px;
   display: none;
   position: relative;
   left: 0;
-  
+
 }
 #searchIcon2{
   border: 2px solid #888888;

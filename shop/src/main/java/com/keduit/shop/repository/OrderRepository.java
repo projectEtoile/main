@@ -29,8 +29,18 @@ public interface OrderRepository extends JpaRepository<Order, Long>,OrderReposit
 
     List<Order> findByMemberAndOrderStatus(Member member, OrderStatus orderStatus);
 
-    @Query(value = "SELECT oi.item_id as itemId, SUM(oi.count) as totalCount FROM order_item oi GROUP BY oi.item_id ORDER BY totalCount DESC", nativeQuery = true)
-    List<Map<String, Object>> findItemsOrderedByCount();
+/*    @Query(value = "SELECT oi.item_id as itemId, SUM(oi.count) as totalCount FROM order_item oi GROUP BY oi.item_id ORDER BY totalCount DESC LIMIT 10", nativeQuery = true)
+    List<Map<String, Object>> findTop10ItemsOrderedByCount();*/
+
+    @Query(value = "SELECT oi.item_id as itemId, SUM(oi.count) as totalCount " +
+            "FROM order_item oi " +
+            "JOIN orders o ON oi.order_id = o.order_id " +
+            "WHERE o.order_status = 'DELIVERED' " +
+            "GROUP BY oi.item_id " +
+            "ORDER BY totalCount DESC " +
+            "LIMIT 10",
+            nativeQuery = true)
+    List<Map<String, Object>> findTop10ItemsOrderedByCount();
 
     @Query("SELECT SUM(oi.count * i.price) " +
             "FROM Order o " +
