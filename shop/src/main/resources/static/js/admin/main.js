@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var context1 = $('#myChart1')[0].getContext('2d');
+/*    var context1 = $('#myChart1')[0].getContext('2d');
     var myChart1 = new Chart(context1, {
         type: 'bar', // 차트의 형태
         data: { // 차트에 들어갈 데이터
@@ -33,7 +33,7 @@ $(document).ready(function() {
                         'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1 //경계선 굵기
-                }/* ,
+                }*//* ,
                 {
                     label: 'test2',
                     fill: false,
@@ -42,7 +42,7 @@ $(document).ready(function() {
                     ],
                     backgroundColor: 'rgb(157, 109, 12)',
                     borderColor: 'rgb(157, 109, 12)'
-                } */
+                } *//*
             ]
         },
         options: {
@@ -56,7 +56,7 @@ $(document).ready(function() {
                 ]
             }
         }
-    });
+    });*/
 
    var OP = parseInt($('#OP').text());
    var DngP = parseInt($('#DngP').text());
@@ -68,9 +68,6 @@ $(document).ready(function() {
 
 
     var context2 = $('#myChart2')[0].getContext('2d');
-
-    var maleValue = document.getElementById('male').textContent;
-    var femaleValue = document.getElementById('female').textContent;
 
     var ttp1 = document.getElementById('ttp1').textContent;
     var otp = document.getElementById('otp').textContent;
@@ -133,4 +130,28 @@ $(document).ready(function() {
             }
         }
     });
+});
+
+$(document).ready(function() {
+    var jsonOrderRank = $('#jsonOrderRank').text();
+    var orderRankObjects = JSON.parse(jsonOrderRank);
+
+    // 테이블 생성 함수
+    function createTableRows() {
+        // 테이블 바디 선택
+        var $tableBody = $('#tableBody');
+        // 각 객체 배열 순회
+        $.each(orderRankObjects, function(index, item) {
+            // 새로운 행 생성 및 데이터 삽입
+            var $row = $('<tr>').append(
+                $('<td>').text(item.itemId),
+                $('<td>').text(item.totalCount)
+            );
+            // 행을 테이블 바디에 추가
+            $tableBody.append($row);
+        });
+    }
+
+    // 페이지 로드 후 테이블 생성 함수 호출
+    createTableRows();
 });
