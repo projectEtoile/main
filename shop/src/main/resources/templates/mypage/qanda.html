@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypageLayout}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+</head>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+        const headers = document.querySelectorAll('.qanda-header');
+        headers.forEach(header => {
+            header.addEventListener('click', function() {
+                const detailId = 'detail_' + this.id.split('_')[1];
+                const detailRow = document.getElementById(detailId);
+                detailRow.style.display = detailRow.style.display === 'none' ? '<ta></ta>ble-row' : 'none';
+            });
+        });
+    });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const paginationLinks = document.querySelectorAll('.pagination-list li a');
+
+    paginationLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            paginationLinks.forEach(otherLink => {
+                otherLink.parentNode.classList.remove('selected');
+            });
+            this.parentNode.classList.add('selected');
+            localStorage.setItem('selectedLink', this.getAttribute('href')); // 선택된 링크 정보 저장
+        });
+
+        // 페이지 로드 시 localStorage에 저장된 선택된 링크가 있다면 해당 링크를 선택한 것으로 처리
+        const selectedLink = localStorage.getItem('selectedLink');
+        if (selectedLink && link.getAttribute('href') === selectedLink) {
+            link.parentNode.classList.add('selected');
+        }
+    });
+});
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <link th:href="@{/css/mypage/myOrder.css}" rel="stylesheet" type="text/css">
+    <div class="mainSection2">
+        <div class="myPageContainer">
+            <div class="dateContainer">
+                <button class="lb">최근 1개월</button>
+                <button class="button3">01월</button>
+                <button class="button3">12월</button>
+                <input type="date">
+                ~
+                <input type="date">
+                <button class="lb" style="background: #222">검색</button>
+            </div>
+        </div>
+
+        <ul class="smallText">
+            <li class="smallText">한 번에 조회 가능한 기간은 최대 6개월이며, 2008년 1월 1일 이후의 주문만 조회하실 수 있습니다.</li>
+            <li class="smallText">옵션 및 배송지 변경은 '주문접수' 또는 '결제완료' 상태일 때만 주문 상세 조회에서 할 수 있습니다.</li>
+        </ul>
+
+        <table class="itemTable">
+            <colgroup>
+                <col style="width:5%;">
+                <col style="width:20%;">
+                <col style="width:20%;">
+                <col style="width:20%;">
+                <col style="width:20%;">
+            </colgroup>
+            <thead>
+            <tr class="firstline2">
+                <th scope="col"><input type="checkbox" id="checkAllOrders" onclick="toggleAllOrders()"></th>
+                <th scope="col" style="text-align: center;">질문제목</th>
+                <th scope="col" style="text-align: center;">등록일</th>
+                <th scope="col" style="text-align: center;">이메일</th>
+                <th scope="col" style="text-align: center;">진행상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="qanda : ${qandaPage.content}" th:id="'qanda_' + ${qanda.id}" class="qanda-header">
+                <td style="text-align: center;"><input type="checkbox" /></td>
+                <td th:text="${qanda.title}" style="text-align: center;">Title here</td>
+                <td th:text="${#temporals.format(qanda.regTime, 'yyyy-MM-dd')}" style="text-align: center;">Registration Date</td>
+                <td th:text="${qanda.email}" style="text-align: center;">Email here</td>
+                <td th:text="${qanda.answer.isEmpty() ? '답변 대기 중' : '답변 완료'}" style="text-align: center;">Status here</td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${qandaPage.totalPages > 1}" class="pagination">
+            <ul class="pagination-list">
+                <li th:class="${qandaPage.first ? 'disabled first' : 'first'}">
+                    <a th:href="@{${#httpServletRequest.requestURI}(page=0)}">&lt;&lt;</a>
+                </li>
+                <li th:class="${qandaPage.first ? 'disabled prev' : 'prev'}">
+                    <a th:href="@{${#httpServletRequest.requestURI}(page=${qandaPage.number - 1})}">&lt;</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, qandaPage.totalPages - 1)}"
+                    th:class="${qandaPage.number == i ? 'active' : ''}">
+                    <a th:href="@{${#httpServletRequest.requestURI}(page=${i})}" th:text="${i + 1}"></a>
+                </li>
+                <li th:class="${qandaPage.last ? 'disabled next' : 'next'}">
+                    <a th:href="@{${#httpServletRequest.requestURI}(page=${qandaPage.number + 1})}">&gt;</a>
+                </li>
+                <li th:class="${qandaPage.last ? 'disabled last' : 'last'}">
+                    <a th:href="@{${#httpServletRequest.requestURI}(page=${qandaPage.totalPages - 1})}">&gt;&gt;</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="imgBox">
+            <img src="/image/deliveryInform.png" alt="deliveryInform" class="lastimg">
+        </div>
+    </div>
+</div>
+</html>
