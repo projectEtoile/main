@@ -45,6 +45,7 @@
                 });
             });
         });
+
     </script>
 </th:block>
 
@@ -89,13 +90,18 @@
                 <td th:text="${qanda.email}" style="text-align: center;">Email here</td>
                 <td th:text="${qanda.answer.isEmpty() ? '답변 대기 중' : '답변 완료'}" style="text-align: center;">Status here</td>
             </tr>
-            <tr th:each="qanda : ${qandaPage.content}" th:id="${'detail_' + qanda.id}" style="display: none;" class="qanda-header">
+            <tr th:each="qanda : ${qandaPage.content}" th:id="${'detail_' + qanda.id}" style="display: none;" class="qanda-detail">
                 <td colspan="4">
-                    <div>
-                        <strong>질문 내용:</strong> <span th:text="${qanda.question}"></span>
-                        <br/>
-                        <strong>답변:</strong> <span th:text="${qanda.answer.isEmpty() ? '답변 대기 중입니다.' : qanda.answer}"></span>
-                    </div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <th style="text-align: left; padding: 8px; background-color: #f2f2f2;">질문 내용:</th>
+                            <td style="text-align: left; padding: 8px;"> <span th:text="${qanda.question}"></span></td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left; padding: 8px; background-color: #f2f2f2;">답변:</th>
+                            <td style="text-align: left; padding: 8px;"> <span th:text="${qanda.answer.isEmpty() ? '답변 대기 중입니다.' : qanda.answer}"></span></td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             </tbody>
