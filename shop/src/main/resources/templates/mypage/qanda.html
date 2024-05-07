@@ -6,44 +6,37 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-
 </head>
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function() {
-        const headers = document.querySelectorAll('.qanda-header');
-        headers.forEach(header => {
-            header.addEventListener('click', function() {
-                const detailId = 'detail_' + this.id.split('_')[1];
-                const detailRow = document.getElementById(detailId);
-                detailRow.style.display = detailRow.style.display === 'none' ? '<ta></ta>ble-row' : 'none';
+            const headers = document.querySelectorAll('.qanda-header');
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    const detailId = 'detail_' + this.id.split('_')[1];
+                    const detailRow = document.getElementById(detailId);
+                    detailRow.style.display = detailRow.style.display === 'none' ? 'table-row' : 'none';
+                });
             });
-        });
-    });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const paginationLinks = document.querySelectorAll('.pagination-list li a');
+            const paginationLinks = document.querySelectorAll('.pagination-list li a');
+            paginationLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    paginationLinks.forEach(otherLink => {
+                        otherLink.parentNode.classList.remove('selected');
+                    });
+                    this.parentNode.classList.add('selected');
+                    localStorage.setItem('selectedLink', this.getAttribute('href'));
+                });
 
-    paginationLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            paginationLinks.forEach(otherLink => {
-                otherLink.parentNode.classList.remove('selected');
+                const selectedLink = localStorage.getItem('selectedLink');
+                if (selectedLink && link.getAttribute('href') === selectedLink) {
+                    link.parentNode.classList.add('selected');
+                }
             });
-            this.parentNode.classList.add('selected');
-            localStorage.setItem('selectedLink', this.getAttribute('href')); // 선택된 링크 정보 저장
-        });
 
-        // 페이지 로드 시 localStorage에 저장된 선택된 링크가 있다면 해당 링크를 선택한 것으로 처리
-        const selectedLink = localStorage.getItem('selectedLink');
-        if (selectedLink && link.getAttribute('href') === selectedLink) {
-            link.parentNode.classList.add('selected');
-        }
-    });
-});
-        document.addEventListener('DOMContentLoaded', function() {
             const qandaTitles = document.querySelectorAll('.qanda-title');
-
             qandaTitles.forEach(title => {
                 title.addEventListener('click', function() {
                     const detailId = 'detail_' + this.dataset.qid;
@@ -63,16 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="lb">최근 1개월</button>
                 <button class="button3">01월</button>
                 <button class="button3">12월</button>
-                <input type="date">
-                ~
-                <input type="date">
+                <input type="date"> ~ <input type="date">
                 <button class="lb" style="background: #222">검색</button>
             </div>
         </div>
 
         <ul class="smallText">
-            <li class="smallText">한 번에 조회 가능한 기간은 최대 6개월이며, 2008년 1월 1일 이후의 주문만 조회하실 수 있습니다.</li>
-            <li class="smallText">옵션 및 배송지 변경은 '주문접수' 또는 '결제완료' 상태일 때만 주문 상세 조회에서 할 수 있습니다.</li>
+            <li>한 번에 조회 가능한 기간은 최대 6개월이며, 2008년 1월 1일 이후의 주문만 조회하실 수 있습니다.</li>
+            <li>옵션 및 배송지 변경은 '주문접수' 또는 '결제완료' 상태일 때만 주문 상세 조회에서 할 수 있습니다.</li>
         </ul>
 
         <table class="itemTable">
@@ -98,9 +89,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td th:text="${qanda.email}" style="text-align: center;">Email here</td>
                 <td th:text="${qanda.answer.isEmpty() ? '답변 대기 중' : '답변 완료'}" style="text-align: center;">Status here</td>
             </tr>
+            <tr th:each="qanda : ${qandaPage.content}" th:id="${'detail_' + qanda.id}" style="display: none;" class="qanda-header">
+                <td colspan="4">
+                    <div>
+                        <strong>질문 내용:</strong> <span th:text="${qanda.question}"></span>
+                        <br/>
+                        <strong>답변:</strong> <span th:text="${qanda.answer.isEmpty() ? '답변 대기 중입니다.' : qanda.answer}"></span>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
-        </table>
+
         <div th:if="${qandaPage.totalPages > 1}" class="pagination">
             <ul class="pagination-list">
                 <li th:class="${qandaPage.first ? 'disabled first' : 'first'}">
@@ -121,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </li>
             </ul>
         </div>
-
 
         <div class="imgBox">
             <img src="/image/deliveryInform.png" alt="deliveryInform" class="lastimg">
