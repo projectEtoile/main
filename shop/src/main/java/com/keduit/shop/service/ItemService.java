@@ -152,4 +152,9 @@ public class ItemService {
     public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
         return itemRepository.getItemPage(itemSearchDTO,category,pageable);
     }
+    public Item getItemById(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
+    }
+
 }

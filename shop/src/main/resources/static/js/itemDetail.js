@@ -391,3 +391,128 @@ document.getElementById("totalPriceM").textContent = price*quantityInput.value;
   });
 });
 /* 결제 모달 불러오기 끝 */
+
+
+/*QandA*/
+document.addEventListener('DOMContentLoaded', function () {
+    // 사용자의 이메일 가져오기
+    var userEmail = getUserEmail();
+
+    // 모달 열기 및 닫기 이벤트
+    document.getElementById('openQuestionModal').addEventListener('click', function () {
+        document.getElementById('questionModal').style.display = 'block';
+    });
+
+    document.getElementById('closeQuestionModal').addEventListener('click', function () {
+        document.getElementById('questionModal').style.display = 'none';
+    });
+
+    // 질문 제출 이벤트
+    document.getElementById('questionForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        var itemId = document.getElementById('itemId').value;
+        var questionTitle = document.getElementById('questionTitle').value.trim();
+        var questionContent = document.getElementById('questionContent').value.trim();
+
+        if (questionTitle === '' || questionContent === '') {
+            alert('질문 제목과 내용을 모두 입력하세요.');
+            return;
+        }
+
+        // CSRF 토큰 가져오기
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        var questionDate = new Date().toLocaleDateString();
+
+        // 서버로 질문 제출
+        try {
+            var response = await fetch(`/item/${itemId}/submitQuestion`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [header]: token
+                },
+                body: JSON.stringify({
+                    title: questionTitle,
+                    question: questionContent
+                })
+            });
+
+            if (response.ok) {
+                alert('질문이 성공적으로 등록되었습니다.');
+
+                // 질문 목록에 새 질문 추가
+                var table = document.getElementById('qnaList');
+                var newQuestionRow = `
+                    <tr class="qnaline">
+                        <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
+                        <td class="question">
+                            <p class="questionp"><a href="#">${questionTitle}</a></p>
+                            <span class="emailname">${userEmail}</span> <!-- 사용자의 이메일 정보 표시 -->
+                        </td>
+                        <td class="qnadate">${questionDate}</td>
+                    </tr>
+                    <tr class="question_detail" style="display: none;">
+                        <td colspan="3">
+                            <div class="cont">
+                                <div class="ask">
+                                    <strong class="tit_sub">질문</strong>
+                                    <p class="qna_txt">${questionContent}</p>
+                                </div>
+                                <div class="answer">
+                                    <strong class="tit_sub">답변</strong>
+                                    <p class="qna_txt">답변 대기 중입니다.</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                table.insertAdjacentHTML('beforeend', newQuestionRow);
+
+                // 새 질문에 클릭 이벤트 리스너 추가
+                setupQuestionClickEvent();
+            } else {
+                alert('질문을 등록하는 데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('질문을 등록하는 동안 오류가 발생했습니다.');
+        }
+
+        // 모달 창 닫기 및 입력 초기화
+        document.getElementById('questionModal').style.display = 'none';
+        document.getElementById('questionTitle').value = '';
+        document.getElementById('questionContent').value = '';
+    });
+
+    // 질문 제목을 클릭하면 세부 질문 내용을 보여주는 이벤트 리스너 설정
+    function setupQuestionClickEvent() {
+        var questionLinks = document.querySelectorAll(".questionp");
+
+        questionLinks.forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                var detail = this.parentElement.parentElement.nextElementSibling;
+
+                if (detail && detail.classList.contains("question_detail")) {
+                    detail.style.display = detail.style.display === "none" || detail.style.display === "" ? "table-row" : "none";
+                }
+            });
+        });
+    }
+
+    // 초기 로드 시 질문 제목에 클릭 이벤트 설정
+    setupQuestionClickEvent();
+
+    // 사용자의 이메일 가져오는 함수
+    function getUserEmail() {
+        // 여기에 사용자의 이메일을 가져오는 로직을 추가하세요.
+        // 예를 들어, 로그인한 사용자의 정보를 가져오는 등의 방법을 사용할 수 있습니다.
+        // 이 부분을 개발 환경에 맞게 수정하여 사용자의 이메일을 가져오세요.
+        var userEmail = "user@example.com"; // 예시로 사용자 이메일을 설정합니다.
+        return userEmail;
+    }
+});
+

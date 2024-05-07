@@ -122,6 +122,7 @@
                         <th th:unless="${orders.deliveryAddress != null}">N/A</th>
                         <th th:if="${orders.deliveryAddress != null}" th:text="${orders.deliveryAddress.detailAddress}"></th>
                         <th th:unless="${orders.deliveryAddress != null}">N/A</th>
+                        <td th:text="${orders.deliveryAddress.roadAddress + ', ' + orders.deliveryAddress.detailAddress}"></td>
                         <th></th>
                     </tr>
                     </thead>
