@@ -77,11 +77,8 @@
                                             <th>인기검색어</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr th:each="searchRank : ${searchRankList}">
-                                            <td th:text="${searchRank.number}"></td> <!-- 순위 -->
-                                            <td th:text="${searchRank.keyword}"></td> <!-- 인기검색어 -->
-                                        </tr>
+
+                                        <tbody id="tableBody">
                                         </tbody>
                                     </table>
                                     <div id="z-example">

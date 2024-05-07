@@ -14,7 +14,7 @@ public class SearchRank {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SearchRank_id")
+    @Column(name = "number")
     private Long id;
 
     private String keyword;

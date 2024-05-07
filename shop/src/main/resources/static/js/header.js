@@ -181,3 +181,74 @@ document.addEventListener('DOMContentLoaded', function() {
     event.stopPropagation(); // 검색창 클릭 시 document의 클릭 이벤트가 발생하지 않도록 막습니다.
   });
 });
+
+
+function rankSearch() {
+
+
+  // CSRF 토큰 가져오기
+ /* var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+  var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+ */
+  // API 엔드포인트
+  var apiUrl = '/rankSearch';
+  fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      .then(response => {
+        if (response.ok) {
+
+          return response.json();
+        } else {
+          // 오류 응답 처리
+          response.text().then(errorMessage => {
+            alert(errorMessage);
+          });
+        }
+      })
+      .then(data => {
+        const data1= data;
+
+        $(document).ready(function() {
+
+          console.log(data1);
+
+          // 테이블 생성 함수
+          function createTableRows() {
+            // 테이블 바디 선택
+            var $tableBody = $('#tableBody');
+            // 각 객체 배열 순회
+            $.each(data1, function(index, item) {
+              // 새로운 행 생성 및 데이터 삽입
+              var $row = $('<tr>').append(
+                  $('<td>').text(item.id),
+                  $('<td>').text(item.keyword)
+              );
+              // 행을 테이블 바디에 추가
+              $tableBody.append($row);
+            });
+          }
+
+          // 페이지 로드 후 테이블 생성 함수 호출
+          createTableRows();
+        });
+
+      })
+      .catch(error => {
+        // 오류 처리
+        alert('Error:', error);
+      });
+
+}
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("버튼 눌림")
+  rankSearch(); // 페이지가 로드될 때마다 rankSearch 함수 호출
+});

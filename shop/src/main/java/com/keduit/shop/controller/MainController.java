@@ -30,8 +30,6 @@ public class MainController {
     private final ItemImgRepository itemImgRepository;
     private final SearchRankRepository searchRankRepository;
 
-  private final ItemRepository itemRepository;
-  private final ItemImgRepository itemImgRepository;
   private final ItemService itemService;
 
   @GetMapping("/")

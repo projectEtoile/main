@@ -51,4 +51,4 @@ goodsSpan.textContent = quantityValue;
 
                 $("#myModal").css("display", "block");
 
-}
+})
