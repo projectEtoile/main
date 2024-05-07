@@ -393,7 +393,6 @@ document.getElementById("totalPriceM").textContent = price*quantityInput.value;
 /* 결제 모달 불러오기 끝 */
 
 
-/*qanda*/
 document.addEventListener('DOMContentLoaded', async function () {
     // 사용자의 이메일 가져오기
     var userEmail = getUserEmail();
@@ -461,6 +460,64 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 초기 로드 시 질문 목록 가져오기
     loadQuestions();
 
+    // 사용자의 이메일 가져오는 함수
+    function getUserEmail() {
+        var userEmail = "user@example.com"; // 예시로 사용자 이메일을 설정합니다.
+        return userEmail;
+    }
+
+    // 서버로부터 질문을 가져와 테이블에 추가하는 함수
+    async function loadQuestions() {
+        var itemId = document.getElementById('itemId').value; // itemId 값을 가져옵니다.
+        try {
+            var response = await fetch(`/item/${itemId}/questions`); // 수정된 경로를 사용하여 요청합니다.
+            if (response.ok) {
+                var questions = await response.json();
+                questions.forEach(question => {
+                    appendQuestionToTable(question.title, question.question, question.userEmail, question.date);
+                });
+            } else {
+                console.error('Failed to fetch questions');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // 질문을 테이블에 추가하는 함수
+    function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {
+        var table = document.getElementById('qnaList');
+        var newQuestionRow = `
+            <tr class="qnaline">
+                <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
+                <td class="question">
+                    <p class="questionp"><a href="#">${questionTitle}</a></p>
+                    <span class="emailname">${userEmail}</span>
+                </td>
+                <td class="qnadate">${questionDate}</td>
+            </tr>
+            <tr class="question_detail" style="display: none;">
+                <td colspan="3">
+                    <div class="cont">
+                        <div class="ask">
+                            <strong class="tit_sub">질문</strong>
+                            <p class="qna_txt">${questionContent}</p>
+                        </div>
+                        <div class="answer">
+                            <strong class="tit_sub">답변</strong>
+                            <p class="qna_txt">답변 대기 중입니다.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        table.insertAdjacentHTML('beforeend', newQuestionRow);
+
+        // 마지막으로 추가된 질문에 대해서만 클릭 이벤트 리스너 설정
+        var lastQuestion = table.lastElementChild.previousElementSibling;
+        setupQuestionClickEvent(lastQuestion);
+    }
+
     // 질문 제목을 클릭하면 세부 질문 내용을 보여주는 이벤트 리스너 설정
     function setupQuestionClickEvent(questionElement) {
         var questionLink = questionElement.querySelector(".questionp a");
@@ -474,82 +531,5 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         });
     }
-
-    // 질문을 테이블에 추가하는 함수
-   function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {
-       var table = document.getElementById('qnaList');
-       var newQuestionRow = `
-           <tr class="qnaline">
-               <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
-               <td class="question">
-                   <p class="questionp"><a href="#">${questionTitle}</a></p>
-                   <span class="emailname">${userEmail}</span> <!-- 사용자의 이메일 정보 표시 -->
-               </td>
-               <td class="qnadate">${questionDate}</td>
-           </tr>
-           <tr class="question_detail" style="display: none;">
-               <td colspan="3">
-                   <div class="cont">
-                       <div class="ask">
-                           <strong class="tit_sub">질문</strong>
-                           <p class="qna_txt">${questionContent}</p>
-                       </div>
-                       <div class="answer">
-                           <strong class="tit_sub">답변</strong>
-                           <p class="qna_txt">답변 대기 중입니다.</p>
-                       </div>
-                   </div>
-               </td>
-           </tr>
-       `;
-       table.insertAdjacentHTML('beforeend', newQuestionRow);
-
-       // 마지막으로 추가된 질문에 대해서만 클릭 이벤트 리스너 설정
-       var lastQuestion = table.lastElementChild.previousElementSibling;
-       setupQuestionClickEvent(lastQuestion);
-   }
-
-    // 사용자의 이메일 가져오는 함수
-    function getUserEmail() {
-        // 여기에 사용자의 이메일을 가져오는 로직을 추가하세요.
-        // 예를 들어, 로그인한 사용자의 정보를 가져오는 등의 방법을 사용할 수 있습니다.
-        // 이 부분을 개발 환경에 맞게 수정하여 사용자의 이메일을 가져오세요.
-        var userEmail = "user@example.com"; // 예시로 사용자 이메일을 설정합니다.
-        return userEmail;
-    }
-
-    // 서버로부터 질문을 가져와 테이블에 추가하는 함수
-    async function loadQuestions() {
-        try {
-            var response = await fetch('/item/questions');
-            if (response.ok) {
-                var questions = await response.json();
-                questions.forEach(question => {
-                var questionStatus = question.answer !== "" ? "답변완료" : "답변대기";
-                    appendQuestionToTable(question.title, question.content, question.userEmail, question.date);
-                });
-            } else {
-                console.error('Failed to fetch questions');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
 });
-// 서버로부터 질문을 가져와 테이블에 추가하는 함수
-async function loadQuestions() {
-    try {
-        var response = await fetch('/item/questions');
-        if (response.ok) {
-            var questions = await response.json();
-            questions.forEach(question => {
-                appendQuestionToTable(question.title, question.question, question.userEmail, question.date);
-            });
-        } else {
-            console.error('Failed to fetch questions');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
 

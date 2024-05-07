@@ -100,6 +100,16 @@ public class ItemController {
         return ResponseEntity.ok(questionDTOs);
     }
 
+
+    @GetMapping("/item/{itemId}/questions")
+    public ResponseEntity<List<QandADTO>> getQuestionsByItemId(@PathVariable("itemId") Long itemId) {
+        List<QandA> questions = qandAService.findQuestionsByItemId(itemId);
+        List<QandADTO> questionDTOs = questions.stream()
+                .map(qanda -> new QandADTO(qanda.getTitle(), qanda.getQuestion(), qanda.getAnswer(), qanda.getEmail(), qanda.getId()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(questionDTOs);
+    }
+
 }
 
 
