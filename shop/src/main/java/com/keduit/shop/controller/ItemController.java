@@ -25,6 +25,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor // 싱글톤 패턴 주입받기 위한
@@ -88,6 +89,15 @@ public class ItemController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body("해당 아이템을 찾을 수 없습니다.");
         }
+    }
+
+    @GetMapping("/item/questions")
+    public ResponseEntity<List<QandADTO>> getAllQuestions() {
+        List<QandA> questions = qandAService.getAllQuestions();
+        List<QandADTO> questionDTOs = questions.stream()
+                .map(qanda -> new QandADTO(qanda.getTitle(),qanda.getQuestion(),qanda.getAnswer(),qanda.getEmail(),qanda.getId())) // QandA 엔티티를 QandADTO로 변환
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(questionDTOs);
     }
 
 }

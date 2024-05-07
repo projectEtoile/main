@@ -393,8 +393,8 @@ document.getElementById("totalPriceM").textContent = price*quantityInput.value;
 /* 결제 모달 불러오기 끝 */
 
 
-/*QandA*/
-document.addEventListener('DOMContentLoaded', function () {
+/*qanda*/
+document.addEventListener('DOMContentLoaded', async function () {
     // 사용자의 이메일 가져오기
     var userEmail = getUserEmail();
 
@@ -442,37 +442,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 alert('질문이 성공적으로 등록되었습니다.');
-
                 // 질문 목록에 새 질문 추가
-                var table = document.getElementById('qnaList');
-                var newQuestionRow = `
-                    <tr class="qnaline">
-                        <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
-                        <td class="question">
-                            <p class="questionp"><a href="#">${questionTitle}</a></p>
-                            <span class="emailname">${userEmail}</span> <!-- 사용자의 이메일 정보 표시 -->
-                        </td>
-                        <td class="qnadate">${questionDate}</td>
-                    </tr>
-                    <tr class="question_detail" style="display: none;">
-                        <td colspan="3">
-                            <div class="cont">
-                                <div class="ask">
-                                    <strong class="tit_sub">질문</strong>
-                                    <p class="qna_txt">${questionContent}</p>
-                                </div>
-                                <div class="answer">
-                                    <strong class="tit_sub">답변</strong>
-                                    <p class="qna_txt">답변 대기 중입니다.</p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-                table.insertAdjacentHTML('beforeend', newQuestionRow);
-
-                // 새 질문에 클릭 이벤트 리스너 추가
-                setupQuestionClickEvent();
+                appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate);
             } else {
                 alert('질문을 등록하는 데 실패했습니다.');
             }
@@ -486,6 +457,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('questionTitle').value = '';
         document.getElementById('questionContent').value = '';
     });
+
+    // 초기 로드 시 질문 목록 가져오기
+    loadQuestions();
 
     // 질문 제목을 클릭하면 세부 질문 내용을 보여주는 이벤트 리스너 설정
     function setupQuestionClickEvent() {
@@ -503,8 +477,37 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 초기 로드 시 질문 제목에 클릭 이벤트 설정
-    setupQuestionClickEvent();
+    // 질문을 테이블에 추가하는 함수
+    function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {
+        var table = document.getElementById('qnaList');
+        var newQuestionRow = `
+            <tr class="qnaline">
+                <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
+                <td class="question">
+                    <p class="questionp"><a href="#">${questionTitle}</a></p>
+                    <span class="emailname">${userEmail}</span> <!-- 사용자의 이메일 정보 표시 -->
+                </td>
+                <td class="qnadate">${questionDate}</td>
+            </tr>
+            <tr class="question_detail" style="display: none;">
+                <td colspan="3">
+                    <div class="cont">
+                        <div class="ask">
+                            <strong class="tit_sub">질문</strong>
+                            <p class="qna_txt">${questionContent}</p>
+                        </div>
+                        <div class="answer">
+                            <strong class="tit_sub">답변</strong>
+                            <p class="qna_txt">답변 대기 중입니다.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        table.insertAdjacentHTML('beforeend', newQuestionRow);
+        // 새 질문에 클릭 이벤트 리스너 추가
+        setupQuestionClickEvent();
+    }
 
     // 사용자의 이메일 가져오는 함수
     function getUserEmail() {
@@ -514,5 +517,38 @@ document.addEventListener('DOMContentLoaded', function () {
         var userEmail = "user@example.com"; // 예시로 사용자 이메일을 설정합니다.
         return userEmail;
     }
+
+    // 서버로부터 질문을 가져와 테이블에 추가하는 함수
+    async function loadQuestions() {
+        try {
+            var response = await fetch('/item/questions');
+            if (response.ok) {
+                var questions = await response.json();
+                questions.forEach(question => {
+                    appendQuestionToTable(question.title, question.content, question.userEmail, question.date);
+                });
+            } else {
+                console.error('Failed to fetch questions');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 });
+// 서버로부터 질문을 가져와 테이블에 추가하는 함수
+async function loadQuestions() {
+    try {
+        var response = await fetch('/item/questions');
+        if (response.ok) {
+            var questions = await response.json();
+            questions.forEach(question => {
+                appendQuestionToTable(question.title, question.question, question.userEmail, question.date);
+            });
+        } else {
+            console.error('Failed to fetch questions');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
