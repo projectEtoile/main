@@ -462,52 +462,52 @@ document.addEventListener('DOMContentLoaded', async function () {
     loadQuestions();
 
     // 질문 제목을 클릭하면 세부 질문 내용을 보여주는 이벤트 리스너 설정
-    function setupQuestionClickEvent() {
-        var questionLinks = document.querySelectorAll(".questionp");
+    function setupQuestionClickEvent(questionElement) {
+        var questionLink = questionElement.querySelector(".questionp a");
 
-        questionLinks.forEach(function (link) {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                var detail = this.parentElement.parentElement.nextElementSibling;
+        questionLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            var detail = this.closest('.qnaline').nextElementSibling;
 
-                if (detail && detail.classList.contains("question_detail")) {
-                    detail.style.display = detail.style.display === "none" || detail.style.display === "" ? "table-row" : "none";
-                }
-            });
+            if (detail && detail.classList.contains("question_detail")) {
+                detail.style.display = detail.style.display === "none" || detail.style.display === "" ? "table-row" : "none";
+            }
         });
     }
 
     // 질문을 테이블에 추가하는 함수
-    function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {
-        var table = document.getElementById('qnaList');
-        var newQuestionRow = `
-            <tr class="qnaline">
-                <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
-                <td class="question">
-                    <p class="questionp"><a href="#">${questionTitle}</a></p>
-                    <span class="emailname">${userEmail}</span> <!-- 사용자의 이메일 정보 표시 -->
-                </td>
-                <td class="qnadate">${questionDate}</td>
-            </tr>
-            <tr class="question_detail" style="display: none;">
-                <td colspan="3">
-                    <div class="cont">
-                        <div class="ask">
-                            <strong class="tit_sub">질문</strong>
-                            <p class="qna_txt">${questionContent}</p>
-                        </div>
-                        <div class="answer">
-                            <strong class="tit_sub">답변</strong>
-                            <p class="qna_txt">답변 대기 중입니다.</p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        `;
-        table.insertAdjacentHTML('beforeend', newQuestionRow);
-        // 새 질문에 클릭 이벤트 리스너 추가
-        setupQuestionClickEvent();
-    }
+   function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {
+       var table = document.getElementById('qnaList');
+       var newQuestionRow = `
+           <tr class="qnaline">
+               <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
+               <td class="question">
+                   <p class="questionp"><a href="#">${questionTitle}</a></p>
+                   <span class="emailname">${userEmail}</span> <!-- 사용자의 이메일 정보 표시 -->
+               </td>
+               <td class="qnadate">${questionDate}</td>
+           </tr>
+           <tr class="question_detail" style="display: none;">
+               <td colspan="3">
+                   <div class="cont">
+                       <div class="ask">
+                           <strong class="tit_sub">질문</strong>
+                           <p class="qna_txt">${questionContent}</p>
+                       </div>
+                       <div class="answer">
+                           <strong class="tit_sub">답변</strong>
+                           <p class="qna_txt">답변 대기 중입니다.</p>
+                       </div>
+                   </div>
+               </td>
+           </tr>
+       `;
+       table.insertAdjacentHTML('beforeend', newQuestionRow);
+
+       // 마지막으로 추가된 질문에 대해서만 클릭 이벤트 리스너 설정
+       var lastQuestion = table.lastElementChild.previousElementSibling;
+       setupQuestionClickEvent(lastQuestion);
+   }
 
     // 사용자의 이메일 가져오는 함수
     function getUserEmail() {
