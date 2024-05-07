@@ -18,6 +18,9 @@ public class QandAService {
     public List<QandA> findQuestionsByItemId(Long itemId) {
         return qandARepository.findAllByItemId(itemId);
     }
+    public Page<QandA> findQuestionsByItemId(Long itemId, Pageable pageable) {
+        return qandARepository.findAllByItemId(itemId, pageable);
+    }
 
     public List<QandA> getAllQuestions() {
         return qandARepository.findAll();

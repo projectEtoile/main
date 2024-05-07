@@ -392,8 +392,9 @@ document.getElementById("totalPriceM").textContent = price*quantityInput.value;
 });
 /* 결제 모달 불러오기 끝 */
 
-
+/*qanda     */
 document.addEventListener('DOMContentLoaded', async function () {
+    loadQuestions(0);
     // 사용자의 이메일 가져오기
     var userEmail = getUserEmail();
 
@@ -467,22 +468,49 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // 서버로부터 질문을 가져와 테이블에 추가하는 함수
-    async function loadQuestions() {
-        var itemId = document.getElementById('itemId').value; // itemId 값을 가져옵니다.
-        try {
-            var response = await fetch(`/item/${itemId}/questions`); // 수정된 경로를 사용하여 요청합니다.
-            if (response.ok) {
-                var questions = await response.json();
-                questions.forEach(question => {
-                    appendQuestionToTable(question.title, question.question, question.userEmail, question.date);
-                });
-            } else {
-                console.error('Failed to fetch questions');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
+  async function loadQuestions(page = 0) {
+      const itemId = document.getElementById('itemId').value;
+      try {
+          const response = await fetch(`/item/${itemId}/questions?page=${page}&size=10`);
+          if (response.ok) {
+              const data = await response.json();
+              updateQuestionTable(data.questions);
+              updatePagination(data.currentPage, data.totalPages);
+          } else {
+              console.error('Failed to fetch questions');
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  }
+
+  function updateQuestionTable(questions) {
+      const table = document.getElementById('qnaList');
+      table.innerHTML = '';  // Clear the table
+      questions.forEach(question => {
+          appendQuestionToTable(question.title, question.question, question.userEmail, question.date);
+      });
+  }
+
+  function updatePagination(currentPage, totalPages) {
+      const pageInfo = document.getElementById('pageInfo');
+      pageInfo.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+
+      const prevButton = document.getElementById('prevButton');
+      const nextButton = document.getElementById('nextButton');
+
+      prevButton.disabled = currentPage === 0;
+      nextButton.disabled = currentPage === totalPages - 1;
+
+      prevButton.onclick = () => {
+          if (currentPage > 0) loadQuestions(currentPage - 1);
+      };
+
+      nextButton.onclick = () => {
+          if (currentPage < totalPages - 1) loadQuestions(currentPage + 1);
+      };
+  }
+
 
     // 질문을 테이블에 추가하는 함수
     function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {

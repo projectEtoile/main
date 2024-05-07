@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -102,13 +104,19 @@ public class ItemController {
 
 
     @GetMapping("/item/{itemId}/questions")
-    public ResponseEntity<List<QandADTO>> getQuestionsByItemId(@PathVariable("itemId") Long itemId) {
-        List<QandA> questions = qandAService.findQuestionsByItemId(itemId);
-        List<QandADTO> questionDTOs = questions.stream()
+    public ResponseEntity<Map<String, Object>> getQuestionsByItemId(@PathVariable("itemId") Long itemId, Pageable pageable) {
+        Page<QandA> page = qandAService.findQuestionsByItemId(itemId, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("questions", page.getContent().stream()
                 .map(qanda -> new QandADTO(qanda.getTitle(), qanda.getQuestion(), qanda.getAnswer(), qanda.getEmail(), qanda.getId()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(questionDTOs);
+                .collect(Collectors.toList()));
+        response.put("currentPage", page.getNumber());
+        response.put("totalItems", page.getTotalElements());
+        response.put("totalPages", page.getTotalPages());
+
+        return ResponseEntity.ok(response);
     }
+
 
 }
 
