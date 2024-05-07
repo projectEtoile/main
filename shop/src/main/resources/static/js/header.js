@@ -184,23 +184,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function rankSearch() {
+// CSRF 토큰 가져오기
+  var csrfTokenElement = document.querySelector('meta[name="_csrf"]');
+  var csrfToken = csrfTokenElement ? csrfTokenElement.getAttribute('content') : null;
+  var csrfHeaderElement = document.querySelector('meta[name="_csrf_header"]');
+  var csrfHeader = csrfHeaderElement ? csrfHeaderElement.getAttribute('content') : null;
 
-
-  // CSRF 토큰 가져오기
-  /* var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-   var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-  */
   // API 엔드포인트
   var apiUrl = '/rankSearch';
   fetch(apiUrl, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      [csrfHeader]: csrfToken // CSRF 토큰이 있든 없든 요청 헤더에 포함
     }
   })
       .then(response => {
         if (response.ok) {
-
           return response.json();
         } else {
           // 오류 응답 처리
@@ -210,38 +210,34 @@ function rankSearch() {
         }
       })
       .then(data => {
-        const data1= data;
+        // 데이터 처리
+        var jsonOrderRank = data;
+        console.log(jsonOrderRank);
 
-        $(document).ready(function() {
+        // 테이블 생성 함수
+        function createTableRows() {
+          // 테이블 바디 선택
+          var $tableBody = $('#tableBody');
+          // 각 객체 배열 순회
+          $.each(jsonOrderRank, function(index, item) {
+            // 새로운 행 생성 및 데이터 삽입
+            var $row = $('<tr>').append(
+                $('<td>').text(item.id),
+                $('<td>').text(item.keyword)
+            );
+            // 행을 테이블 바디에 추가
+            $tableBody.append($row);
+          });
+        }
 
-          console.log(data1);
-
-          // 테이블 생성 함수
-          function createTableRows() {
-            // 테이블 바디 선택
-            var $tableBody = $('#tableBody');
-            // 각 객체 배열 순회
-            $.each(data1, function(index, item) {
-              // 새로운 행 생성 및 데이터 삽입
-              var $row = $('<tr>').append(
-                  $('<td>').text(item.id),
-                  $('<td>').text(item.keyword)
-              );
-              // 행을 테이블 바디에 추가
-              $tableBody.append($row);
-            });
-          }
-
-          // 페이지 로드 후 테이블 생성 함수 호출
-          createTableRows();
-        });
+        // 페이지 로드 후 테이블 생성 함수 호출
+        createTableRows();
 
       })
-      .catch(error => {
+     /* .catch(error => {
         // 오류 처리
         alert('Error:', error);
-      });
-
+      });*/
 }
 
 
