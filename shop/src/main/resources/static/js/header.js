@@ -188,22 +188,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function rankSearch(message) {
 
-    const token = $("meta[name='_csrf']").attr("content");
-    const header = $("meta[name='_csrf_header']").attr("content");
 
-    console.log("dddd");
-
-    if (true) {
         var apiUrl = '/rankSearch';
         console.log("트루로직");
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // CSRF 토큰 추가
-                [header]: token
-            }
-        })
+
+        fetch(apiUrl)
+
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -239,63 +229,11 @@ function rankSearch(message) {
                 createTableRows();
 
             })
-            .catch(error => {
+            /*.catch(error => {
                 // 오류 처리
                 alert('Error:', error);
-            });
-    } else {
-        console.log("엘스로직");
-        var apiUrl = '/rankSearch';
-        console.log("트루로직");
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // csrf 토큰 제거
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    // 오류 응답 처리
-                   response.text().then(errorMessage => {
-                        alert(errorMessage);
-                    });
-                }
-            })
-            .then(data => {
-                // 데이터 처리
-                var jsonOrderRank = data;
-                console.log(jsonOrderRank);
+            });*/
 
-                // 테이블 생성 함수
-                function createTableRows() {
-                    // 테이블 바디 선택
-                    var $tableBody = $('#tableBody');
-                    // 각 객체 배열 순회
-                    $.each(jsonOrderRank, function (index, item) {
-                        // 새로운 행 생성 및 데이터 삽입
-                        var $row = $('<tr>').append(
-                            $('<td>').text(item.id),
-                            $('<td>').text(item.keyword)
-                        );
-                        // 행을 테이블 바디에 추가
-                        $tableBody.append($row);
-                    });
-                }
-
-                // 페이지 로드 후 테이블 생성 함수 호출
-                createTableRows();
-
-            })
-           .catch(error => {
-                // 오류 처리
-                alert('Error:', error);
-            });
-
-
-    }
 }
 
 

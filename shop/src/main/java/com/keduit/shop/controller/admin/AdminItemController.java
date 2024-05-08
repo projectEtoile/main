@@ -83,6 +83,12 @@ public class AdminItemController {
 
         Page<Item> items = itemService.getAdminItemPage(adminItemSearchDTO, pageable);
 
+        System.out.println(items);
+
+        for (Item item : items){
+            System.out.println(item.toString());
+        }
+
         model.addAttribute("items", items);
         model.addAttribute("adminItemSearchDTO", adminItemSearchDTO); // 검색어 유지시키기 위한 설정!
         model.addAttribute("maxPage", 10); // 부트스트랩 페이징 뷰를 위한?
