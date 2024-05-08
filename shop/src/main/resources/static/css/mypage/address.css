@@ -373,38 +373,82 @@ ul {
 }
 
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+    display: none; /* 기본적으로 모달은 숨김 상태 */
+    position: fixed; /* 화면에 고정 */
+    z-index: 1; /* 다른 요소들보다 위에 표시 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 스크롤 가능 */
+    background-color: rgba(0, 0, 0, 0.4); /* 배경에 어둡게 처리 */
 }
 
-/* 모달 콘텐츠 스타일 */
+/* 모달 내용 */
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+    background-color: #fefefe; /* 모달 내용 배경색 */
+    margin: 15% auto; /* 모달을 가운데 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%; /* 모달 내용의 너비 */
+    height:50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* 그림자 효과 */
+    display:flex;
+    flex-direction: column; /* 자식 요소들을 세로로 나열 */
+        justify-content: space-around; /* 자식 요소들을 세로 축을 따라 공간 분배 */
 }
 
-/* 모달 닫기 버튼 스타일 */
+/* 닫기 버튼 스타일 */
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 주소 입력 폼 스타일 */
+#postcode,
+#roadAddress,
+#jibunAddress,
+#detailAddress,
+#extraAddress {
+    margin-bottom: 10px;
+    width: calc(100% - 20px); /* 부모 요소의 너비에서 마진 제외 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩과 보더를 포함한 크기 계산 */
+}
+
+/* 우편번호 찾기 버튼 스타일 */
+#myModal input[type="button"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#myModal input[type="button"]:hover {
+    background-color: #45a049;
+}
+
+
+
+
+.btn1:hover {
+    background-color: #005f6b;
+}
+
+/* 기본배송지 설정 체크박스 스타일 */
+#selectAddress {
+    margin-right: 10px;
 }

@@ -79,7 +79,7 @@
                         <td th:unless="${#strings.length(qNaList.answer) == 0}">답변 완료</td>
 
                         <td>
-                            <button type="button" th:onclick="'openModal(' + ${qNaList.id} + ')'">문의 보기</button>
+                            <button style="width: 130px;" type="button" th:onclick="'openModal(' + ${qNaList.id} + ')'">문의 보기</button>
                         </td>
                     </tr>
                 </table>
@@ -98,7 +98,7 @@
                         <input type="text" id="question" class="response-input" style="weigh" readonly>
                     </div>
                     <input type="text" id="answer" class="response-input" placeholder="답변을 입력하세요">
-                    <button type="button" onclick="answerFinished()">답변 제출</button>
+                    <button type="button" onclick="answerFinished()" style="width: 130px;">답변 제출</button>
                 </div>
             </div>
 

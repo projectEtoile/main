@@ -76,29 +76,29 @@
             <div class="tableContainer">
                 <table>
                     <colgroup>
-                        <col width="50">
+                        <col width="30">
                         <col width="80">
                         <col width="80">
                         <col width="80">
-                        <col width="250">
+                        <col width="400">
                         <col width="80">
                         <col width="80">
                         <col width="100">
                         <col width="120">
-                        <col width="100">
+                        <col width="120">
                         <col width="150">
-                        <col width="300">
-                        <col width="300">
+                        <col width="150">
+                        <col width="500">
                     </colgroup>
                     <thead>
                     <tr class="firstLine">
-                        <th scope="col">개별</th>
+                        <th scope="col"></th>
                         <th scope="col">주문id</th>
                         <th scope="col">고객id</th>
                         <th scope="col">상품id</th>
                         <th scope="col">상품명</th>
                         <th scope="col">사이즈</th>
-                        <th scope="col">주문수량</th>
+                        <th scope="col">수량</th>
                         <th scope="col">단가</th>
                         <th scope="col">총 주문가</th>
                         <th scope="col">주문 상태</th>
@@ -116,14 +116,26 @@
                         <th th:text="${orders.orderItems.get(0).count}"></th>
                         <th th:text="${orders.orderItems.get(0).item.price}"></th>
                         <th th:text="${orders.orderItems.get(0).item.price} * ${orders.orderItems.get(0).count}"></th>
-                        <th th:text="${orders.orderStatus}"></th>
-                        <td th:text="${#temporals.format(orders.regTime, 'yyyy-MM-dd HH:mm')}"></td>
+
+
+
+
+                        <th th:if="${orders.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_REQUEST or orders.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_COMPLETED}"
+                            th:text="${orders.orderStatus}"
+                            style="color: blue; cursor: pointer;"
+                            th:onclick="'openModalReason(' + ${orders.id} + ')'"></th>
+
+
+                        <th th:unless="${orders.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_REQUEST or orders.orderStatus == T(com.keduit.shop.constant.OrderStatus).RETURN_COMPLETED}"
+                            th:text="${orders.orderStatus}"></th>
+
+
+                        <th th:text="${#temporals.format(orders.regTime, 'yyyy-MM-dd HH:mm')}"></th>
                         <th th:if="${orders.deliveryAddress != null}" th:text="${orders.deliveryAddress.postcode}"></th>
                         <th th:unless="${orders.deliveryAddress != null}">N/A</th>
                         <th th:if="${orders.deliveryAddress != null}" th:text="${orders.deliveryAddress.detailAddress}"></th>
                         <th th:unless="${orders.deliveryAddress != null}">N/A</th>
-                        <td th:text="${orders.deliveryAddress.roadAddress + ', ' + orders.deliveryAddress.detailAddress}"></td>
-                        <th></th>
+                        <!--<th th:text="${orders.deliveryAddress.roadAddress + ', ' + orders.deliveryAddress.detailAddress}"></th>-->
                     </tr>
                     </thead>
                 </table>
@@ -136,6 +148,16 @@
                 </button>
             </div>
         </div>
+
+        <div id="inquiryModal" class="modal">
+            <!-- 모달 내용 -->
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div id="requestType" class="modal-title"></div>
+                <input type="text" id="reason" class="response-input" readonly>
+            </div>
+        </div>
+
         <div th:with="start=${(orders.number/maxPage)*maxPage + 1},
                       end=(${(orders.totalPages == 0) ? 1 :
                       (start + (maxPage - 1) < orders.totalPages ? start + (maxPage - 1) :
