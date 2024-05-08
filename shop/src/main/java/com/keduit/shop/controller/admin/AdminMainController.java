@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 
@@ -36,8 +38,6 @@ public class AdminMainController {
         List<Order> deliveredList = orderRepository.findByOrderStatus(OrderStatus.DELIVERED);
         List<Order> return_requestList = orderRepository.findByOrderStatus(OrderStatus.RETURN_REQUEST);
         List<Order> return_completedList = orderRepository.findByOrderStatus(OrderStatus.RETURN_COMPLETED);
-
-        List<Map<String, Object>> itemId와팔린총갯수순서대로 =orderRepository.findItemsOrderedByCount();
 
         Long orderTotalPrice = orderService.totalPrice(orderList);
         Long deliveringTotalPrice = orderService.totalPrice(deliveringList);
@@ -62,6 +62,20 @@ public class AdminMainController {
         Optional<Integer> STP = orderRepository.getTotalPriceByLevel1("Shoes");
         int stp = STP.orElse(0);
 
+        List<Map<String, Object>> orderRank =orderRepository.findTop10ItemsOrderedByCount();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonOrderRank = objectMapper.writeValueAsString(orderRank);
+        System.out.println(jsonOrderRank);
+
+
+        for (Map<String, Object> item : orderRank) {
+            Object itemId =  item.get("itemId");
+            Object totalCount = item.get("totalCount");
+
+            String output = "ItemId: " + itemId + ", TotalCount: " + totalCount;
+            System.out.println(output);
+        }
+
         Map<String, Object> data = new HashMap<>();
 
         data.put("orderTotalPrice", orderTotalPrice);
@@ -79,6 +93,8 @@ public class AdminMainController {
         data.put("ptp", ptp);
         data.put("sdtp", sdtp);
         data.put("stp", stp);
+        data.put("jsonOrderRank", jsonOrderRank);
+
 
         model.addAttribute("data", data);
 
