@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-/*가격할인*/
+/*할인율적용*/
 document.addEventListener('DOMContentLoaded', function() {
     updateDiscountedPriceAndRate();
 });
@@ -571,30 +571,24 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateDiscountedPriceAndRate() {
     var originalPrice = parseFloat(document.getElementById('originalPrice').textContent.replace(/[^0-9.-]+/g, ""));
     var discountRateElement = document.getElementById('discountRateMessage');
-    var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1); // 소수점 첫째 자리까지 처리하고 문자열 비교를 위해 변환
+    var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1);
 
     console.log('Original Price: ' + originalPrice);
     console.log('Discount Rate: ' + discountRate);
 
     var discountedPrice = originalPrice;
-    var discountMessage = '';
+    var discountTextElement = document.querySelector('.discountText');
 
     if (discountRate === "1.0") {
-        discountedPrice = originalPrice; // 할인 없음
-        discountMessage = '';
-    } else if (discountRate === "0.9") {
-        discountedPrice = originalPrice - (originalPrice * 0.1);
-        discountMessage = '10%';
-    } else if (discountRate === "0.8") {
-        discountedPrice = originalPrice - (originalPrice * 0.2);
-        discountMessage = '20%';
-    } else if (discountRate === "0.7") {
-        discountedPrice = originalPrice - (originalPrice * 0.3);
-        discountMessage = '30%';
+        discountedPrice = originalPrice;
+        discountTextElement.style.display = 'none';
+    } else {
+        var discountMultiplier = 1 - discountRate;
+        discountedPrice = originalPrice - (originalPrice * discountMultiplier);
+        discountTextElement.style.display = 'inline';
     }
 
-    discountedPrice = Math.floor(discountedPrice); // 결과를 소수점 없이 처리
-
+    discountedPrice = Math.floor(discountedPrice);
     document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + '원';
-    document.getElementById('discountRateMessage').textContent = discountMessage;
+    discountRateElement.querySelector('.discountValue').textContent = ((1 - discountRate) * 100).toFixed(0) + '%';
 }

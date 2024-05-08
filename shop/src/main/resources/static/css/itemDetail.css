@@ -146,9 +146,15 @@ padding-left: 10px;
 
 #discountRateMessage {
 padding-left: 15px;
-color: rgb(255, 115, 0);
+}
+.discountValue {
+    color: rgb(255, 115, 0);
 }
 
+/* '할인' 텍스트에 적용할 스타일 */
+.discountText {
+    color: black;
+}
 
 
 .price em {

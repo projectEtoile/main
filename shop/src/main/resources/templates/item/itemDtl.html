@@ -2522,7 +2522,7 @@ ojnKOBENYgCgJ54xiFSwOPwZ6PhUtm8ssef/9yBCjMw=">
                             <dd class="sale">
                                 <span id="salePrice" th:text="${item.price}">판매가</span>
                                 <p id="discountRateMessage" th:attr="data-rate=${item.discountRate}">
-                                    <th:block th:if="${item.discountRate != null}" th:text="${item.discountRate * 100}"></th:block>
+                                    <span class="discountValue" th:if="${item.discountRate != null}" th:text="${item.discountRate * 100}"></span>
                                     <span class="discountText" style="display:none;">할인</span>
                                 </p>
                             </dd>
