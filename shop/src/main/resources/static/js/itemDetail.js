@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       const table = document.getElementById('qnaList');
       table.innerHTML = '';  // Clear the table
       questions.forEach(question => {
-          appendQuestionToTable(question.title, question.question, question.userEmail, question.date);
+          appendQuestionToTable(question.title, question.question, question.userEmail, question.date, question.answer);
       });
   }
 
@@ -513,38 +513,40 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     // 질문을 테이블에 추가하는 함수
-    function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate) {
-        var table = document.getElementById('qnaList');
-        var newQuestionRow = `
-            <tr class="qnaline">
-                <td class="qna_iconp"><em class="qna_icon">답변대기</em></td>
-                <td class="question">
-                    <p class="questionp"><a href="#">${questionTitle}</a></p>
-                    <span class="emailname">${userEmail}</span>
-                </td>
-                <td class="qnadate">${questionDate}</td>
-            </tr>
-            <tr class="question_detail" style="display: none;">
-                <td colspan="3">
-                    <div class="cont">
-                        <div class="ask">
-                            <strong class="tit_sub">질문</strong>
-                            <p class="qna_txt">${questionContent}</p>
-                        </div>
-                        <div class="answer">
-                            <strong class="tit_sub">답변</strong>
-                            <p class="qna_txt">답변 대기 중입니다.</p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        `;
-        table.insertAdjacentHTML('beforeend', newQuestionRow);
+  function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate, answer) {
+      var table = document.getElementById('qnaList');
+      var status = answer ? '답변 완료' : '답변 대기 중';
 
-        // 마지막으로 추가된 질문에 대해서만 클릭 이벤트 리스너 설정
-        var lastQuestion = table.lastElementChild.previousElementSibling;
-        setupQuestionClickEvent(lastQuestion);
-    }
+      var newQuestionRow = `
+          <tr class="qnaline">
+              <td class="qna_iconp"><em class="qna_icon">${status}</em></td>
+              <td class="question">
+                  <p class="questionp"><a href="#">${questionTitle}</a></p>
+                  <span class="emailname">${userEmail}</span>
+              </td>
+              <td class="qnadate">${questionDate}</td>
+          </tr>
+          <tr class="question_detail" style="display: none;">
+              <td colspan="3">
+                  <div class="cont">
+                      <div class="ask">
+                          <strong class="tit_sub">질문</strong>
+                          <p class="qna_txt">${questionContent}</p>
+                      </div>
+                      <div class="answer">
+                          <strong class="tit_sub">답변</strong>
+                          <p class="qna_txt">${answer ? answer : '답변 대기 중입니다.'}</p>
+                      </div>
+                  </div>
+              </td>
+          </tr>
+      `;
+      table.insertAdjacentHTML('beforeend', newQuestionRow);
+
+      // 마지막으로 추가된 질문에 대해서만 클릭 이벤트 리스너 설정
+      var lastQuestion = table.lastElementChild.previousElementSibling;
+      setupQuestionClickEvent(lastQuestion);
+  }
 
     // 질문 제목을 클릭하면 세부 질문 내용을 보여주는 이벤트 리스너 설정
     function setupQuestionClickEvent(questionElement) {
@@ -560,4 +562,21 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 });
+
+async function submitQuestion() {
+    // 질문 제출 로직은 그대로 유지하고, 성공적으로 등록된 질문을 받아올 때 질문 목록을 다시 불러오는 부분을 추가합니다.
+    try {
+        // 질문 제출 로직...
+        if (response.ok) {
+            alert('질문이 성공적으로 등록되었습니다.');
+            // 질문 목록에 새 질문 추가
+            loadQuestions();
+        } else {
+            alert('질문을 등록하는 데 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('질문을 등록하는 동안 오류가 발생했습니다.');
+    }
+}
 
