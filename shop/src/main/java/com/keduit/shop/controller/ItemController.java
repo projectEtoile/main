@@ -1,6 +1,9 @@
 package com.keduit.shop.controller;
 
-import com.keduit.shop.dto.*;
+import com.keduit.shop.dto.AdminItemSearchDTO;
+import com.keduit.shop.dto.ItemFormDTO;
+import com.keduit.shop.dto.ItemSearchDTO;
+import com.keduit.shop.dto.QandADTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.entity.QandA;
@@ -106,6 +109,32 @@ public class ItemController {
 
     return "category/categoryPage";
   }
+
+    @GetMapping("/item/questions")
+    public ResponseEntity<List<QandADTO>> getAllQuestions() {
+        List<QandA> questions = qandAService.getAllQuestions();
+        List<QandADTO> questionDTOs = questions.stream()
+                .map(qanda -> new QandADTO(qanda.getTitle(),qanda.getQuestion(),qanda.getAnswer(),qanda.getEmail(),qanda.getId())) // QandA 엔티티를 QandADTO로 변환
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(questionDTOs);
+    }
+
+
+    @GetMapping("/item/{itemId}/questions")
+    public ResponseEntity<Map<String, Object>> getQuestionsByItemId(@PathVariable("itemId") Long itemId, Pageable pageable) {
+        Page<QandA> page = qandAService.findQuestionsByItemId(itemId, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("questions", page.getContent().stream()
+                .map(qanda -> new QandADTO(qanda.getTitle(), qanda.getQuestion(), qanda.getAnswer(), qanda.getEmail(), qanda.getId()))
+                .collect(Collectors.toList()));
+        response.put("currentPage", page.getNumber());
+        response.put("totalItems", page.getTotalElements());
+        response.put("totalPages", page.getTotalPages());
+
+        return ResponseEntity.ok(response);
+    }
+
+
 }
 
 

@@ -19,4 +19,12 @@ public class QandADTO {
     private String answer; // 필요하다면 추가
     private String email; // 필요하다면 추가
     private Long itemId; // 필요하다면 추가
+
+    public QandADTO(String title, String question, String answer, String email, Long itemId) {
+        this.title = title;
+        this.question = question;
+        this.answer = answer;
+        this.email = email;
+        this.itemId = itemId;
+    }
 }
