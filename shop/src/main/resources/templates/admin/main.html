@@ -40,8 +40,8 @@
                             <td id="RRP" th:text="${data.return_requestTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>문의 내역</td>
-                            <td>10</td>
+                            <td>미답변 문의</td>
+                            <td th:text="${data.unfinished}"></td>
                             <td>-</td>
                         </tr>
 
@@ -89,8 +89,8 @@
                             <td th:text="${data.return_completedTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>문의 완료</td>
-                            <td>3</td>
+                            <td>답변완료 문의</td>
+                            <td th:text="${data.finished}"></td>
                             <td>-</td>
                         </tr>
                         <!--         <tr>
