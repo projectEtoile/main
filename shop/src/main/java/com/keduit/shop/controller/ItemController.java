@@ -1,9 +1,6 @@
 package com.keduit.shop.controller;
 
-import com.keduit.shop.dto.AdminItemSearchDTO;
-import com.keduit.shop.dto.ItemFormDTO;
-import com.keduit.shop.dto.ItemSearchDTO;
-import com.keduit.shop.dto.QandADTO;
+import com.keduit.shop.dto.*;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.entity.QandA;
@@ -18,12 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,12 +30,6 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final MemberService memberService;
     private final QandAService qandAService;
-
-    @GetMapping("/category")
-    public String main() {
-      return "category/categoryPage";
-    }
-
 
     @GetMapping("/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
@@ -92,51 +80,32 @@ public class ItemController {
         }
     }
 
-//  @GetMapping("/items/{category}/{page}")
-//  public String itemsCategoryListPage(Model model,
-//                                      @PathVariable("page") Optional<Integer> page,
-//                                      @PathVariable("category") String category,
-//                                      ItemSearchDTO itemSearchDTO){
-//    Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
-//
-//    List<ItemFormDTO> itemFormDTOList = new ArrayList<>();
-//    Page<Item> items = itemService.getItemPage(itemSearchDTO, category, pageable);
-//    System.out.println("==================items================== " + items.getContent());
-//    for (Item item : items.getContent()){
-//      ItemFormDTO itemFormDTO = itemService.getItemDtl(item.getId());
-//      itemFormDTOList.add(itemFormDTO);
-//    }
-//
-//    Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
-//    System.out.println("==================itemFormDTOs================== " + itemFormDTOs.getContent());
-//
-//    model.addAttribute("itemFormDTOs",itemFormDTOs);
-//    model.addAttribute("itemSearchDTO",itemSearchDTO);
-//    model.addAttribute("maxPAge",10);
-//
-//    return "category/categoryPage";
-//  }
-//
-//    @GetMapping("/category/{level2}")
-//    public String categoryPadding(Model model , @PathVariable("level2") String level2){
-//        System.out.println("================level2=============" + level2);
-//        List<Item> itemList = new ArrayList<>();
-//        List<ItemFormDTO> itemFormDTOs = new ArrayList<>();
-//
-//        itemList = itemRepository.findItemByLevel2OrderByIdDesc(level2);
-//
-//        for(Item item : itemList) {
-//            itemFormDTOs.add(itemService.getItemDtl(item.getId()));
-//        }
-//
-//        model.addAttribute("items", itemList);
-//        model.addAttribute("itemImg", itemFormDTOs);
-//        System.out.println("===========itemList=============" + itemList);
-//        System.out.println("===========itemFormDTOs=========" + itemFormDTOs);
-//
-//        return "category/categoryPage";
-//    }
+  @GetMapping("/items/{category}/{page}")
+  public String itemsCategoryListPage(Model model,
+                                      @PathVariable("page") Optional<Integer> page,
+                                      @PathVariable("category") String category,
+                                      ItemSearchDTO itemSearchDTO){
+    Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
+    List<ItemFormDTO> itemFormDTOList = new ArrayList<>();
+    Page<Item> items = itemService.getItemPage(itemSearchDTO, category, pageable);
+    System.out.println("==================items================== " + items.getContent());
+
+    for (Item item : items.getContent()){
+      ItemFormDTO itemFormDTO = itemService.getItemDtl(item.getId());
+      itemFormDTOList.add(itemFormDTO);
+    }
+
+    Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
+    System.out.println("==================itemFormDTOs================== " + itemFormDTOs.getContent());
+
+    model.addAttribute("item", items);
+    model.addAttribute("itemFormDTOs",itemFormDTOs);
+    model.addAttribute("itemSearchDTO",itemSearchDTO);
+    model.addAttribute("maxPage",10);
+
+    return "category/categoryPage";
+  }
 }
 
 

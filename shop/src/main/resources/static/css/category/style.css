@@ -1,4 +1,4 @@
-    html {
+html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%
@@ -33,11 +33,13 @@ body {
   position: relative;
   width: 32%;
 }
+
 @media (max-width: 780px) {
   .slide {
     width: 48%;
   }
 }
+
 @media (max-width: 450px) {
   .slide {
     width: 100%;
@@ -59,15 +61,17 @@ body {
 .plane {
   padding-top: calc(64000% / 382);
 }
+
 .plane img {
   display: none;
 }
+
 element.style {
   width: 100%;
 }
 
 .cardTitle {
- /* width: 100% auto; */
+  /* width: 100% auto; */
 
   margin: 0;
   max-width: 1240px;
@@ -75,7 +79,8 @@ element.style {
   text-align: center;
 
 }
-.cardTitle>p {
+
+.cardTitle > p {
   margin: auto;
   padding-top: 70px;
   color: #000;
@@ -84,7 +89,8 @@ element.style {
   line-height: 38px;
 
 }
-.plane_container{
+
+.plane_container {
   margin-bottom: 75px;
 }
 
@@ -120,11 +126,13 @@ body {
   position: relative;
   width: 32%;
 }
+
 @media (max-width: 780px) {
   .slide {
     width: 48%;
   }
 }
+
 @media (max-width: 450px) {
   .slide {
     width: 100%;
@@ -146,6 +154,88 @@ body {
 .plane {
   padding-top: calc(64000% / 382);
 }
+
 .plane img {
   display: none;
+}
+
+
+/* paging ------------------------------- */
+.paging * {
+  box-sizing: border-box;
+}
+
+.paging {
+  text-align: center;
+  /*margin: 2% 0 0;*/
+  display: flex;
+  justify-content: center;
+}
+
+.paging > p {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+.paging > p > a, .paging > p > span {
+  margin-left: -1px;
+}
+
+.paging > p > a:first-child, .paging > p > span:first-child {
+  margin-left: 0;
+}
+
+.paging a, .paging span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 240%;
+  color: #999;
+  font-size: 12px;
+}
+
+.paging a:hover {
+  background: #f7f7f7;
+}
+
+.paging a.on, .paging span.on {
+  background: #666;
+  border-color: transparent;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.paging .page_bt {
+  /*text-indent: -9999px;*/
+  position: relative;
+}
+
+.paging .page_bt::after {
+  background-position: -30px 0;
+  width: 6px;
+  height: 11px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -5px 0 0 -3px;
+}
+
+.paging .first::after {
+  background-position: -15px 0;
+  width: 12px;
+  margin-left: -6px;
+}
+
+.paging .next::after {
+  background-position: -40px 0;
+}
+
+.paging .last::after {
+  background-position: -49px 0;
+  width: 12px;
+  margin-left: -6px;
+}
+
+.paging .prev, .paging .last {
+  margin-left: -1px;
 }

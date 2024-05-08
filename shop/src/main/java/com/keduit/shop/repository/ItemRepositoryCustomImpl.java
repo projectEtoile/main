@@ -148,43 +148,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         return new PageImpl<>(result, pageable, total); // 이건 디폴트 메서드. Ctrl 클릭으로 확인해보자
     }
 
-    @Override
-    public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
-        QItem item = QItem.item;
-        QItemImg itemImg = QItemImg.itemImg;
-
-        List<MainItemDTO> result = jpaQueryFactory
-                .select(
-                        new QMainItemDTO(
-                                item.id,
-                                item.itemNm,
-                                item.brandNm,
-                                item.itemText,
-                                itemImg.imgUrl,
-                                item.price,
-                                item.discountRate.intValue(),
-                                item.itemSellStatus)
-                ).from(itemImg)
-                .join(itemImg.item, item)
-
-                .where(itemNmLike(searchDTO.getSearchQuery()))
-                .orderBy(item.id.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        long total = jpaQueryFactory
-                .select(Wildcard.count)
-                .from(itemImg)
-                .join(itemImg.item, item)
-                .where(itemNmLike(searchDTO.getSearchQuery()))
-                .fetchOne();
-        return new PageImpl<>(result, pageable, total);
-    }
-    private BooleanExpression itemNmLike(String searchQuery) {
-        return StringUtils.isEmpty(searchQuery) ? null :
-                QItem.item.itemNm.like("%" + searchQuery + "%");
-    }
 /////////////////////////////////
 
     private BooleanExpression categorySelect(String category){
@@ -203,7 +166,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     private BooleanExpression itemSellStatus(){
         return QItem.item.itemSellStatus.ne(ItemSellStatus.STOP_SALE);
     }
-    private BooleanExpression searchBylike(String searchBy, String searchQuery) {
+    private BooleanExpression searchByLike(String searchBy, String searchQuery) {
         if (searchQuery == null || searchQuery.isEmpty()) {
             return null;
         }
@@ -219,10 +182,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
         List<Item> result = jpaQueryFactory
                 .selectFrom(QItem.item)
-                //.from(QItem.item)
                 .where(categorySelect(category),
                         itemSellStatus(),
-                        searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                        searchByLike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
                 .orderBy(QItem.item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -233,11 +195,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .from(QItem.item)
                 .where(categorySelect(category),
                         itemSellStatus(),
-                        searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                        searchByLike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
                 .fetchOne();
 
         return new PageImpl<>(result, pageable, total);
     }
-
-
 }
