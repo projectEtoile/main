@@ -577,8 +577,6 @@ function updateDiscountedPriceAndRate() {
     var discountValueElement = discountRateElement.querySelector('.discountValue');
     var discountTextElement = document.querySelector('.discountText');
 
-    console.log('Original Price: ' + originalPrice);
-    console.log('Discount Rate: ' + discountRate);
 
     var discountedPrice = originalPrice;
 
