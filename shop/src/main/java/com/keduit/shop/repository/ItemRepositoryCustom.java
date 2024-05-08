@@ -13,7 +13,7 @@ public interface ItemRepositoryCustom {
 
     Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable);
 
-    Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable);
+    Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable);
 
 
 }

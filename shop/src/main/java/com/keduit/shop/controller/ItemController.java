@@ -8,6 +8,7 @@ import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
 import com.keduit.shop.entity.QandA;
 import com.keduit.shop.repository.ItemRepository;
+import com.keduit.shop.repository.OrderRepository;
 import com.keduit.shop.service.ItemService;
 import com.keduit.shop.service.MemberService;
 import com.keduit.shop.service.QandAService;
@@ -39,7 +40,7 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final MemberService memberService;
     private final QandAService qandAService;
-
+    private final OrderRepository orderRepository;
     @GetMapping("/categoryPadding")
     public String main() {
         return "category/categoryPadding";
@@ -100,29 +101,47 @@ public class ItemController {
     }
 
 
-    @GetMapping("/items/{category}/{page}")
-    public String itemsCategoryListPage(Model model,
+    @GetMapping({"/items/{page}","/items"})
+    public String getItemPage(Model model,
                                         @PathVariable("page") Optional<Integer> page,
-                                        @PathVariable("category") String category,
                                         ItemSearchDTO itemSearchDTO){
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 12);
+
+        Page<Item> items = itemService.getItemPage(itemSearchDTO, pageable);
 
         List<ItemFormDTO> itemFormDTOList = new ArrayList<>();
-        Page<Item> items = itemService.getItemPage(itemSearchDTO, category, pageable);
 
         for (Item item : items.getContent()){
             ItemFormDTO itemFormDTO = itemService.getItemDtl(item.getId());
             itemFormDTOList.add(itemFormDTO);
         }
 
-
         Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
 
-        model.addAttribute("itemFormDTOs",itemFormDTOs);
+        model.addAttribute("items",itemFormDTOs);
         model.addAttribute("itemSearchDTO",itemSearchDTO);
-        model.addAttribute("maxPAge",10);
+        model.addAttribute("maxPage",10);
 
-        return "item/category";
+        return "item/items";
+    }
+
+    @GetMapping("/items/rank")
+    public String itemsRank10(Model model){
+
+        List<Long> tap10itemId = orderRepository.findTop10ItemIdsOrderedByCount();
+
+        List<ItemFormDTO> tap10ItemFormDTOList = new ArrayList<>();
+
+        System.out.println(tap10itemId.toString());
+
+        for (Long i : tap10itemId) {
+            tap10ItemFormDTOList.add(itemService.getItemDtl(i));
+        }
+
+        model.addAttribute("items",tap10ItemFormDTOList);
+
+        return "item/rank";
     }
 
     @GetMapping("/item/questions")
@@ -148,6 +167,7 @@ public class ItemController {
 
         return ResponseEntity.ok(response);
     }
+
 
 
 }

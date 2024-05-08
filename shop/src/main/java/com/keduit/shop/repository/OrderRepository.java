@@ -42,6 +42,16 @@ public interface OrderRepository extends JpaRepository<Order, Long>,OrderReposit
             nativeQuery = true)
     List<Map<String, Object>> findTop10ItemsOrderedByCount();
 
+    @Query(value = "SELECT oi.item_id as itemId " +
+            "FROM order_item oi " +
+            "JOIN orders o ON oi.order_id = o.order_id " +
+            "WHERE o.order_status = 'DELIVERED' " +
+            "GROUP BY oi.item_id " +
+            "ORDER BY COUNT(oi.item_id) DESC " +
+            "LIMIT 10",
+            nativeQuery = true)
+    List<Long> findTop10ItemIdsOrderedByCount();
+
     @Query("SELECT SUM(oi.count * i.price) " +
             "FROM Order o " +
             "JOIN o.orderItems oi " +
