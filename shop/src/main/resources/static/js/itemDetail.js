@@ -572,23 +572,25 @@ function updateDiscountedPriceAndRate() {
     var originalPrice = parseFloat(document.getElementById('originalPrice').textContent.replace(/[^0-9.-]+/g, ""));
     var discountRateElement = document.getElementById('discountRateMessage');
     var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1);
-
-    console.log('Original Price: ' + originalPrice);
-    console.log('Discount Rate: ' + discountRate);
-
-    var discountedPrice = originalPrice;
+    var discountValueElement = discountRateElement.querySelector('.discountValue');
     var discountTextElement = document.querySelector('.discountText');
 
+
+
+    var discountedPrice = originalPrice;
+
     if (discountRate === "1.0") {
-        discountedPrice = originalPrice;
-        discountTextElement.style.display = 'none';
+        discountedPrice = originalPrice; // 할인 없음
+        discountValueElement.style.display = 'none'; // 할인율 숫자 숨기기
+        discountTextElement.style.display = 'none'; // 할인 텍스트 숨기기
     } else {
         var discountMultiplier = 1 - discountRate;
         discountedPrice = originalPrice - (originalPrice * discountMultiplier);
-        discountTextElement.style.display = 'inline';
+        discountValueElement.textContent = ((1 - discountRate) * 100).toFixed(0) + '%'; // 할인율 표시
+        discountValueElement.style.display = 'inline'; // 할인율 숫자 표시
+        discountTextElement.style.display = 'inline'; // 할인 텍스트 표시
     }
 
-    discountedPrice = Math.floor(discountedPrice);
+    discountedPrice = Math.floor(discountedPrice); // 결과를 소수점 없이 처리
     document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + '원';
-    discountRateElement.querySelector('.discountValue').textContent = ((1 - discountRate) * 100).toFixed(0) + '%';
 }
