@@ -57,6 +57,7 @@ padding: 8px;
 max-height: 22px;
 height: 22px;
 width:120px;
+font-size:14px;
 }
 
 tr:not(.top-row):hover {

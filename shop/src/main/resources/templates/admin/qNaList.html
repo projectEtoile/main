@@ -63,6 +63,7 @@
                         <td>고객 ID</td>
                         <td>고객 email</td>
                         <td>문의 등록일</td>
+                        <td>문의 제목</td>
                         <td>답변 상태</td>
                         <td>답변</td>
                     </tr>
@@ -73,11 +74,12 @@
                         <td th:text="${qNaList.member.id}"></td>
                         <td th:text="${qNaList.member.email}"></td>
                         <td th:text="${#temporals.format(qNaList.regTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${qNaList.title}"></td>
                         <td th:if="${#strings.length(qNaList.answer) == 0}">답변 미등록</td>
                         <td th:unless="${#strings.length(qNaList.answer) == 0}">답변 완료</td>
 
                         <td>
-                            <button type="button" th:onclick="'openModal(' + ${qNaList.id} + ')'">문의 보기</button>
+                            <button style="width: 130px;" type="button" th:onclick="'openModal(' + ${qNaList.id} + ')'">문의 보기</button>
                         </td>
                     </tr>
                 </table>
@@ -90,13 +92,13 @@
                 <!-- 모달 내용 -->
                 <div class="modal-content">
                     <span class="close" onclick="closeModal()">&times;</span>
-                    <div class="modal-title">문의 내용</div>
+                    <div id="title" class="modal-title"></div>
                     <div class="box">
                         <input type="hidden" id="id" readonly>
                         <input type="text" id="question" class="response-input" style="weigh" readonly>
                     </div>
                     <input type="text" id="answer" class="response-input" placeholder="답변을 입력하세요">
-                    <button type="button" onclick="answerFinished()">답변 제출</button>
+                    <button type="button" onclick="answerFinished()" style="width: 130px;">답변 제출</button>
                 </div>
             </div>
 

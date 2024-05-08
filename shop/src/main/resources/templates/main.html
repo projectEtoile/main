@@ -154,7 +154,7 @@
   <div class="card3">
     <div class="alll">
       <th:block th:each="item :${itemList}"
-                th:if="${item.itemSellStatus == T(com.keduit.shop.constant.ItemSellStatus).SELL}">
+                th:if="${item.itemSellStatus != T(com.keduit.shop.constant.ItemSellStatus).STOP_SALE}">
         <div class="saleProduct1">
           <div class="swiper-wrapper"
                style="transform: translate3d(0px,0px,0px); transition-duration:0ms ; transition-delay:0ms ;">
