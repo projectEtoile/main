@@ -2557,7 +2557,7 @@ ojnKOBENYgCgJ54xiFSwOPwZ6PhUtm8ssef/9yBCjMw=">
                     <!-- 총상품금액 -->
                     <div class="total_price" id="total_price" style="display: none;">
                         <ul>총상품금액
-                            <li class="total" id="total2"><span th:text="${item.price}">총상품금액</span> 원</li>
+                            <li class="total" id="total2"><span id="salePriceTotal"></span></li>
                             <!-- 상품수량조절 -->
                             <label for="quantity"></label>
                             <input type="number" id="quantity" value="1" min="1" onchange="calculateTotal()">

@@ -135,14 +135,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 총 금액을 계산하는 함수
-  function calculateTotal() {
-    var priceElement = document.getElementById("total2").querySelector("span");
-    var price = parseInt(priceElement.dataset.price);
-    var quantity = parseInt(quantityInput.value);
-    var total = price * quantity;
-    var formattedTotal = total.toLocaleString();
-    priceElement.textContent = formattedTotal;
-  }
+function calculateTotal() {
+    var priceElement = document.getElementById("salePrice"); // 할인된 가격 요소 가져오기
+    var price = parseInt(priceElement.textContent.replace(/\D/g, "")); // 가격 파싱
+    var quantity = parseInt(document.getElementById("quantity").value); // 수량 가져오기
+    var total = price * quantity; // 총 가격 계산
+    var formattedTotal = total.toLocaleString(); // 총 가격 포맷팅
+    document.getElementById("total2").querySelector("span").textContent = formattedTotal + " 원"; // 총 가격 표시
+}
 });
 
 
@@ -597,4 +597,5 @@ function updateDiscountedPriceAndRate() {
     discountedPrice = Math.floor(discountedPrice);
     document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + ' 원';
     document.getElementById('originalPrice').textContent = originalPrice.toLocaleString() + ' 원';
+     document.getElementById('salePriceTotal').textContent = discountedPrice.toLocaleString() + ' 원';
 }
