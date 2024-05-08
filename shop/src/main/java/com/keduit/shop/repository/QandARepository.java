@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-@Repository
-public interface QandARepository extends JpaRepository<QandA, Long> {
+
+public interface QandARepository extends JpaRepository<QandA, Long>,QandARepositoryCustom {
     List<QandA> findAllByItemId(Long itemId);
+
 }
 
