@@ -69,6 +69,8 @@ public class Item extends BaseTimeEntity {
     @Column(nullable = false)
     private String material; /*상품 소재*/
 
+    @Column
+    private String imgUrl;
 
     @Enumerated(EnumType.STRING)  /*도메인만들어줌*/
     private ItemSellStatus itemSellStatus = ItemSellStatus.SELL; // 디폴트SELL  /*상품 판매 현황*/

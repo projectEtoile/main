@@ -55,7 +55,7 @@ public class ItemService {
 
             // 여기선 item객체만 set하고 이제 나머지 값들을 set해야함.
             itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
-             
+
             // 위 메서드에서 나머지 필드들을 모두 채우고 테이블에 등록까지 완료했다.
         }
 
@@ -106,6 +106,9 @@ public class ItemService {
         // 이걸 넘겨주면 서비스 역할은 끝.
     }
 
+
+
+
     public Long updateItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList) throws Exception {
 
         Item item = itemRepository.findById(itemFormDTO.getId())
@@ -125,11 +128,6 @@ public class ItemService {
             itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
         }
         return item.getId();
-    }
-
-    @Transactional(readOnly = true)
-    public Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable) {
-        return itemRepository.getMainItemPage(searchDTO, pageable);
     }
 
     @Transactional
@@ -152,9 +150,9 @@ public class ItemService {
     public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
         return itemRepository.getItemPage(itemSearchDTO,category,pageable);
     }
+
     public Item getItemById(Long itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
     }
-
 }

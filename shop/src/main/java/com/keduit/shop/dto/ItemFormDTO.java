@@ -26,9 +26,9 @@ public class ItemFormDTO {
 
     @NotBlank(message = "브랜드명은 필수입니다.")
     private String brandNm;
-    
+
     private String level1; // 폼 js에서 자동 설정
-    
+
     @NotBlank(message = "카테고리 선택은 필수입니다")
     private String level2;
 
@@ -36,8 +36,8 @@ public class ItemFormDTO {
     private ItemSellStatus itemSellStatus;    // 상품 판매 현황
 
     private List<ItemImgDTO> itemImgDTOList = new ArrayList<>(); // 이미지 담아두는 공간.
-    
-     private List<Long> itemImgIds = new ArrayList<>(); // 아이탬 수정하기 때 필요한 리스트
+
+    private List<Long> itemImgIds = new ArrayList<>(); // 아이탬 수정하기 때 필요한 리스트
     // 수정하기 페이지에서 기존 이미지들은 모두 삭제하고 다시 등록하는 로직이므로
     // 기존의 이미지들의 id를 리스트에 담았다. 모두 삭제됨.
 

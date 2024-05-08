@@ -167,7 +167,7 @@
                   <!--                      <div class="ProductImage_1">-->
                   <div class="ProductImage_1_2 wh294-374">
                     <a th:href="'/item/' +${item.id}" th:each="itemImgDTO:${item.itemImgDTOList}">
-                      <img th:src="${itemImgDTO.imgUrl}" alt="#">
+                      <img th:src="@{${itemImgDTO.imgUrl}}" alt="#">
                     </a>
                   </div>
                   <!--                      </div>-->

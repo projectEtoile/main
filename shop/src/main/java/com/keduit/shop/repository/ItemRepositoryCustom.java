@@ -11,8 +11,6 @@ public interface ItemRepositoryCustom {
 
     Page<Item> getAdminItemPage(AdminItemSearchDTO adminItemSearchDTO, Pageable pageable);
 
-    Page<MainItemDTO> getMainItemPage(AdminItemSearchDTO searchDTO, Pageable pageable);
-
     Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable);
 
 
