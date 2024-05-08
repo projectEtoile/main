@@ -24,9 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor // 싱글톤 패턴 주입받기 위한
@@ -121,6 +124,31 @@ public class ItemController {
 
         return "item/category";
     }
+
+    @GetMapping("/item/questions")
+    public ResponseEntity<List<QandADTO>> getAllQuestions() {
+        List<QandA> questions = qandAService.getAllQuestions();
+        List<QandADTO> questionDTOs = questions.stream()
+                .map(qanda -> new QandADTO(qanda.getTitle(),qanda.getQuestion(),qanda.getAnswer(),qanda.getEmail(),qanda.getId())) // QandA 엔티티를 QandADTO로 변환
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(questionDTOs);
+    }
+
+
+    @GetMapping("/item/{itemId}/questions")
+    public ResponseEntity<Map<String, Object>> getQuestionsByItemId(@PathVariable("itemId") Long itemId, Pageable pageable) {
+        Page<QandA> page = qandAService.findQuestionsByItemId(itemId, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("questions", page.getContent().stream()
+                .map(qanda -> new QandADTO(qanda.getTitle(), qanda.getQuestion(), qanda.getAnswer(), qanda.getEmail(), qanda.getId()))
+                .collect(Collectors.toList()));
+        response.put("currentPage", page.getNumber());
+        response.put("totalItems", page.getTotalElements());
+        response.put("totalPages", page.getTotalPages());
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }
 

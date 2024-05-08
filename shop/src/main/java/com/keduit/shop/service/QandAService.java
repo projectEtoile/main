@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 
@@ -24,6 +27,13 @@ public class QandAService {
     public List<QandA> findQuestionsByItemId(Long itemId) {
         return qandARepository.findAllByItemId(itemId);
     }
+    public Page<QandA> findQuestionsByItemId(Long itemId, Pageable pageable) {
+        return qandARepository.findAllByItemId(itemId, pageable);
+    }
+
+    public List<QandA> getAllQuestions() {
+        return qandARepository.findAll();
+    }
 
     public void save(QandA qanda) {
         qandARepository.save(qanda);
@@ -33,5 +43,13 @@ public class QandAService {
         return qandARepository.getAdminQandAListPage(adminQNASearchDTO,pageable);
     }
 
-}
+    // QandAService.java
+    public List<QandA> findQuestionsByUserId(Long userId) {
+        return qandARepository.findAllByMemberId(userId);
+    }
 
+    public Page<QandA> findQuestionsByUserId(Long userId, Pageable pageable) {
+        return qandARepository.findAllByMemberId(userId, pageable);
+    }
+
+}

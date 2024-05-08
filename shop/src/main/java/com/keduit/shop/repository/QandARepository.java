@@ -9,9 +9,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-public interface QandARepository extends JpaRepository<QandA, Long>,QandARepositoryCustom {
+@Repository
+public interface QandARepository extends JpaRepository<QandA, Long>, QandARepositoryCustom {
     List<QandA> findAllByItemId(Long itemId);
 
+    List<QandA> findAllByMemberId(Long memberId);
+
+    Page<QandA> findAllByMemberId(Long memberId, Pageable pageable);
+
+    Page<QandA> findAllByItemId(Long itemId, Pageable pageable);
 }
 
