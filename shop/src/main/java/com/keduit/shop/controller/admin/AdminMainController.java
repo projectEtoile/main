@@ -8,6 +8,7 @@ import com.keduit.shop.entity.Order;
 import com.keduit.shop.repository.ItemRepository;
 import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.repository.OrderRepository;
+import com.keduit.shop.repository.QandARepository;
 import com.keduit.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
@@ -30,6 +31,7 @@ public class AdminMainController {
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
     private final OrderService orderService;
+    private final QandARepository qandARepository;
 
     @GetMapping("/main")
     public String itemForm(Model model) throws JsonProcessingException {
@@ -76,6 +78,11 @@ public class AdminMainController {
             System.out.println(output);
         }
 
+        int unfinished = qandARepository.countByAnswerLengthZero();
+        int finished = qandARepository.countByAnswerLengthGreaterThanZero();
+
+        System.out.println(unfinished+"@@"+finished+"@@@@@@@@@@@@@@");
+
         Map<String, Object> data = new HashMap<>();
 
         data.put("orderTotalPrice", orderTotalPrice);
@@ -94,6 +101,8 @@ public class AdminMainController {
         data.put("sdtp", sdtp);
         data.put("stp", stp);
         data.put("jsonOrderRank", jsonOrderRank);
+        data.put("unfinished", unfinished);
+        data.put("finished", finished);
 
 
         model.addAttribute("data", data);

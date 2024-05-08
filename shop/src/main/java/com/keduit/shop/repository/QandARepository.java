@@ -4,6 +4,7 @@ package com.keduit.shop.repository;
 
 import com.keduit.shop.entity.QandA;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,5 +22,11 @@ public interface QandARepository extends JpaRepository<QandA, Long>, QandAReposi
     Page<QandA> findAllByMemberId(Long memberId, Pageable pageable);
 
     Page<QandA> findAllByItemId(Long itemId, Pageable pageable);
+
+    @Query("SELECT COUNT(q) FROM QandA q WHERE LENGTH(q.answer) = 0")
+    int countByAnswerLengthZero();
+
+    @Query("SELECT COUNT(q) FROM QandA q WHERE LENGTH(q.answer) > 0")
+    int countByAnswerLengthGreaterThanZero();
 }
 

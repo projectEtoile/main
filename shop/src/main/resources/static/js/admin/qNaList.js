@@ -86,6 +86,7 @@ function openModal(id) {
      $("#id").val(data.id);
 
      $("#question").val(data.question);
+     $("#title").text(data.title);
      $("#answer").val(data.answer);
 
     $("#inquiryModal").css("display", "block");
