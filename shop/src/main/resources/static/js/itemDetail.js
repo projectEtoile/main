@@ -581,16 +581,16 @@ function updateDiscountedPriceAndRate() {
 
     if (discountRate === "1.0") {
         discountedPrice = originalPrice; // 할인 없음
-        discountMessage = '할인 없음';
+        discountMessage = '';
     } else if (discountRate === "0.9") {
         discountedPrice = originalPrice - (originalPrice * 0.1);
-        discountMessage = '10% 할인';
+        discountMessage = '10%';
     } else if (discountRate === "0.8") {
         discountedPrice = originalPrice - (originalPrice * 0.2);
-        discountMessage = '20% 할인';
+        discountMessage = '20%';
     } else if (discountRate === "0.7") {
         discountedPrice = originalPrice - (originalPrice * 0.3);
-        discountMessage = '30% 할인';
+        discountMessage = '30%';
     }
 
     discountedPrice = Math.floor(discountedPrice); // 결과를 소수점 없이 처리
