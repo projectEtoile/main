@@ -142,3 +142,51 @@ color: #525252;
   display: flex;
   justify-content: center;
 }
+
+.pagination {
+    text-align: center;
+}
+
+.pagination-list {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination-list li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.pagination-list li a {
+    color: rgb(117, 117, 117);
+    text-decoration: none;
+    padding: 5px 10px;
+    font-weight: normal;
+    cursor: pointer; /* 마우스 커서를 일반 클릭 커서로 설정 */
+}
+
+.pagination-list li a:hover {
+    font-weight: bold;
+}
+
+.disabled a {
+    color: #ccc;
+    pointer-events: none; /* 이벤트 비활성화 */
+
+}
+
+.active a,
+.pagination-list li.selected a {
+    font-weight: bold;
+    color: #000;
+}
+
+  .detail-toggle {
+            cursor: pointer;
+            font-size: 12px; /* Adjust the size to match your design */
+            padding: 3px;
+            border: none;
+            background: none;
+            color: black; /* Adjust color to match your design */
+        }
