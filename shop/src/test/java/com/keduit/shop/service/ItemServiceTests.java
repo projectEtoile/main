@@ -37,15 +37,26 @@ public class ItemServiceTests {
   @DisplayName("상품 100개 등록해보기")
   void saveItem() throws Exception {
 
-    for (int i = 1; i < 10; i++) {
+    for (int i = 1; i < 201; i++) {
 
       ItemFormDTO itemFormDTO = new ItemFormDTO();
 
       itemFormDTO.setItemNm("테스트 상품명 " + i);
       itemFormDTO.setBrandNm("테스트 브랜드명 " + i);
       itemFormDTO.setPrice(8888 + (i * 50));
+
       itemFormDTO.setLevel1("Outer");
-      itemFormDTO.setLevel2("코트");
+
+      if (i % 3 == 0) {
+        itemFormDTO.setLevel2("코트");
+      } else if (i % 4 == 0) {
+        itemFormDTO.setLevel2("재킷");
+      } else if (i % 5 == 0) {
+        itemFormDTO.setLevel2("집업");
+      } else {
+        itemFormDTO.setLevel2("패딩");
+      }
+
       itemFormDTO.setItemText("테스트 상품 설명 " + i);
       itemFormDTO.setMaterial("테스트 상품 소재 " + i);
       itemFormDTO.setStockFree(10);
@@ -54,6 +65,8 @@ public class ItemServiceTests {
       itemFormDTO.setStockS(40);
       if (i % 3 == 0) {
         itemFormDTO.setItemSellStatus(ItemSellStatus.STOP_SALE);
+      } else if(i % 4 == 0) {
+        itemFormDTO.setItemSellStatus(ItemSellStatus.SOLD_OUT);
       } else {
         itemFormDTO.setItemSellStatus(ItemSellStatus.SELL);
       }

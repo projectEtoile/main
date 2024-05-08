@@ -24,11 +24,15 @@ public class MemberServiceTests {
 
     public Member createMember(int i) {
         MemberFormDTO memberFormDTO = new MemberFormDTO();
-        memberFormDTO.setEmail(i + "test124@Hong.com");
+        memberFormDTO.setEmail("test" + i + "@Hong.com");
         memberFormDTO.setName("홍길동");
         memberFormDTO.setPassword("12345678");
         memberFormDTO.setAge(i);
-        memberFormDTO.setSex(Sex.FEMALE);
+        if(i % 3 == 0) {
+            memberFormDTO.setSex(Sex.FEMALE);
+        } else {
+            memberFormDTO.setSex(Sex.MALE);
+        }
         return Member.createMember(memberFormDTO, passwordEncoder);
     }
 

@@ -40,16 +40,6 @@ public class ItemController {
     private final MemberService memberService;
     private final QandAService qandAService;
 
-    @GetMapping("/categoryPadding")
-    public String main() {
-        return "category/categoryPadding";
-    }
-
-    @GetMapping("/categoryPage")
-    public String categoryPage() {
-        return "category/categoryPage";
-    }
-
     @GetMapping("/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
         try {
@@ -115,14 +105,14 @@ public class ItemController {
             itemFormDTOList.add(itemFormDTO);
         }
 
-
         Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
 
+        model.addAttribute("item", items);
         model.addAttribute("itemFormDTOs",itemFormDTOs);
         model.addAttribute("itemSearchDTO",itemSearchDTO);
-        model.addAttribute("maxPAge",10);
+        model.addAttribute("maxPage",10);
 
-        return "item/category";
+        return "category/categoryPage";
     }
 
     @GetMapping("/item/questions")
