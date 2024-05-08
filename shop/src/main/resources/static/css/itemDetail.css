@@ -130,10 +130,12 @@ a {
   float: left;
 }
 
-.normal em {
+.strikethrough {
   text-decoration: line-through;
   color: #9d9d9d;
 }
+
+
 
 .sale{
 display: flex;

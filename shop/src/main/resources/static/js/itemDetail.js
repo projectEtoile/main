@@ -569,28 +569,32 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function updateDiscountedPriceAndRate() {
-    var originalPrice = parseFloat(document.getElementById('originalPrice').textContent.replace(/[^0-9.-]+/g, ""));
+    var originalPriceElement = document.querySelector('.normal em');
+    var originalPrice = parseFloat(originalPriceElement.textContent.replace(/[^0-9.-]+/g, ""));
     var discountRateElement = document.getElementById('discountRateMessage');
     var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1);
     var discountValueElement = discountRateElement.querySelector('.discountValue');
     var discountTextElement = document.querySelector('.discountText');
 
-
+    console.log('Original Price: ' + originalPrice);
+    console.log('Discount Rate: ' + discountRate);
 
     var discountedPrice = originalPrice;
 
     if (discountRate === "1.0") {
-        discountedPrice = originalPrice; // 할인 없음
-        discountValueElement.style.display = 'none'; // 할인율 숫자 숨기기
-        discountTextElement.style.display = 'none'; // 할인 텍스트 숨기기
+        discountedPrice = originalPrice;
+        discountValueElement.style.display = 'none';
+        discountTextElement.style.display = 'none';
+        originalPriceElement.classList.remove('strikethrough'); // 할인 클래스 제거
     } else {
         var discountMultiplier = 1 - discountRate;
         discountedPrice = originalPrice - (originalPrice * discountMultiplier);
-        discountValueElement.textContent = ((1 - discountRate) * 100).toFixed(0) + '%'; // 할인율 표시
-        discountValueElement.style.display = 'inline'; // 할인율 숫자 표시
-        discountTextElement.style.display = 'inline'; // 할인 텍스트 표시
+        discountValueElement.textContent = ((1 - discountRate) * 100).toFixed(0) + '%';
+        discountValueElement.style.display = 'inline';
+        discountTextElement.style.display = 'inline';
+        originalPriceElement.classList.add('strikethrough'); // 할인 클래스 추가
     }
 
-    discountedPrice = Math.floor(discountedPrice); // 결과를 소수점 없이 처리
+    discountedPrice = Math.floor(discountedPrice);
     document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + '원';
 }
