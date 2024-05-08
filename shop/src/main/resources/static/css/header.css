@@ -1,3 +1,28 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* tbody 스타일 */
+#tableBody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#tableBody tr:hover {
+  background-color: #ddd;
+}
+
+
 body, html {
   margin: 0;
   padding: 0;
