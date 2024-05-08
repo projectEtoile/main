@@ -115,6 +115,7 @@ public class ItemController {
             itemFormDTOList.add(itemFormDTO);
         }
 
+
         Page<ItemFormDTO> itemFormDTOs = new PageImpl<>(itemFormDTOList, items.getPageable(), items.getTotalElements());
 
         model.addAttribute("itemFormDTOs",itemFormDTOs);
