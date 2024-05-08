@@ -1812,7 +1812,7 @@
 
                             <title>L POINT 팝업</title>
 
-                           <!-- <link rel="stylesheet" href="../css/lpointPopup.css" type="text/css">-->
+                            <!-- <link rel="stylesheet" href="../css/lpointPopup.css" type="text/css">-->
 
 
                             <div class="lpointPopLayer popLayer">
@@ -2487,7 +2487,8 @@ ojnKOBENYgCgJ54xiFSwOPwZ6PhUtm8ssef/9yBCjMw=">
                         <!-- 좌측 상품 썸네일 -->
                         <div class="img_thumb">
                             <ul id="gallery" style="max-width: 525px">
-                                <li th:each="itemImgDTO, iterStat : ${item.itemImgDTOList}"><a href="#"><img
+                                <li th:each="itemImgDTO, iterStat : ${item.itemImgDTOList}"
+                                    th:if="${iterStat.index < 3}"><a href="#"><img
                                         th:src="${itemImgDTO.imgUrl}"
                                         width="60" height="80" alt="thumbnail" class="small"></a></li>
                             </ul>
@@ -2522,7 +2523,8 @@ ojnKOBENYgCgJ54xiFSwOPwZ6PhUtm8ssef/9yBCjMw=">
                             <dd class="sale">
                                 <span id="salePrice" th:text="${item.price}">판매가</span>
                                 <p id="discountRateMessage" th:attr="data-rate=${item.discountRate}">
-                                    <span class="discountValue" th:if="${item.discountRate != null}" th:text="${item.discountRate * 100}"></span>
+                                    <span class="discountValue" th:if="${item.discountRate != null}"
+                                          th:text="${item.discountRate * 100}"></span>
                                     <span class="discountText" style="display:none;">할인</span>
                                 </p>
                             </dd>
@@ -2686,17 +2688,8 @@ ojnKOBENYgCgJ54xiFSwOPwZ6PhUtm8ssef/9yBCjMw=">
                         title="2024011811323934.jpg"></p> -->
 
                     <!-- 여기는 상품 바뀔때마다 해당 사진 p태그안에 변경혹은업데이트 -->
-                    <p>
-                        <img src="https://muuiel.diskn.com/Y7PaC9uf34">
-                        <img src="https://muuiel.diskn.com/i7PaCaq5Nu">
-                        <img src="https://muuiel.diskn.com/j7PaCaqdyu">
-                        <img src="https://muuiel.diskn.com/l7PaCaqkFn">
-                        <img src="https://muuiel.diskn.com/x7PaCaqsgd">
-                        <img src="https://muuiel.diskn.com/c7PaCa0dFD">
-                        <img src="https://muuiel.diskn.com/V7PaCdNBOE">
-                        <img src="https://muuiel.diskn.com/P7PaCdNIuT">
-                        <img src="https://muuiel.diskn.com/w7PaCdNQIM">
-                        <img src="https://muuiel.diskn.com/p7PaCdNuCn">
+                    <p th:each="itemImgDTO : ${item.itemImgDTOList}">
+                        <img th:src="${itemImgDTO.imgUrl}" alt="Image">
                     </p>
                 </div>
 
