@@ -571,6 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateDiscountedPriceAndRate() {
     var originalPriceElement = document.querySelector('.normal em');
     var originalPrice = parseFloat(originalPriceElement.textContent.replace(/[^0-9.-]+/g, ""));
+    originalPriceElement.textContent = originalPrice.toLocaleString();
     var discountRateElement = document.getElementById('discountRateMessage');
     var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1);
     var discountValueElement = discountRateElement.querySelector('.discountValue');
@@ -596,5 +597,6 @@ function updateDiscountedPriceAndRate() {
     }
 
     discountedPrice = Math.floor(discountedPrice);
-    document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + '원';
+    document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + ' 원';
+    document.getElementById('originalPrice').textContent = originalPrice.toLocaleString() + ' 원';
 }
