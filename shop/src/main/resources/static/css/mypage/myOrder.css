@@ -47,7 +47,7 @@
     margin-left: 5px;
     cursor: pointer;
 }
-ul {
+/*ul {
   display: block;
   list-style-type: disc;
   margin-block-start: 1em;
@@ -55,7 +55,7 @@ ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
-}
+}*/
 
 
 /* button li{

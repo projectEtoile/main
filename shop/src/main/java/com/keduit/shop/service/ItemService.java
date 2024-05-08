@@ -69,6 +69,10 @@ public class ItemService {
         // 혹시 예외 시 아이탬서비스 impl 에 dsl 추가
 
     }
+    @Transactional(readOnly = true)
+    public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
+        return itemRepository.getItemPage(itemSearchDTO,pageable);
+    }
 
     // 이곳은 하나의 itemid로 아이탬의 정보와 이미지를 itemFormDTO에 담아 페이지로 넘겨주기 위한 로직.
     @Transactional(readOnly = true) // 뿌려주기만 하는 역할이므로. 변경감지. 즉 더티체크를 하지않아 성능 이점.
@@ -149,9 +153,8 @@ public class ItemService {
 
     }
 
-    public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
-        return itemRepository.getItemPage(itemSearchDTO,category,pageable);
-    }
+
+
     public Item getItemById(Long itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));

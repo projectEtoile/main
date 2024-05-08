@@ -1,5 +1,6 @@
 package com.keduit.shop.repository;
 
+
 import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.ItemSearchDTO;
@@ -8,8 +9,8 @@ import com.keduit.shop.dto.QMainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.QItem;
 import com.keduit.shop.entity.QItemImg;
-import com.keduit.shop.entity.QOrder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -22,17 +23,17 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
+public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     // 쿼리팩토리를 활용하기 위한 동적쿼리 메소드 저장소
 
     private JPAQueryFactory jpaQueryFactory;
 
     // 생성자를 통해 엔티티메니저를 받아옴. 동적쿼리를 생성하기 위해선 엔티티메니저가 필요하다.
-    public ItemRepositoryCustomImpl(EntityManager em){
+    public ItemRepositoryCustomImpl(EntityManager em) {
         this.jpaQueryFactory = new JPAQueryFactory(em);
     }
 
-    private List<String> level1 = Arrays.asList("Top", "Outer", "Pants", "Skirt/Dress", "Shoes");
+    private List<String> level1List = Arrays.asList("Top", "Outer", "Pants", "Skirt/Dress", "Shoes");
 
     private BooleanExpression regDtsAfter(String searchDateType) {
         LocalDateTime dateTime = LocalDateTime.now();
@@ -60,7 +61,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
             return QItem.item.itemNm.like("%" + searchQuery + "%");
         } else if (StringUtils.equals("itemId", searchBy)) {
 
-            if(searchQuery.length() == 0 ){
+            if (searchQuery.length() == 0) {
                 return null;
             }
 
@@ -74,15 +75,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     // 카테고리 별로 검색하기 위한 메서드!
-    private BooleanExpression searchByLevel(String level1,String level2) {
-        if (StringUtils.equals(level1,"null")||level1==null) { // level1이 null이면 전체 검색
+    private BooleanExpression searchByLevel(String level1, String level2) {
+        if (StringUtils.equals(level1, "null") || level1 == null) { // level1이 null이면 전체 검색
             System.out.println();
             System.out.println("여기가 문제인가?+++++++++++++++++++++++++11111");
             return null;
-        } else if (level1 != null && StringUtils.equals(level2,"null")) { // level2가 null이면 상위 카테고리로만 검색
+        } else if (level1 != null && StringUtils.equals(level2, "null")) { // level2가 null이면 상위 카테고리로만 검색
             System.out.println("여기가 문제인가?+++++++++++++++++++++++++2222");
             return QItem.item.level1.eq(level1);
-        } else if (!StringUtils.equals(level1,"null") && !StringUtils.equals(level1,"null")) { // level1과 level2 모두 존재하면 하위 카테고리로 검색
+        } else if (!StringUtils.equals(level1, "null") && !StringUtils.equals(level1, "null")) { // level1과 level2 모두 존재하면 하위 카테고리로 검색
             System.out.println("여기가 문제인가?++++++++++++++++++++++++3333333");
             return QItem.item.level2.eq(level2);
         }
@@ -105,9 +106,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 //
 //        return null;
 
-    private BooleanExpression searchSellStatuEq(ItemSellStatus searchSellStatus){
+    private BooleanExpression searchSellStatuEq(ItemSellStatus searchSellStatus) {
         System.out.println("---searchSellStatus=====> " + searchSellStatus);
-        return searchSellStatus == null? null: QItem.item.itemSellStatus.eq(searchSellStatus);
+        return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
         // 쿼리스트링 값이 널이면 널. 존재하면 입력된 설정값과 일치하는 것만 검색.
     }
 
@@ -135,9 +136,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .select(Wildcard.count)
                 .from(QItem.item)
                 .where(regDtsAfter(adminItemSearchDTO.getSearchDateType()), // 날짜 타입 설정.
-                        searchByLikeOrEq(adminItemSearchDTO.getSearchBy(),adminItemSearchDTO.getSearchQuery()),
+                        searchByLikeOrEq(adminItemSearchDTO.getSearchBy(), adminItemSearchDTO.getSearchQuery()),
                         // id 혹은 상품명 검색. 해당 쿼리문자열까지.
-                        searchByLevel(adminItemSearchDTO.getLevel1(),adminItemSearchDTO.getLevel2()),
+                        searchByLevel(adminItemSearchDTO.getLevel1(), adminItemSearchDTO.getLevel2()),
                         searchSellStatuEq(adminItemSearchDTO.getItemSellStatus()))
                 .fetchOne(); // 하나의 결과값. 즉 몇개인지.
 
@@ -181,6 +182,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .fetchOne();
         return new PageImpl<>(result, pageable, total);
     }
+
     private BooleanExpression itemNmLike(String searchQuery) {
         return StringUtils.isEmpty(searchQuery) ? null :
                 QItem.item.itemNm.like("%" + searchQuery + "%");
@@ -188,13 +190,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
 
     @Override
-    public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
+    public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
 
         List<Item> result = jpaQueryFactory
                 .selectFrom(QItem.item)
-                .where(categorySelect(category),
-                        itemSellStatus(),
-                        searchByLike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                .where(itemSellStatus(),
+                        searchBylike(itemSearchDTO.getSearchBy(), itemSearchDTO.getSearchQuery()),
+                        level(itemSearchDTO.getLevel()),
+                        saleItems(itemSearchDTO.getSaleItems())
+                )
                 .orderBy(QItem.item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -203,34 +207,53 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         long total = jpaQueryFactory
                 .select(Wildcard.count)
                 .from(QItem.item)
-                .where(categorySelect(category),
-                        itemSellStatus(),
-                        searchByLike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                .where(itemSellStatus(),
+                        searchBylike(itemSearchDTO.getSearchBy(), itemSearchDTO.getSearchQuery()),
+                        level(itemSearchDTO.getLevel()),
+                        saleItems(itemSearchDTO.getSaleItems()
+                        ))
                 .fetchOne();
 
         return new PageImpl<>(result, pageable, total);
     }
-    private BooleanExpression categorySelect(String category){
 
-        if(level1.contains(category)){
-            return QItem.item.level1.eq(category);
+    private BooleanExpression level(String level) {
+
+        if (level.isEmpty()) {
+            return null;
         }
-        return category == null? null : QItem.item.level2.eq(category);
+        System.out.println("들어오긴함   level");
+        if (level1List.contains(level)) {
+            return QItem.item.level1.eq(level);
+        }
+        return QItem.item.level2.eq(level);
     }
 
-    private BooleanExpression itemSellStatus(){
+    private BooleanExpression itemSellStatus() {
         return QItem.item.itemSellStatus.ne(ItemSellStatus.STOP_SALE);
     }
 
-    private BooleanExpression searchByLike(String searchBy, String searchQuery) {
+    private BooleanExpression saleItems(String saleItems) {
 
-        if(searchQuery.length()==0){
+        if (saleItems.equals("saleItems")) {
+            return QItem.item.discountRate.ne(1f);
+        } else {
             return null;
         }
-        if(StringUtils.equals("itemNm",searchBy)){
+
+    }
+
+    private BooleanExpression searchBylike(String searchBy, String searchQuery) {
+        System.out.println("들어오긴함searchBylike");
+        if (StringUtils.isEmpty(searchBy) || StringUtils.isEmpty(searchQuery)) {
+            return Expressions.asBoolean(true).isTrue(); // 빈 BooleanExpression 반환
+        }
+
+        if (StringUtils.equals("itemNm", searchBy)) {
             return QItem.item.itemNm.like("%" + searchQuery + "%");
         }
-        return null;
+        return Expressions.asBoolean(true).isTrue(); // 기본적으로 참인 BooleanExpression 반환
     }
+
 
 }

@@ -127,4 +127,14 @@ public class AdminMainController {
         ));*/
     }
 
+    @GetMapping("/main2")
+    public String main2(Model model){
+        Long femail = memberRepository.countMembersBySex(Sex.FEMALE);
+        Long male = memberRepository.countMembersBySex(Sex.MALE);
+
+
+
+        return "/admin/main2";
+    }
+
 }
