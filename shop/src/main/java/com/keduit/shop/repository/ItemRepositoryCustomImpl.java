@@ -191,10 +191,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
 
         List<Item> result = jpaQueryFactory
-                .select(QItem.item)
+                .selectFrom(QItem.item)
                 .where(categorySelect(category),
                         itemSellStatus(),
-                        searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                        searchByLike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
                 .orderBy(QItem.item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -205,7 +205,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .from(QItem.item)
                 .where(categorySelect(category),
                         itemSellStatus(),
-                        searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                        searchByLike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
                 .fetchOne();
 
         return new PageImpl<>(result, pageable, total);
@@ -221,7 +221,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     private BooleanExpression itemSellStatus(){
         return QItem.item.itemSellStatus.ne(ItemSellStatus.STOP_SALE);
     }
-    private BooleanExpression searchBylike(String searchBy, String searchQuery) {
+
+    private BooleanExpression searchByLike(String searchBy, String searchQuery) {
 
         if(searchQuery.length()==0){
             return null;

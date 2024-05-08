@@ -130,14 +130,38 @@ a {
   float: left;
 }
 
-.normal em {
+.strikethrough {
   text-decoration: line-through;
   color: #9d9d9d;
 }
 
+
+
+.sale{
+display: flex;
+    align-items: center;
+}
+
+#salePrice {
+padding-left: 10px;
+}
+
+#discountRateMessage {
+padding-left: 15px;
+}
+.discountValue {
+    color: rgb(255, 115, 0);
+}
+
+/* '할인' 텍스트에 적용할 스타일 */
+.discountText {
+    color: black;
+}
+
+
 .price em {
-  padding-left: 52px;
-  font-weight: bold;
+  padding-left: 10px;
+
 }
 
 /* 포인트적립 */
