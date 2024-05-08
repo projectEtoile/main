@@ -563,20 +563,38 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-async function submitQuestion() {
-    // 질문 제출 로직은 그대로 유지하고, 성공적으로 등록된 질문을 받아올 때 질문 목록을 다시 불러오는 부분을 추가합니다.
-    try {
-        // 질문 제출 로직...
-        if (response.ok) {
-            alert('질문이 성공적으로 등록되었습니다.');
-            // 질문 목록에 새 질문 추가
-            loadQuestions();
-        } else {
-            alert('질문을 등록하는 데 실패했습니다.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('질문을 등록하는 동안 오류가 발생했습니다.');
-    }
-}
+/*가격할인*/
+document.addEventListener('DOMContentLoaded', function() {
+    updateDiscountedPriceAndRate();
+});
 
+function updateDiscountedPriceAndRate() {
+    var originalPrice = parseFloat(document.getElementById('originalPrice').textContent.replace(/[^0-9.-]+/g, ""));
+    var discountRateElement = document.getElementById('discountRateMessage');
+    var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1); // 소수점 첫째 자리까지 처리하고 문자열 비교를 위해 변환
+
+    console.log('Original Price: ' + originalPrice);
+    console.log('Discount Rate: ' + discountRate);
+
+    var discountedPrice = originalPrice;
+    var discountMessage = '';
+
+    if (discountRate === "1.0") {
+        discountedPrice = originalPrice; // 할인 없음
+        discountMessage = '할인 없음';
+    } else if (discountRate === "0.9") {
+        discountedPrice = originalPrice - (originalPrice * 0.1);
+        discountMessage = '10% 할인';
+    } else if (discountRate === "0.8") {
+        discountedPrice = originalPrice - (originalPrice * 0.2);
+        discountMessage = '20% 할인';
+    } else if (discountRate === "0.7") {
+        discountedPrice = originalPrice - (originalPrice * 0.3);
+        discountMessage = '30% 할인';
+    }
+
+    discountedPrice = Math.floor(discountedPrice); // 결과를 소수점 없이 처리
+
+    document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + '원';
+    document.getElementById('discountRateMessage').textContent = discountMessage;
+}
