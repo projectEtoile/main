@@ -3,13 +3,8 @@ html, body {
   margin: 0;
   padding: 0;
 }
-.allBtnCont{
-    display: flex;
-    justify-content: center;
-}
 
 .tableBox{
-margin-top : 20px;
   margin-left: 200px;
   margin-right: 20px;
   margin-bottom: 50px;
@@ -57,7 +52,6 @@ padding: 8px;
 max-height: 22px;
 height: 22px;
 width:120px;
-font-size:14px;
 }
 
 tr:not(.top-row):hover {
@@ -92,7 +86,7 @@ font-weight: bold;
 .search-bar input[type="text"] {
 
   height: 35px;
-  width: 150%;
+  width: 50%;
   padding: 10px;
   margin: 8px 30px;
   /* box-sizing: border-box; */
@@ -120,25 +114,6 @@ font-weight: bold;
   border-radius: 100px;
   }
 /* 검색창 끝 */
-.disBtn{
-
-      margin-left: 15px;
-
-      top:20px;
-      padding: 0.5rem 1rem;
-      font-family: "Noto Sans KR", sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      width: 100px;
-      height 50px;
-      border: none;
-      border-radius: 4px;
-      background-color: #4abad0;
-      color: white;
-}
 button {
   margin: 0;
   padding: 0.5rem 1rem;
@@ -257,4 +232,93 @@ button {
 .search-btn:hover {
     background-color: #0056b3;
 }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 제목 스타일 */
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 박스 스타일 */
+.box {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+/* 문의 내용 스타일 */
+.inquiry-content {
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+/* 답변 입력란 스타일 */
+.response-input {
+    width: calc(100% - 40px);
+    height: 40px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* 답변 버튼 스타일 */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
 

@@ -11,11 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <body>
     <!-- 상품등록 시작 -->
-    <div style="disply='none;">
-
-        <span id="male" th:text="${male}"></span>
-        <span id="female" th:text="${female}"></span>
-    </div>
 
     <div id="container">
 
@@ -45,8 +40,8 @@
                             <td id="RRP" th:text="${data.return_requestTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>문의 내역</td>
-                            <td>10</td>
+                            <td>미답변 문의</td>
+                            <td th:text="${data.unfinished}"></td>
                             <td>-</td>
                         </tr>
 
@@ -69,6 +64,8 @@
             <p id="ptp" th:text="${data.ptp}"></p>
             <p id="sdtp" th:text="${data.sdtp}"></p>
             <p id="stp" th:text="${data.stp}"></p>
+
+            <p id="jsonOrderRank" th:text="${data.jsonOrderRank}"></p>
         </div>
 
         <div class="rights">
@@ -92,15 +89,15 @@
                             <td th:text="${data.return_completedTotalPrice}"></td>
                         </tr>
                         <tr>
-                            <td>문의 완료</td>
-                            <td>3</td>
+                            <td>답변완료 문의</td>
+                            <td th:text="${data.finished}"></td>
                             <td>-</td>
                         </tr>
-               <!--         <tr>
-                            <td>교환 요청 처리</td>
-                            <td>2</td>
-                            <td>0</td>
-                        </tr>-->
+                        <!--         <tr>
+                                     <td>교환 요청 처리</td>
+                                     <td>2</td>
+                                     <td>0</td>
+                                 </tr>-->
 
                     </table>
                 </div>
@@ -108,11 +105,22 @@
                 <p>총 금액 | <span class="numbox">530,000</span><span> 원</span></p>
             </div>
             <div class="bottom">
-                <h1 style="margin-top: 30px;">월 별 매출 현황</h1>
-                <div style="width: 700px; height: 700px; margin-right: 50px;">
-                    <!--차트가 그려질 부분-->
-                    <canvas id="myChart1" style="margin-top: 30px;"></canvas>
+
+                <h1 style="margin-top: 30px;">판매량 TOP 10</h1>
+
+                <div class="tableContainer">
+                    <table>
+                        <tr class="firstLine">
+
+                            <td>상품 ID</td>
+                            <td>총 판매량</td>
+                        </tr>
+                        <tbody id="tableBody">
+                        <!-- JavaScript로 생성될 테이블 행이 여기에 추가됩니다. -->
+                        </tbody>
+                    </table>
                 </div>
+
             </div>
         </div>
 
