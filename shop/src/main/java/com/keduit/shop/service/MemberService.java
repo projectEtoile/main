@@ -3,6 +3,7 @@ package com.keduit.shop.service;
 import com.keduit.shop.constant.Sex;
 import com.keduit.shop.dto.AddressDTO;
 import com.keduit.shop.dto.AdminMemberSearchDTO;
+//import com.keduit.shop.dto.MailDto;
 import com.keduit.shop.dto.MemberFormDTO;
 import com.keduit.shop.entity.Address;
 import com.keduit.shop.entity.Member;
@@ -10,8 +11,12 @@ import com.keduit.shop.repository.AddressRepository;
 import com.keduit.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.security.SecureRandom;
 
 @Service
 @Transactional
@@ -31,6 +37,10 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
+    @Autowired
+    private final JavaMailSender javaMailSender;
+
+
 
     public Member saveMember(Member member) {//새로운 멤버를 등록할 시 중복x
         validateDuplicateMember(member);//중복 여부를 검증하는 과정
@@ -51,7 +61,10 @@ public class MemberService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Member member =memberRepository.findByEmail(email);
+        System.out.println("MemberEmail++++++"+email);
         if(member == null){
+            System.out.println("MemberEmail++++++sssss"+email);
+
             throw new UsernameNotFoundException(email);
         }
         return User.builder()
@@ -61,6 +74,44 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
+    // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
+
+
+//이멜 보내는 서비스
+    public void sendEmail(String to, String newPw) {//to: 이멜 주소 수신 , key: 인증번호or임시비번
+        System.out.println("sendemailservice====================================================");
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        String subject = "shoppingmall 인증번호 입니다.";//제목
+        String text = "인증번호는: " + "12345678";//내용
+
+        // 이메일 주소를 RFC 5321에 따라 올바른 형식으로 설정
+        String from = "<example@example.com>"; // 이메일 주소 예시
+
+        message.setTo(to);// 수신자 이메일 주소를 설정
+        message.setSubject(subject);// 이메일의 제목을 설정
+        message.setText(text);// 이메일의 본문 내용을 설정
+        // 보내는 이메일 주소 설정
+        message.setFrom(from);
+        javaMailSender.send(message);
+    }
+
+    public String generateKey() {
+        System.out.println("generatekey--------------------------------------------");
+        SecureRandom random = new SecureRandom();
+        StringBuilder randomKey = new StringBuilder(6);
+
+        for (int i = 0; i < 6; i++) {
+            // 0 ~ 9까지 랜덤으로 6번 반복해서 randomKeyBuilder에 넣는다.
+            randomKey.append(random.nextInt(10));
+        }
+
+        return randomKey.toString();
+    }
+
+
+
+//////////////////////////////////////////////////////////////////////
     public Page<Member> getAdminMemberPage(AdminMemberSearchDTO adminMemberSearchDTO, Pageable pageable) {
         return memberRepository.getAdminMemberPage(adminMemberSearchDTO, pageable);
     }
@@ -110,7 +161,7 @@ public class MemberService implements UserDetailsService {
         System.out.println(addressDTO.getSelectAddress());
 
         if(addressDTO.getSelectAddress().equals(true)){
-            List<Address> allAddresses = addressRepository.findAll();
+            List<Address> allAddresses = addressRepository.findAllByMember(address.getMember());
             for (Address address1 : allAddresses) {
                 address1.setSelectAddress(false);
             }
@@ -123,14 +174,19 @@ public class MemberService implements UserDetailsService {
         }
 
 
+
+
         Member member =  memberRepository.findByEmail(email);
 
+        if(addressRepository.findAllByMember(member).isEmpty()){
+            address.setSelectAddress(true);
+        }
         address.setMember(member);
 
         addressRepository.save(address);
     }
 
-    public void modifyAddress(AddressDTO addressDTO) {
+    public boolean modifyAddress(AddressDTO addressDTO) {
 
         Address address = addressRepository.findById(addressDTO.getId()).orElseThrow(EntityNotFoundException::new);
 
@@ -140,22 +196,29 @@ public class MemberService implements UserDetailsService {
         address.setDetailAddress(addressDTO.getDetailAddress());
         address.setExtraAddress(addressDTO.getExtraAddress());
 
+        List<Address> allAddresses = addressRepository.findAllByMember(address.getMember());
+
         if (addressDTO.getSelectAddress().equals(true)) {
             System.out.println("트루로직");
-            List<Address> allAddresses = addressRepository.findAll();
+
             for (Address address1 : allAddresses) {
+
                 address1.setSelectAddress(false);
             }
-            addressRepository.saveAll(allAddresses);
-
             address.setSelectAddress(true);
 
         } else {
-            System.out.println("펄스로직");
-            address.setSelectAddress(false);
+            return false;
         }
 
         addressRepository.save(address);
+        return true;
     }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+
 }
 

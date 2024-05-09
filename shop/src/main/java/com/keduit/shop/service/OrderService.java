@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -113,21 +115,34 @@ public class OrderService {
     }
 
 
-    @Transactional
-    public void cancelOrder(Long orderId) {
+    public OrderStatus getOrderStatus(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("주문을 찾을 수 없습니다."));
+        return order.getOrderStatus();
+    }
+
+    public boolean cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("주문을 찾을 수 없습니다."));
 
-        // 주문 상태를 취소로 변경
-        order.setOrderStatus(OrderStatus.CANCEL); // 이 부분은 Order 엔티티에 적절한 setter가 구현되어 있어야 합니다.
-
-        // 각 주문 항목의 재고를 증가시키지만 주문 항목을 삭제하지 않습니다.
-        for (OrderItem orderItem : order.getOrderItems()) {
-            increaseItemStock(orderItem);  // 재고 증가 로직
+        // 주문 상태를 확인하여 취소할 수 있는지 검사
+        if (order.getOrderStatus() != OrderStatus.ORDER) {
+            return false;
         }
 
-        orderRepository.save(order);  // 변경 사항을 저장
+        // 주문을 취소로 변경
+        order.setOrderStatus(OrderStatus.CANCEL);
+
+        // 각 주문 항목의 재고를 증가시킴
+
+        for (OrderItem orderItem : order.getOrderItems()) {
+            increaseItemStock(orderItem);
+        }
+
+        orderRepository.save(order);
+        return true;
     }
+
 
     private void increaseItemStock(OrderItem orderItem) {
         Item item = orderItem.getItem();
@@ -188,7 +203,7 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
     }
 
     @Transactional
-    public void allChangeStatus(String currentState,String newState){
+    public ResponseEntity allChangeStatus(String currentState, String newState){
 
         OrderStatus newStatus1 = OrderStatus.valueOf(newState);
         OrderStatus currentState1 = OrderStatus.valueOf(currentState);
@@ -196,14 +211,17 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
 
         List<Order> orderList = orderRepository.findByOrderStatus(currentState1);
 
-        if(orderList == null){
-            return;
+        if(orderList.isEmpty()){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@4444@@@");
+            return new ResponseEntity<>(currentState+" 의 상태인 주문이 없습니다.",HttpStatus.BAD_REQUEST);
         }
 
         for (Order order : orderList){
             order.setOrderStatus(newStatus1);
         }
         orderRepository.saveAll(orderList);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -227,6 +245,17 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
             // 옵셔널에서 get을 하면 원래 상태인것인가?? 그렇다
         }
             return "성공!";
+    }
+
+    public Long totalPrice(List<Order> orderList){
+
+        Long AllOrderPrice = 0l;
+        for (Order order : orderList){
+            int orderPrice = order.getOrderItems().get(0).getCount() *
+                    order.getOrderItems().get(0).getItem().getPrice();
+            AllOrderPrice += orderPrice;
+        }
+        return AllOrderPrice;
     }
 
 }

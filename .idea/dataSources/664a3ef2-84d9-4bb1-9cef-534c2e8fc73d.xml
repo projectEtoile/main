@@ -1052,7 +1052,7 @@ webdb|schema||webuser||grant option|G</Grants>
     </schema>
     <schema id="300" parent="1" name="etoile">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-04-21.06:06:45</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-05-07.18:24:19</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="301" parent="1" name="webuser">
@@ -1077,816 +1077,1026 @@ webdb|schema||webuser||grant option|G</Grants>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="306" parent="300" name="asd">
+    <table id="306" parent="300" name="address">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="307" parent="300" name="cart">
+    <table id="307" parent="300" name="asd">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="308" parent="300" name="cart_item">
+    <table id="308" parent="300" name="cart">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="309" parent="300" name="item">
+    <table id="309" parent="300" name="cart_item">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="310" parent="300" name="item_img">
+    <table id="310" parent="300" name="exchange_return_request">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="311" parent="300" name="item_size">
+    <table id="311" parent="300" name="item">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="312" parent="300" name="member">
+    <table id="312" parent="300" name="item_img">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="313" parent="300" name="month_sales">
+    <table id="313" parent="300" name="item_size">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="314" parent="300" name="order_item">
+    <table id="314" parent="300" name="member">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="315" parent="300" name="orders">
+    <table id="315" parent="300" name="month_sales">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="316" parent="300" name="qanda">
+    <table id="316" parent="300" name="order_item">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="317" parent="300" name="rank_search">
+    <table id="317" parent="300" name="orders">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="318" parent="300" name="review">
+    <table id="318" parent="300" name="qanda">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="319" parent="300" name="review_img">
+    <table id="319" parent="300" name="review">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="320" parent="300" name="search_rank">
+    <table id="320" parent="300" name="review_img">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="321" parent="300" name="size">
+    <table id="321" parent="300" name="search_rank">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="322" parent="306" name="number">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="323" parent="306" name="keyword">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <index id="324" parent="306" name="PRIMARY">
-      <ColNames>number</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="325" parent="306" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="326" parent="307" name="cart_id">
+    <table id="322" parent="300" name="size">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="323" parent="300" name="user">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="324" parent="306" name="address_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="327" parent="307" name="reg_time">
-      <DasType>datetime(6)|0s</DasType>
+    <column id="325" parent="306" name="detail_address">
+      <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="328" parent="307" name="update_time">
-      <DasType>datetime(6)|0s</DasType>
+    <column id="326" parent="306" name="extra_address">
+      <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="329" parent="307" name="aa">
-      <DasType>bigint|0s</DasType>
+    <column id="327" parent="306" name="jibun_address">
+      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="330" parent="307" name="member_id">
-      <DasType>bigint|0s</DasType>
+    <column id="328" parent="306" name="postcode">
+      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <foreign-key id="331" parent="307" name="FKix170nytunweovf2v9137mx2o">
+    <column id="329" parent="306" name="road_address">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="330" parent="306" name="select_address">
+      <DasType>bit(1)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="331" parent="306" name="member_id">
+      <DasType>bigint|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <foreign-key id="332" parent="306" name="FKcnw0s8hudme00qu71e3mqd5ih">
       <ColNames>member_id</ColNames>
       <RefColNames>member_id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="332" parent="307" name="PRIMARY">
-      <ColNames>cart_id</ColNames>
+    <index id="333" parent="306" name="PRIMARY">
+      <ColNames>address_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="333" parent="307" name="FKix170nytunweovf2v9137mx2o">
+    <index id="334" parent="306" name="FKcnw0s8hudme00qu71e3mqd5ih">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="334" parent="307" name="PRIMARY">
+    <key id="335" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="335" parent="308" name="cart_item_id">
+    <column id="336" parent="307" name="number">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="337" parent="307" name="keyword">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <index id="338" parent="307" name="PRIMARY">
+      <ColNames>number</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="339" parent="307" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="340" parent="308" name="cart_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="336" parent="308" name="reg_time">
+    <column id="341" parent="308" name="reg_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="337" parent="308" name="update_time">
+    <column id="342" parent="308" name="update_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="338" parent="308" name="count">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="343" parent="308" name="created_by">
+      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="339" parent="308" name="cart_id">
-      <DasType>bigint|0s</DasType>
+    <column id="344" parent="308" name="modified_by">
+      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="340" parent="308" name="item_id">
+    <column id="345" parent="308" name="member_id">
       <DasType>bigint|0s</DasType>
       <Position>6</Position>
     </column>
-    <foreign-key id="341" parent="308" name="FK1uobyhgl1wvgt1jpccia8xxs3">
+    <foreign-key id="346" parent="308" name="FKix170nytunweovf2v9137mx2o">
+      <ColNames>member_id</ColNames>
+      <RefColNames>member_id</RefColNames>
+      <RefTableName>member</RefTableName>
+    </foreign-key>
+    <index id="347" parent="308" name="PRIMARY">
+      <ColNames>cart_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="348" parent="308" name="FKix170nytunweovf2v9137mx2o">
+      <ColNames>member_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="349" parent="308" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="350" parent="309" name="cart_item_id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="351" parent="309" name="reg_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="352" parent="309" name="update_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="353" parent="309" name="created_by">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="354" parent="309" name="modified_by">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="355" parent="309" name="count">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="356" parent="309" name="size">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="357" parent="309" name="cart_id">
+      <DasType>bigint|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="358" parent="309" name="item_id">
+      <DasType>bigint|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <foreign-key id="359" parent="309" name="FK1uobyhgl1wvgt1jpccia8xxs3">
       <ColNames>cart_id</ColNames>
       <RefColNames>cart_id</RefColNames>
       <RefTableName>cart</RefTableName>
     </foreign-key>
-    <foreign-key id="342" parent="308" name="FKdljf497fwm1f8eb1h8t6n50u9">
+    <foreign-key id="360" parent="309" name="FKdljf497fwm1f8eb1h8t6n50u9">
       <ColNames>item_id</ColNames>
       <RefColNames>item_id</RefColNames>
       <RefTableName>item</RefTableName>
     </foreign-key>
-    <index id="343" parent="308" name="PRIMARY">
+    <index id="361" parent="309" name="PRIMARY">
       <ColNames>cart_item_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="344" parent="308" name="FK1uobyhgl1wvgt1jpccia8xxs3">
+    <index id="362" parent="309" name="FK1uobyhgl1wvgt1jpccia8xxs3">
       <ColNames>cart_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="345" parent="308" name="FKdljf497fwm1f8eb1h8t6n50u9">
+    <index id="363" parent="309" name="FKdljf497fwm1f8eb1h8t6n50u9">
       <ColNames>item_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="346" parent="308" name="PRIMARY">
+    <key id="364" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="347" parent="309" name="item_id">
+    <column id="365" parent="310" name="request_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="348" parent="309" name="reg_time">
+    <column id="366" parent="310" name="reg_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="349" parent="309" name="update_time">
+    <column id="367" parent="310" name="update_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="350" parent="309" name="brand_nm">
+    <column id="368" parent="310" name="created_by">
       <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="351" parent="309" name="discount_rate">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="369" parent="310" name="modified_by">
+      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="352" parent="309" name="item_nm">
-      <DasType>varchar(50)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="370" parent="310" name="reason">
+      <DasType>longtext|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="353" parent="309" name="item_sell_status">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="371" parent="310" name="request_date">
+      <DasType>datetime(6)|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="354" parent="309" name="item_text">
-      <DasType>longtext|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="372" parent="310" name="request_type">
+      <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
     </column>
-    <column id="355" parent="309" name="level1">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="373" parent="310" name="member_id">
+      <DasType>bigint|0s</DasType>
       <Position>9</Position>
     </column>
-    <column id="356" parent="309" name="level2">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="374" parent="310" name="order_id">
+      <DasType>bigint|0s</DasType>
       <Position>10</Position>
     </column>
-    <column id="357" parent="309" name="material">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>11</Position>
-    </column>
-    <column id="358" parent="309" name="price">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>12</Position>
-    </column>
-    <column id="359" parent="309" name="stock_free">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>13</Position>
-    </column>
-    <column id="360" parent="309" name="stockl">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>14</Position>
-    </column>
-    <column id="361" parent="309" name="stockm">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>15</Position>
-    </column>
-    <column id="362" parent="309" name="stock_number">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>16</Position>
-    </column>
-    <column id="363" parent="309" name="stocks">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>17</Position>
-    </column>
-    <index id="364" parent="309" name="PRIMARY">
-      <ColNames>item_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="365" parent="309" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="366" parent="310" name="item_img_id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>bigint|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="367" parent="310" name="reg_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="368" parent="310" name="update_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="369" parent="310" name="img_name">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="370" parent="310" name="img_url">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="371" parent="310" name="ori_img_name">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="372" parent="310" name="item_id">
-      <DasType>bigint|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <foreign-key id="373" parent="310" name="FKdd5u08y3ap4c46ayrqjf8g88m">
-      <ColNames>item_id</ColNames>
-      <RefColNames>item_id</RefColNames>
-      <RefTableName>item</RefTableName>
-    </foreign-key>
-    <index id="374" parent="310" name="PRIMARY">
-      <ColNames>item_img_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="375" parent="310" name="FKdd5u08y3ap4c46ayrqjf8g88m">
-      <ColNames>item_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="376" parent="310" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="377" parent="311" name="item_size_id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>bigint|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="378" parent="311" name="reg_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="379" parent="311" name="update_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="380" parent="311" name="stock">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="381" parent="311" name="item_id">
-      <DasType>bigint|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="382" parent="311" name="size_id">
-      <DasType>bigint|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <foreign-key id="383" parent="311" name="FKr7o96qfksgctdy5j228v3fqtg">
-      <ColNames>item_id</ColNames>
-      <RefColNames>item_id</RefColNames>
-      <RefTableName>item</RefTableName>
-    </foreign-key>
-    <foreign-key id="384" parent="311" name="FKl2u6gufgvic2q2baxxfxu5gg0">
-      <ColNames>size_id</ColNames>
-      <RefColNames>size_id</RefColNames>
-      <RefTableName>size</RefTableName>
-    </foreign-key>
-    <index id="385" parent="311" name="PRIMARY">
-      <ColNames>item_size_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="386" parent="311" name="FKr7o96qfksgctdy5j228v3fqtg">
-      <ColNames>item_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="387" parent="311" name="FKl2u6gufgvic2q2baxxfxu5gg0">
-      <ColNames>size_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="388" parent="311" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="389" parent="312" name="member_id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>bigint|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="390" parent="312" name="reg_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="391" parent="312" name="update_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="392" parent="312" name="address">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="393" parent="312" name="email">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="394" parent="312" name="name">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="395" parent="312" name="password">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="396" parent="312" name="role">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <index id="397" parent="312" name="PRIMARY">
+    <foreign-key id="375" parent="310" name="FK8vagw6nik47jw3lvxe1a5lwm6">
       <ColNames>member_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="398" parent="312" name="UK_mbmcqelty0fbrvxp1q58dn57t">
-      <ColNames>email</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="399" parent="312" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <key id="400" parent="312" name="UK_mbmcqelty0fbrvxp1q58dn57t">
-      <UnderlyingIndexName>UK_mbmcqelty0fbrvxp1q58dn57t</UnderlyingIndexName>
-    </key>
-    <column id="401" parent="313" name="month_sales_id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>bigint|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="402" parent="313" name="category_sales">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="403" parent="313" name="sales_amount">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="404" parent="313" name="sales_month">
-      <DasType>date|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="405" parent="313" name="sales_year">
-      <DasType>date|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <index id="406" parent="313" name="PRIMARY">
-      <ColNames>month_sales_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="407" parent="313" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="408" parent="314" name="order_item_id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>bigint|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="409" parent="314" name="reg_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="410" parent="314" name="update_time">
-      <DasType>datetime(6)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="411" parent="314" name="count">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="412" parent="314" name="order_price">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="413" parent="314" name="item_id">
-      <DasType>bigint|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="414" parent="314" name="order_id">
-      <DasType>bigint|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <foreign-key id="415" parent="314" name="FKija6hjjiit8dprnmvtvgdp6ru">
-      <ColNames>item_id</ColNames>
-      <RefColNames>item_id</RefColNames>
-      <RefTableName>item</RefTableName>
+      <RefColNames>member_id</RefColNames>
+      <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="416" parent="314" name="FKt4dc2r9nbvbujrljv3e23iibt">
+    <foreign-key id="376" parent="310" name="FKrw4ockqhba6x5sdn8boryuptx">
       <ColNames>order_id</ColNames>
       <RefColNames>order_id</RefColNames>
       <RefTableName>orders</RefTableName>
     </foreign-key>
-    <index id="417" parent="314" name="PRIMARY">
+    <index id="377" parent="310" name="PRIMARY">
+      <ColNames>request_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="378" parent="310" name="FK8vagw6nik47jw3lvxe1a5lwm6">
+      <ColNames>member_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="379" parent="310" name="FKrw4ockqhba6x5sdn8boryuptx">
+      <ColNames>order_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="380" parent="310" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="381" parent="311" name="item_id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="382" parent="311" name="reg_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="383" parent="311" name="update_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="384" parent="311" name="brand_nm">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="385" parent="311" name="discount_rate">
+      <DasType>float|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="386" parent="311" name="item_nm">
+      <DasType>varchar(50)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="387" parent="311" name="item_sell_status">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="388" parent="311" name="item_text">
+      <DasType>longtext|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="389" parent="311" name="level1">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="390" parent="311" name="level2">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <column id="391" parent="311" name="material">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <column id="392" parent="311" name="price">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="393" parent="311" name="stock_free">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+    </column>
+    <column id="394" parent="311" name="stockl">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="395" parent="311" name="stockm">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>15</Position>
+    </column>
+    <column id="396" parent="311" name="stock_number">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <column id="397" parent="311" name="stocks">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>17</Position>
+    </column>
+    <index id="398" parent="311" name="PRIMARY">
+      <ColNames>item_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="399" parent="311" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="400" parent="312" name="item_img_id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="401" parent="312" name="reg_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="402" parent="312" name="update_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="403" parent="312" name="img_name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="404" parent="312" name="img_url">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="405" parent="312" name="ori_img_name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="406" parent="312" name="repimg_yn">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="407" parent="312" name="item_id">
+      <DasType>bigint|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <foreign-key id="408" parent="312" name="FKdd5u08y3ap4c46ayrqjf8g88m">
+      <ColNames>item_id</ColNames>
+      <RefColNames>item_id</RefColNames>
+      <RefTableName>item</RefTableName>
+    </foreign-key>
+    <index id="409" parent="312" name="PRIMARY">
+      <ColNames>item_img_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="410" parent="312" name="FKdd5u08y3ap4c46ayrqjf8g88m">
+      <ColNames>item_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="411" parent="312" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="412" parent="313" name="item_size_id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="413" parent="313" name="reg_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="414" parent="313" name="update_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="415" parent="313" name="stock">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="416" parent="313" name="item_id">
+      <DasType>bigint|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="417" parent="313" name="size_id">
+      <DasType>bigint|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <foreign-key id="418" parent="313" name="FKr7o96qfksgctdy5j228v3fqtg">
+      <ColNames>item_id</ColNames>
+      <RefColNames>item_id</RefColNames>
+      <RefTableName>item</RefTableName>
+    </foreign-key>
+    <foreign-key id="419" parent="313" name="FKl2u6gufgvic2q2baxxfxu5gg0">
+      <ColNames>size_id</ColNames>
+      <RefColNames>size_id</RefColNames>
+      <RefTableName>size</RefTableName>
+    </foreign-key>
+    <index id="420" parent="313" name="PRIMARY">
+      <ColNames>item_size_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="421" parent="313" name="FKr7o96qfksgctdy5j228v3fqtg">
+      <ColNames>item_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="422" parent="313" name="FKl2u6gufgvic2q2baxxfxu5gg0">
+      <ColNames>size_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="423" parent="313" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="424" parent="314" name="member_id">
+      <AutoIncrement>2</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="425" parent="314" name="reg_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="426" parent="314" name="update_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="427" parent="314" name="age">
+      <DasType>int|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="428" parent="314" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="429" parent="314" name="emailequals">
+      <DasType>bit(1)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="430" parent="314" name="name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="431" parent="314" name="password">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="432" parent="314" name="role">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="433" parent="314" name="sex">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="434" parent="314" name="social">
+      <DasType>bit(1)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <index id="435" parent="314" name="PRIMARY">
+      <ColNames>member_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="436" parent="314" name="UK_mbmcqelty0fbrvxp1q58dn57t">
+      <ColNames>email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="437" parent="314" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="438" parent="314" name="UK_mbmcqelty0fbrvxp1q58dn57t">
+      <UnderlyingIndexName>UK_mbmcqelty0fbrvxp1q58dn57t</UnderlyingIndexName>
+    </key>
+    <column id="439" parent="315" name="month_sales_id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="440" parent="315" name="category_sales">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="441" parent="315" name="sales_amount">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="442" parent="315" name="sales_month">
+      <DasType>date|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="443" parent="315" name="sales_year">
+      <DasType>date|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <index id="444" parent="315" name="PRIMARY">
+      <ColNames>month_sales_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="445" parent="315" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="446" parent="316" name="order_item_id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="447" parent="316" name="reg_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="448" parent="316" name="update_time">
+      <DasType>datetime(6)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="449" parent="316" name="count">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="450" parent="316" name="order_price">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="451" parent="316" name="size">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="452" parent="316" name="item_id">
+      <DasType>bigint|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="453" parent="316" name="order_id">
+      <DasType>bigint|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <foreign-key id="454" parent="316" name="FKija6hjjiit8dprnmvtvgdp6ru">
+      <ColNames>item_id</ColNames>
+      <RefColNames>item_id</RefColNames>
+      <RefTableName>item</RefTableName>
+    </foreign-key>
+    <foreign-key id="455" parent="316" name="FKt4dc2r9nbvbujrljv3e23iibt">
+      <ColNames>order_id</ColNames>
+      <RefColNames>order_id</RefColNames>
+      <RefTableName>orders</RefTableName>
+    </foreign-key>
+    <index id="456" parent="316" name="PRIMARY">
       <ColNames>order_item_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="418" parent="314" name="FKija6hjjiit8dprnmvtvgdp6ru">
+    <index id="457" parent="316" name="FKija6hjjiit8dprnmvtvgdp6ru">
       <ColNames>item_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="419" parent="314" name="FKt4dc2r9nbvbujrljv3e23iibt">
+    <index id="458" parent="316" name="FKt4dc2r9nbvbujrljv3e23iibt">
       <ColNames>order_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="420" parent="314" name="PRIMARY">
+    <key id="459" parent="316" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="421" parent="315" name="order_id">
+    <column id="460" parent="317" name="order_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="422" parent="315" name="reg_time">
+    <column id="461" parent="317" name="reg_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="423" parent="315" name="update_time">
+    <column id="462" parent="317" name="update_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="424" parent="315" name="delivery_over">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="463" parent="317" name="order_date">
+      <DasType>datetime(6)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="425" parent="315" name="on_delivery">
+    <column id="464" parent="317" name="order_status">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="426" parent="315" name="order_date">
-      <DasType>datetime(6)|0s</DasType>
+    <column id="465" parent="317" name="address_id">
+      <DasType>bigint|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="427" parent="315" name="order_status">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="466" parent="317" name="member_id">
+      <DasType>bigint|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="428" parent="315" name="shipment">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="429" parent="315" name="member_id">
-      <DasType>bigint|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <foreign-key id="430" parent="315" name="FKpktxwhj3x9m4gth5ff6bkqgeb">
+    <foreign-key id="467" parent="317" name="FKf5464gxwc32ongdvka2rtvw96">
+      <ColNames>address_id</ColNames>
+      <RefColNames>address_id</RefColNames>
+      <RefTableName>address</RefTableName>
+    </foreign-key>
+    <foreign-key id="468" parent="317" name="FKpktxwhj3x9m4gth5ff6bkqgeb">
       <ColNames>member_id</ColNames>
       <RefColNames>member_id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="431" parent="315" name="PRIMARY">
+    <index id="469" parent="317" name="PRIMARY">
       <ColNames>order_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="432" parent="315" name="FKpktxwhj3x9m4gth5ff6bkqgeb">
+    <index id="470" parent="317" name="FKf5464gxwc32ongdvka2rtvw96">
+      <ColNames>address_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="471" parent="317" name="FKpktxwhj3x9m4gth5ff6bkqgeb">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="433" parent="315" name="PRIMARY">
+    <key id="472" parent="317" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="434" parent="316" name="qa_id">
+    <column id="473" parent="318" name="qa_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="435" parent="316" name="reg_time">
+    <column id="474" parent="318" name="reg_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="436" parent="316" name="update_time">
+    <column id="475" parent="318" name="update_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="437" parent="316" name="answer">
-      <DasType>longtext|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="476" parent="318" name="created_by">
+      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="438" parent="316" name="question">
-      <DasType>longtext|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="477" parent="318" name="modified_by">
+      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="439" parent="316" name="title">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="478" parent="318" name="answer">
+      <DasType>longtext|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="440" parent="316" name="member_id">
-      <DasType>bigint|0s</DasType>
+    <column id="479" parent="318" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <foreign-key id="441" parent="316" name="FKh64eh2nf7doslr6r7bvawmnc2">
+    <column id="480" parent="318" name="question">
+      <DasType>longtext|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="481" parent="318" name="title">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="482" parent="318" name="item_id">
+      <DasType>bigint|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="483" parent="318" name="member_id">
+      <DasType>bigint|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <foreign-key id="484" parent="318" name="FKmk29pfna5f9cxemakk2idlc0j">
+      <ColNames>item_id</ColNames>
+      <RefColNames>item_id</RefColNames>
+      <RefTableName>item</RefTableName>
+    </foreign-key>
+    <foreign-key id="485" parent="318" name="FKh64eh2nf7doslr6r7bvawmnc2">
       <ColNames>member_id</ColNames>
       <RefColNames>member_id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="442" parent="316" name="PRIMARY">
+    <index id="486" parent="318" name="PRIMARY">
       <ColNames>qa_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="443" parent="316" name="FKh64eh2nf7doslr6r7bvawmnc2">
+    <index id="487" parent="318" name="FKmk29pfna5f9cxemakk2idlc0j">
+      <ColNames>item_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="488" parent="318" name="FKh64eh2nf7doslr6r7bvawmnc2">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="444" parent="316" name="PRIMARY">
+    <key id="489" parent="318" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="445" parent="317" name="number">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="446" parent="317" name="keyword">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <index id="447" parent="317" name="PRIMARY">
-      <ColNames>number</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="448" parent="317" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="449" parent="318" name="review_id">
+    <column id="490" parent="319" name="review_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="450" parent="318" name="reg_time">
+    <column id="491" parent="319" name="reg_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="451" parent="318" name="update_time">
+    <column id="492" parent="319" name="update_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="452" parent="318" name="comment">
+    <column id="493" parent="319" name="comment">
       <DasType>longtext|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="453" parent="318" name="rating">
+    <column id="494" parent="319" name="rating">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="454" parent="318" name="size">
+    <column id="495" parent="319" name="size">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="455" parent="318" name="item_id">
+    <column id="496" parent="319" name="item_id">
       <DasType>bigint|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="456" parent="318" name="member_id">
+    <column id="497" parent="319" name="member_id">
       <DasType>bigint|0s</DasType>
       <Position>8</Position>
     </column>
-    <foreign-key id="457" parent="318" name="FK6hb6qqehnsm7mvfgv37m66hd7">
+    <foreign-key id="498" parent="319" name="FK6hb6qqehnsm7mvfgv37m66hd7">
       <ColNames>item_id</ColNames>
       <RefColNames>item_id</RefColNames>
       <RefTableName>item</RefTableName>
     </foreign-key>
-    <foreign-key id="458" parent="318" name="FKk0ccx5i4ci2wd70vegug074w1">
+    <foreign-key id="499" parent="319" name="FKk0ccx5i4ci2wd70vegug074w1">
       <ColNames>member_id</ColNames>
       <RefColNames>member_id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="459" parent="318" name="PRIMARY">
+    <index id="500" parent="319" name="PRIMARY">
       <ColNames>review_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="460" parent="318" name="FK6hb6qqehnsm7mvfgv37m66hd7">
+    <index id="501" parent="319" name="FK6hb6qqehnsm7mvfgv37m66hd7">
       <ColNames>item_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="461" parent="318" name="FKk0ccx5i4ci2wd70vegug074w1">
+    <index id="502" parent="319" name="FKk0ccx5i4ci2wd70vegug074w1">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="462" parent="318" name="PRIMARY">
+    <key id="503" parent="319" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="463" parent="319" name="review_img_id">
+    <column id="504" parent="320" name="review_img_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="464" parent="319" name="reg_time">
+    <column id="505" parent="320" name="reg_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="465" parent="319" name="update_time">
+    <column id="506" parent="320" name="update_time">
       <DasType>datetime(6)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="466" parent="319" name="photo_url">
+    <column id="507" parent="320" name="photo_url">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <index id="467" parent="319" name="PRIMARY">
+    <index id="508" parent="320" name="PRIMARY">
       <ColNames>review_img_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="468" parent="319" name="PRIMARY">
+    <key id="509" parent="320" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="469" parent="320" name="number">
-      <AutoIncrement>1500</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="510" parent="321" name="id">
+      <AutoIncrement>501</AutoIncrement>
+      <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="470" parent="320" name="keyword">
-      <DasType>varchar(45)|0s</DasType>
+    <column id="511" parent="321" name="keyword">
+      <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
     </column>
-    <index id="471" parent="320" name="PRIMARY">
-      <ColNames>number</ColNames>
+    <index id="512" parent="321" name="PRIMARY">
+      <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="472" parent="320" name="PRIMARY">
+    <key id="513" parent="321" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="473" parent="321" name="size_id">
+    <column id="514" parent="322" name="size_id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="474" parent="321" name="free">
+    <column id="515" parent="322" name="free">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="475" parent="321" name="l">
+    <column id="516" parent="322" name="l">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="476" parent="321" name="m">
+    <column id="517" parent="322" name="m">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="477" parent="321" name="s">
+    <column id="518" parent="322" name="s">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="478" parent="321" name="item_id">
+    <column id="519" parent="322" name="item_id">
       <DasType>bigint|0s</DasType>
       <Position>6</Position>
     </column>
-    <foreign-key id="479" parent="321" name="FKobniogl4ijrc3wyiq9jb56f6u">
+    <foreign-key id="520" parent="322" name="FKobniogl4ijrc3wyiq9jb56f6u">
       <ColNames>item_id</ColNames>
       <RefColNames>item_id</RefColNames>
       <RefTableName>item</RefTableName>
     </foreign-key>
-    <index id="480" parent="321" name="PRIMARY">
+    <index id="521" parent="322" name="PRIMARY">
       <ColNames>size_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="481" parent="321" name="FKobniogl4ijrc3wyiq9jb56f6u">
+    <index id="522" parent="322" name="FKobniogl4ijrc3wyiq9jb56f6u">
       <ColNames>item_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="482" parent="321" name="PRIMARY">
+    <key id="523" parent="322" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="524" parent="323" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="525" parent="323" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="526" parent="323" name="name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="527" parent="323" name="password">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="528" parent="323" name="userid">
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <index id="529" parent="323" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="530" parent="323" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

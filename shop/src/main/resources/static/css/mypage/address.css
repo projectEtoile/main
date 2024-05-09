@@ -1,3 +1,147 @@
+
+.mainSection1{
+  flex: 1;
+}
+.mainSection2{
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+    width: 200%;
+    margin:100px;
+}
+
+.dateContainer{
+  background-color:#f2f2f2;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
+}
+.dateContainer button,.dateContainer input {
+  margin: 0 10px;
+}
+.button3 {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  height: 30px;
+  /* line-height: 28px; */
+  padding: 0 16px;
+}
+.lb{
+    /* display: block; */
+    float: left;
+    padding: 0 16px;
+    height: 30px;
+    /* line-height: 28px; */
+    border: 1px solid #d9d9d9;
+    background-color: #666;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    margin-left: 5px;
+    cursor: pointer;
+}
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+
+/* button li{
+  font-size: 11px;
+    line-height: 22px;
+    position: relative;
+    padding-left: 11px;
+    color: #666666;
+    font-family: "ProximaNova-Regular","Noto Sans KR";
+} */
+.smallText{
+  font-size: 11px;
+  line-height: 22px;
+  position: relative;
+  padding-left: 11px;
+  color: #666666;
+  font-family: "ProximaNova-Regular","Noto Sans KR";
+  margin-left: 40px;
+
+}
+/* .itemTable th{
+font-size: 15px;
+} */
+
+/* 테이블 시작 */
+.itemTable{
+  margin-top: 50px;
+  margin-left: 60px;
+  border-top: 2px solid #000000;
+border-bottom: 1px solid #525252;
+}
+th{
+  /* border: 1px solid #666; */
+  height: 35px;
+  font-size: 14px;
+  color: #000;
+}
+.firstline2 > th{
+font-size: 15px;
+border: none;
+/* background-color: #d8d6d6; */
+/* border-top: 1px solid #525252;
+border-bottom: 1px solid #525252; */
+height: 43px;
+color: #525252;
+}
+/* .lastTr th{
+  border-bottom: 1px solid #525252;
+} */
+.firstline2 th{
+  border-bottom: 1px solid #525252
+
+}
+.buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.buttons button{
+  /* display: block; */
+  float: left;
+  padding: 0 16px;
+  height: 30px;
+  /* line-height: 28px; */
+  border: 1px solid #d9d9d9;
+  background-color: #81e989;
+  text-align: center;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.lastimg{
+  margin-left: 80px;
+  -webkit-user-drag: none;
+  width: 750px;
+  height: 348px;
+}
+.imgBox{
+  display: flex;
+  justify-content: center;
+}
 /* 모달 스타일 */
 .modal {
   display: none;
@@ -51,15 +195,39 @@
   text-decoration: none;
   cursor: pointer;
 }
+h5{
+    font-size: 35px;
+     position: relative;
 
-
+        bottom: -20px;
+}
+.cont1{
+margin-bottom: -30px;
+}
+/*.mainSection2 h3{
+    color: #000;
+    font-family: "ProximaNova-Regular", "Noto Sans KR";
+    font-size: 24px;
+    line-height: 36px;
+    display: inline-block;
+    font-weight: 200;
+    margin-bottom: 15px;
+    margin-right: 350px;
+    white-space: nowrap;
+}*/
 .mainSection2{
   flex: 3;
   display: flex;
+  font-size: 24px;
+margin-top: 10px;
+  font-family: "ProximaNova-Regular", "Noto Sans KR";
   /* justify-content: center; */
   flex-direction: column;
-  margin-top: 100px;
+/*margin-bottom: 15px;*/
+   /* margin-right: 150px;*/
+   margin-left: 20px;
   align-items: center;
+white-space: nowrap;
 }
 
 /* 회원정보 변경 시작*/
@@ -90,17 +258,17 @@
     cursor: pointer;
 
 }
-.mainSection2 h3{
+/*.mainSection2 h3{
     color: #000;
     font-family: "ProximaNova-Regular", "Noto Sans KR";
     font-size: 24px;
     line-height: 36px;
     display: inline-block;
-    font-weight: 500;
+    font-weight: 200;
     margin-bottom: 15px;
-    margin-right: 550px;
+    margin-right: 350px;
     white-space: nowrap;
-}
+}*/
 .inpBox input{
   background-color: #f2f2f2;
   border: 1px solid #f2f2f2;
@@ -205,38 +373,82 @@ ul {
 }
 
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+    display: none; /* 기본적으로 모달은 숨김 상태 */
+    position: fixed; /* 화면에 고정 */
+    z-index: 1; /* 다른 요소들보다 위에 표시 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 스크롤 가능 */
+    background-color: rgba(0, 0, 0, 0.4); /* 배경에 어둡게 처리 */
 }
 
-/* 모달 콘텐츠 스타일 */
+/* 모달 내용 */
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+    background-color: #fefefe; /* 모달 내용 배경색 */
+    margin: 15% auto; /* 모달을 가운데 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%; /* 모달 내용의 너비 */
+    height:50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* 그림자 효과 */
+    display:flex;
+    flex-direction: column; /* 자식 요소들을 세로로 나열 */
+        justify-content: space-around; /* 자식 요소들을 세로 축을 따라 공간 분배 */
 }
 
-/* 모달 닫기 버튼 스타일 */
+/* 닫기 버튼 스타일 */
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 주소 입력 폼 스타일 */
+#postcode,
+#roadAddress,
+#jibunAddress,
+#detailAddress,
+#extraAddress {
+    margin-bottom: 10px;
+    width: calc(100% - 20px); /* 부모 요소의 너비에서 마진 제외 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩과 보더를 포함한 크기 계산 */
+}
+
+/* 우편번호 찾기 버튼 스타일 */
+#myModal input[type="button"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#myModal input[type="button"]:hover {
+    background-color: #45a049;
+}
+
+
+
+
+.btn1:hover {
+    background-color: #005f6b;
+}
+
+/* 기본배송지 설정 체크박스 스타일 */
+#selectAddress {
+    margin-right: 10px;
 }

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<div layout:fragment="content">
+    <link th:href="@{/css/admin/qNaList.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/admin/qNaList.js}" type="text/javascript"></script>
+    <!--${items.number} 이부분은 현제 페이지를 나타낸다.? -->
+    <form th:action="@{'/admin/qNaList/' + ${qNaList.number}}"
+          role="form" method="get" th:object="${qNaList}">
+        <body>
+
+        <div class="search-container" th:object="${adminQNASearchDTO}">
+            <select th:field="*{searchDateType}" class="form-control search-select">
+                <option value="all">전체기간</option>
+                <option value="1d">1일</option>
+                <option value="1w">1주</option>
+                <option value="1m">1개월</option>
+                <option value="6m">6개월</option>
+            </select>
+
+            <select th:field="*{answerStatus}" class="form-control search-select">
+                <option value="">전체보기</option>
+                <option value="unfinished">답변 미등록</option>
+                <option value="finished">답변 등록 완료</option>
+            </select>
+
+            <select th:field="*{searchBy}" class="form-control search-select">
+                <option value="memberId">고객 ID</option>
+                <option value="email">고객 이메일</option>
+                <option value="itemId">상품 ID</option>
+            </select>
+
+
+            <br>
+
+            <div>
+                <div class="search-bar">
+                    <input th:field="*{searchQuery}" type="text" class="inp" placeholder="상품명 혹은 상품코드를 입력">
+                    <button id="searchBtn" type="submit" class="search-btn">검색
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tableBox">
+            <div class="subBox">&emsp;&emsp;&emsp;&emsp;검색된 문의 수 :&emsp; <p
+                    th:text="${qNaList.totalElements}+'개'"></p>
+            </div>
+            <div class="tableContainer">
+                <table>
+                    <tr class="firstLine">
+                        <td>문의 ID</td>
+                        <td>상품 ID</td>
+                        <td>고객 ID</td>
+                        <td>고객 email</td>
+                        <td>문의 등록일</td>
+                        <td>문의 제목</td>
+                        <td>답변 상태</td>
+                        <td>답변</td>
+                    </tr>
+                    <tr th:each="qNaList, status: ${qNaList.getContent()}">
+                        <!--status: ${items.getContent()} 이부분은 page 처리를 하기위해?-->
+                        <td th:text="${qNaList.id}"></td>
+                        <td th:text="${qNaList.item.id}"></td>
+                        <td th:text="${qNaList.member.id}"></td>
+                        <td th:text="${qNaList.member.email}"></td>
+                        <td th:text="${#temporals.format(qNaList.regTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${qNaList.title}"></td>
+                        <td th:if="${#strings.length(qNaList.answer) == 0}">답변 미등록</td>
+                        <td th:unless="${#strings.length(qNaList.answer) == 0}">답변 완료</td>
+
+                        <td>
+                            <button style="width: 130px;" type="button" th:onclick="'openModal(' + ${qNaList.id} + ')'">문의 보기</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 모달 시작-->
+
+            <!-- 문의 모달 -->
+            <div id="inquiryModal" class="modal">
+                <!-- 모달 내용 -->
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <div id="title" class="modal-title"></div>
+                    <div class="box">
+                        <input type="hidden" id="id" readonly>
+                        <input type="text" id="question" class="response-input" style="weigh" readonly>
+                    </div>
+                    <input type="text" id="answer" class="response-input" placeholder="답변을 입력하세요">
+                    <button type="button" onclick="answerFinished()" style="width: 130px;">답변 제출</button>
+                </div>
+            </div>
+
+            <!-- 모달 끝-->
+            <div class="finalButton">
+<!--                <form action="">
+                    <button>수정하기</button>
+                </form>-->
+            </div>
+        </div>
+
+        <div th:with="start=${(qNaList.number/maxPage)*maxPage + 1},
+                      end=(${(qNaList.totalPages == 0) ? 1 :
+                      (start + (maxPage - 1) < qNaList.totalPages ? start + (maxPage - 1) :
+                      qNaList.totalPages)})" class="pagination-container">
+
+            <ul class="pagination-list">
+                <li th:classappend="${qNaList.first} ? 'disabled' : ''"
+                    class="pagination-item pagination-item-previous">
+                    <!-- 페이지가 0인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${qNaList.number != 0}" th:onclick="'javascript: page(' + (${qNaList.number - 1}) + ')'"
+                       aria-label='Previous' class="pagination-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                    <a th:unless="${qNaList.number != 0}" aria-label='Previous' class="pagination-link disabled">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                    th:classappend="${qNaList.number eq page - 1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+                       class="page-link pagination-link">
+                        [[${page}]]
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${qNaList.last} ? 'disabled' : ''">
+                    <!-- 페이지가 마지막 페이지인 경우 클릭 이벤트 제거 및 버튼 비활성화 -->
+                    <a th:if="${!qNaList.last}" th:onclick="'javascript:page(' + (${qNaList.number + 1}) + ')'"
+                       aria-label='Next' class="page-link pagination-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                    <a th:if="${qNaList.last}" aria-label='Next' class="page-link pagination-link disabled">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        </body>
+    </form>
+</div>
+
+</html>
+
+
+
+
+

@@ -76,7 +76,9 @@ event.preventDefault();
                     alert("상태 변경 되었습니다");
                     location.reload();
                 } else {
-                    alert("상태 변경이 실패했습니다");
+                    response.text().then(errorMessage => {
+                                                      alert(errorMessage);
+                                                  });
                 }
             })
             .catch(error => {
@@ -167,3 +169,47 @@ event.preventDefault();
 //                localStorage.setItem('scrollPosition', currentScrollPosition);
 //            });
 //        });
+
+var modal = $(document).find("#inquiryModal")[0];
+
+// 모달 열기 함수
+function openModalReason(id) {
+     // window.openModalBtnModify = function(id) {
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+            // REST API 엔드포인트 URL
+            var apiUrl = "/admin/getReason";
+
+            // AJAX 요청
+            $.ajax({
+                type: "GET",
+                url: apiUrl + "?id=" + id,
+                beforeSend: function(xhr) {
+                    // CSRF 토큰을 헤더에 포함
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function(response) {
+                var jsonResponse = JSON.parse(response);
+           if(jsonResponse.requestType == 'return'){
+
+          $("#requestType").text('반품');
+          }else{
+          $("#requestType").text('교환');
+          }
+     $("#reason").val(jsonResponse.reason);
+
+    $("#inquiryModal").css("display", "block");
+                },
+                error: function(xhr, status, error) {
+                    // 요청이 실패했을 때 실행할 코드
+                    alert("REST API 요청 실패:", error);
+                }
+            });
+
+
+        };
+        function closeModal() {
+             $("#inquiryModal").css("display", "none");
+        }

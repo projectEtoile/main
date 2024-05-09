@@ -2,11 +2,13 @@ package com.keduit.shop.repository;
 
 import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminItemSearchDTO;
+import com.keduit.shop.dto.ItemSearchDTO;
 import com.keduit.shop.dto.MainItemDTO;
 import com.keduit.shop.dto.QMainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.QItem;
 import com.keduit.shop.entity.QItemImg;
+import com.keduit.shop.entity.QOrder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,6 +19,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
@@ -28,6 +31,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     public ItemRepositoryCustomImpl(EntityManager em){
         this.jpaQueryFactory = new JPAQueryFactory(em);
     }
+
+    private List<String> level1 = Arrays.asList("Top", "Outer", "Pants", "Skirt/Dress", "Shoes");
 
     private BooleanExpression regDtsAfter(String searchDateType) {
         LocalDateTime dateTime = LocalDateTime.now();
@@ -157,7 +162,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                                 item.itemText,
                                 itemImg.imgUrl,
                                 item.price,
-                                item.discountRate,
+                                item.discountRate.intValue(),
                                 item.itemSellStatus)
                 ).from(itemImg)
                 .join(itemImg.item, item)
@@ -176,9 +181,55 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .fetchOne();
         return new PageImpl<>(result, pageable, total);
     }
-
     private BooleanExpression itemNmLike(String searchQuery) {
         return StringUtils.isEmpty(searchQuery) ? null :
                 QItem.item.itemNm.like("%" + searchQuery + "%");
     }
+
+
+    @Override
+    public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
+
+        List<Item> result = jpaQueryFactory
+                .select(QItem.item)
+                .where(categorySelect(category),
+                        itemSellStatus(),
+                        searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                .orderBy(QItem.item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = jpaQueryFactory
+                .select(Wildcard.count)
+                .from(QItem.item)
+                .where(categorySelect(category),
+                        itemSellStatus(),
+                        searchBylike(itemSearchDTO.getSearchBy1(), itemSearchDTO.getSearchQuery1()))
+                .fetchOne();
+
+        return new PageImpl<>(result, pageable, total);
+    }
+    private BooleanExpression categorySelect(String category){
+
+        if(level1.contains(category)){
+            return QItem.item.level1.eq(category);
+        }
+        return category == null? null : QItem.item.level2.eq(category);
+    }
+
+    private BooleanExpression itemSellStatus(){
+        return QItem.item.itemSellStatus.ne(ItemSellStatus.STOP_SALE);
+    }
+    private BooleanExpression searchBylike(String searchBy, String searchQuery) {
+
+        if(searchQuery.length()==0){
+            return null;
+        }
+        if(StringUtils.equals("itemNm",searchBy)){
+            return QItem.item.itemNm.like("%" + searchQuery + "%");
+        }
+        return null;
+    }
+
 }

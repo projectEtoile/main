@@ -1,9 +1,15 @@
 package com.keduit.shop.controller;
 
+import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.dto.OrderDTO;
 import com.keduit.shop.dto.OrderHistDTO;
+import com.keduit.shop.entity.Address;
+import com.keduit.shop.entity.Member;
+import com.keduit.shop.repository.AddressRepository;
+import com.keduit.shop.repository.MemberRepository;
 import com.keduit.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import netscape.javascript.JSObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +21,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +34,8 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
+    private final MemberRepository memberRepository;
+    private final AddressRepository addressRepository;
 
     @PostMapping("/order")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDTO orderDTO,
@@ -70,12 +81,42 @@ public class OrderController {
     }
 
     @PostMapping("/order/{orderId}/cancel")
-    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId,
-                                                    Principal principal) {
+    public ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
+        // 주문 취소 권한 검사
         if (!orderService.validateOrder(orderId, principal.getName())) {
-            return new ResponseEntity("주문 취소 권한이 없습니다.", HttpStatus.FORBIDDEN);/*Forbidden 권한이없음*/
+            return new ResponseEntity<>("주문 취소 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-        orderService.cancelOrder(orderId);/*주문취소*/
-        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+
+        // 주문 취소 상태 확인
+        OrderStatus orderStatus = orderService.getOrderStatus(orderId);
+        if (orderStatus != OrderStatus.ORDER) {
+            return new ResponseEntity<>("주문을 취소할 수 없는 상태입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        // 주문 취소 처리
+        boolean isCancelled = orderService.cancelOrder(orderId);
+        if (!isCancelled) {
+            return new ResponseEntity<>("주문 취소 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>("주문이 성공적으로 취소되었습니다.", HttpStatus.OK);
+    }
+
+
+    @GetMapping("/payment")
+    public @ResponseBody ResponseEntity order(Principal principal) {
+
+        Member member =  memberRepository.findByEmail(principal.getName());
+        if(addressRepository.findByMemberAndSelectAddressTrue(member).isEmpty()){
+            String notFound = "notFound";
+            return new ResponseEntity("{\"message\": \"notFound\"}",HttpStatus.OK);
+        }
+        Address address = addressRepository.findByMemberAndSelectAddressTrue(member).orElseThrow(EntityNotFoundException::new);
+
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("member", member);
+        responseData.put("address", address);
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 }

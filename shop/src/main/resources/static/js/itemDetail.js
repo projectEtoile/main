@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
                  dataType: "json",
                  success: function(result) {
                      alert("주문이 완료되었습니다.");
-//                     location.href = '/'; // 주문 성공 후 리디렉션
+                     location.href = '/'; // 주문 성공 후 리디렉션
                  },
                  error: function(jqXHR) {
                      if (jqXHR.status === 401) { // 인증 오류
@@ -298,3 +298,285 @@ document.addEventListener("DOMContentLoaded", function () {
                            // 장바구니에 상품을 담는 로직
                            addCart();
                        }
+
+/* 결제 모달 불러오기 시작 */
+$(document).ready(function() {
+  // 모달 열기 버튼 클릭 시 모달 열기
+$("#openModalButton").click(function() {
+event.preventDefault();
+
+var productName = document.querySelector(".prod_name").textContent;
+
+// 사이즈
+var selectElement = document.querySelector("select[name='size']");
+var selectedIndex = selectElement.selectedIndex;
+var selectedValue = selectElement.options[selectedIndex].value;
+    if (selectedValue.length === 0) {
+        alert("선택된 사이즈가 없습니다.");
+        return;
+    }
+
+// 갯수
+    var quantityInput = document.getElementById("quantity");
+
+var price = document.getElementById("realPrice").textContent;
+console.log(price);
+
+document.querySelector(".goods_span").textContent = productName;
+document.getElementById("mountt").textContent = quantityInput.value;
+document.getElementById("realPriceM").textContent = price;
+document.getElementById("totalPriceM").textContent = price*quantityInput.value;
+
+
+    var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+                var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+                // API 엔드포인트
+                var apiUrl = '/payment';
+
+               fetch(apiUrl, {
+                   method: 'GET',
+                   headers: {
+                       'Content-Type': 'application/json',
+                       [csrfHeader]: csrfToken
+                   }
+               })
+           .then(response => {
+               if (!response.ok) {
+                   return;
+               }
+               return response.json();
+           })
+
+               .then(data => {
+               console.log(data.message)
+                    if(data.message === 'notFound'){
+                          alert('기본 주소지를 설정해주세요.');
+                          return;
+                    }
+
+                   // 받은 데이터에서 member와 address 추출
+                   const member = data.member;
+                   const address = data.address;
+
+                   // 여기서부터 데이터를 활용하여 필요한 작업을 수행
+
+                   document.getElementById("nameM").innerText  = member.name;
+                   document.getElementById("emailM").innerText  = member.email;
+                   document.getElementById("postM").innerText  = address.postcode;
+                   document.getElementById("jiM").innerText  = address.jibunAddress;
+                   document.getElementById("detM").innerText  = address.detailAddress;
+
+
+ $("#myModal").css("display", "block");
+                   // 예를 들어, HTML에 표시하거나 다른 작업을 수행할 수 있습니다.
+               })
+               .catch(error => {
+                   alert('로그인 후 사용 가능합니다.');
+                    return;
+               });
+});
+
+  // 모달 닫기 버튼 클릭 시 모달 닫기
+  $("#btnCancel").click(function() {
+    $("#myModal").hide();
+  });
+
+  // 모달 외부 클릭 시 모달 닫기
+  $(document).mouseup(function(e) {
+    var modal = $("#myModal");
+    if (!modal.is(e.target) && modal.has(e.target).length === 0) {
+      modal.css("display", "none");
+    }
+  });
+});
+/* 결제 모달 불러오기 끝 */
+
+/*qanda     */
+document.addEventListener('DOMContentLoaded', async function () {
+    loadQuestions(0);
+    // 사용자의 이메일 가져오기
+    var userEmail = getUserEmail();
+
+    // 모달 열기 및 닫기 이벤트
+    document.getElementById('openQuestionModal').addEventListener('click', function () {
+        document.getElementById('questionModal').style.display = 'block';
+    });
+
+    document.getElementById('closeQuestionModal').addEventListener('click', function () {
+        document.getElementById('questionModal').style.display = 'none';
+    });
+
+    // 질문 제출 이벤트
+    document.getElementById('questionForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        var itemId = document.getElementById('itemId').value;
+        var questionTitle = document.getElementById('questionTitle').value.trim();
+        var questionContent = document.getElementById('questionContent').value.trim();
+
+        if (questionTitle === '' || questionContent === '') {
+            alert('질문 제목과 내용을 모두 입력하세요.');
+            return;
+        }
+
+        // CSRF 토큰 가져오기
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        var questionDate = new Date().toLocaleDateString();
+
+        // 서버로 질문 제출
+        try {
+            var response = await fetch(`/item/${itemId}/submitQuestion`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [header]: token
+                },
+                body: JSON.stringify({
+                    title: questionTitle,
+                    question: questionContent
+                })
+            });
+
+            if (response.ok) {
+                alert('질문이 성공적으로 등록되었습니다.');
+                // 질문 목록에 새 질문 추가
+                 loadQuestions();
+            } else {
+                alert('질문을 등록하는 데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('질문을 등록하는 동안 오류가 발생했습니다.');
+        }
+
+        // 모달 창 닫기 및 입력 초기화
+        document.getElementById('questionModal').style.display = 'none';
+        document.getElementById('questionTitle').value = '';
+        document.getElementById('questionContent').value = '';
+    });
+
+    // 초기 로드 시 질문 목록 가져오기
+    loadQuestions();
+
+    // 사용자의 이메일 가져오는 함수
+    function getUserEmail() {
+        var userEmail = "user@example.com"; // 예시로 사용자 이메일을 설정합니다.
+        return userEmail;
+    }
+
+    // 서버로부터 질문을 가져와 테이블에 추가하는 함수
+  async function loadQuestions(page = 0) {
+      const itemId = document.getElementById('itemId').value;
+      try {
+          const response = await fetch(`/item/${itemId}/questions?page=${page}&size=10`);
+          if (response.ok) {
+              const data = await response.json();
+              updateQuestionTable(data.questions);
+              updatePagination(data.currentPage, data.totalPages);
+          } else {
+              console.error('Failed to fetch questions');
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  }
+
+  function updateQuestionTable(questions) {
+      const table = document.getElementById('qnaList');
+      table.innerHTML = '';  // Clear the table
+      questions.forEach(question => {
+          appendQuestionToTable(question.title, question.question, question.userEmail, question.date, question.answer);
+      });
+  }
+
+  function updatePagination(currentPage, totalPages) {
+      const pageInfo = document.getElementById('pageInfo');
+      pageInfo.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+
+      const prevButton = document.getElementById('prevButton');
+      const nextButton = document.getElementById('nextButton');
+
+      prevButton.disabled = currentPage === 0;
+      nextButton.disabled = currentPage === totalPages - 1;
+
+      prevButton.onclick = () => {
+          if (currentPage > 0) loadQuestions(currentPage - 1);
+      };
+
+      nextButton.onclick = () => {
+          if (currentPage < totalPages - 1) loadQuestions(currentPage + 1);
+      };
+  }
+
+
+    // 질문을 테이블에 추가하는 함수
+  function appendQuestionToTable(questionTitle, questionContent, userEmail, questionDate, answer) {
+      var table = document.getElementById('qnaList');
+      var status = answer ? '답변 완료' : '답변 대기 중';
+
+      var newQuestionRow = `
+          <tr class="qnaline">
+              <td class="qna_iconp"><em class="qna_icon">${status}</em></td>
+              <td class="question">
+                  <p class="questionp"><a href="#">${questionTitle}</a></p>
+                  <span class="emailname">${userEmail}</span>
+              </td>
+              <td class="qnadate">${questionDate}</td>
+          </tr>
+          <tr class="question_detail" style="display: none;">
+              <td colspan="3">
+                  <div class="cont">
+                      <div class="ask">
+                          <strong class="tit_sub">질문</strong>
+                          <p class="qna_txt">${questionContent}</p>
+                      </div>
+                      <div class="answer">
+                          <strong class="tit_sub">답변</strong>
+                          <p class="qna_txt">${answer ? answer : '답변 대기 중입니다.'}</p>
+                      </div>
+                  </div>
+              </td>
+          </tr>
+      `;
+      table.insertAdjacentHTML('beforeend', newQuestionRow);
+
+      // 마지막으로 추가된 질문에 대해서만 클릭 이벤트 리스너 설정
+      var lastQuestion = table.lastElementChild.previousElementSibling;
+      setupQuestionClickEvent(lastQuestion);
+  }
+
+    // 질문 제목을 클릭하면 세부 질문 내용을 보여주는 이벤트 리스너 설정
+    function setupQuestionClickEvent(questionElement) {
+        var questionLink = questionElement.querySelector(".questionp a");
+
+        questionLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            var detail = this.closest('.qnaline').nextElementSibling;
+
+            if (detail && detail.classList.contains("question_detail")) {
+                detail.style.display = detail.style.display === "none" || detail.style.display === "" ? "table-row" : "none";
+            }
+        });
+    }
+});
+
+async function submitQuestion() {
+    // 질문 제출 로직은 그대로 유지하고, 성공적으로 등록된 질문을 받아올 때 질문 목록을 다시 불러오는 부분을 추가합니다.
+    try {
+        // 질문 제출 로직...
+        if (response.ok) {
+            alert('질문이 성공적으로 등록되었습니다.');
+            // 질문 목록에 새 질문 추가
+            loadQuestions();
+        } else {
+            alert('질문을 등록하는 데 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('질문을 등록하는 동안 오류가 발생했습니다.');
+    }
+}
+

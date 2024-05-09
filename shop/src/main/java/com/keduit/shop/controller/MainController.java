@@ -5,8 +5,10 @@ import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.dto.MainItemDTO;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
+import com.keduit.shop.entity.SearchRank;
 import com.keduit.shop.repository.ItemImgRepository;
 import com.keduit.shop.repository.ItemRepository;
+import com.keduit.shop.repository.SearchRankRepository;
 import com.keduit.shop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,8 +26,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MainController {
 
-  private final ItemRepository itemRepository;
-  private final ItemImgRepository itemImgRepository;
+    private final ItemRepository itemRepository;
+    private final ItemImgRepository itemImgRepository;
+    private final SearchRankRepository searchRankRepository;
+
   private final ItemService itemService;
 
   @GetMapping("/")

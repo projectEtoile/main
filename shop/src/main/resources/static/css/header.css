@@ -34,14 +34,14 @@ body, html {
 .top-area {
   width: 100%;
   height: 50px;
-  
+
   background-color: pink;
 }
 .top-areaInner {
 /* background-color: pink; */
 display: flex;
 align-items: center;
-  /* align-items: cdropdown-menuenter; / 세로 가운데 정렬 */ 
+  /* align-items: cdropdown-menuenter; / 세로 가운데 정렬 */
   /* height: 39px; */
   /* margin-right: 120px; */
 }
@@ -176,7 +176,7 @@ align-items: center;
   padding: 8px 10px;
   color: #333;
   text-decoration: none;
-  text-align: left; 
+  text-align: left;
 }
 
 /* 이 부분은 모바일버전에서 활용하기 */
@@ -188,7 +188,7 @@ align-items: center;
   /* display: flex; */
   /* justify-content: space-around; */
   /* margin: 0 50px; */
-/* }   */ 
+/* }   */
 /* .navbar-links {
   float: left;
   width: 100%;
@@ -220,14 +220,14 @@ align-items: center;
   flex: 1; /* 동일한 공간을 차지하도록 설정 */
   /* border: 1px solid #702929;  */
   display: flex; /* 내부 요소를 수평으로 정렬하기 위해 */
-  justify-content: center; 
+  justify-content: center;
   align-items: center; /* 수직 가운데 정렬 */
 }
 .section2 {
   flex: 2; /* 동일한 공간을 차지하도록 설정 */
   /* border: 1px solid #702929;  */
   display: flex; /* 내부 요소를 수평으로 정렬하기 위해 */
-  justify-content: center; 
+  justify-content: center;
   align-items: center; /* 수직 가운데 정렬 */
 }
 
@@ -278,7 +278,7 @@ align-items: center;
 }
 .inp {
 display: block;
-padding: 0 20px; 
+padding: 0 20px;
 font-size: 16px;
 color: #333;
 border: 1px solid #ddd;
@@ -384,7 +384,7 @@ border-radius: 100px;
   display: none;
   position: relative;
   left: 0;
-  
+
 }
 #searchIcon2{
   border: 2px solid #888888;
@@ -447,6 +447,8 @@ border-radius: 100px;
   top: -15px;
   right: 0;
   z-index: 100;
+  text-align: center; /* 텍스트 중앙 정렬 */
+
 }
 
 #z-example{
@@ -463,6 +465,7 @@ border-radius: 100px;
 }
 
 #rank-title{
+
   letter-spacing: -1px;
   font-size: 14px;
 }

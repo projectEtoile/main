@@ -83,8 +83,11 @@ public class AdminItemController {
 
         Page<Item> items = itemService.getAdminItemPage(adminItemSearchDTO, pageable);
 
-        System.out.println("----- items.getContent() : " + items.getContent());
-        System.out.println("----- adminItemSearchDTO: " + adminItemSearchDTO);
+        System.out.println(items);
+
+        for (Item item : items){
+            System.out.println(item.toString());
+        }
 
         model.addAttribute("items", items);
         model.addAttribute("adminItemSearchDTO", adminItemSearchDTO); // 검색어 유지시키기 위한 설정!
@@ -116,8 +119,6 @@ public class AdminItemController {
                              Model model) {
 
         if (bindingResult.hasErrors()) {
-            System.out.println(" post 수정 유효성 검사 실패@@@@@@@@@@@@@@@@@@@");
-            System.out.println(itemFormDTO.getItemImgIds());
             return "item/itemForm"; // 유효성 검사 실패시 돌아간다.
             // 하지만 이럼 수정했던 정보가 날아가므로 html에서 유효성 검사를 모두 한다.
 
@@ -126,12 +127,8 @@ public class AdminItemController {
             itemService.updateItem(itemFormDTO, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다.");
-            System.out.println(itemFormDTO.getItemImgIds());
-            System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             return "redirect:/admin/main";
         }
-        System.out.println(itemFormDTO.getItemImgIds());
-        System.out.println("포스트수정 응답받음@@@@@@@@@@@@@@@@@");
         return "redirect:/admin/item/modify/" + itemFormDTO.getId();
     }
 

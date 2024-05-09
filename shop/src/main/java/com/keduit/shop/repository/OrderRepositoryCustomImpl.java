@@ -22,6 +22,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
     public OrderRepositoryCustomImpl(EntityManager em){
         this.jpaQueryFactory = new JPAQueryFactory(em);
     }
+
     private BooleanExpression regDtsAfter(String searchDateType) {
         LocalDateTime dateTime = LocalDateTime.now();
         if (StringUtils.equals("all", searchDateType) || searchDateType == null) {
@@ -83,4 +84,5 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
 
         return new PageImpl<>(result, pageable, total);
     }
+
 }

@@ -41,6 +41,9 @@ public class Member extends BaseTimeEntity{
     private Integer age;
 
 
+    private boolean emailequals = false;
+
+
     /*dto주면 entity 리턴하는애임 이게핵심. html폼에서 입력받는 주체가 dto 그걸 entity에 set해주는것 그걸리턴함*/
 
    public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
@@ -50,7 +53,7 @@ public class Member extends BaseTimeEntity{
         member.setEmail(memberFormDTO.getEmail());
         String password = passwordEncoder.encode(memberFormDTO.getPassword());
         member.setPassword(password);
-        member.setRole(Role.ADMIN);
+        member.setRole(Role.USER);
         member.setAge(memberFormDTO.getAge());
         member.setSex(memberFormDTO.getSex());
         return member;

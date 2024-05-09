@@ -2,12 +2,19 @@
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
 <div th:fragment="header">
 
     <nav>
         <div class="top-area">
             <div class="top-areaInner">
-                <a href="#">★SALE EVENT★</a>
+                <a href="#">★여름 맞이 쇼핑★</a>
             </div>
         </div>
         <div class="container1">
@@ -27,53 +34,7 @@
                 <i class="fas fa-search search-icon searchIcon123" id="searchIcon2"></i>
                 <input type="text" id="searchInput" placeholder="Search here..." style="display: none;">
             </div>
-            <nav>
-                <div class="center-align relative">
-                    <div id="search-ranking">
-                        <table>
-                            <tbody>
-                            <!-- 반복문을 통해 데이터를 테이블에 표시 -->
 
-                            </tbody>
-                        </table>
-                        <div>
-                            <span id="rank-number">1</span>
-                            <span id="rank-title">제로초</span>
-                        </div>
-
-                        <!-- 실시간 급상승 추가 -->
-                        <div id="real-time-rankings">
-                            <ul style="posiotion: absolute; top: -15px;right: 0;">
-
-                                <h1>Search Rank</h1>
-
-                                {% for row in data %}
-
-
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <th>순위</th>
-                                        <th>인기검색어</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                    <tr th:each="searchRank : ${searchRankList}">
-                                        <td th:text="${searchRank.number}"></td>
-                                        <td th:text="${searchRank.keyword}"></td>
-                                    </tr>
-                                    </tbody>
-                                    {% endfor %}
-                                </table>
-                            </ul>
-                            <div id="z-example">
-                                <div id="z-inner"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
             <div class="section" id="icon-box">
                 <li sec:authorize="isAuthenticated()">
                     <a href="/members/logout">
@@ -81,15 +42,13 @@
                     </a>
                 </li>
 
-                <li sec:authorize="isAnonymous()">
-                    <a href="/members/login">
+                <a href="/members/login" sec:authorize="isAnonymous()">
                         <span class="material-symbols-outlined">
                           login
                         </span>
-                    </a>
-                </li>
+                </a>
 
-                <a href="/members/new">
+                <a href="/members/new" sec:authorize="isAnonymous()">
                     <span class="material-symbols-outlined">
                       person_add
                     </span>
@@ -106,7 +65,37 @@
           shopping_bag
         </span>
                 </a>
+                <nav>
+                    <div class="center-align relative">
+                        <div id="search-ranking">
+                            <div>
+                                <span id="rank-number">1</span>
+                                <span id="rank-title">원피스</span>
+                            </div>
+                            <!-- 실시간 급상승 추가 -->
+                            <div id="real-time-rankings">
+                                <ul style="position: absolute; top: -15px; right: 0;">
+                                    <h1>Search Rank</h1>
+                                    <table border="1">
+                                        <thead>
 
+                                        <tr>
+                                            <th>순위</th>
+                                            <th>인기검색어</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody id="tableBody">
+                                        </tbody>
+                                    </table>
+                                    <div id="z-example">
+                                        <div id="z-inner"></div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
 
             </div>
         </div>
@@ -116,7 +105,7 @@
                     <button id="mainCategoryBtn">메인 카테고리</button>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="">Top</a>
+                            <a href="#">Top</a>
                             <ul class="sub-dropdown-menu">
                                 <li><a href="#">블라우스</a></li>
                                 <li><a href="#">셔츠</a></li>

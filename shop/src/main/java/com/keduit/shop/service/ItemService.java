@@ -1,9 +1,6 @@
 package com.keduit.shop.service;
 
-import com.keduit.shop.dto.AdminItemSearchDTO;
-import com.keduit.shop.dto.ItemFormDTO;
-import com.keduit.shop.dto.ItemImgDTO;
-import com.keduit.shop.dto.MainItemDTO;
+import com.keduit.shop.dto.*;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
 import com.keduit.shop.entity.QItemImg;
@@ -41,7 +38,7 @@ public class ItemService {
                 + itemFormDTO.getStockS();
 
         item.setStockNumber(total);
-        item.setDiscountRate(1); // 할인율 기본값
+        item.setDiscountRate(1f); // 할인율 기본값
         itemRepository.save(item);
 
         // 이미지 파일을 순회하며 설정
@@ -141,7 +138,7 @@ public class ItemService {
         List<Item> itemList = itemRepository.findByLevel1(categorySelect);
 
         if(itemList.isEmpty()){
-            return new ResponseEntity<>("카테고리에 해당하는 상품 없음",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("카테고리에 해당하는 상품이 없습니다.",HttpStatus.BAD_REQUEST);
         }
 
         for (Item item : itemList){
@@ -150,6 +147,14 @@ public class ItemService {
         itemRepository.saveAll(itemList);
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    public Page<Item> getItemPage(ItemSearchDTO itemSearchDTO, String category, Pageable pageable) {
+        return itemRepository.getItemPage(itemSearchDTO,category,pageable);
+    }
+    public Item getItemById(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
     }
 
 }

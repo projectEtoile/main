@@ -1,8 +1,16 @@
 package com.keduit.shop.controller.admin;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.keduit.shop.dto.AdminOrderSearchDTO;
+import com.keduit.shop.entity.ExchangeReturnRequest;
 import com.keduit.shop.entity.Order;
+import com.keduit.shop.entity.QandA;
 import com.keduit.shop.repository.AddressRepository;
+import com.keduit.shop.repository.ExchangeReturnRequestRepository;
+import com.keduit.shop.repository.OrderRepository;
 import com.keduit.shop.service.OrderService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,6 +33,8 @@ public class AdminOrderController {
 
     private final OrderService orderService;
     private final AddressRepository addressRepository;
+    private final ExchangeReturnRequestRepository exchangeReturnRequestRepository;
+    private final OrderRepository orderRepository;
 
     @GetMapping({"/orders/{page}", "/orders"})
     public String orderListPage(Model model,
@@ -37,6 +45,8 @@ public class AdminOrderController {
 
         Page<Order> orders = orderService.getAdminOrderPage(adminOrderSearchDTO, pageable);
 
+//        orders.getContent().get(0).getDeliveryAddress().getDetailAddress();
+//        orders.getContent().get(0).getDeliveryAddress().getPostcode();
 
         model.addAttribute("orders", orders);
         model.addAttribute("adminOrderSearchDTO", adminOrderSearchDTO);
@@ -51,8 +61,8 @@ public class AdminOrderController {
     public @ResponseBody ResponseEntity allChangeStatus(@RequestBody JSONObject requestData){
         String currentState = requestData.getAsString("currentState");
         String newState = requestData.getAsString("newState");
-        orderService.allChangeStatus(currentState,newState);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return orderService.allChangeStatus(currentState,newState);
     }
 
     @PostMapping("/changeStatus")
@@ -73,5 +83,26 @@ public class AdminOrderController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
             return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/getReason")
+    public @ResponseBody ResponseEntity getReason(@RequestParam("id") Long id) throws JsonProcessingException {
+
+        Order order = orderRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        ExchangeReturnRequest exchangeReturnRequest =
+                exchangeReturnRequestRepository.findByOrder(order);
+
+        String requestType = exchangeReturnRequest.getRequestType();
+        String reason = exchangeReturnRequest.getReason();
+
+        Map<String, String> data = new HashMap<>();
+
+        data.put("requestType",requestType);
+        data.put("reason",reason);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(data);
+        System.out.println(json);
+        return new ResponseEntity(json, HttpStatus.OK);
     }
 }
