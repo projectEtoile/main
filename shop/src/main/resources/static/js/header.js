@@ -28,13 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', function () {
     var categoryBtns = document.querySelectorAll('.dropdown button'); // 일반 드롭다운
-/* 헤더 검색 창 기능 시작*/
+    /* 헤더 검색 창 기능 시작*/
 
-function itemNmSearch(){
-   var searchQ = document.getElementById("inp").value;
-var url = "/items?level=&saleItems=&searchBy=itemNm&searchQuery=" + searchQ;
-   window.location.href = url;
-}
+    function itemNmSearch() {
+        var searchQ = document.getElementById("inp").value;
+        var url = "/items?level=&saleItems=&searchBy=itemNm&searchQuery=" + searchQ;
+        window.location.href = url;
+    }
 
 });
 
