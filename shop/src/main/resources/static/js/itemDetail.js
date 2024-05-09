@@ -189,7 +189,7 @@ function calculateTotal() {
                 cache : false,
                 success : function(result, status){
                     alert("주문이 완료되었습니다.");
-//                    location.href='/';
+                        location.reload();
                 },
                 error : function(jqXHR, status, error){
                     if(jqXHR.status == '401'){
@@ -236,7 +236,7 @@ function calculateTotal() {
                  dataType: "json",
                  success: function(result) {
                      alert("주문이 완료되었습니다.");
-                     location.href = '/'; // 주문 성공 후 리디렉션
+                    location.reload(); // 주문 성공 후 리디렉션
                  },
                  error: function(jqXHR) {
                      if (jqXHR.status === 401) { // 인증 오류
