@@ -112,6 +112,8 @@ public class AdminItemController {
                              @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
                              Model model) {
 
+        System.out.println("@@@@@@@@@@@@@@");
+
         if (bindingResult.hasErrors()) {
             return "item/itemForm"; // 유효성 검사 실패시 돌아간다.
             // 하지만 이럼 수정했던 정보가 날아가므로 html에서 유효성 검사를 모두 한다.

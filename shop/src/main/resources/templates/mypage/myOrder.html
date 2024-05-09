@@ -174,9 +174,7 @@
                 <td><span th:text="${order.orderDate}"></span></td>
                 <td>
                     <div th:each="orderItem : ${order.orderItemDTOList}">
-                        <div>
-                            <img th:src="${orderItem.imgUrl}" class="rounded repImg">
-                            <span th:text="${orderItem.itemNm}"></span>
+                        <div th:text="${orderItem.itemNm}">
                         </div>
                     </div>
                 </td>
