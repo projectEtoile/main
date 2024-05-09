@@ -53,11 +53,22 @@ align-items: center;
   line-height: 40px;
   color: black;
 }
+.top-areaInner>p {
+  font-style: "accent";
+  margin: auto;
+  text-decoration: none;
+  font-size: 35px;
+  line-height: 40px;
+  color: black;
+}
 /* 상단 배너 css 끝 */
 
 
 
 #icon-box > a{
+  margin: 0px 10px;
+}
+#icon-box > p{
   margin: 0px 10px;
 }
 
@@ -89,6 +100,9 @@ align-items: center;
 }
 
 .Category-container a {
+  color: #888888;
+}
+.Category-container p {
   color: #888888;
 }
 
@@ -143,8 +157,19 @@ align-items: center;
   padding: 8px 10px;
   transition: background-color 0.3s ease;
 }
+.dropdown-menu li p {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 10px;
+  transition: background-color 0.3s ease;
+}
 
 .dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+.dropdown-menu li p:hover {
   background-color: #f0f0f0;
   color: #000;
 }
@@ -171,6 +196,14 @@ align-items: center;
 }
 
 .sub-dropdown-menu li a {
+  display: flex;
+  /* flex: 1; */
+  padding: 8px 10px;
+  color: #333;
+  text-decoration: none;
+  text-align: left;
+}
+.sub-dropdown-menu li p {
   display: flex;
   /* flex: 1; */
   padding: 8px 10px;
@@ -206,7 +239,19 @@ align-items: center;
   text-decoration: none;
   /* margin: 0 px; */
 }
+.links p {
+  display: inline-block;
+  color: #111111;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  /* margin: 0 px; */
+}
 .links a:hover {
+  color: black;
+  text-decoration: underline;
+}
+.links p:hover {
   color: black;
   text-decoration: underline;
 }

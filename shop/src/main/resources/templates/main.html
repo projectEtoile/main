@@ -2,8 +2,10 @@
 <html lang="ko" xmlns:th="https://www.thymeleaf.org"
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout layout:decorate='~{layouts/layout1}'>
 <head>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   <meta charset="UTF-8">
-  <title>étoile</title>
+  <title>Title</title>
 </head>
 <th:block layout:fragment="content">
 
@@ -51,42 +53,42 @@
     <div class="contents_card">
       <div class="card_blockcontent">
 
-        <a href="https://www.lfmall.co.kr/app/exhibition/menu/501">
+        <a href="/items?level=재킷&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063176411.jpg" alt="자켓">
           <span>자켓</span>
         </a>
 
-        <a href="/app/exhibition/menu/501">
+        <a href="/items?level=맨투맨%2F후드&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447825303.png" alt="가방/잡화">
           <span>맨투맨</span>
         </a>
-        <a href="/app/exhibition/menu/501">
+        <a href="/items?level=니트%2F스웨터&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447809974.png" alt="니트/스웨터">
           <span>니트/스웨터</span>
         </a>
-        <a href="http://127.0.0.1:5500/1/nav+footer/Category_menu_Padding.html">
+        <a href="/items?level=패딩&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447705032.png" alt="스포츠">
           <span>패딩</span>
         </a>
-        <a href="/app/exhibition/menu/501">
+        <a href="/items?level=코트&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447732315.png" alt="명품">
           <span>코트</span>
         </a>
-        <a href="/app/exhibition/menu/501">
+        <a href="/items?level=슬랙스&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447841365.png" alt="가방/잡화">
           <span>슬랙스</span>
         </a>
-        <a href="/app/exhibition/menu/501">
+        <a href="/items?level=Shoes&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063196071.jpg" alt="슈즈">
           <span>슈즈</span>
         </a>
-        <a href="/app/exhibition/menu/501">
+        <a href=/items?level=트레이닝%2F레깅스&searchBy=&searchQuery=&saleItems=>
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2024/2/1708063205831.jpg" alt="스포츠">
-          <span>스포츠</span>
+          <span>트레이닝</span>
         </a>
-        <a href="/app/exhibition/menu/501">
+        <a href="/items?level=블라우스&searchBy=&searchQuery=&saleItems=">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702447858475.png" alt="명품">
-          <span>스커트</span>
+          <span>블라우스</span>
         </a>
       </div>
     </div>
@@ -106,29 +108,29 @@
           </a>
         </li>
         <li><a class="darks"
-               href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1017?af=BNAPC29076&utm_source=naverP_BNAPC29076&utm_medium=display&utm_campaign=Sales&utm_term=%EC%A7%88%EC%8A%A4%ED%8A%9C%EC%96%B4%ED%8A%B8_P%ED%99%88%EB%A7%81%ED%81%ACbrand_J2">
+               href="#">
           <img src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625206665.jpg"
                style="min-height: calc(64.3821px); min-width: calc(137.778px);">
         </a>
         </li>
 
-        <li><a class="jill" href="https://www.lfmall.co.kr/display.do?cmd=getBrandMain&TBRAND_CD=1009"><img
+        <li><a class="jill" href="#"><img
                 src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625209812.jpg"
                 style="min-height: calc(64.3821px); min-width: calc(137.778px);">
         </a>
         </li>
         <li><a class="vanessa"
-               href="https://www.lfmall.co.kr/app/exhibition/brandGroup/1875?brandUrl=ATCORNER"><img
+               href="#"><img
                 src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625213187.jpg"
                 style="min-height: calc(64.3821px); min-width: calc(137.778px);">
         </a>
         </li>
-        <li><a class="a.t" href="https://display.wconcept.co.kr/brand/102725"><img
+        <li><a class="a.t" href="#"><img
                 src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625217046.jpg"
                 style="min-height: calc(64.3821px); min-width: calc(137.778px);">
         </a>
         </li>
-        <li><a class="isabel" href="https://www.isabelmarant.com/kr"><img
+        <li><a class="isabel" href="#"><img
                 src="https://img.lfmall.co.kr/v2/real/origin/card/2023/12/1702625221012.jpg"
                 style="min-height: calc(64.3821px); min-width: calc(137.778px);">
         </a>

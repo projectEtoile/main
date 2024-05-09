@@ -216,7 +216,7 @@ select:focus {
   padding: 0 16px;
 }
 
-ul {
+/*ul {
   display: block;
   list-style-type: disc;
   margin-block-start: 1em;
@@ -224,7 +224,7 @@ ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
-}
+}*/
 
 .smallText {
   font-size: 11px;

@@ -26,9 +26,9 @@
             </div>
             <div class="section2">
                 <div class="search-bar">
-                    <input type="text" class="inp" placeholder="">
+                    <input type="text" id="inp" class="inp" placeholder="상품명을 입력해주세요.">
 
-                    <i class="fas fa-search search-icon" id="searchIcon"></i>
+                    <i class="fas fa-search search-icon" id="searchIcon" onclick="itemNmSearch()"></i>
 
                 </div>
                 <i class="fas fa-search search-icon searchIcon123" id="searchIcon2"></i>
@@ -107,101 +107,102 @@
                         <li>
                             <a href="#">Top</a>
                             <ul class="sub-dropdown-menu">
-                                <li><a href="#">블라우스</a></li>
-                                <li><a href="#">셔츠</a></li>
-                                <li><a href="#">맨투맨/후드</a></li>
-                                <li style="padding-bottom: 80px;"><a href="#">니트/스웨터</a></li>
+                                <li><p>블라우스</p></li>
+                                <li><p>셔츠</p></li>
+                                <li><p>맨투맨/후드</p></li>
+                                <li style="padding-bottom: 80px;"><p>니트/스웨터</p></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#">Outer</a>
                             <ul class="sub-dropdown-menu">
-                                <li><a href="/categoryPadding">패딩</a></li>
-                                <li><a href="/2pro/hyo/hyoju/Category_menu_Outer.html">코트</a></li>
-                                <li><a href="/2pro/hyo/hyoju/Category_menu_Jaket.html">재킷</a></li>
-                                <li style="padding-bottom: 80px;"><a href="#">집업</a></li>
+                                <li><p href="/categoryPadding">패딩</p></li>
+                                <li><p href="/2pro/hyo/hyoju/Category_menu_Outer.html">코트</p></li>
+                                <li><p href="/2pro/hyo/hyoju/Category_menu_Jaket.html">재킷</p></li>
+                                <li style="padding-bottom: 80px;"><p href="#">집업</p></li>
 
                             </ul>
                         </li>
                         <li>
                             <a href="#">Pants</a>
                             <ul class="sub-dropdown-menu">
-                                <li><a href="#">슬랙스</a></li>
-                                <li><a href="#">청바지</a></li>
-                                <li style="padding-bottom: 80px;"><a href="#">트레이닝/레깅스</a></li>
+                                <li><p href="#">슬랙스</p></li>
+                                <li><p href="#">청바지</p></li>
+                                <li style="padding-bottom: 80px;"><p href="#">트레이닝/레깅스</p></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#">Skirt/Dress</a>
+                            <p href="#">Skirt/Dress</p>
                             <ul class="sub-dropdown-menu">
-                                <li><a href="#">미니</a></li>
-                                <li><a href="#">미디</a></li>
-                                <li style="padding-bottom: 95px;"><a href="#">롱</a></li>
+                                <li><p href="#">미니</p></li>
+                                <li><p href="#">미디</p></li>
+                                <li style="padding-bottom: 95px;"><p href="#">롱</p></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#">Shoes</a>
+                            <p href="#">Shoes</p>
                             <ul class="sub-dropdown-menu">
-                                <li><a href="#">부츠</a></li>
-                                <li><a href="#">힐/로퍼</a></li>
-                                <li><a href="#">운동화</a></li>
-                                <li style="padding-bottom: 80px;"><a href="#">슬리퍼</a></li>
+                                <li><p href="#">부츠</p></li>
+                                <li><p href="#">힐/로퍼</p></li>
+                                <li><p href="#">운동화</p></li>
+                                <li style="padding-bottom: 80px;"><p href="#">슬리퍼</p></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
                 <div class="dropdown" id="pcBt">
-                    <button id="categoryBtn1">Top</button>
+                    <button onclick="itemsPage(this)" type="button" id="categoryBtn1">Top</button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">블라우스</a></li>
-                        <li><a href="#">셔츠</a></li>
-                        <li><a href="#">맨투맨/후드</a></li>
-                        <li><a href="#">니트/스웨터</a></li>
+                        <li><p onclick="itemsPage(this)" >블라우스</p></li>
+                        <li><p onclick="itemsPage(this)">셔츠</p></li>
+                        <li><p onclick="itemsPage(this)" >맨투맨/후드</p></li>
+                        <li><p onclick="itemsPage(this)" >니트/스웨터</p></li>
                     </ul>
                 </div>
 
                 <div class="dropdown" id="pcBt">
-                    <button id="categoryBtn2">Outer</button>
+                    <button onclick="itemsPage(this)" type="button" id="categoryBtn2">Outer</button>
                     <ul class="dropdown-menu">
-                        <li><a href="/items/패딩/1">패딩</a></li>
-                        <li><a href="/items/코트/1">코트</a></li>
-                        <li><a href="/items/재킷/1">재킷</a></li>
-                        <li><a href="/items/집업/1">집업</a></li>
+                        <li><p onclick="itemsPage(this)">패딩</p></li>
+                        <li><p onclick="itemsPage(this)">코트</p></li>
+                        <li><p onclick="itemsPage(this)">재킷</p></li>
+                        <li><p onclick="itemsPage(this)">집업</p></li>
                     </ul>
                 </div>
 
                 <div class="dropdown" id="pcBt">
-                    <button id="categoryBtn3">Pants</button>
+                    <button onclick="itemsPage(this)" type="button" id="categoryBtn3">Pants</button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">슬랙스</a></li>
-                        <li><a href="#">청바지</a></li>
-                        <li><a href="#">트레이닝/레깅스</a></li>
+                        <li><p onclick="itemsPage(this)">슬랙스</p></li>
+                        <li><p onclick="itemsPage(this)">청바지</p></li>
+                        <li><p onclick="itemsPage(this)">트레이닝/레깅스</p></li>
                     </ul>
                 </div>
 
                 <div class="dropdown" id="pcBtn">
-                    <button id="categoryBtn4">Skirt/Dress</button>
+                    <button onclick="itemsPage(this)" type="button" id="categoryBtn4">Skirt/Dress</button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">미니</a></li>
-                        <li><a href="#">미디</a></li>
-                        <li><a href="#">롱</a></li>
+                        <li><p onclick="itemsPage(this)">미니</p></li>
+                        <li><p onclick="itemsPage(this)">미디</p></li>
+                        <li><p onclick="itemsPage(this)">롱</p></li>
                     </ul>
                 </div>
 
                 <div class="dropdown" id="pcBt">
-                    <button id="categoryBtn5">Shoes</button>
+                    <button onclick="itemsPage(this)" type="button" id="categoryBtn5">Shoes</button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">부츠</a></li>
-                        <li><a href="#">힐/로퍼</a></li>
-                        <li><a href="#">운동화</a></li>
-                        <li><a href="#">슬리퍼</a></li>
+                        <li><p onclick="itemsPage(this)">부츠</p></li>
+                        <li><p onclick="itemsPage(this)">힐/로퍼</p></li>
+                        <li><p onclick="itemsPage(this)">운동화</p></li>
+                        <li><p onclick="itemsPage(this)">슬리퍼</p></li>
                     </ul>
                 </div>
             </div>
             <div class="links">
-                <a href="#">NEW</a>
-                <a href="#">RANK</a>
-                <a href="#">SALE</a>
+                <a href="/items?level=&saleItems=&searchBy=itemNm&searchQuery=">NEW</a>
+
+                <a href="/items?level=&saleItems=saleItems&searchBy=itemNm&searchQuery=">SALE</a>
+                <a href="/items/rank">RANK</a>
             </div>
         </div>
     </nav>
