@@ -114,6 +114,7 @@
                 <input name="itemImgFile" accept=".png, .jpeg, .jpg" onchange="PreviewImage(this);" type="file"
                        class="user_profile_img"/>
 
+
             </div>
 
             <div class="box">
@@ -129,6 +130,7 @@
             </div>
             <p th:if="${#fields.hasErrors('material')}" th:errors="*{material}"
                class="fieldError">Incorrect data</p>
+
 
             <!--          <div class="box">
                           <label for="size">치수<span style="color: red;"> *</span></label><br>
