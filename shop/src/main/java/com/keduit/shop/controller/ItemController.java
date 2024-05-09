@@ -106,7 +106,7 @@ public class ItemController {
                                         @PathVariable("page") Optional<Integer> page,
                                         ItemSearchDTO itemSearchDTO){
 
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 12);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
 
         Page<Item> items = itemService.getItemPage(itemSearchDTO, pageable);
 
