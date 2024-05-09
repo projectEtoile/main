@@ -1,17 +1,21 @@
 package com.keduit.shop.controller;
 
-import com.keduit.shop.dto.AdminItemSearchDTO;
-import com.keduit.shop.dto.AdminMemberSearchDTO;
-import com.keduit.shop.dto.MemberFormDTO;
+import com.keduit.shop.dto.*;
 import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Member;
+import com.keduit.shop.repository.MemberRepository;
+import com.keduit.shop.repository.MemberRepositoryCustom;
 import com.keduit.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +25,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
+import static com.keduit.shop.entity.QMember.member;
 
 @Controller
 @RequestMapping("/members")
@@ -30,15 +41,11 @@ public class MemberController {
     //memberservice생성자 주입
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
+    private String key;
+    // key와 해당 유효시간을 저장할 맵
+    private Map<String, LocalDateTime> keyExpirationMap = new HashMap<>();
 
-
-    /*@PostMapping("/new")
-    public String memberForm(MemberFormDTO memberFormDTO){
-        Member member = Member.createMember(memberFormDTO, passwordEncoder);
-        memberService.saveMember(member);
-
-        return "redirect:/";
-    }*/
 
     @GetMapping("/new")
     public String memberForm(Model model){
@@ -88,12 +95,12 @@ public class MemberController {
         model.addAttribute("loginErrorMsg", "아이디 혹은 비밀번호를 확인해주세요");
         return "member/login";
     }
-//@PostMapping("/findpw")
-//    public String findPw(@RequestBody UserPwRequestDto userPwRequestDto) {
-//        UserService.userCheck(userPwRequestDto);
-//        return "/member/pwsuccess";
-//
-//}
+/*@PostMapping("/findpw")
+    public String findPw(@RequestBody UserPwRequestDto userPwRequestDto) {
+       UserService.userCheck(userPwRequestDto);
+        return "/member/pwsuccess";
+
+}*/
 
     /*비밀번호 찾기*/
 //    @GetMapping("/findLoginPw")
@@ -101,27 +108,75 @@ public class MemberController {
 //        return "member/findLoginPw";
 //    }
 
-    @GetMapping("/findLoginPw")
-    public String findLoginPw(){
+    @GetMapping("/pw")
+        public String findpw(){
         return "member/pwInquiry";
     }
-
-@GetMapping("/pwRestSuccess")
+    @GetMapping("/pwRestSuccess")
     public String showPwRestSuccessPage(){
         return "pwRestSuccess";
-}
-
-
-@GetMapping("/pw")
-    public String findpw(){
-        return "member/pwInquiry";
     }
-/*    @GetMapping("/doFindLoginPw")
-    public String doFindLoginPw(String email){
-        if(Utilit.empty(email)){
-            return Utility.jsHistoryBack("이메일을 입력해주세요");
-        }
+
+
+    // 비밀번호 재설정 페이지로 이동
+
+    // 비밀번호 재설정 폼에서 새로운 비밀번호를 입력받아 처리하는 메서드
+    /*@PostMapping("/pw")
+    public String resetPassword(@RequestParam("memberEmail") String memberEmail, Model model) {
+        // 이메일로 임시 비밀번호 생성 및 전송
+        MailDto dto = memberService.createMailAndChangePassword(memberEmail);
+        memberService.mailSend(dto);
+
+        // 비밀번호 재설정 성공 페이지로 이동
+        return "member/pwRestSuccess";
     }*/
+
+
+
+    /*@PostMapping("/sendEmail")
+    public String sendEmail(@RequestParam("memberEmail") String memberEmail) {
+        // 메일 전송을 위한 MailDto 생성
+        MailDto dto = memberService.createMailAndChangePassword(memberEmail);
+        // 생성된 메일을 전송
+        memberService.mailSend(dto);
+        return "member/login";
+    }*/
+
+    @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
+    public ResponseEntity<Void> findPassword(@RequestBody Map<String, String> requestBody
+    ) {//@RequestBody:컨트롤러에서 요청 데이터를 JSON 형식으로 받기 위해
+        // 요청 데이터에서 이메일 주소 추출
+        String email = requestBody.get("memberEmail");
+
+        // 이메일 주소가 유효한지 검증
+        if (email == null || email.isEmpty()) {
+            // 이메일이 유효하지 않은 경우 또는 빈 문자열일 경우
+            return ResponseEntity.badRequest().build();
+        }
+
+        System.out.println("findpassword====================");
+        try {
+            Member member10 = memberRepository.findByEmail(email);
+
+//            member10.setPassword("12345678");
+            String newPw = passwordEncoder.encode("12345678");
+
+            member10.setPassword(newPw);
+
+            memberRepository.save(member10);
+
+
+            // 이메일 발송
+            memberService.sendEmail(email, "12345678");
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // 예외 발생 시 로깅
+            System.out.println("예외로 가긴가요~~~~~~~~~~~~~~~~");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
 
 //    ------------------- 마이페이지 컨트롤러 ----------------------
