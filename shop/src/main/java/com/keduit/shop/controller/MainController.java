@@ -50,7 +50,7 @@ public class MainController {
       return "main";
     }
 
-    List<Item> newItems = itemRepository.findFirst20ByOrderByIdDesc();
+    List<Item> newItems = itemRepository.findFirst20ByOrderByIdAsc();
     for (Item newItem : newItems){
       itemFormDTOS.add(itemService.getItemDtl(newItem.getId()));
     }
