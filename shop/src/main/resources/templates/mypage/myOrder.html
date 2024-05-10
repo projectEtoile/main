@@ -153,10 +153,10 @@
             <colgroup>
                 <col style="width:30px;">
                 <col style="width:108px;">
-                <col style="width:326px;">
+                <col style="width:400px;">
                 <col style="width:90px;">
                 <col style="width:100px;">
-                <col style="width:90px;">
+                <col style="width:70px;">
             </colgroup>
             <thead>
             <tr class="firstline2">
@@ -174,9 +174,7 @@
                 <td><span th:text="${order.orderDate}"></span></td>
                 <td>
                     <div th:each="orderItem : ${order.orderItemDTOList}">
-                        <div>
-                            <img th:src="${orderItem.imgUrl}" class="rounded repImg">
-                            <span th:text="${orderItem.itemNm}"></span>
+                        <div th:text="${orderItem.itemNm}">
                         </div>
                     </div>
                 </td>

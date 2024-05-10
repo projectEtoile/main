@@ -30,7 +30,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findBydiscountRateNot(float discountRate);
 
-    List<Item> findFirst20ByOrderByIdDesc();
+    List<Item> findFirst20ByOrderByIdAsc();
 
     /*위에랑 다르게 JPQL사용하기*/
     @Query("select i from Item i where i.itemText like" +

@@ -1,3 +1,16 @@
+
+function itemsPage(element){
+var level = element.textContent;
+ var searchBy = "";
+    var searchQuery = "";
+var url = "/items?level="
++ encodeURIComponent(level)
++ "&searchBy=" + encodeURIComponent(searchBy)
++ "&searchQuery=" + encodeURIComponent(searchQuery)
++ "&saleItems=";
+  window.location.href = url;
+}
+
 function navigateTo(url) {
     window.location.href = url; // 새로운 페이지로 이동
 }
@@ -15,6 +28,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', function () {
     var categoryBtns = document.querySelectorAll('.dropdown button'); // 일반 드롭다운
+    /* 헤더 검색 창 기능 시작*/
+
+    function itemNmSearch() {
+        var searchQ = document.getElementById("inp").value;
+        var url = "/items?level=&saleItems=&searchBy=itemNm&searchQuery=" + searchQ;
+        window.location.href = url;
+    }
+
+});
+
+
+
+/* 헤더 검색 창 기능 끝*/
+
+document.addEventListener('DOMContentLoaded', function() {
+  var categoryBtns = document.querySelectorAll('.dropdown button'); // 일반 드롭다운
 
     categoryBtns.forEach(function (btn) { // 일반 드롭다운
         var dropdownMenu = btn.nextElementSibling; // 일반 드롭다운

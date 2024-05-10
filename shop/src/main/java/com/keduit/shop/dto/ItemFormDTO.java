@@ -61,6 +61,8 @@ public class ItemFormDTO {
     @NotNull(message = "사이즈별 재고수량은 필수 입력입니다 -재고 없을 시 0 입력")
     private int stockFree;
 
+    private Double discountRate; // 할인율
+
     private static ModelMapper modelMapper = new ModelMapper();
 
     // ItemFormDTO -> Item

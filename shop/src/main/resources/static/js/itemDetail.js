@@ -135,14 +135,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 총 금액을 계산하는 함수
-  function calculateTotal() {
-    var priceElement = document.getElementById("total2").querySelector("span");
-    var price = parseInt(priceElement.dataset.price);
-    var quantity = parseInt(quantityInput.value);
-    var total = price * quantity;
-    var formattedTotal = total.toLocaleString();
-    priceElement.textContent = formattedTotal;
-  }
+function calculateTotal() {
+    var priceElement = document.getElementById("salePrice"); // 할인된 가격 요소 가져오기
+    var price = parseInt(priceElement.textContent.replace(/\D/g, "")); // 가격 파싱
+    var quantity = parseInt(document.getElementById("quantity").value); // 수량 가져오기
+    var total = price * quantity; // 총 가격 계산
+    var formattedTotal = total.toLocaleString(); // 총 가격 포맷팅
+    document.getElementById("total2").querySelector("span").textContent = formattedTotal + " 원"; // 총 가격 표시
+}
 });
 
 
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 cache : false,
                 success : function(result, status){
                     alert("주문이 완료되었습니다.");
-//                    location.href='/';
+                        location.reload();
                 },
                 error : function(jqXHR, status, error){
                     if(jqXHR.status == '401'){
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
                  dataType: "json",
                  success: function(result) {
                      alert("주문이 완료되었습니다.");
-                     location.href = '/'; // 주문 성공 후 리디렉션
+                    location.reload(); // 주문 성공 후 리디렉션
                  },
                  error: function(jqXHR) {
                      if (jqXHR.status === 401) { // 인증 오류
@@ -303,79 +303,79 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function() {
   // 모달 열기 버튼 클릭 시 모달 열기
 $("#openModalButton").click(function() {
-event.preventDefault();
+    event.preventDefault();
 
-var productName = document.querySelector(".prod_name").textContent;
+    var productName = document.querySelector(".prod_name").textContent;
 
-// 사이즈
-var selectElement = document.querySelector("select[name='size']");
-var selectedIndex = selectElement.selectedIndex;
-var selectedValue = selectElement.options[selectedIndex].value;
+    // 사이즈
+    var selectElement = document.querySelector("select[name='size']");
+    var selectedIndex = selectElement.selectedIndex;
+    var selectedValue = selectElement.options[selectedIndex].value;
     if (selectedValue.length === 0) {
         alert("선택된 사이즈가 없습니다.");
         return;
     }
 
-// 갯수
+    // 갯수
     var quantityInput = document.getElementById("quantity");
+    var quantity = parseInt(quantityInput.value);
 
-var price = document.getElementById("realPrice").textContent;
-console.log(price);
+    var price = document.getElementById("salePrice").textContent;
+    var totalPrice = parseInt(price.replace(/\D/g, "")) * quantity;
 
-document.querySelector(".goods_span").textContent = productName;
-document.getElementById("mountt").textContent = quantityInput.value;
-document.getElementById("realPriceM").textContent = price;
-document.getElementById("totalPriceM").textContent = price*quantityInput.value;
+    console.log("Total Price:", totalPrice);
 
+    document.querySelector(".goods_span").textContent = productName;
+    document.getElementById("mountt").textContent = quantity;
+    document.getElementById("realPriceM").textContent = price;
+    document.getElementById("totalPriceM").textContent = totalPrice;
 
     var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-                var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-                // API 엔드포인트
-                var apiUrl = '/payment';
+    // API 엔드포인트
+    var apiUrl = '/payment';
 
-               fetch(apiUrl, {
-                   method: 'GET',
-                   headers: {
-                       'Content-Type': 'application/json',
-                       [csrfHeader]: csrfToken
-                   }
-               })
-           .then(response => {
-               if (!response.ok) {
-                   return;
-               }
-               return response.json();
-           })
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.message)
+        if(data.message === 'notFound'){
+            alert('기본 주소지를 설정해주세요.');
+            return;
+        }
 
-               .then(data => {
-               console.log(data.message)
-                    if(data.message === 'notFound'){
-                          alert('기본 주소지를 설정해주세요.');
-                          return;
-                    }
+        // 받은 데이터에서 member와 address 추출
+        const member = data.member;
+        const address = data.address;
 
-                   // 받은 데이터에서 member와 address 추출
-                   const member = data.member;
-                   const address = data.address;
+        // 여기서부터 데이터를 활용하여 필요한 작업을 수행
+        document.getElementById("nameM").innerText = member.name;
+        document.getElementById("emailM").innerText = member.email;
+        document.getElementById("postM").innerText = address.postcode;
+        document.getElementById("jiM").innerText = address.jibunAddress;
+        document.getElementById("detM").innerText = address.detailAddress;
 
-                   // 여기서부터 데이터를 활용하여 필요한 작업을 수행
-
-                   document.getElementById("nameM").innerText  = member.name;
-                   document.getElementById("emailM").innerText  = member.email;
-                   document.getElementById("postM").innerText  = address.postcode;
-                   document.getElementById("jiM").innerText  = address.jibunAddress;
-                   document.getElementById("detM").innerText  = address.detailAddress;
-
-
- $("#myModal").css("display", "block");
-                   // 예를 들어, HTML에 표시하거나 다른 작업을 수행할 수 있습니다.
-               })
-               .catch(error => {
-                   alert('로그인 후 사용 가능합니다.');
-                    return;
-               });
+        $("#myModal").css("display", "block");
+        // 예를 들어, HTML에 표시하거나 다른 작업을 수행할 수 있습니다.
+    })
+    .catch(error => {
+        alert('로그인 후 사용 가능합니다.');
+        return;
+    });
 });
+
 
   // 모달 닫기 버튼 클릭 시 모달 닫기
   $("#btnCancel").click(function() {
@@ -563,20 +563,39 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-async function submitQuestion() {
-    // 질문 제출 로직은 그대로 유지하고, 성공적으로 등록된 질문을 받아올 때 질문 목록을 다시 불러오는 부분을 추가합니다.
-    try {
-        // 질문 제출 로직...
-        if (response.ok) {
-            alert('질문이 성공적으로 등록되었습니다.');
-            // 질문 목록에 새 질문 추가
-            loadQuestions();
-        } else {
-            alert('질문을 등록하는 데 실패했습니다.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('질문을 등록하는 동안 오류가 발생했습니다.');
-    }
-}
+/*할인율적용*/
+document.addEventListener('DOMContentLoaded', function() {
+    updateDiscountedPriceAndRate();
+});
 
+function updateDiscountedPriceAndRate() {
+    var originalPriceElement = document.querySelector('.normal em');
+    var originalPrice = parseFloat(originalPriceElement.textContent.replace(/[^0-9.-]+/g, ""));
+    originalPriceElement.textContent = originalPrice.toLocaleString();
+    var discountRateElement = document.getElementById('discountRateMessage');
+    var discountRate = parseFloat(discountRateElement.getAttribute('data-rate')).toFixed(1);
+    var discountValueElement = discountRateElement.querySelector('.discountValue');
+    var discountTextElement = document.querySelector('.discountText');
+
+
+    var discountedPrice = originalPrice;
+
+    if (discountRate === "1.0") {
+        discountedPrice = originalPrice;
+        discountValueElement.style.display = 'none';
+        discountTextElement.style.display = 'none';
+        originalPriceElement.classList.remove('strikethrough'); // 할인 클래스 제거
+    } else {
+        var discountMultiplier = 1 - discountRate;
+        discountedPrice = originalPrice - (originalPrice * discountMultiplier);
+        discountValueElement.textContent = ((1 - discountRate) * 100).toFixed(0) + '%';
+        discountValueElement.style.display = 'inline';
+        discountTextElement.style.display = 'inline';
+        originalPriceElement.classList.add('strikethrough'); // 할인 클래스 추가
+    }
+
+    discountedPrice = Math.floor(discountedPrice);
+    document.getElementById('salePrice').textContent = discountedPrice.toLocaleString() + ' 원';
+    document.getElementById('originalPrice').textContent = originalPrice.toLocaleString() + ' 원';
+     document.getElementById('salePriceTotal').textContent = discountedPrice.toLocaleString() + ' 원';
+}

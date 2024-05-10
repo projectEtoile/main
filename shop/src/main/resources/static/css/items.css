@@ -1,0 +1,126 @@
+/* 카드 호버 효과 */
+.saleProduct1 {
+  transition: transform 0.3s;
+}
+
+.saleProduct1:hover {
+  transform: scale(1.05); /* 호버 시 조금 확대됨 */
+}
+
+.text-logo-title,
+.ProductName,
+.ProductPrice_lastprice {
+  position: relative;
+  z-index: 1;
+}
+
+/* 호버 끝 */
+/* Pagination Container */
+.pagination-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Pagination List */
+.pagination-list {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+}
+
+/* Pagination Item */
+.pagination-item {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+/* Pagination Link */
+.pagination-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ff7eb9; /* 핑크색 */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Pagination Link Hover */
+.pagination-link:hover {
+  background-color: #ff63a5; /* 더 연한 핑크색 */
+}
+
+/* Disabled Pagination Link */
+.pagination-link.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Active Page Item */
+.pagination-item.active .pagination-link {
+  background-color: #ffc0cb;
+}
+
+/* Previous & Next Buttons */
+.pagination-item-previous, .pagination-item-next {
+  font-weight: bold;
+}
+
+/* Previous & Next Buttons Icons */
+.pagination-item-previous::before, .pagination-item-next::after {
+  content: '\2039'; /* Previous: '<' symbol */
+  font-size: 14px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.pagination-item-next::after {
+  content: '\203A'; /* Next: '>' symbol */
+  margin-left: 5px;
+}
+
+/* Disabled Previous & Next Buttons Icons */
+.pagination-link.disabled::before, .pagination-link.disabled::after {
+  opacity: 0.5;
+}
+
+/* Active Previous & Next Buttons Icons */
+.pagination-item-previous.active::before, .pagination-item-next.active::after {
+  opacity: 0.8;
+}
+
+/* Page Number */
+.page-item {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+.page-link {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #ff7eb9; /* 핑크색 */
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #ff63a5; /* 더 연한 핑크색 */
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Page Number Hover */
+.page-link:hover {
+  background-color: #ff63a5; /* 더 연한 핑크색 */
+}
+
+/* Active Page Number */
+.page-item.active .page-link {
+  background-color: #ffc0cb;
+}
+/* Pagination Link Text Color */
+.pagination-link, .page-link {
+  color: #fff; /* 흰색 텍스트 */
+}
+
+/* Disabled Pagination Link Text Color */
+.pagination-link.disabled, .page-link.disabled {
+  color: #666; /* 회색 텍스트 */
+}

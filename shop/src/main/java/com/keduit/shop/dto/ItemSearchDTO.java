@@ -10,10 +10,17 @@ import lombok.ToString;
 @ToString
 public class ItemSearchDTO {
 
-    private String searchBy1;
+
+    private String level;
+
+    private String searchBy;
     // itemName
 
-    private String searchQuery1 = "";
+    private String saleItems;
+
+    private String searchQuery = "";
+
+
 
 }
 

@@ -11,6 +11,17 @@
 
 }
 
+td {
+  text-align: center;
+}
+
+.rounded.repImg {
+  width: 60px;  /* 너비를 150px로 설정 */
+  height: 60px; /* 높이를 100px로 설정 */
+  border-radius: 5px; /* 모서리를 둥글게 처리 */
+}
+
+
 .dateContainer{
   background-color:#f2f2f2;
   height: 70px;
@@ -47,7 +58,7 @@
     margin-left: 5px;
     cursor: pointer;
 }
-ul {
+/*ul {
   display: block;
   list-style-type: disc;
   margin-block-start: 1em;
@@ -55,7 +66,7 @@ ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
-}
+}*/
 
 
 /* button li{

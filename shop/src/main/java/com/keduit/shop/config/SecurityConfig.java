@@ -42,7 +42,7 @@ public class SecurityConfig {
         // anyRequest().authenticated() 위의 경우 이외의 페이지는 인증 절차가 필요.
         http.authorizeRequests()
                 .mvcMatchers("/", "/members/**",
-                        "/item/**", "/images/**", "/image/**").permitAll()
+                        "/item/**","/items/**", "/images/**", "/image/**","error","favicon.ico","/rankSearch").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
