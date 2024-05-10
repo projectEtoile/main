@@ -107,31 +107,32 @@ public class MemberService implements UserDetailsService {
         address.setDetailAddress(addressDTO.getDetailAddress());
         address.setExtraAddress(addressDTO.getExtraAddress());
 
-        System.out.println(addressDTO.getSelectAddress());
+        Member member =  memberRepository.findByEmail(email);
+
+        address.setMember(member);
+
+        if(addressRepository.findAllByMember(member).isEmpty()){
+            address.setSelectAddress(true);
+            addressRepository.save(address);
+            return;
+        }
 
         if(addressDTO.getSelectAddress().equals(true)){
-            List<Address> allAddresses = addressRepository.findAllByMember(address.getMember());
+
+
+
+            List<Address> allAddresses = addressRepository.findAllByMember(member);
             for (Address address1 : allAddresses) {
                 address1.setSelectAddress(false);
             }
             addressRepository.saveAll(allAddresses);
+            System.out.println("다른 모든 add");
 
             address.setSelectAddress(true);
 
         }else{
             address.setSelectAddress(false);
         }
-
-
-
-
-        Member member =  memberRepository.findByEmail(email);
-
-        if(addressRepository.findAllByMember(member).isEmpty()){
-            address.setSelectAddress(true);
-        }
-        address.setMember(member);
-
         addressRepository.save(address);
     }
 

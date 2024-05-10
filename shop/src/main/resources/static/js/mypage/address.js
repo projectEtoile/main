@@ -113,6 +113,7 @@ $("#modBtn").show();
     $(".close, .modal").click(function(event) {
         if (event.target == $("#myModal")[0] || event.target.className == "close") {
             $("#myModal").css("display", "none");
+            location.reload();
         }
     });
 });
