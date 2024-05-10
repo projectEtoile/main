@@ -40,7 +40,6 @@ public class Member extends BaseTimeEntity{
 
     private Integer age;
 
-
     private boolean emailequals = false;
 
 
