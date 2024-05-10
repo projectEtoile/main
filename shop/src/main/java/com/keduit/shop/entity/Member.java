@@ -52,7 +52,7 @@ public class Member extends BaseTimeEntity{
         member.setEmail(memberFormDTO.getEmail());
         String password = passwordEncoder.encode(memberFormDTO.getPassword());
         member.setPassword(password);
-        member.setRole(Role.USER);
+        member.setRole(Role.ADMIN);
         member.setAge(memberFormDTO.getAge());
         member.setSex(memberFormDTO.getSex());
         return member;
