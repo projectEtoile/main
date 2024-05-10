@@ -36,6 +36,14 @@
             </div>
 
             <div class="section" id="icon-box">
+
+                <li sec:authorize="hasRole('ROLE_ADMIN')" style="margin-right: 20px;">
+                    <a href="/admin/main">
+                        <span class="material-symbols-outlined">shield_person</span>
+                    </a>
+                </li>
+
+
                 <li sec:authorize="isAuthenticated()">
                     <a href="/members/logout">
                         <span class="material-symbols-outlined">logout</span>
@@ -153,10 +161,10 @@
                 <div class="dropdown" id="pcBt">
                     <button onclick="itemsPage(this)" type="button" id="categoryBtn1">Top</button>
                     <ul class="dropdown-menu">
-                        <li><p onclick="itemsPage(this)" >블라우스</p></li>
+                        <li><p onclick="itemsPage(this)">블라우스</p></li>
                         <li><p onclick="itemsPage(this)">셔츠</p></li>
-                        <li><p onclick="itemsPage(this)" >맨투맨/후드</p></li>
-                        <li><p onclick="itemsPage(this)" >니트/스웨터</p></li>
+                        <li><p onclick="itemsPage(this)">맨투맨/후드</p></li>
+                        <li><p onclick="itemsPage(this)">니트/스웨터</p></li>
                     </ul>
                 </div>
 
