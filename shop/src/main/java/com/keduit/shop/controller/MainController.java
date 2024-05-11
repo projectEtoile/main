@@ -35,7 +35,7 @@ public class MainController {
   @GetMapping("/")
   public String main(Model model, AdminItemSearchDTO searchDTO, Optional<Integer> page) {
 
-    List<Item> discountRateItems = itemRepository.findTop10ByDiscountRateNotOrderByIdDesc(1f);
+    List<Item> discountRateItems = itemRepository.findTop12ByDiscountRateNotOrderByIdDesc(1f);
 
     List<ItemFormDTO> itemFormDTOS = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class MainController {
       return "main";
     }
 
-    List<Item> newItems = itemRepository.findFirst10ByOrderByIdDesc();
+    List<Item> newItems = itemRepository.findFirst12ByOrderByIdDesc();
     for (Item newItem : newItems){
       itemFormDTOS.add(itemService.getItemDtl(newItem.getId()));
     }
