@@ -28,9 +28,9 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findByLevel1(String level1);
 
-    List<Item> findBydiscountRateNot(float discountRate);
+    List<Item> findTop10ByDiscountRateNotOrderByIdDesc(float discountRate);
 
-    List<Item> findFirst20ByOrderByIdDesc();
+    List<Item> findFirst10ByOrderByIdDesc();
 
     /*위에랑 다르게 JPQL사용하기*/
     @Query("select i from Item i where i.itemText like" +

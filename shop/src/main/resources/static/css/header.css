@@ -289,16 +289,6 @@ align-items: center;
   justify-content: center;
 }
 
-.search-bar input[type="text"] {
-  flex: 2;
-  height: 35px;
-  /* width: 50%; */
-  padding: 10px;
-  margin: 8px 50px;
-  /* box-sizing: border-box; */
-  padding-left: 25px;
-  padding-right: 25px;
-}
 .inp:hover:not(:disabled) {
   border: 1px solid #333;
 }
@@ -336,7 +326,7 @@ border-radius: 100px;
 
 /* 메인 이미지 슬라이더 */
 
-* {box-sizing:border-box}
+/** {box-sizing:border-box}*/
 
 /* Slideshow container */
 .slideshow-container {
@@ -512,4 +502,15 @@ border-radius: 100px;
 #rank-title {
   letter-spacing: -1px;
   font-size: 14px;
+}
+
+.search-bar input[type="text"] {
+  flex: 2;
+  height: 35px;
+  /* width: 50%; */
+  padding: 10px;
+  margin: 0px 50px;
+  /* box-sizing: border-box; */
+  padding-left: 25px;
+  padding-right: 25px;
 }
