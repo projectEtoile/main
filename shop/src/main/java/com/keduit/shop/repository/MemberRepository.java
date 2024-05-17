@@ -29,6 +29,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> ,MemberRep
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.sex = :sex")
     Long countMembersBySex(@Param("sex")Sex sex);
+
+    @Query("SELECT COUNT(m) FROM Member m WHERE m.age BETWEEN :startAge AND :endAge")
+    Long countMembersByAgeRange(@Param("startAge") int startAge, @Param("endAge") int endAge);
+
 }
 
 

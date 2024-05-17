@@ -130,7 +130,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .offset(pageable.getOffset()) // 데이터를 가지고 올 시작 인덱스 즉.0이게됬다
                 .limit(pageable.getPageSize()) // 한 번에 가지고 올 최대 갯수 즉 10이 되겠다. pageable 에서 설정한 값이 담김.
                 .fetch();
-
         // 이제 total 값을 구해보자
         long total = jpaQueryFactory
                 .select(Wildcard.count)

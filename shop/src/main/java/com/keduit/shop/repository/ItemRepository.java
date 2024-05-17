@@ -22,8 +22,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);/*금액큰거부터 나오게하기*/
 
-
-
     Page<Item> findPageBy(Pageable page);
 
     List<Item> findByLevel1(String level1);
@@ -42,4 +40,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
             " %:itemText% order by i.price desc", nativeQuery = true)
     List<Item> findByItemTextByNative(@Param("itemText") String itemText);
 
+    List<Item> findByTotalStockLessThanEqual(int threshold);
 }

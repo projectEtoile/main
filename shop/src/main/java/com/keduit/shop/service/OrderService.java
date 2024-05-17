@@ -212,7 +212,6 @@ public Page<Order> getAdminOrderPage(AdminOrderSearchDTO adminOrderSearchDTO, Pa
         List<Order> orderList = orderRepository.findByOrderStatus(currentState1);
 
         if(orderList.isEmpty()){
-            System.out.println("@@@@@@@@@@@@@@@@@@@@4444@@@");
             return new ResponseEntity<>(currentState+" 의 상태인 주문이 없습니다.",HttpStatus.BAD_REQUEST);
         }
 
