@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<!-- 사용자 CSS 추가 -->
+
+<div layout:fragment="content">
+    <link th:href="@{/css/admin/changeInfo.css}" rel="stylesheet" type="text/css">
+    <body>
+    <main>
+        <h1>계정 정보</h1>
+        <p style="font-size: 20px;">내 계정</p>
+        <div class="updtBox">
+            <p> * 계정정보가 변경되었을 경우 업데이트 해주세요.</p>
+        </div>
+        <div class="accountBox">
+            <dl>
+                <dt>ID</dt>
+                <dd> userIDtext</dd>
+            </dl>
+            <dl>
+                <dt>이름</dt>
+                <dd> <input type="text" name="name" id="name" value="송진영"></dd>
+            </dl>
+            <dl>
+                <dt>비밀번호</dt>
+                <dd>
+
+
+
+                    <button><a href="/admin/changePw" style="color: black;">변경하기</a></button>
+                </dd>
+            </dl>
+            <dl>
+                <dt>전화번호</dt>
+                <dd>
+                    <input type="text" id="phone" name="phone" value="010-1234-1234"
+                           placeholder="'-' 포함 입력">
+                    <button>인증하기</button>
+                </dd>
+            </dl>
+            <dl>
+                <dt>이메일</dt>
+                <dd>
+                    <input type="text" id="email" name="email" value="asdqwe@naver.com"
+                           placeholder="이메일">
+
+                    <button>인증하기</button>
+
+                </dd>
+            </dl>
+        </div>
+        <p>관리자 개인정보 변경은 쇼핑몰 마이페이지에서 할 수 있습니다 ( 현재 페이지는 기능이 없습니다 )</p>
+        <div class="butBox">
+            <button class="smbt">취소</button>
+            <button>저장하기</button>
+        </div>
+    </main>
+    </body>
+</div>
+
+</html>
+
+
+
+
+

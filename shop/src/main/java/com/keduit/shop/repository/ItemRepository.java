@@ -22,14 +22,13 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);/*금액큰거부터 나오게하기*/
 
-
-
     Page<Item> findPageBy(Pageable page);
 
     List<Item> findByLevel1(String level1);
 
-    List<Item> findBydiscountRateNot(float discountRate);
+    List<Item> findTop12ByDiscountRateNotOrderByIdDesc(float discountRate);
 
+    List<Item> findFirst12ByOrderByIdDesc();
     List<Item> findFirst20ByOrderByIdAsc();
 
     /*위에랑 다르게 JPQL사용하기*/
@@ -42,4 +41,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
             " %:itemText% order by i.price desc", nativeQuery = true)
     List<Item> findByItemTextByNative(@Param("itemText") String itemText);
 
+    List<Item> findByStockNumberLessThanEqualOrderByStockNumberAsc(int threshold);
 }

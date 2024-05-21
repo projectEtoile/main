@@ -12,15 +12,45 @@
     <body>
     <!-- 상품등록 시작 -->
 
+    <div style="display:none;">
+        <p id="male" th:text="${data.male}"></p>
+        <p id="female" th:text="${data.female}"></p>
+        <p id="ageTotal10" th:text="${data.ageTotal10}"></p>
+        <p id="ageTotal20" th:text="${data.ageTotal20}"></p>
+        <p id="ageTotal30" th:text="${data.ageTotal30}"></p>
+        <p id="ageTotal40" th:text="${data.ageTotal40}"></p>
+        <p id="ageTotal50" th:text="${data.ageTotal50}"></p>
+        <p id="ageTotal60" th:text="${data.ageTotal60}"></p>
+        <p id="ageTotal70" th:text="${data.ageTotal70}"></p>
+
+        <p id="january" th:text="${data.january}"></p>
+        <p id="february" th:text="${data.february}"></p>
+        <p id="march" th:text="${data.march}"></p>
+        <p id="april" th:text="${data.april}"></p>
+        <p id="may" th:text="${data.may}"></p>
+        <p id="june" th:text="${data.june}"></p>
+        <p id="july" th:text="${data.july}"></p>
+        <p id="august" th:text="${data.august}"></p>
+        <p id="september" th:text="${data.september}"></p>
+        <p id="october" th:text="${data.october}"></p>
+        <p id="november" th:text="${data.november}"></p>
+        <p id="december" th:text="${data.december}"></p>
+    </div>
+
+
     <div id="container">
 
         <div class="lefts">
             <div class="top">
-
+                <h1 style="margin-top: 25px;">월 별 주문 수 비율 <span style="font-size: 17px; color: blue;">(단위 : 수문 수량)</span></h1>
+                <div style="width: 700px; height: 700px; margin-right: 50px;">
+                    <!--차트가 그려질 부분-->
+                    <canvas id="myChart3" style="margin-top: 30px;"></canvas>
+                </div>
 
             </div>
             <div class="bottom">
-                <h1>카테고리 별 매출 비중 현황</h1>
+                <h1>회원 남녀 성비 <span></span></h1>
                 <div style="width: 370px; height: 370px;">
                     <!--차트가 그려질 부분-->
                     <canvas id="myChart2" style="margin-top: 30px;"></canvas>
@@ -35,10 +65,23 @@
 
         <div class="rights">
             <div class="top">
+                <h1 style="margin-top: 30px;">재고 부족 상품 목록</h1>
 
+                <div class="tableContainer">
+                    <table>
+                        <tr class="firstLine">
+                            <td>상품 ID</td>
+                            <td>총 재고 수량</td>
+                        </tr>
+                        <tr th:each="item : ${data.itemList}">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.stockNumber}"></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="bottom">
-                <h1 style="margin-top: 30px;">월 별 매출 현황</h1>
+                <h1 style="margin-top: 30px;">연령대별 회원 분포 <span style="font-size: 17px; color: blue;">(단위 : 명)</span> </h1>
                 <div style="width: 700px; height: 700px; margin-right: 50px;">
                     <!--차트가 그려질 부분-->
                     <canvas id="myChart1" style="margin-top: 30px;"></canvas>

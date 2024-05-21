@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keduit.shop.constant.OrderStatus;
 import com.keduit.shop.constant.Sex;
+import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.Order;
 import com.keduit.shop.repository.ItemRepository;
 import com.keduit.shop.repository.MemberRepository;
@@ -64,14 +65,16 @@ public class AdminMainController {
         Optional<Integer> STP = orderRepository.getTotalPriceByLevel1("Shoes");
         int stp = STP.orElse(0);
 
-        List<Map<String, Object>> orderRank =orderRepository.findTop10ItemsOrderedByCount();
+        List<Map<String, Object>> orderRank = orderRepository.findTop10ItemsOrderedByCount();
+
+
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonOrderRank = objectMapper.writeValueAsString(orderRank);
         System.out.println(jsonOrderRank);
 
 
         for (Map<String, Object> item : orderRank) {
-            Object itemId =  item.get("itemId");
+            Object itemId = item.get("itemId");
             Object totalCount = item.get("totalCount");
 
             String output = "ItemId: " + itemId + ", TotalCount: " + totalCount;
@@ -81,7 +84,7 @@ public class AdminMainController {
         int unfinished = qandARepository.countByAnswerLengthZero();
         int finished = qandARepository.countByAnswerLengthGreaterThanZero();
 
-        System.out.println(unfinished+"@@"+finished+"@@@@@@@@@@@@@@");
+        System.out.println(unfinished + "@@" + finished + "@@@@@@@@@@@@@@");
 
         Map<String, Object> data = new HashMap<>();
 
@@ -128,13 +131,75 @@ public class AdminMainController {
     }
 
     @GetMapping("/main2")
-    public String main2(Model model){
-        Long femail = memberRepository.countMembersBySex(Sex.FEMALE);
+    public String main2(Model model) {
+        Long female = memberRepository.countMembersBySex(Sex.FEMALE);
         Long male = memberRepository.countMembersBySex(Sex.MALE);
+        Long ageTotal10 = memberRepository.countMembersByAgeRange(10, 19);
+        Long ageTotal20 = memberRepository.countMembersByAgeRange(20, 29);
+        Long ageTotal30 = memberRepository.countMembersByAgeRange(30, 39);
+        Long ageTotal40 = memberRepository.countMembersByAgeRange(40, 49);
+        Long ageTotal50 = memberRepository.countMembersByAgeRange(50, 59);
+        Long ageTotal60 = memberRepository.countMembersByAgeRange(60, 69);
+        Long ageTotal70 = memberRepository.countMembersByAgeRange(70, 79);
 
+        Long january = orderRepository.countByMonth(1);
+        Long february = orderRepository.countByMonth(2);
+        Long march = orderRepository.countByMonth(3);
+        Long april = orderRepository.countByMonth(4);
+        Long may = orderRepository.countByMonth(5);
+        Long june = orderRepository.countByMonth(6);
+        Long july = orderRepository.countByMonth(7);
+        Long august = orderRepository.countByMonth(8);
+        Long september = orderRepository.countByMonth(9);
+        Long october = orderRepository.countByMonth(10);
+        Long november = orderRepository.countByMonth(11);
+        Long december = orderRepository.countByMonth(12);
 
+        List<Item> itemList = itemRepository.findByStockNumberLessThanEqualOrderByStockNumberAsc(5);
+
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("female", female);
+        data.put("male", male);
+        data.put("ageTotal10", ageTotal10);
+        data.put("ageTotal20", ageTotal20);
+        data.put("ageTotal30", ageTotal30);
+        data.put("ageTotal40", ageTotal40);
+        data.put("ageTotal50", ageTotal50);
+        data.put("ageTotal60", ageTotal60);
+        data.put("ageTotal70", ageTotal70);
+
+        data.put("january", january);
+        data.put("february", february);
+        data.put("march", march);
+        data.put("april", april);
+        data.put("may", may);
+        data.put("june", june);
+        data.put("july", july);
+        data.put("august", august);
+        data.put("september", september);
+        data.put("october", october);
+        data.put("november", november);
+        data.put("december", december);
+
+        data.put("itemList", itemList);
+
+        model.addAttribute("data", data);
 
         return "/admin/main2";
+    }
+
+    @GetMapping("/pwCheck")
+    public String pwCheck(){
+        return "/admin/pwCheck";
+    }
+    @GetMapping("/changePw")
+    public String changePw(){
+        return "/admin/changePw";
+    }
+    @GetMapping("/changeInfo")
+    public String changeInfo(){
+        return "/admin/changeInfo";
     }
 
 }

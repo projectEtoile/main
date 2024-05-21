@@ -50,11 +50,9 @@
 
 function allChangeStatus(currentState,newState,event) {
 event.preventDefault();
-            // CSRF 토큰 가져오기
             var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
             var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-            // API 엔드포인트
             var apiUrl = '/admin/allchangeStatus';
 
             // API 요청 데이터
@@ -69,7 +67,7 @@ event.preventDefault();
                     'Content-Type': 'application/json',
                     [csrfHeader]: csrfToken
                 },
-                body: JSON.stringify(requestData) // 요청 데이터를 JSON 문자열로 변환하여 body에 추가
+                body: JSON.stringify(requestData)
             })
             .then(response => {
                 if (response.ok) {

@@ -60,4 +60,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>,OrderReposit
             "AND i.level1 = :level1")
     Optional<Integer> getTotalPriceByLevel1(@Param("level1") String level1);
 
+    @Query("SELECT COUNT(o) FROM Order o WHERE MONTH(o.orderDate) = :month")
+    Long countByMonth(@Param("month") int month);
+
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<!-- 사용자 CSS 추가 -->
+
+<div layout:fragment="content">
+    <link th:href="@{/css/admin/changePw.css}" rel="stylesheet" type="text/css">
+    <body>
+    <main>
+        <h1>비밀번호 변경</h1>
+        <div class="accountBox">
+            <dl>
+                <dt>기존 비밀번호</dt>
+                <dd>
+          <span>
+            <span>
+              <input type="password" id="password"
+                     name="password">
+            </span>
+          </span>
+                </dd>
+            </dl>
+            <dl>
+                <dt>새 비밀번호</dt>
+                <dd>
+          <span>
+            <span>
+              <input type="password" id="password"
+                     name="password" style="width: 211px;">
+            </span>
+            <p>8자~15자의 영문, 숫자, 특수문자를 모두 혼합하여 입력해주세요.</p>
+          </span>
+                </dd>
+
+            </dl>
+            <dl>
+                <dt>새 비밀번호 확인</dt>
+                <dd>
+          <span>
+            <span>
+              <input type="password" id="password"
+                     name="password">
+            </span>
+          </span>
+                </dd>
+            </dl>
+        </div>
+        <p>관리자 개인정보 변경은 쇼핑몰 마이페이지에서 할 수 있습니다 ( 현재 페이지는 기능이 없습니다 )</p>
+        <div class="butBox">
+            <button class="smbt">취소</button>
+            <button onclick="showAlert()" id="alertBox">변경하기</button>
+        </div>
+    </main>
+    </body>
+</div>
+
+</html>
+
+
+
+
+
