@@ -73,9 +73,9 @@
                             <td>상품 ID</td>
                             <td>총 재고 수량</td>
                         </tr>
-                        <tr th:each="item : ${items}">
-                            <td th:text="${data.item.id}"></td>
-                            <td th:text="${data.item.stockNumber}"></td>
+                        <tr th:each="item : ${data.itemList}">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.stockNumber}"></td>
                         </tr>
                     </table>
                 </div>

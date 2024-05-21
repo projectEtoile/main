@@ -40,5 +40,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
             " %:itemText% order by i.price desc", nativeQuery = true)
     List<Item> findByItemTextByNative(@Param("itemText") String itemText);
 
-    List<Item> findByTotalStockLessThanEqual(int threshold);
+    List<Item> findByStockNumberLessThanEqualOrderByStockNumberAsc(int threshold);
 }

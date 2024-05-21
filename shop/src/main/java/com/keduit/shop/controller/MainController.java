@@ -47,7 +47,7 @@ public class MainController {
       model.addAttribute("items", discountRateItems);
       model.addAttribute("itemList", itemFormDTOS);
 
-      return "main";
+      return "index";
     }
 
     List<Item> newItems = itemRepository.findFirst12ByOrderByIdDesc();
@@ -91,6 +91,6 @@ public class MainController {
 
         model.addAttribute("itemList", mainItems);
         System.out.println(mainItems.getContent());*/
-    return "main";
+    return "index";
   }
 }

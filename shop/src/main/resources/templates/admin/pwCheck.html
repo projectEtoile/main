@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate='~{layouts/adminLayout}'>
+
+<!-- 사용자 CSS 추가 -->
+
+<div layout:fragment="content">
+    <link th:href="@{/css/admin/pwCheck.css}" rel="stylesheet" type="text/css">
+    <body>
+    <main>
+        <h1>비밀번호 확인</h1>
+        <div class="accountBox">
+            <dl>
+                <dt>ID</dt>
+                <dd> userIDtext</dd>
+            </dl>
+            <dl>
+                <dt>비밀번호</dt>
+                <dd>
+          <span>
+            <span>
+              <input type="password" id="password"
+                     name="password">
+            </span>
+          </span>
+                </dd>
+            </dl>
+        </div>
+
+        <div class="butBox">
+            <button class="smbt">취소</button>
+            <button> <a href="/admin/changeInfo" style="color:white">확인</a></button>
+        </div>
+    </main>
+    </body>
+</div>
+
+</html>
+
+
+
+
+

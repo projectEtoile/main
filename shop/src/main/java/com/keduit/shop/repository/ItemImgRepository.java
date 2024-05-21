@@ -1,6 +1,8 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.entity.Item;
 import com.keduit.shop.entity.ItemImg;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

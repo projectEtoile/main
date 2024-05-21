@@ -66,6 +66,8 @@ public class AdminMainController {
         int stp = STP.orElse(0);
 
         List<Map<String, Object>> orderRank = orderRepository.findTop10ItemsOrderedByCount();
+
+
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonOrderRank = objectMapper.writeValueAsString(orderRank);
         System.out.println(jsonOrderRank);
@@ -153,7 +155,7 @@ public class AdminMainController {
         Long november = orderRepository.countByMonth(11);
         Long december = orderRepository.countByMonth(12);
 
-        List<Item> itemList = itemRepository.findByTotalStockLessThanEqual(5);
+        List<Item> itemList = itemRepository.findByStockNumberLessThanEqualOrderByStockNumberAsc(5);
 
         Map<String, Object> data = new HashMap<>();
 
@@ -185,6 +187,19 @@ public class AdminMainController {
         model.addAttribute("data", data);
 
         return "/admin/main2";
+    }
+
+    @GetMapping("/pwCheck")
+    public String pwCheck(){
+        return "/admin/pwCheck";
+    }
+    @GetMapping("/changePw")
+    public String changePw(){
+        return "/admin/changePw";
+    }
+    @GetMapping("/changeInfo")
+    public String changeInfo(){
+        return "/admin/changeInfo";
     }
 
 }
