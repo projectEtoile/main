@@ -7,7 +7,6 @@ body, html {
         .fieldError {
             color: #bd2130;
         }
-
 /* .top-area {
   width: 100%;
   height: 40px;
@@ -29,7 +28,9 @@ body, html {
   line-height: 18px;
   color: #C9C9C9;
 } */
-
+.star1{
+    color: gold;
+}
 /* 상단 배너 css 시작 */
 .top-area {
   width: 100%;
@@ -49,9 +50,9 @@ align-items: center;
   font-style: "accent";
   margin: auto;
   text-decoration: none;
-  font-size: 35px;
-  line-height: 40px;
-  color: black;
+  font-size: 28px;
+  line-height: 50px;
+  color: white;
 }
 .top-areaInner>p {
   font-style: "accent";

@@ -43,7 +43,7 @@ public class MainController {
       for (Item discountRateItem : discountRateItems){
           itemFormDTOS.add(itemService.getItemDtl(discountRateItem.getId()));
       }
-      model.addAttribute("message","SALE 중입니다 : "+itemFormDTOS.get(0).getLevel1());
+      model.addAttribute("message","SALE Category '"+itemFormDTOS.get(0).getLevel1()+"\'");
       model.addAttribute("items", discountRateItems);
       model.addAttribute("itemList", itemFormDTOS);
 

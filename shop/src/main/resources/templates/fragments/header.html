@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+    <link rel="icon" href="/etoileFavicon.ico" type="image/x-icon">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
@@ -14,7 +15,7 @@
     <nav>
         <div class="top-area">
             <div class="top-areaInner">
-                <a href="#">★여름 맞이 쇼핑★</a>
+                <a href="/items?level=&saleItems=saleItems&searchBy=itemNm&searchQuery="> <span class="star1">★</span> Summer Celebration Sale! <span class="star1">★</span></a>
             </div>
         </div>
         <div class="container1">

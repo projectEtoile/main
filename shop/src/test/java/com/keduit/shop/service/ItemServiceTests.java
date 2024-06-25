@@ -2,6 +2,8 @@ package com.keduit.shop.service;
 
 import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.ItemFormDTO;
+import com.keduit.shop.entity.Item;
+import com.keduit.shop.repository.ItemRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class ItemServiceTests {
   @Autowired
   ItemService itemService;
 
+  @Autowired
+  ItemRepository itemRepository;
+
+
   List<MultipartFile> createMultipartFiles() {
 
     List<MultipartFile> multipartFiles = new ArrayList<>();
@@ -31,6 +37,19 @@ public class ItemServiceTests {
       multipartFiles.add(multipartFile);
     }
     return multipartFiles;
+  }
+
+  @Test
+  void testItemStop(){
+    List<Item> itemList = new ArrayList<Item>();
+     itemList = itemRepository.findAll();
+
+     for (Item a : itemList){
+       if(a.getItemNm().contains("테스트")){
+         a.setItemSellStatus(ItemSellStatus.STOP_SALE);
+         itemRepository.save(a);
+       }
+     }
   }
 
   @Test

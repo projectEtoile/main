@@ -61,7 +61,8 @@ $(document).ready(function() {
    var OP = parseInt($('#OP').text());
    var DngP = parseInt($('#DngP').text());
 
-   var sum =OP+DngP;
+   var sum = OP+DngP;
+
 
    $('#TTP').text(sum);
 
