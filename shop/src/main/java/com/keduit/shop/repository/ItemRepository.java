@@ -1,5 +1,6 @@
 package com.keduit.shop.repository;
 
+import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.entity.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     List<Item> findTop12ByDiscountRateNotOrderByIdDesc(float discountRate);
 
-    List<Item> findFirst12ByOrderByIdDesc();
+    List<Item> findFirst12ByItemSellStatusNotOrderByIdDesc(ItemSellStatus itemSellStatus);
     List<Item> findFirst20ByOrderByIdAsc();
 
     /*위에랑 다르게 JPQL사용하기*/

@@ -1,5 +1,6 @@
 package com.keduit.shop.controller;
 
+import com.keduit.shop.constant.ItemSellStatus;
 import com.keduit.shop.dto.AdminItemSearchDTO;
 import com.keduit.shop.dto.ItemFormDTO;
 import com.keduit.shop.dto.MainItemDTO;
@@ -46,11 +47,10 @@ public class MainController {
       model.addAttribute("message","SALE Category '"+itemFormDTOS.get(0).getLevel1()+"\'");
       model.addAttribute("items", discountRateItems);
       model.addAttribute("itemList", itemFormDTOS);
-
-      return "index";
+      return "index.html";
     }
-
-    List<Item> newItems = itemRepository.findFirst12ByOrderByIdDesc();
+    List<Item> newItems = itemRepository.findFirst12ByItemSellStatusNotOrderByIdDesc(ItemSellStatus.STOP_SALE);
+    System.out.println(newItems.toString());
     for (Item newItem : newItems){
       itemFormDTOS.add(itemService.getItemDtl(newItem.getId()));
     }
@@ -91,6 +91,6 @@ public class MainController {
 
         model.addAttribute("itemList", mainItems);
         System.out.println(mainItems.getContent());*/
-    return "index";
+    return "index.html";
   }
 }
